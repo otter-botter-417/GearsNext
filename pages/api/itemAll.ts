@@ -20,7 +20,7 @@ export default async function handler(
           .collection("items")
           .find()
           .toArray();
-        console.log(itemDatas);
+        // console.log(itemDatas);
 
         res.status(200).json({ success: true, data: itemDatas });
       } catch (error) {

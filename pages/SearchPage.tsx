@@ -6,51 +6,63 @@ import {
   ToggleButtonGroup,
 } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
-import Typography from "@mui/material/Typography";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import themeOptions from "@/styles/themes/themeOptions";
-import Grid from "@mui/material/Grid";
-import Slider from "@mui/material/Slider";
-import Switch, { SwitchProps } from "@mui/material/Switch";
-import Stack from "@mui/material/Stack";
-
 import { TextFieldStyles } from "@/styles/ItemAppendPage/TextFieldStyles";
 import { ThemeProvider } from "@mui/material/styles";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 import { CategoryNameList } from "@/components/atoms/itemAppend/SelectNames/CategoryNameList";
-import { colorTagList } from "../components/atoms/itemAppend/SelectNames/ColorTagList";
-import { itemTagList } from "../components/atoms/itemAppend/SelectNames/ItemTagList";
 import { SubCategoryNameList } from "@/components/atoms/itemAppend/SelectNames/SubCategoryNameList";
 import { ItemDataTypes } from "@/components/types/ItemDataTypes";
 
-import { useItemApi } from "../components/api/useItemApi";
-import { ItemThumbnail } from "@/components/molecules/searchPage/ItemThumbnail";
-import { Tags } from "@/components/atoms/itemAppend/Tags";
-import { Buttons } from "@/components/molecules/itemPage/Buttons";
 import { SortPattern } from "@/components/atoms/searchPage/SortPattern";
+import PriceSlider from "@/components/atoms/searchPage/PriceSlider";
+import { ItemDataText } from "@/components/atoms/itemPage/text/ItemDataText";
+
+import { categoryValueState } from "@/components/atoms/state/searchPage/categoryValueState";
+import { subCategoryValueState } from "@/components/atoms/state/searchPage/subCategoryValueState";
+import { itemTagsState } from "@/components/atoms/state/searchPage/itemTagsState";
+import { colorTagsState } from "@/components/atoms/state/searchPage/colorTagsState";
+import { filterSwitchState } from "@/components/atoms/state/searchPage/filterSwitchState";
+import { itemDataMapState } from "@/components/atoms/state/searchPage/itemDataMapState";
+import { priceDataState } from "@/components/atoms/state/searchPage/priceDataState";
+import { sliderValueState } from "@/components/atoms/state/searchPage/sliderValueState";
+import { priceRangeState } from "@/components/atoms/state/searchPage/priceRangeState";
+import { filteredProductsState } from "@/components/atoms/state/searchPage/filteredProductsState";
+import { itemNumState } from "@/components/atoms/state/searchPage/itemNumState";
+import { sortPatternValueState } from "@/components/atoms/state/searchPage/sortPatternValueState";
+import ItemTags from "@/components/molecules/searchPage/ItemTags";
+import ColorTags from "@/components/molecules/searchPage/ColorTags";
+import ItemThumbnailGrid from "@/components/organisms/searchPage/ItemThumbnailGrid";
 
 export const SearchPage = () => {
-  const [categoryValue, setCategoryValue] = useState(""); // valueをstateで管理
-  const [subCategoryValue, setSubCategoryValue] = useState("");
-  const [filterSwitch, setFilterSwitch] = useState("or");
-  const [itemDataMap, setItemDataMap] = useState<ItemDataTypes[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<ItemDataTypes[]>([]);
-  const [itemTags, setItemTags] = useState<string[]>([]);
-  const [colorTags, setColorTags] = useState<string[]>([]);
-  const [sliderValue, setSliderValue] = useState<number[]>([0, 1000000]);
-  const [value, setValue] = useState<number[]>([0, 1000000]);
-  const [priceSliderNum, setPriceSliderNum] = useState<number[]>([0, 1000000]);
-  const [sortPatternValue, setSortPatternValue] = useState("閲覧数");
+  //APIで最初に取得する全データ
+  const [itemDataMap, setItemDataMap] = useRecoilState(itemDataMapState);
+  //絞り込み
 
-  const { getItemData } = useItemApi();
+  const [categoryValue, setCategoryValue] = useRecoilState(categoryValueState);
+  const [subCategoryValue, setSubCategoryValue] = useRecoilState(
+    subCategoryValueState
+  );
+  const [itemTags, setItemTags] = useRecoilState(itemTagsState);
+  const [colorTags, setColorTags] = useRecoilState(colorTagsState);
+  const [filterSwitch, setFilterSwitch] = useRecoilState(filterSwitchState);
+  //価格スライダー関連
+  const setPriceData = useSetRecoilState(priceDataState);
+  const [sliderValue, setSliderValue] = useRecoilState(sliderValueState);
+  const setPriceRange = useSetRecoilState(priceRangeState);
+  //絞り込み後の表示アイテム
+  const [filteredProducts, setFilteredProducts] = useRecoilState(
+    filteredProductsState
+  );
+  const [itemNum, setItemNum] = useRecoilState(itemNumState);
+  //ソート条件
+  const [sortPatternValue, setSortPatternValue] = useRecoilState(
+    sortPatternValueState
+  );
 
-  const handleChange = (
-    event: Event | React.SyntheticEvent<Element, Event>,
-    newValue: number | number[]
-  ) => {
-    setValue(newValue as number[]);
-  };
-
+  //トグルボタンクリック時に絞り込み条件をORかANDか切り替え
   const handleChangeToggleButton = (
     event: React.MouseEvent<HTMLElement>,
     newAlignment: string | null
@@ -60,16 +72,9 @@ export const SearchPage = () => {
     }
   };
 
-  const handleChangeCommitted = (
-    event: Event | React.SyntheticEvent<Element, Event>,
-    newValue: number | number[]
-  ) => {
-    setSliderValue(newValue as number[]);
-  };
   //条件をクリアボタンをクリックで初期化
   const onClickResetButton = () => {
-    setPriceSliderNum([0, 1000000]);
-    setValue([0, 1000000]);
+    // setPriceRange({ min: 0, max: 100000 });
     setSliderValue([0, 1000000]);
     setCategoryValue("");
     setSubCategoryValue("");
@@ -83,55 +88,89 @@ export const SearchPage = () => {
     const fetchData = async () => {
       if (typeof window === "undefined") return;
 
-      const response = await fetch("http://localhost:3000/api/itemAll")
-        .then((response) => response.json())
-        .then((data) => {
-          let filtered = data.data;
-          if (sortPatternValue === "高い順") {
-            filtered = filtered
-              .slice()
-              .sort((a: any, b: any) => b.price - a.price);
-          } else if (sortPatternValue === "安い順") {
-            filtered = filtered
-              .slice()
-              .sort((a: any, b: any) => a.price - b.price);
-          }
-          console.log(data);
+      if (categoryValue) {
+        const response = await fetch(
+          `http://localhost:3000/api/itemSearchApi?category=${categoryValue}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            let filtered = data.data;
+            //並び替え条件に従って並び替える
+            if (sortPatternValue === "高い順") {
+              filtered = filtered
+                .slice()
+                .sort((a: any, b: any) => b.price - a.price);
+            } else if (sortPatternValue === "安い順") {
+              filtered = filtered
+                .slice()
+                .sort((a: any, b: any) => a.price - b.price);
+            }
 
-          setItemDataMap(filtered);
-          setFilteredProducts(filtered);
-          const prices = filtered.map((item: ItemDataTypes) => item.price);
-          const priceValue = [Math.min(...prices), Math.max(...prices)];
-          setPriceSliderNum(priceValue);
-        });
+            //取得データをそれぞれ設定しておく
+            setItemDataMap(filtered);
+            setFilteredProducts(filtered);
+            //価格スライダー用
+            const prices = filtered.map((item: ItemDataTypes) => item.price);
+            setPriceData(prices);
+            setPriceRange({
+              min: Math.min(...prices),
+              max: Math.max(...prices),
+            });
+          });
+      } else {
+        const response = await fetch("http://localhost:3000/api/itemAll")
+          .then((response) => response.json())
+          .then((data) => {
+            let filtered = data.data;
+            //並び替え条件に従って並び替える
+            if (sortPatternValue === "高い順") {
+              filtered = filtered
+                .slice()
+                .sort((a: any, b: any) => b.price - a.price);
+            } else if (sortPatternValue === "安い順") {
+              filtered = filtered
+                .slice()
+                .sort((a: any, b: any) => a.price - b.price);
+            }
+
+            //取得データをそれぞれ設定しておく
+            setItemDataMap(filtered);
+            setFilteredProducts(filtered);
+            //価格スライダー用
+            const prices = filtered.map((item: ItemDataTypes) => item.price);
+            setPriceData(prices);
+            setPriceRange({
+              min: Math.min(...prices),
+              max: Math.max(...prices),
+            });
+          });
+      }
     };
 
     fetchData();
-  }, []);
+  }, [categoryValue]);
 
   //絞り込みを操作したときにitemDataMapの絞り込みをする
   useEffect(() => {
     let filtered = itemDataMap;
 
+    //カテゴリーでの絞り込み
     if (categoryValue) {
       filtered = filtered.filter(
         (product) => product.category === categoryValue
       );
     }
 
+    //サブカテゴリーでの絞り込み
     if (subCategoryValue) {
       filtered = filtered.filter(
         (product) => product.itemAbility.subCategorys === subCategoryValue
       );
     }
 
-    const prices = filtered.map((item: ItemDataTypes) => item.price);
-    const priceValue = [Math.min(...prices), Math.max(...prices)];
-    setPriceSliderNum(priceValue);
-
     // 価格の絞り込み
-    const min = value[0];
-    const max = value[1];
+    const min = sliderValue[0];
+    const max = sliderValue[1];
     if (min && max) {
       filtered = filtered.filter(
         (product) => product.price >= min && product.price <= max
@@ -140,7 +179,7 @@ export const SearchPage = () => {
 
     // タグの絞り込み
     if (itemTags.length > 0) {
-      if (filterSwitch) {
+      if (filterSwitch === "or") {
         filtered = filtered.filter((product) =>
           itemTags.some((tag) => product.tags.includes(tag))
         );
@@ -158,17 +197,22 @@ export const SearchPage = () => {
           colorTags.some((tag) => product.colors.includes(tag))
         );
       } else {
+        console.log(11);
         filtered = filtered.filter((product) =>
           colorTags.every((tag) => product.colors.includes(tag))
         );
       }
     }
 
+    //並び替え
     if (sortPatternValue === "高い順") {
       filtered = filtered.slice().sort((a, b) => b.price - a.price);
     } else if (sortPatternValue === "安い順") {
       filtered = filtered.slice().sort((a, b) => a.price - b.price);
     }
+
+    //対象件数
+    setItemNum(filtered.length);
 
     setFilteredProducts(filtered);
   }, [
@@ -200,6 +244,7 @@ export const SearchPage = () => {
         width={"80%"}
       >
         <ThemeProvider theme={themeOptions}>
+          {/* キーワード　カテゴリー　サブカテゴリー */}
           <Box display={"flex"} alignItems="center" width={"80%"} margin={2}>
             <TextField
               id="keyword"
@@ -240,7 +285,9 @@ export const SearchPage = () => {
               ))}
             </TextField>
           </Box>
+          {/* トグル　タグ　カラータグ　価格スライダー　条件クリア */}
           <Box display={"flex"} alignItems="center" width={"80%"}>
+            {/* トグルスイッチ */}
             <ToggleButtonGroup
               value={filterSwitch}
               exclusive
@@ -249,39 +296,25 @@ export const SearchPage = () => {
               <ToggleButton value="or">OR</ToggleButton>
               <ToggleButton value="and">AND</ToggleButton>
             </ToggleButtonGroup>
-            <Box flexGrow={1}>
-              <Tags
-                text={"タグ"}
-                tagName={itemTags}
-                setTagName={setItemTags}
-                items={itemTagList}
-              />
+            {/* タグ */}
+            <ItemTags />
+            {/* カラータグ */}
+            <ColorTags />
+            {/* 価格スライダー */}
+            <Box flexGrow={1} padding={4} width={"30%"}>
+              <PriceSlider />
             </Box>
-            <Box flexGrow={1}>
-              <Tags
-                text={"カラー"}
-                tagName={colorTags}
-                setTagName={setColorTags}
-                items={colorTagList}
-              />
-            </Box>
-            <Box flexGrow={1} padding={4}>
-              <Typography variant="caption">price</Typography>
-              <Slider
-                getAriaLabel={() => "Temperature range"}
-                value={value}
-                onChange={handleChange}
-                onChangeCommitted={handleChangeCommitted}
-                valueLabelDisplay="auto"
-                min={priceSliderNum[0]}
-                max={priceSliderNum[1]}
-              />
-            </Box>
+            {/* 条件クリア */}
             <Button variant="outlined" onClick={onClickResetButton}>
               条件をクリア
             </Button>
           </Box>
+          {/* 並び替え */}
+
           <Box display={"flex"} justifyContent="flex-end" width={"100%"}>
+            <Box padding={2}>
+              <ItemDataText text={`${itemNum}件`} />
+            </Box>
             <Box justifyContent="flex-end" width={"20%"}>
               <TextField
                 select
@@ -299,22 +332,8 @@ export const SearchPage = () => {
             </Box>
           </Box>
 
-          <Grid
-            container
-            spacing={{ xs: 2, md: 5 }}
-            columns={{ xs: 12, sm: 8, md: 10 }}
-            sx={{ position: "center" }}
-          >
-            {filteredProducts ? (
-              filteredProducts.map((data: ItemDataTypes, index: number) => (
-                <Grid item xs={2} sm={2} md={2} key={index}>
-                  <ItemThumbnail ItemData={data} key={`item-${index}`} />
-                </Grid>
-              ))
-            ) : (
-              <p>No items found</p>
-            )}
-          </Grid>
+          {/* 絞り込み後の商品表示 */}
+          <ItemThumbnailGrid />
         </ThemeProvider>
       </Box>
     </Box>

@@ -5,6 +5,6 @@ export const TextFieldStyles = {
   },
   input: {
     mb: 2,
-    width: "50%",
+    width: "30%",
   },
 };

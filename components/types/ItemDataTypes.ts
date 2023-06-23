@@ -25,6 +25,7 @@ export type ItemDataTypes = {
     capacity: number;
     innerTent: string;
     grandSheet: string;
+    fabrics: Array<string>;
     accessories: Array<string>;
   };
 };

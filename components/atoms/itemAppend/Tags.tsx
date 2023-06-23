@@ -10,12 +10,12 @@ import Chip from "@mui/material/Chip";
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
+  // PaperProps: {
+  //   style: {
+  //     maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+  //     width: 250,
+  //   },
+  // },
 };
 
 interface Props {
@@ -39,7 +39,10 @@ export const Tags = ({ text, tagName, setTagName, items }: Props) => {
   };
 
   return (
-    <FormControl sx={{ m: 1, width: "100%" }}>
+    <FormControl
+      fullWidth
+      // sx={{ m: 1, width: "100%" }}
+    >
       <InputLabel id="demo-multiple-chip-label">{text}</InputLabel>
       <Select
         id="demo-multiple-chip"

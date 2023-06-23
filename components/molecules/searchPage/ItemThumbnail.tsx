@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Box } from "@mui/material";
 import { ItemDataTypes } from "../../types/ItemDataTypes";
 import Image from "next/legacy/image";
-import { useWindowSize } from "../../atoms/hooks/useWindowSize";
+import { useWindowSize } from "../../../hooks/useWindowSize";
 import Typography from "@mui/material/Typography";
 
 type ItemThumbnailProps = {
@@ -27,7 +27,7 @@ export const ItemThumbnail = (props: ItemThumbnailProps) => {
       {/* 商品名　メーカー　を表示 */}
       <Link href={`/items/${ItemData._id}`}>
         <Image
-          src={`/images/items/${ItemData.imagePath}`}
+          src={`/images/items/${ItemData.brandName}/${ItemData.imagePath}`}
           alt="example image"
           layout="responsive"
           width={widthSize}

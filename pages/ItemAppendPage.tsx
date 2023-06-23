@@ -9,23 +9,28 @@ import { TextFieldStyles } from "../styles/ItemAppendPage/TextFieldStyles";
 import { CategoryNameList } from "../components/atoms/itemAppend/SelectNames/CategoryNameList";
 import { brandNameList } from "../components/atoms/itemAppend/SelectNames/BrandNameList";
 import { colorTagList } from "../components/atoms/itemAppend/SelectNames/ColorTagList";
-import { itemTagList } from "../components/atoms/itemAppend/SelectNames/ItemTagList";
+import { ItemTagList } from "../components/atoms/itemAppend/SelectNames/ItemTagList";
 import { useItemApi } from "../components/api/useItemApi";
 import CategoryAssign from "@/components/molecules/itemAppend/CategoryAssign";
 
+// データベースへ商品情報を登録するページ
 const ItemAppendPage = () => {
-  const [categoryValue, setCategoryValue] = useState(""); // valueをstateで管理
-  const [brandValue, setBrandValue] = useState(""); // valueをstateで管理
-  const [itemTags, setItemTags] = useState<string[]>([]);
-  const [colorTags, setColorTags] = useState<string[]>([]);
-  const [abilitys, setAbilitys] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [categoryValue, setCategoryValue] = useState(""); // カテゴリー名
+  const [brandValue, setBrandValue] = useState(""); // ブランド名
+  const [itemTags, setItemTags] = useState<string[]>([]); // 特徴のタグ
+  const [colorTags, setColorTags] = useState<string[]>([]); // カラータグ
+  const [abilitys, setAbilitys] = useState([]); // カテゴリー毎の詳細な情報
+  const [loading, setLoading] = useState(false); // 送信中のグルグル
 
-  const { postItemData } = useItemApi();
+  const { postItemData } = useItemApi(); //mongoDBにデータを送信するAPI
 
+  //送信ボタンを押された時の処理
+  //フォームの入力情報をまとめてmongoDBにデータ送信
+  //送信完了まではローディングのグルグル
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    //フォームの入力情報をまとめる
     const itemDatas = {
       category: categoryValue,
       itemName: e.currentTarget.itemName.value,
@@ -40,6 +45,7 @@ const ItemAppendPage = () => {
     };
 
     try {
+      //ローディング状態に変更してmongoDBにデータ送信
       setLoading(true);
       await postItemData(itemDatas);
       setLoading(false);
@@ -128,7 +134,7 @@ const ItemAppendPage = () => {
           text={"タグ"}
           tagName={itemTags}
           setTagName={setItemTags}
-          items={itemTagList}
+          items={ItemTagList}
         />
         <Tags
           text={"カラー"}

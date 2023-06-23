@@ -34,7 +34,7 @@ function ItemPage() {
     <ThemeProvider theme={themeOptions}>
       <Box
         sx={{
-          padding: 10,
+          padding: 3,
           display: "flex",
           justifyContent: "space-evenly",
         }}

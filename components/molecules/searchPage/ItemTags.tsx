@@ -1,4 +1,4 @@
-import { itemTagList } from "@/components/atoms/itemAppend/SelectNames/ItemTagList";
+import { ItemTagList } from "@/components/atoms/itemAppend/SelectNames/ItemTagList";
 import { Tags } from "@/components/atoms/itemAppend/Tags";
 import { itemTagsState } from "@/components/atoms/state/searchPage/itemTagsState";
 import { Box } from "@mui/system";
@@ -13,7 +13,7 @@ const ItemTags = () => {
         text={"タグ"}
         tagName={itemTags}
         setTagName={setItemTags}
-        items={itemTagList}
+        items={ItemTagList}
       />
     </Box>
   );

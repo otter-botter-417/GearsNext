@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import React from "react";
+import Link from "next/link";
 
 const Header = () => {
   return (
@@ -12,7 +13,9 @@ const Header = () => {
         <IconButton edge="start" aria-label="menu" sx={{ mr: 2 }}>
           <MenuIcon />
         </IconButton>
-        <Typography variant="h4">Gears</Typography>
+        <Link href={`/`}>
+          <Typography variant="h4">Gears</Typography>
+        </Link>
       </Toolbar>
     </AppBar>
   );

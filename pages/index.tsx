@@ -14,9 +14,11 @@ const Home: NextPage = () => {
         justifyContent="center"
       >
         Welcome to my site
-        <Link href="/ItemAppendPage">Item Append Page</Link>
+        {/* 各ページヘのリンク */}
+        <Link href="/AddNewItemPage">AddNewItemPage</Link>
         <Link href="/ItemPage">ItemPage</Link>
         <Link href="/SearchPage">SearchPage</Link>
+        <Link href="/Openai">Openai</Link>
       </Box>
     </React.StrictMode>
   );

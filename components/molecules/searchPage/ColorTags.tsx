@@ -1,5 +1,5 @@
 import { colorTagList } from "@/components/atoms/itemAppend/SelectNames/ColorTagList";
-import { itemTagList } from "@/components/atoms/itemAppend/SelectNames/ItemTagList";
+import { ItemTagList } from "@/components/atoms/itemAppend/SelectNames/ItemTagList";
 import { Tags } from "@/components/atoms/itemAppend/Tags";
 import { colorTagsState } from "@/components/atoms/state/searchPage/colorTagsState";
 import { itemTagsState } from "@/components/atoms/state/searchPage/itemTagsState";

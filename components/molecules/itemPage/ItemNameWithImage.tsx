@@ -3,7 +3,7 @@ import { BrandName } from "../../atoms/itemPage/BrandName";
 import { ItemName } from "../../atoms/itemPage/ItemName";
 import { Box } from "@mui/material";
 import Image from "next/legacy/image";
-import { useWindowSize } from "../../atoms/hooks/useWindowSize";
+import { useWindowSize } from "../../../hooks/useWindowSize";
 type itemNameAndBrandType = {
   itemName: string;
   brandName: string;
@@ -38,18 +38,16 @@ export const ItemNameWithImage: FC<itemNameAndBrandType> = (props) => {
         <ItemName itemName={itemName} />
       </Box>
       {/* 商品画像とクリックでアマゾンへのリンク */}
-      <a target="_blank" href={amazonUrl} rel="noopener noreferrer">
-        {/* レスポンシブ画像 */}
+      {/* レスポンシブ画像 */}
 
-        <Image
-          height={widthSize}
-          width={widthSize}
-          src={`/images/items/${imagePath}`}
-          alt=""
-          priority
-          objectFit="contain"
-        />
-      </a>
+      <Image
+        height={widthSize}
+        width={widthSize}
+        src={`/images/items/${brandName}/${imagePath}`}
+        alt=""
+        priority
+        objectFit="contain"
+      />
     </div>
   );
 };

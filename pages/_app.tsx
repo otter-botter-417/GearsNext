@@ -17,7 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme}>
       <RecoilRoot>
-        <Box sx={{ pt: "124px" }}>
+        <Box sx={{ pt: "64px" }}>
           <CssBaseline />
           <Header />
           <Component {...pageProps} />

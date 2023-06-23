@@ -1,7 +1,9 @@
 export const brandNameList = [
-  "ogawa (オガワ)",
-  "Coleman (コールマン)",
-  "snow peak (スノーピーク)",
+  "ogawa",
+  "Coleman",
+  "snow peak",
   "WIWO",
-  "BUNDOK (バンドック)",
+  "BUNDOK",
+  "OneTigris",
+  "WAQ",
 ];

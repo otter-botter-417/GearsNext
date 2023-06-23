@@ -1,8 +1,10 @@
-export const itemTagList = [
+export const ItemTagList = [
   "軽量",
   "簡単設営",
   "韓国",
   "コンパクト",
   "無骨",
   "煙突穴",
+  "難燃素材",
+  "高遮光性",
 ];

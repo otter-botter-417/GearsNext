@@ -11,7 +11,8 @@ import { Accessories } from "../../../atoms/itemPage/ability/Accessories";
 import { Box } from "@mui/material";
 import { Buttons } from "../Buttons";
 import { itemDatas } from "../../../../typs/itemDatas";
-import { AmazonLink } from "@/components/atoms/itemPage/ability/AmazonLink";
+import { AmazonLink } from "../../../atoms/itemPage/ability/AmazonLink";
+import { Fabrics } from "../../../atoms/itemPage/ability/Fabrics";
 
 export const TentAbilitys: FC<itemDatas> = (props) => {
   const { itemDatas } = props;
@@ -36,7 +37,8 @@ export const TentAbilitys: FC<itemDatas> = (props) => {
       <Capacity capacity={itemDatas.itemAbility?.capacity ?? 0} />
       <InnerTent innerTent={itemDatas.itemAbility?.innerTent ?? "なし"} />
       <GrandSheet grandSheet={itemDatas.itemAbility?.grandSheet ?? "なし"} />
-      <Accessories accessories={itemDatas.itemAbility?.accessories} />
+      <Fabrics fabrics={itemDatas.itemAbility?.fabrics} />
+      {/* <Accessories accessories={itemDatas.itemAbility?.accessories} /> */}
     </Box>
   );
 };

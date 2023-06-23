@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { TextFieldStyles } from "../../../../styles/ItemAppendPage/TextFieldStyles";
 import { Dispatch, SetStateAction } from "react";
 import { Box } from "@mui/system";
+import Typography from "@mui/material/Typography";
 
 interface Props {
   abilitys: {
@@ -21,6 +22,7 @@ interface Props {
     capacity: number;
     innerTent: string;
     grandSheet: string;
+    fabrics: string[];
     accessories: string[];
   };
   setAbilitys: Dispatch<
@@ -40,6 +42,7 @@ interface Props {
       capacity: number;
       innerTent: string;
       grandSheet: string;
+      fabrics: string[];
       accessories: string[];
     }>
   >;
@@ -79,6 +82,7 @@ export const TentDatas = ({ abilitys, setAbilitys }: Props) => {
       capacity: 0,
       innerTent: "",
       grandSheet: "",
+      fabrics: [],
       accessories: [],
     });
   }, [handleSetAbilitys]);
@@ -251,6 +255,22 @@ export const TentDatas = ({ abilitys, setAbilitys }: Props) => {
           })
         }
       />
+      <Typography variant="body2">
+        フライ:ポリエステル(耐水圧1,500mm)　インナー:ポリエステル　
+        フロア:ポリエステル(耐水圧1,500mm)　ポール:FRP
+      </Typography>
+      <TextField
+        id="fabrics"
+        label="素材"
+        sx={TextFieldStyles.input}
+        onChange={(event) =>
+          setAbilitys({
+            ...abilitys,
+            fabrics: [String(event.target.value)],
+          })
+        }
+      />
+      <Typography variant="body2">自在ロープ×4　ペグ×15　収納袋</Typography>
       <TextField
         id="accessories"
         label="その他付属品"

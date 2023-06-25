@@ -42,11 +42,13 @@ const schema = yup.object().shape({
     .string()
     .url("有効なURLを入力してください。")
     .required("AmazonURLは必須です。"),
-  asin: yup.string().required("ASINは必須です。"),
-  imagePath: yup
+  asin: yup
     .string()
-    .url("有効なURLを入力してください。")
-    .required("画像パスは必須です。"),
+    .required("ASINは必須です。")
+    .test("len", "ASINは正確に10桁である必要があります", (val) =>
+      val ? val.length === 10 : false
+    ),
+  imagePath: yup.string().required("画像パスは必須です。"),
   price: yup
     .number()
     .positive("価格は正の数である必要があります。")
@@ -80,7 +82,7 @@ const AddNewItemPage = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       {/* レスポンシブデザインを適応する */}
-      <Grid container justifyContent="center" item xs={12} sm={6}>
+      <Grid container justifyContent="center" item xs={12} sm={6} mt={4}>
         {/* 手入力の各種商品情報入力 */}
         <TextField
           {...register("itemName")}
@@ -90,10 +92,38 @@ const AddNewItemPage = () => {
           label="商品名"
           fullWidth
         />
-        <TextField id="amazonUrl" label="AmazonURL" fullWidth />
-        <TextField id="asin" label="ASIN" fullWidth />
-        <TextField id="imagePath" label="imagePath" fullWidth />
-        <TextField id="price" label="定価" fullWidth />
+        <TextField
+          {...register("amazonUrl")}
+          error={!!errors.amazonUrl}
+          helperText={errors.amazonUrl?.message}
+          id="amazonUrl"
+          label="AmazonURL"
+          fullWidth
+        />
+        <TextField
+          {...register("asin")}
+          error={!!errors.asin}
+          helperText={errors.asin?.message}
+          id="asin"
+          label="ASIN"
+          fullWidth
+        />
+        <TextField
+          {...register("imagePath")}
+          error={!!errors.imagePath}
+          helperText={errors.imagePath?.message}
+          id="imagePath"
+          label="imagePath"
+          fullWidth
+        />
+        <TextField
+          {...register("price")}
+          error={!!errors.price}
+          helperText={errors.price?.message}
+          id="price"
+          label="定価"
+          fullWidth
+        />
 
         {/* SelectValuesに渡したリストを元に、プルダウンで選択できる */}
         <SelectValues

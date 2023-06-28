@@ -1,40 +1,42 @@
 import { TextField, MenuItem } from "@mui/material";
 import React, { ChangeEvent } from "react";
+import { UseFormReturn, FieldError } from "react-hook-form";
 
 // プルダウン　選択式のフォーム
 
 // optionsListには選択肢のリストが入る
 
-interface SelectValuesProps {
-  id: string;
+interface DropdownSelectorProps {
+  name: string;
   label: string;
-  value: string;
+  formMethods: UseFormReturn<any>;
   defaultValue?: string;
-  onChange: (value: string) => void;
   optionsList: string[];
 }
 
-export const SelectValues: React.FC<SelectValuesProps> = ({
-  id,
+export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
+  name,
   label,
-  value,
+  formMethods,
   defaultValue,
-  onChange,
   optionsList,
 }) => {
-  // 選択されたらonChange関数でstateが更新される
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    onChange(event.target.value);
-  };
+  const {
+    register,
+    formState: { errors },
+  } = formMethods;
+
+  const errorMessage = errors[name] ? (errors[name] as FieldError).message : ""; //undefined または string または FieldError の可能性があるため、エラーが発生　沼ポイント
 
   return (
     <TextField
-      id={id}
+      {...register(name)}
+      error={!!errors[name]}
+      helperText={errorMessage}
+      id={name}
       select
       label={label}
-      value={value}
       defaultValue={defaultValue}
-      onChange={handleChange}
       fullWidth
     >
       {/* map関数でリスト内の選択肢の処理 */}

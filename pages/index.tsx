@@ -18,7 +18,6 @@ const Home: NextPage = () => {
         <Link href="/AddNewItemPage">AddNewItemPage</Link>
         <Link href="/ItemPage">ItemPage</Link>
         <Link href="/SearchPage">SearchPage</Link>
-        <Link href="/Openai">Openai</Link>
       </Box>
     </React.StrictMode>
   );

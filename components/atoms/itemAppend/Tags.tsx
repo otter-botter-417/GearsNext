@@ -39,10 +39,7 @@ export const Tags = ({ text, tagName, setTagName, items }: Props) => {
   };
 
   return (
-    <FormControl
-      fullWidth
-      // sx={{ m: 1, width: "100%" }}
-    >
+    <FormControl fullWidth>
       <InputLabel id="demo-multiple-chip-label">{text}</InputLabel>
       <Select
         id="demo-multiple-chip"

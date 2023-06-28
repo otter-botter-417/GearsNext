@@ -68,7 +68,7 @@ const AddNewItemPage = () => {
         {/* Tagコンポーネントに渡したリストを元に、タグを選択できる */}
         <Tags
           text={"タグ"}
-          tagName={(formMethods.watch("itemTags") || []).filter(Boolean)}
+          tagName={(formMethods.watch("itemTags") || []).filter(Boolean)} //
           setTagName={itemFormState.setItemTags}
           items={ItemTagList}
         />

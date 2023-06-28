@@ -8,11 +8,16 @@ import { Price } from "../../../atoms/itemPage/ability/Price";
 import { InnerTent } from "../../../atoms/itemPage/ability/InnerTent";
 import { GrandSheet } from "../../../atoms/itemPage/ability/GrandSheet";
 import { Accessories } from "../../../atoms/itemPage/ability/Accessories";
+import { AmazonLink } from "../../../atoms/itemPage/ability/AmazonLink";
+import { Fabrics } from "../../../atoms/itemPage/ability/Fabrics";
 import { Box } from "@mui/material";
 import { Buttons } from "../Buttons";
 import { itemDatas } from "../../../../typs/itemDatas";
+<<<<<<< HEAD
+=======
 import { AmazonLink } from "../../../atoms/itemPage/ability/AmazonLink";
 import { Fabrics } from "../../../atoms/itemPage/ability/Fabrics";
+>>>>>>> main
 
 export const TentAbilitys: FC<itemDatas> = (props) => {
   const { itemDatas } = props;

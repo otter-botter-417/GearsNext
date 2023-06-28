@@ -16,7 +16,6 @@ const Home: NextPage = () => {
         Welcome to my site
         {/* 各ページヘのリンク */}
         <Link href="/AddNewItemPage">AddNewItemPage</Link>
-        {/* <Link href="/ItemAppendPage">Item Append Page</Link> */}
         <Link href="/ItemPage">ItemPage</Link>
         <Link href="/SearchPage">SearchPage</Link>
       </Box>

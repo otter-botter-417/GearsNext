@@ -43,11 +43,7 @@ export const ItemNameWithImage: FC<itemNameAndBrandType> = (props) => {
       <Image
         height={widthSize}
         width={widthSize}
-<<<<<<< HEAD
         src={`/images/items/${brandName}/${imagePath}`}
-=======
-        src={`/images/items/${imagePath}`}
->>>>>>> main
         alt=""
         priority
         objectFit="contain"

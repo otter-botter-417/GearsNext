@@ -1,22 +1,23 @@
+import React from "react";
 import { ValidatedTextField } from "@/components/atoms/form/ValidatedTextField";
 import { UseFormReturn } from "react-hook-form";
-import { FormNamesList } from "@/components/atoms/valueNameList/FormNamesList";
+import { DropDownFormNamesList } from "@/components/atoms/valueNameList/DropDownFormNamesList";
+import { DropdownSelector } from "../atoms/form/DropdownSelector";
 
 interface ItemInformationFieldsProps {
   formMethods: UseFormReturn<any>;
 }
 
-export const ItemInformationFields: React.FC<ItemInformationFieldsProps> = ({
+export const DropdownSelectors: React.FC<ItemInformationFieldsProps> = ({
   formMethods,
 }) => {
   // 入力フォームのリスト　要素の編集はFormNamesListを編集する
-  const formFields = FormNamesList();
+  const formFields = DropDownFormNamesList();
 
   return (
     <>
       {formFields.map((field) => (
-        <ValidatedTextField
-          key={field.name}
+        <DropdownSelector
           name={field.name}
           label={field.label}
           formMethods={formMethods}

@@ -1,4 +1,4 @@
-export const brandNameList = [
+export const BrandNameList = [
   "ogawa",
   "Coleman",
   "snow peak",

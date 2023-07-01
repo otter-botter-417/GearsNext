@@ -1,24 +1,23 @@
-import { LoadingButton } from "@mui/lab";
 import React from "react";
+import { LoadingButton } from "@mui/lab";
 
 interface SubmitButtonProps {
   loading: boolean;
-  onSubmit: () => void;
   text: string;
+  type?: "submit" | "button"; // Add this line
 }
 
 export const SubmitButton: React.FC<SubmitButtonProps> = ({
   loading,
-  onSubmit,
   text,
+  type = "submit", // Set default value
 }) => {
   return (
     <LoadingButton
-      type="submit"
+      type={type} // Use it here
       variant="outlined"
       loading={loading}
       sx={{ mt: 4 }}
-      onClick={onSubmit}
     >
       {text}
     </LoadingButton>

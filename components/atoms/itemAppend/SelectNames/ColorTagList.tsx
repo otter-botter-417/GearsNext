@@ -1,4 +1,4 @@
-export const colorTagList = [
+export const ColorTagList = [
   "オリーブ",
   "レッド",
   "ブラック",

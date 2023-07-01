@@ -1,6 +1,7 @@
 import { TextField, MenuItem } from "@mui/material";
-import React, { ChangeEvent } from "react";
+import React from "react";
 import { UseFormReturn, FieldError } from "react-hook-form";
+import { DropDownListSelector } from "./DropDownListSelector";
 
 // プルダウン　選択式のフォーム
 
@@ -11,7 +12,6 @@ interface DropdownSelectorProps {
   label: string;
   formMethods: UseFormReturn<any>;
   defaultValue?: string;
-  optionsList: string[];
 }
 
 export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
@@ -19,7 +19,6 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
   label,
   formMethods,
   defaultValue,
-  optionsList,
 }) => {
   const {
     register,
@@ -27,6 +26,8 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
   } = formMethods;
 
   const errorMessage = errors[name] ? (errors[name] as FieldError).message : ""; //undefined または string または FieldError の可能性があるため、エラーが発生　沼ポイント
+
+  const optionsList = name ? DropDownListSelector({ idName: name }) : [];
 
   return (
     <TextField

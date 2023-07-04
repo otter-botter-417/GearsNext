@@ -16,8 +16,9 @@ export const DropdownSelectors: React.FC<ItemInformationFieldsProps> = ({
 
   return (
     <>
-      {formFields.map((field) => (
+      {formFields.map((field, index) => (
         <DropdownSelector
+          key={index}
           name={field.name}
           label={field.label}
           formMethods={formMethods}

@@ -37,7 +37,7 @@ export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
       id={name}
       select
       label={label}
-      defaultValue={defaultValue}
+      defaultValue={optionsList[0]}
       fullWidth
     >
       {/* map関数でリスト内の選択肢の処理 */}

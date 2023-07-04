@@ -13,8 +13,9 @@ export const TagSelectors: React.FC<TagSelectorsProps> = ({ formMethods }) => {
 
   return (
     <>
-      {formFields.map((field) => (
+      {formFields.map((field, index) => (
         <TagSelector
+          key={index}
           name={field.name}
           label={field.label}
           formMethods={formMethods}

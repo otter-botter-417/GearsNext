@@ -22,12 +22,15 @@ const AddNewItemPage = () => {
   const formMethods = useForm({
     defaultValues: {
       loading: false,
+      itemCategoryName: "テント",
+      brandName: "ogawa",
     },
     resolver: yupResolver(schema),
   });
 
   // バリデーションチェックを通ったdataをhandleFormSubmit関数でmongoDBに商品データを送信する
   const onSubmit = async (data: any, event: any) => {
+    console.log("onSubmit function is called"); // 追加: コンソールにログを出力
     event.preventDefault();
     try {
       await handleFormSubmit(data);
@@ -42,11 +45,11 @@ const AddNewItemPage = () => {
       <form onSubmit={formMethods.handleSubmit(onSubmit)}>
         <BaseItemDataForm formMethods={formMethods} />
         {/* 選択されたカテゴリーによって詳細情報入力画面を切り替える処理 */}
-        {/* <CategoryAssign
+        <CategoryAssign
         categoryValue={itemFormState.categoryValue}
         abilitys={itemFormState.details}
         setAbilitys={itemFormState.setAbilitys}
-      /> */}
+      />
         {/* 送信ボタン */}
         <SubmitButton
           loading={formMethods.watch("loading") || false}

@@ -178,31 +178,31 @@ export const SearchPage = () => {
     }
 
     // タグの絞り込み
-    if (itemTags.length > 0) {
-      if (filterSwitch === "or") {
-        filtered = filtered.filter((product) =>
-          itemTags.some((tag) => product.tags.includes(tag))
-        );
-      } else {
-        filtered = filtered.filter((product) =>
-          itemTags.every((tag) => product.tags.includes(tag))
-        );
-      }
-    }
+    // if (itemTags.length > 0) {
+    //   if (filterSwitch === "or") {
+    //     filtered = filtered.filter((product) =>
+    //       itemTags.some((tag) => product.tags.includes(tag))
+    //     );
+    //   } else {
+    //     filtered = filtered.filter((product) =>
+    //       itemTags.every((tag) => product.tags.includes(tag))
+    //     );
+    //   }
+    // }
 
-    // カラータグの絞り込み
-    if (colorTags.length > 0) {
-      if (filterSwitch === "or") {
-        filtered = filtered.filter((product) =>
-          colorTags.some((tag) => product.colors.includes(tag))
-        );
-      } else {
-        console.log(11);
-        filtered = filtered.filter((product) =>
-          colorTags.every((tag) => product.colors.includes(tag))
-        );
-      }
-    }
+    // // カラータグの絞り込み
+    // if (colorTags.length > 0) {
+    //   if (filterSwitch === "or") {
+    //     filtered = filtered.filter((product) =>
+    //       colorTags.some((tag) => product.colors.includes(tag))
+    //     );
+    //   } else {
+    //     console.log(11);
+    //     filtered = filtered.filter((product) =>
+    //       colorTags.every((tag) => product.colors.includes(tag))
+    //     );
+    //   }
+    // }
 
     //並び替え
     if (sortPatternValue === "高い順") {
@@ -297,9 +297,9 @@ export const SearchPage = () => {
               <ToggleButton value="and">AND</ToggleButton>
             </ToggleButtonGroup>
             {/* タグ */}
-            <ItemTags />
+            {/* <ItemTags /> */}
             {/* カラータグ */}
-            <ColorTags />
+            {/* <ColorTags /> */}
             {/* 価格スライダー */}
             <Box flexGrow={1} padding={4} width={"30%"}>
               <PriceSlider />

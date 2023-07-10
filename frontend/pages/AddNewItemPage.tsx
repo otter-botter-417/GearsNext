@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import CategoryAssign from "@/components/molecules/itemAppend/CategoryAssign";
 
 import { useItemForm } from "../hooks/useItemForm"; // mongoDBに商品データを送信するためのカスタムフック
-import { ValidatedSchema } from "@/components/atoms/form/ValidatedSchema";
+import { AddNewItemValidatedSchema } from "@/components/atoms/schema/AddNewItemValidatedSchema";
 import { SubmitButton } from "@/components/atoms/form/SubmitButton";
 import AddNewItemPageTemplate from "@/components/templates/AddNewItemPageTemplate";
 import BaseItemDataForm from "@/components/organisms/BaseItemDataForm";
@@ -16,7 +16,7 @@ const AddNewItemPage = () => {
   const { handleFormSubmit } = useItemForm();
 
   // バリデーションスキーマを取得するコンポーネント
-  const schema = ValidatedSchema();
+  const schema = AddNewItemValidatedSchema();
 
   // textfieldにバリデーションを渡すため
   const formMethods = useForm({

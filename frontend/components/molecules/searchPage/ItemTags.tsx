@@ -9,12 +9,12 @@ const ItemTags = () => {
   const [itemTags, setItemTags] = useRecoilState(itemTagsState);
   return (
     <Box flexGrow={1}>
-      <Tags
+      {/* <Tags
         text={"タグ"}
         tagName={itemTags}
         setTagName={setItemTags}
         items={ItemTagList}
-      />
+      /> */}
     </Box>
   );
 };

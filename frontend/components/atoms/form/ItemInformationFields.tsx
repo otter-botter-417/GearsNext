@@ -1,20 +1,21 @@
 import { ValidatedTextField } from "@/components/atoms/form/ValidatedTextField";
 import { UseFormReturn } from "react-hook-form";
-import { FormNamesList } from "@/components/atoms/valueNameList/FormNamesList";
 
 interface ItemInformationFieldsProps {
   formMethods: UseFormReturn<any>;
+  inputFormFieldsList: {
+    name: string;
+    label: string;
+  }[];
 }
 
 export const ItemInformationFields: React.FC<ItemInformationFieldsProps> = ({
   formMethods,
+  inputFormFieldsList,
 }) => {
-  // 入力フォームのリスト　要素の編集はFormNamesListを編集する
-  const formFields = FormNamesList();
-
   return (
     <>
-      {formFields.map((field) => (
+      {inputFormFieldsList.map((field) => (
         <ValidatedTextField
           key={field.name}
           name={field.name}

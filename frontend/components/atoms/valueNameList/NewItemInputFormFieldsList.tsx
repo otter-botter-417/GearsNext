@@ -1,4 +1,4 @@
-export const FormNamesList = () => {
+export const NewItemInputFormFieldsList = () => {
   const FormNamesList = [
     { name: "itemName", label: "商品名" },
     { name: "amazonUrl", label: "AmazonURL" },

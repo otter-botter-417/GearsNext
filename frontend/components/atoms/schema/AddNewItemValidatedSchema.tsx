@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-export const ValidatedSchema = () => {
+export const AddNewItemValidatedSchema = () => {
   const schema = yup.object().shape({
     itemName: yup.string().required("商品名は必須です。"),
     amazonUrl: yup

@@ -1,4 +1,4 @@
-import { colorTagList } from "@/components/atoms/itemAppend/SelectNames/ColorTagList";
+import { ColorTagList } from "@/components/atoms/itemAppend/SelectNames/ColorTagList";
 import { ItemTagList } from "@/components/atoms/itemAppend/SelectNames/ItemTagList";
 import { Tags } from "@/components/atoms/itemAppend/Tags";
 import { colorTagsState } from "@/components/atoms/state/searchPage/colorTagsState";
@@ -11,12 +11,12 @@ const ColorTags = () => {
   const [colorTags, setColorTags] = useRecoilState(colorTagsState);
   return (
     <Box flexGrow={1}>
-      <Tags
+      {/* <Tags
         text={"カラー"}
-        tagName={colorTags}
+        name={colorTags}
         setTagName={setColorTags}
-        items={colorTagList}
-      />
+        items={ColorTagList}
+      /> */}
     </Box>
   );
 };

@@ -11,20 +11,14 @@ import { auth } from "./firebase";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { Typography } from "@mui/material";
+import { LoginFormDataTypes } from "../typs/LoginFormDataTypes"; //formMethods 内の配列の型
 
 const LoginPage = () => {
   // バリデーションスキーマを取得するコンポーネント
   const schema = RegisterValidatedSchema();
 
-  type FormData = {
-    userId: string;
-    email: string;
-    password: string;
-    loading: boolean;
-  };
-
   // textfieldにバリデーションを渡すため
-  const formMethods = useForm<FormData>({
+  const formMethods = useForm<LoginFormDataTypes>({
     defaultValues: {
       loading: false,
     },
@@ -33,7 +27,7 @@ const LoginPage = () => {
 
   const router = useRouter();
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: LoginFormDataTypes) => {
     // const auth = getAuth();
     createUserWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {

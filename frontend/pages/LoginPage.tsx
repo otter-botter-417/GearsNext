@@ -12,14 +12,19 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { Typography } from "@mui/material";
 
-import { LoginFormDataTypes } from "../typs/LoginFormDataTypes"; //formMethods 内の配列の型
-
-const RegisterPage = () => {
+const LoginPage = () => {
   // バリデーションスキーマを取得するコンポーネント
   const schema = RegisterValidatedSchema();
 
+  type FormData = {
+    userId: string;
+    email: string;
+    password: string;
+    loading: boolean;
+  };
+
   // textfieldにバリデーションを渡すため
-  const formMethods = useForm<LoginFormDataTypes>({
+  const formMethods = useForm<FormData>({
     defaultValues: {
       loading: false,
     },
@@ -28,7 +33,7 @@ const RegisterPage = () => {
 
   const router = useRouter();
 
-  const onSubmit = async (data: LoginFormDataTypes) => {
+  const onSubmit = async (data: FormData) => {
     // const auth = getAuth();
     createUserWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
@@ -47,18 +52,18 @@ const RegisterPage = () => {
 
   return (
     <RegisterPageTemplate>
-      <Typography variant="h4">新規登録</Typography>
+      <Typography variant="h4">ログイン</Typography>
 
       <form onSubmit={formMethods.handleSubmit(onSubmit)}>
         <RegisterForm formMethods={formMethods} />
         <SubmitButton
           loading={formMethods.watch("loading") || false}
-          text={"新規登録"}
+          text={"ログイン"}
         />
       </form>
-      <Link href="/LoginPage">既にアカウントを持っている</Link>
+      <Link href="/RegisterPage">アカウントを持っていない</Link>
     </RegisterPageTemplate>
   );
 };
 
-export default RegisterPage;
+export default LoginPage;

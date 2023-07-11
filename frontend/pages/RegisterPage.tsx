@@ -31,11 +31,24 @@ const RegisterPage = () => {
   const onSubmit = async (data: LoginFormDataTypes) => {
     // const auth = getAuth();
     createUserWithEmailAndPassword(auth, data.email, data.password)
-      .then((userCredential) => {
+      .then((userCredential: any) => {
         // Signed in
         const user = userCredential.user;
-        console.log(user);
-        router.push("/"); // リダイレクト
+
+        // ユーザーデータをLaravelに送信する
+        fetch("/api/users", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            // Laravelからのレスポンスを処理する
+            console.log(data);
+            // ここでNext.jsのステートやコンポーネントの更新などを行う
+          });
         // ...
       })
       .catch((error) => {

@@ -1,12 +1,12 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
-import { RegisterValidatedSchema } from "@/components/atoms/schema/RegisterValidatedSchema";
+import { LoginValidatedSchema } from "@/components/atoms/schema/LoginValidatedSchema";
 import { SubmitButton } from "@/components/atoms/form/SubmitButton";
 import RegisterPageTemplate from "@/components/templates/RegisterPageTemplate";
-import RegisterForm from "@/components/organisms/RegisterForm";
+import LoginForm from "@/components/organisms/LoginForm";
 import { auth } from "./firebase";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -15,7 +15,7 @@ import { LoginFormDataTypes } from "../typs/LoginFormDataTypes"; //formMethods �
 
 const LoginPage = () => {
   // バリデーションスキーマを取得するコンポーネント
-  const schema = RegisterValidatedSchema();
+  const schema = LoginValidatedSchema();
 
   // textfieldにバリデーションを渡すため
   const formMethods = useForm<LoginFormDataTypes>({
@@ -28,8 +28,8 @@ const LoginPage = () => {
   const router = useRouter();
 
   const onSubmit = async (data: LoginFormDataTypes) => {
-    // const auth = getAuth();
-    createUserWithEmailAndPassword(auth, data.email, data.password)
+    console.log("user");
+    signInWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
@@ -49,7 +49,7 @@ const LoginPage = () => {
       <Typography variant="h4">ログイン</Typography>
 
       <form onSubmit={formMethods.handleSubmit(onSubmit)}>
-        <RegisterForm formMethods={formMethods} />
+        <LoginForm formMethods={formMethods} />
         <SubmitButton
           loading={formMethods.watch("loading") || false}
           text={"ログイン"}

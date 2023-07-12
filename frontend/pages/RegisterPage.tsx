@@ -13,14 +13,14 @@ import Link from "next/link";
 import { Typography } from "@mui/material";
 import axios from "axios";
 
-import { LoginFormDataTypes } from "../typs/LoginFormDataTypes"; //formMethods 内の配列の型
+import { RegisterFormDataTypes } from "../typs/RegisterFormDataTypes"; //formMethods 内の配列の型
 
 const RegisterPage = () => {
   // バリデーションスキーマを取得するコンポーネント
   const schema = RegisterValidatedSchema();
 
   // textfieldにバリデーションを渡すため
-  const formMethods = useForm<LoginFormDataTypes>({
+  const formMethods = useForm<RegisterFormDataTypes>({
     defaultValues: {
       loading: false,
     },
@@ -29,7 +29,7 @@ const RegisterPage = () => {
 
   const router = useRouter();
 
-  const onSubmit = async (data: LoginFormDataTypes) => {
+  const onSubmit = async (data: RegisterFormDataTypes) => {
     // const auth = getAuth();
     createUserWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential: any) => {
@@ -51,6 +51,8 @@ const RegisterPage = () => {
           .catch((error) => {
             console.error("Error occurred while calling API: ", error);
           });
+        router.push("/"); // リダイレクト
+
         // ...
       })
       .catch((error) => {

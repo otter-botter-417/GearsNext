@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class UserRegister extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'userId',
+        'name',
+        'email',
+        // 'created_at',
+    ];
 }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\UserRegister;
+use Illuminate\Support\Facades\Log;
+use App\Http\Requests\StoreUserRegisterRequest;
 
 class UserRegisterController extends Controller
 {
@@ -38,16 +40,21 @@ class UserRegisterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserRegisterRequest $request)
     {
         // 受け取ったユーザーデータをデータベースに保存するなどの処理を行う
-        $user = new UserRegister;
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->save();
+        Log::info($request);
+        UserRegister::create([
+            'userId' => $request['userId'],
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'created_at' => now(),
+        ]);
+
+        return response()->json(['message' => 'User created successfully']);
 
         // 必要に応じてレスポンスを返す
-        return response()->json(['message' => 'User created successfully']);
+        
     }
 
     /**

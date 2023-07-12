@@ -2,10 +2,10 @@ import * as yup from "yup";
 
 export const RegisterValidatedSchema = () => {
   const schema = yup.object().shape({
-    userId: yup
+    name: yup
       .string()
-      .min(3, "IDは最低3文字必要です")
-      .required("IDは必須です"),
+      .max(20, "ユーザー名は20文字以内です")
+      .required("ユーザー名は必須です"),
     email: yup
       .string()
       .email("有効なメールアドレスを入力してください。")

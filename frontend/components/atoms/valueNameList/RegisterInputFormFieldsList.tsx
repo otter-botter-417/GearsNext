@@ -1,6 +1,6 @@
 export const RegisterInputFormFieldsList = () => {
   const FormNamesList = [
-    { name: "userId", label: "ID" },
+    { name: "name", label: "ユーザー名" },
     { name: "email", label: "メールアドレス" },
     { name: "password", label: "パスワード" },
   ];

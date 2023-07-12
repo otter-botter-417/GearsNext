@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/users',[ UserRegisterController::class, 'store']);
+Route::post('/register',[ UserRegisterController::class, 'store']);
 
 // Route::prefix('users')->middleware(['auth'])
 // ->controller(UserRegisterController::class)

@@ -11,6 +11,7 @@ import { auth } from "./firebase";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { Typography } from "@mui/material";
+import axios from "axios";
 
 import { LoginFormDataTypes } from "../typs/LoginFormDataTypes"; //formMethods 内の配列の型
 
@@ -34,24 +35,26 @@ const RegisterPage = () => {
       .then((userCredential: any) => {
         // Signed in
         const user = userCredential.user;
+        console.log("firebase OK");
 
-        // ユーザーデータをLaravelに送信する
-        fetch("/api/users", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(user),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            // Laravelからのレスポンスを処理する
-            console.log(data);
-            // ここでNext.jsのステートやコンポーネントの更新などを行う
+        // LaravelのエンドポイントにPOSTリクエストを送信
+        const response = axios
+          .post("http://localhost:8000/api/register", {
+            userId: user.uid,
+            name: data.name,
+            email: user.email,
+          })
+          .then((response) => {
+            //レスポンスをログに出力
+            console.log(response);
+          })
+          .catch((error) => {
+            console.error("Error occurred while calling API: ", error);
           });
         // ...
       })
       .catch((error) => {
+        console.log(error.response.data);
         const errorCode = error.code;
         const errorMessage = error.message;
         // ..

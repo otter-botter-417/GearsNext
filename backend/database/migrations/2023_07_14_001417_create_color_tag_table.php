@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('color_tag', function (Blueprint $table) {
-            $table->increments('color_tag_id')->primary();
+            $table->increments('color_tag_id');
+            $table->unsignedInteger('item_id'); // brand_idカラムを追加
             $table->foreign('item_id') // 外部キーとするカラム
               ->references('item_id') // 参照するテーブルのカラム
               ->on('item') // 参照するテーブル

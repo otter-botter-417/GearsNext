@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('category', function (Blueprint $table) {
-            $table->increments('category_id')->primary();
+            $table->increments('category_id');
             $table->string('category_name',50);
         });
     }

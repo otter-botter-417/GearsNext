@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sub_category', function (Blueprint $table) {
-            $table->increments('sub_category_id')->primary();
-            $table->string('sub_category_name',50);
+        Schema::create('brand', function (Blueprint $table) {
+            $table->increments('brand_id');
+            $table->string('brand_name',50);
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sub_category');
+        Schema::dropIfExists('brand');
     }
 };

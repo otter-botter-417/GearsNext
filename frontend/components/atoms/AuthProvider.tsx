@@ -1,4 +1,4 @@
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { useEffect } from "react";
 import { userState } from "@/components/atoms/state/userAuth.State";
 import { onAuthStateChanged } from "firebase/auth";
@@ -10,11 +10,13 @@ interface AuthProviderProps {
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const setUser = useSetRecoilState(userState);
+  const users = useRecoilState(userState);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUser(user);
+        setUser(user.uid);
+        // console.log(users);
       } else {
         setUser(null);
       }

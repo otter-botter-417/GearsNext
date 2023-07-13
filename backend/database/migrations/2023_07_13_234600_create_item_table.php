@@ -42,6 +42,7 @@ return new class extends Migration
             $table->integer('favorite_count');
             $table->integer('view_count');
             $table->timestamps("");
+            
         });
     }
 

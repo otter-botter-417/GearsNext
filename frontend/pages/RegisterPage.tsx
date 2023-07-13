@@ -56,7 +56,7 @@ const RegisterPage = () => {
         // ...
       })
       .catch((error) => {
-        console.log(error.response.data);
+        console.log(error.response);
         const errorCode = error.code;
         const errorMessage = error.message;
         // ..

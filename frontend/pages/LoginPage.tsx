@@ -28,7 +28,6 @@ const LoginPage = () => {
   const router = useRouter();
 
   const onSubmit = async (data: LoginFormDataTypes) => {
-    console.log("user");
     signInWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
         // Signed in

@@ -4,25 +4,12 @@ import Link from "next/link";
 import { NextPage } from "next";
 import { Box } from "@mui/system";
 
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebase";
+import { useRecoilState } from "recoil";
+import { userState } from "@/components/atoms/state/userAuth.State";
 
 const Home: NextPage = () => {
-  React.useEffect(() => {
-    const checkUser = async () => {
-      const user = auth.currentUser;
-      if (user) {
-        // ユーザーがログインしている場合の処理
-        console.log("User is logged in");
-      } else {
-        // ユーザーがログインしていない場合の処理
-        console.log("User is not logged in");
-      }
-      console.log(user);
-    };
-
-    checkUser();
-  }, []);
+  const user = useRecoilState(userState);
+  console.log(user);
   return (
     <React.StrictMode>
       <Box

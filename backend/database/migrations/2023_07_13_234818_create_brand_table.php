@@ -13,11 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_registers', function (Blueprint $table) {
-            $table->string('user_id',50)->primary(); // 主キーをuserIdに設定
-            $table->string('name',20)->unique();
-            $table->string('email', 255)->unique();
-            $table->timestamps();
+        Schema::create('brand', function (Blueprint $table) {
+            $table->increments('brand_id')->primary();
+            $table->string('brand_name',50);
         });
     }
 
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_registers');
+        Schema::dropIfExists('brand');
     }
 };

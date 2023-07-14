@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CategoryAssign from "@/components/molecules/itemAppend/CategoryAssign";
 
-import { useItemForm } from "../hooks/useItemForm"; // mongoDBに商品データを送信するためのカスタムフック
+import { useItemForm } from "../hooks/useItemFormToLaravel"; // mongoDBに商品データを送信するためのカスタムフック
 import { AddNewItemValidatedSchema } from "@/components/atoms/schema/AddNewItemValidatedSchema";
 import { SubmitButton } from "@/components/atoms/form/SubmitButton";
 import AddNewItemPageTemplate from "@/components/templates/AddNewItemPageTemplate";

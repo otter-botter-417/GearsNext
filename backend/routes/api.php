@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserRegisterController;
+use App\Http\Controllers\itemController;
 
 
 /*
@@ -21,3 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/register',[ UserRegisterController::class, 'store']);
+Route::apiResource('/items', itemController::class);

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedInteger('item_id'); // brand_idカラムを追加
             $table->foreign('item_id') // 外部キーとするカラム
               ->references('item_id') // 参照するテーブルのカラム
-              ->on('item') // 参照するテーブル
+              ->on('items') // 参照するテーブル
               ->onDelete('cascade');  // 参照先のレコードが削除されたとき、このテーブルのレコードも一緒に削除
             $table->string('attribute_name',50);
             $table->string('attribute_value',50);

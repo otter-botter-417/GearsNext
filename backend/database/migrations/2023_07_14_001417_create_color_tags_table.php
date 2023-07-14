@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('color_tag', function (Blueprint $table) {
+        Schema::create('color_tags', function (Blueprint $table) {
             $table->increments('color_tag_id');
-            $table->unsignedInteger('item_id'); // brand_idカラムを追加
-            $table->foreign('item_id') // 外部キーとするカラム
-              ->references('item_id') // 参照するテーブルのカラム
-              ->on('item') // 参照するテーブル
-              ->onDelete('cascade');  // 参照先のレコードが削除されたとき、このテーブルのレコードも一緒に削除
             $table->string('color_name',50);
             // 外部キー制約を設定
             

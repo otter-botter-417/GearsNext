@@ -4,6 +4,7 @@ export const DropDownFormNamesList = () => {
     // { name: "colorTags", label: "カラー" },
     { name: "brand", label: "メーカー" },
     { name: "itemCategoryName", label: "カテゴリー" },
+    // { name: "itemSubCategoryName", label: "サブカテゴリー" },
   ];
   return DropDownFormNamesList;
 };

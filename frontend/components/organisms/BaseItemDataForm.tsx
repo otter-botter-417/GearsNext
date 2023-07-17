@@ -1,9 +1,12 @@
 import React from "react";
-import { ItemInformationFields } from "@/components/atoms/form/ItemInformationFields";
+import { ItemInformationInputFields } from "@/components/atoms/form/ItemInformationInputFields";
 import { UseFormReturn } from "react-hook-form";
 import { DropdownSelectors } from "../molecules/DropdownSelectors";
 import { TagSelectors } from "../molecules/TagSelectors";
 import { NewItemInputFormFieldsList } from "@/components/atoms/valueNameList/NewItemInputFormFieldsList";
+import { NewItemInputFormSizeFieldsList } from "@/components/atoms/valueNameList/NewItemInputFormSizeFieldsList";
+import { ItemSizeInputFields } from "../atoms/form/ItemSizeInputFields";
+import { Grid } from "@mui/material";
 
 interface ItemInformationFieldsProps {
   formMethods: UseFormReturn<any>;
@@ -14,24 +17,19 @@ const BaseItemDataForm: React.FC<ItemInformationFieldsProps> = ({
   return (
     <>
       {/* 手入力の各種商品情報入力コンポーネント */}
-      <ItemInformationFields
+      <ItemInformationInputFields
         formMethods={formMethods}
         inputFormFieldsList={NewItemInputFormFieldsList()}
       />
+      <Grid container spacing={3}>
+        <ItemSizeInputFields
+          formMethods={formMethods}
+          inputFormFieldsList={NewItemInputFormSizeFieldsList()}
+        />
+      </Grid>
+
       <DropdownSelectors formMethods={formMethods} />
       <TagSelectors formMethods={formMethods} />
-      {/* <Tags
-        name="itemTags"
-        text={"タグ"}
-        formMethods={formMethods}
-        items={ItemTagList}
-      />
-      <Tags
-        name="colorTags"
-        text={"カラー"}
-        formMethods={formMethods}
-        items={ColorTagList}
-      /> */}
     </>
   );
 };

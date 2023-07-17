@@ -44,12 +44,7 @@ const AddNewItemPage = () => {
     <AddNewItemPageTemplate>
       <form onSubmit={formMethods.handleSubmit(onSubmit)}>
         <BaseItemDataForm formMethods={formMethods} />
-        {/* 選択されたカテゴリーによって詳細情報入力画面を切り替える処理 */}
-        {/* <CategoryAssign
-        categoryValue={itemFormState.categoryValue}
-        abilitys={itemFormState.details}
-        setAbilitys={itemFormState.setAbilitys}
-      /> */}
+        <CategoryAssign formMethods={formMethods} />
         {/* 送信ボタン */}
         <SubmitButton
           loading={formMethods.watch("loading") || false}

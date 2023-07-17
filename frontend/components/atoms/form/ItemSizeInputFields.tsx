@@ -1,7 +1,7 @@
-import { ValidatedTextField } from "@/components/atoms/form/ValidatedTextField";
+import { ValidatedTextField } from "@/components/atoms/form/ValidatedTextFieldForSizes";
 import { UseFormReturn } from "react-hook-form";
 
-interface ItemInformationFieldsProps {
+interface ItemSizeInputFieldsProps {
   formMethods: UseFormReturn<any>;
   inputFormFieldsList: {
     name: string;
@@ -9,7 +9,7 @@ interface ItemInformationFieldsProps {
   }[];
 }
 
-export const ItemInformationFields: React.FC<ItemInformationFieldsProps> = ({
+export const ItemSizeInputFields: React.FC<ItemSizeInputFieldsProps> = ({
   formMethods,
   inputFormFieldsList,
 }) => {

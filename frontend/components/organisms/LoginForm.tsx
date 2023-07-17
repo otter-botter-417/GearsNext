@@ -1,5 +1,5 @@
 import React from "react";
-import { ItemInformationFields } from "../atoms/form/ItemInformationFields";
+import { ItemInformationFields } from "../atoms/form/ItemInformationInputFields";
 import { UseFormReturn } from "react-hook-form";
 import { LoginInputFormFieldsList } from "../atoms/valueNameList/LoginInputFormFieldsList";
 

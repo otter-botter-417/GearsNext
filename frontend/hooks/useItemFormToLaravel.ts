@@ -1,28 +1,6 @@
-import { useFormContext } from "react-hook-form";
-import { useItemApi } from "../components/api/useItemApi";
 import axios from "axios";
 
-// フォームの入力情報をmongoDBに送信するカスタムフック
-
-// itemDatasとhandleFormSubmit関数が扱うイベントの型定義
-interface ItemData {
-  category: string;
-  itemName: string;
-  brandName: string;
-  price: number;
-  asin: string;
-  imagePath: string;
-  amazonUrl: string;
-  colors: string[];
-  tags: string[];
-  itemAbility: any[];
-  loading: boolean; // Add loading to the interface
-}
-
 export const useItemForm = () => {
-  const { postItemData } = useItemApi(); //mongoDBにデータを送信するAPI
-  // const { setValue } = useFormContext(); // useContext to get setValue from useForm
-
   const handleFormSubmit = async (formData: any) => {
     //フォームの入力情報をまとめる formDataから読み取るのはバリデーションが必要な要素
     const sizes: { [key: string]: number } = {
@@ -37,13 +15,13 @@ export const useItemForm = () => {
       itemName: formData.itemName,
       brandName: formData.brandValue,
       price: parseInt(formData.price),
-      imagePath: formData.imagePath,
       asin: formData.asin,
+      imagePath: formData.imagePath,
       sizes: sizes,
-      category: formData.categoryValue,
-      subCategory: "ドームテント",
-      colors: formData.colorTags,
-      tags: formData.itemTags,
+      itemTags: formData.itemTags,
+      colorTags: formData.colorTags,
+      categoryName: formData.categoryValue,
+      subCategoryName: "ドームテント",
       itemAbility: formData.details,
     };
 

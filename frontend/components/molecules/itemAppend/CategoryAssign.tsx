@@ -1,18 +1,32 @@
+import { ItemInformationInputFields } from "@/components/atoms/form/ItemInformationInputFields";
 import { TentDatas } from "@/components/atoms/itemAppend/itemDatas/TentDatas";
-import { Dispatch, SetStateAction } from "react";
+import { detailListsForTent } from "@/components/atoms/valueNameList/detailListsForTent";
+import { useEffect } from "react";
+import { UseFormReturn } from "react-hook-form";
 
-interface Props {
-  categoryValue: string;
-  abilitys: any;
-  setAbilitys: Dispatch<SetStateAction<any>>;
+interface formMethodsProps {
+  formMethods: UseFormReturn<any>;
 }
 
-const CategoryAssign = ({ categoryValue, abilitys, setAbilitys }: Props) => {
-  if (categoryValue === "テント") {
-    return <TentDatas abilitys={abilitys} setAbilitys={setAbilitys} />;
-  } else {
-    return null;
-  }
+const CategoryAssign: React.FC<formMethodsProps> = ({ formMethods }) => {
+  const categoryName = formMethods.getValues("itemCategoryName");
+
+  let detailList: { name: string; label: string }[];
+  useEffect(() => {
+    console.log(categoryName);
+    if (categoryName == "テント") {
+      detailList = detailListsForTent();
+    }
+
+    return () => {
+      <ItemInformationInputFields
+        formMethods={formMethods}
+        inputFormFieldsList={detailList}
+      />;
+    };
+  }, categoryName);
+
+  return <></>;
 };
 
 export default CategoryAssign;

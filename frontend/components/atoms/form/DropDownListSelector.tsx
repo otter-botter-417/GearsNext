@@ -8,7 +8,7 @@ export const DropDownListSelector = ({
 }): string[] => {
   let name: string[];
 
-  if (idName === "brand") {
+  if (idName === "brandName") {
     name = BrandNameList;
   } else if (idName === "itemCategoryName") {
     name = CategoryNameList;

@@ -26,7 +26,7 @@ class SubCategoryTableSeeder extends Seeder
         ];
             
         foreach ($categories as $category) {
-            DB::table('sub_categorys')->insert([
+            DB::table('sub_categories')->insert([
                 'sub_category_name' => $category,
             ]);
         }

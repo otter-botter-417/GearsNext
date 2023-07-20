@@ -1,8 +1,7 @@
-import { ValidatedTextField } from "@/components/atoms/form/ValidatedTextFieldForSizes";
-import { Grid } from "@mui/material";
+import { ValidatedTextField } from "@/components/atoms/form/ValidatedTextField";
 import { UseFormReturn } from "react-hook-form";
 
-interface ItemSizeInputFieldsProps {
+interface ItemInformationFieldsProps {
   formMethods: UseFormReturn<any>;
   inputFormFieldsList: {
     name: string;
@@ -10,12 +9,12 @@ interface ItemSizeInputFieldsProps {
   }[];
 }
 
-export const ItemSizeInputFields: React.FC<ItemSizeInputFieldsProps> = ({
+export const ItemDitailInputFields: React.FC<ItemInformationFieldsProps> = ({
   formMethods,
   inputFormFieldsList,
 }) => {
   return (
-    <Grid item xs={10}>
+    <>
       {inputFormFieldsList.map((field) => (
         <ValidatedTextField
           key={field.name}
@@ -24,6 +23,6 @@ export const ItemSizeInputFields: React.FC<ItemSizeInputFieldsProps> = ({
           formMethods={formMethods}
         />
       ))}
-    </Grid>
+    </>
   );
 };

@@ -1,33 +1,35 @@
 import axios from "axios";
 
 export const useItemForm = () => {
-  const handleFormSubmit = async (formData: any) => {
+  const handleFormSubmit = async (baseFormData: any, detailFormData: any) => {
     //フォームの入力情報をまとめる formDataから読み取るのはバリデーションが必要な要素
-    const sizes: { [key: string]: number } = {
-      open_width: 120,
-      open_depth: 110,
-      open_height: 100,
-      close_width: 20,
-      close_depth: 10,
-      close_height: 1,
-    };
+    const details: { [key: string]: number } = {};
     const itemDatas = {
-      itemName: formData.itemName,
-      brandName: formData.brandValue,
-      price: parseInt(formData.price),
-      asin: formData.asin,
-      imagePath: formData.imagePath,
-      sizes: sizes,
-      itemTags: formData.itemTags,
-      colorTags: formData.colorTags,
-      categoryName: formData.categoryValue,
+      itemName: baseFormData.itemName,
+      asin: baseFormData.asin,
+      imageName: baseFormData.imageName,
+      price: parseInt(baseFormData.price),
+
+      openWidth: baseFormData.openWidth,
+      openDepth: baseFormData.openDepth,
+      openHeight: baseFormData.openHeight,
+      storageWidth: baseFormData.storageWidth,
+      storageDepth: baseFormData.storageDepth,
+      storageHeight: baseFormData.storageHeight,
+      weight: baseFormData.weight,
+      brandName: baseFormData.brandName,
+      itemCategoryName: baseFormData.itemCategoryName,
       subCategoryName: "ドームテント",
-      itemAbility: formData.details,
+      itemTags: baseFormData.itemTags,
+      colorTags: baseFormData.colorTags,
+
+      details: detailFormData,
     };
 
     try {
       //ローディング状態に変更してmongoDBにデータ送信
       // setValue("loading", true);
+      console.log(itemDatas);
       const response = await axios
         .post("http://localhost:8000/api/items", {
           itemDatas,
@@ -39,7 +41,7 @@ export const useItemForm = () => {
         .catch((error) => {
           console.error("Error occurred while calling API: ", error);
         });
-      console.log(itemDatas);
+      // console.log(itemDatas);
       // setValue("loading", false);
     } catch (error) {
       //エラーがあればアラート

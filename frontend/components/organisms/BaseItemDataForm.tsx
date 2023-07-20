@@ -21,7 +21,7 @@ const BaseItemDataForm: React.FC<ItemInformationFieldsProps> = ({
         formMethods={formMethods}
         inputFormFieldsList={NewItemInputFormFieldsList()}
       />
-      <Grid container spacing={3}>
+      <Grid container>
         <ItemSizeInputFields
           formMethods={formMethods}
           inputFormFieldsList={NewItemInputFormSizeFieldsList()}

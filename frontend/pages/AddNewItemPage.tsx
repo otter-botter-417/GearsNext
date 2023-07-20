@@ -1,13 +1,13 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import CategoryAssign from "@/components/molecules/itemAppend/CategoryAssign";
-
 import { useItemForm } from "../hooks/useItemFormToLaravel"; // mongoDBに商品データを送信するためのカスタムフック
 import { AddNewItemValidatedSchema } from "@/components/atoms/schema/AddNewItemValidatedSchema";
 import { SubmitButton } from "@/components/atoms/form/SubmitButton";
 import AddNewItemPageTemplate from "@/components/templates/AddNewItemPageTemplate";
 import BaseItemDataForm from "@/components/organisms/BaseItemDataForm";
+import CategoryDetailList from "@/components/molecules/itemAppend/CategoryDetailList";
+import { useDetailFormMethods } from "@/hooks/useDetailFormMethods";
 
 // 新規に商品情報をmongoDBに送信、登録するページ
 const AddNewItemPage = () => {
@@ -23,28 +23,44 @@ const AddNewItemPage = () => {
     defaultValues: {
       loading: false,
       itemCategoryName: "テント",
+      itemTags: [],
+      colorTags: [],
       brandName: "ogawa",
     },
     resolver: yupResolver(schema),
   });
 
+  const detailFormMethods = useDetailFormMethods(formMethods);
+
   // バリデーションチェックを通ったdataをhandleFormSubmit関数でmongoDBに商品データを送信する
-  const onSubmit = async (data: any, event: any) => {
-    console.log("onSubmit function is called"); // 追加: コンソールにログを出力
-    event.preventDefault();
+  const onSubmit = async (data: any) => {
+    console.log("onSubmit function is called");
+
+    // 両方のフォームメソッドのデータを取得
+    const baseFormData = formMethods.getValues();
+    const detailFormData = detailFormMethods.getValues();
+
     try {
-      await handleFormSubmit(data);
+      await handleFormSubmit(baseFormData, detailFormData);
       console.log("Data submitted successfully");
     } catch (error) {
       console.error("Error submitting data:", error);
     }
   };
 
+  const wrappedOnSubmit = (data: any) => {
+    console.log("1");
+    detailFormMethods.handleSubmit(onSubmit)(data);
+  };
+
   return (
     <AddNewItemPageTemplate>
-      <form onSubmit={formMethods.handleSubmit(onSubmit)}>
+      <form onSubmit={formMethods.handleSubmit(wrappedOnSubmit)}>
         <BaseItemDataForm formMethods={formMethods} />
-        <CategoryAssign formMethods={formMethods} />
+        <CategoryDetailList
+          formMethods={formMethods}
+          detailFormMethods={detailFormMethods}
+        />
         {/* 送信ボタン */}
         <SubmitButton
           loading={formMethods.watch("loading") || false}

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->increments('item_id'); // 主キーをuserIdに設定
-            $table->string('Item_name',50);
+            $table->string('item_name',50);
             $table->unsignedInteger('brand_id'); // brand_idカラムを追加
             $table->foreign('brand_id') // 外部キーとするカラム
               ->references('brand_id') // 参照するテーブルのカラム
@@ -34,12 +34,12 @@ return new class extends Migration
             $table->unsignedInteger('category_id'); // brand_idカラムを追加
             $table->foreign('category_id') // 外部キーとするカラム
                 ->references('category_id') // 参照するテーブルのカラム
-                ->on('categorys') // 参照するテーブル
+                ->on('categories') // 参照するテーブル
                 ->onDelete('cascade');  // 参照先のレコードが削除されたとき、このテーブルのレコードも一緒に削除
             $table->unsignedInteger('sub_category_id'); // brand_idカラムを追加
                 $table->foreign('sub_category_id') // 外部キーとするカラム
-                ->references('category_id') // 参照するテーブルのカラム
-                ->on('categorys') // 参照するテーブル
+                ->references('sub_category_id') // 参照するテーブルのカラム
+                ->on('sub_categories') // 参照するテーブル
                 ->onDelete('cascade');  // 参照先のレコードが削除されたとき、このテーブルのレコードも一緒に削除
             $table->integer('favorite_count')->default(0);
             $table->integer('view_count')->default(0);

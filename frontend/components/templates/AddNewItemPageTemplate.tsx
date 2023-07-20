@@ -11,7 +11,7 @@ const AddNewItemPageTemplate: React.FC<AddNewItemPageTemplateProps> = ({
 }) => {
   return (
     <Box display="flex" justifyContent="center">
-      <Grid container justifyContent="center" item xs={12} sm={6}>
+      <Grid container justifyContent="center" item xs={10} sm={5}>
         {children}
       </Grid>
     </Box>

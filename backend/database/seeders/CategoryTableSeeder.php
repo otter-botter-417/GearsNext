@@ -21,7 +21,7 @@ class CategoryTableSeeder extends Seeder
             "マット","コット","調理器具","テントアクセサリー","暖房器具","クーラーボックス","収納",];
             
             foreach ($categories as $category) {
-                DB::table('categorys')->insert([
+                DB::table('categories')->insert([
                     'category_name' => $category,
                 ]);
             }

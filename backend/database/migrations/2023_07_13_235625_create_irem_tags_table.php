@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('item_tags', function (Blueprint $table) {
             $table->increments('item_tag_id');
             $table->string('item_tag_name',50);
-            $table->timestamps();
             
         });
     }

@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserRegister extends Model
+class FavoriteItemRelation extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'favorite_item_relations';
 
     protected $fillable = [
         'user_id',
-        'name',
-        'email',
-        // 'created_at',
-    ];
+        'item_id',];
+
+
 }

@@ -4,6 +4,7 @@ import { ItemName } from "../../atoms/itemPage/ItemName";
 import { Box } from "@mui/material";
 import Image from "next/legacy/image";
 import { useWindowSize } from "../../../hooks/useWindowSize";
+import ItemImageUrl from "@/components/atoms/getItemImageUrl";
 type itemNameAndBrandType = {
   itemName: string;
   brandName: string;
@@ -25,6 +26,8 @@ export const ItemNameWithImage: FC<itemNameAndBrandType> = (props) => {
     widthSize = width * 0.9;
   }
 
+  const ItemImagesUrl: string = ItemImageUrl(brandName, imagePath);
+
   return (
     <div style={{ width: "40%" }}>
       <Box
@@ -43,7 +46,8 @@ export const ItemNameWithImage: FC<itemNameAndBrandType> = (props) => {
       <Image
         height={widthSize}
         width={widthSize}
-        src={`/images/items/${brandName}/${imagePath}`}
+        src={ItemImagesUrl}
+        // https://gears-item-images.s3.ap-northeast-1.amazonaws.com/items/BUNDOK/solobase_ex.jpg
         alt=""
         priority
         objectFit="contain"

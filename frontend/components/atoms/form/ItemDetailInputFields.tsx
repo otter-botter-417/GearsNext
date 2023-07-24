@@ -9,7 +9,7 @@ interface ItemInformationFieldsProps {
   }[];
 }
 
-export const ItemDitailInputFields: React.FC<ItemInformationFieldsProps> = ({
+export const ItemDetailInputFields: React.FC<ItemInformationFieldsProps> = ({
   formMethods,
   inputFormFieldsList,
 }) => {

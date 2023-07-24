@@ -35,6 +35,7 @@ import { sortPatternValueState } from "@/components/atoms/state/searchPage/sortP
 import ItemTags from "@/components/molecules/searchPage/ItemTags";
 import ColorTags from "@/components/molecules/searchPage/ColorTags";
 import ItemThumbnailGrid from "@/components/organisms/searchPage/ItemThumbnailGrid";
+import axios from "axios";
 
 export const SearchPage = () => {
   //APIで最初に取得する全データ
@@ -89,10 +90,15 @@ export const SearchPage = () => {
       if (typeof window === "undefined") return;
 
       if (categoryValue) {
-        const response = await fetch(
-          `http://localhost:3000/api/itemSearchApi?category=${categoryValue}`
-        )
-          .then((response) => response.json())
+        // const response = await fetch(
+        //   // `http://localhost:3000/api/itemSearchApi?category=${categoryValue}`
+        //   'http://localhost:8000/api/items'
+        // )
+        const response = await axios
+          .post("http://localhost:8000/api/item/search", {
+            data: categoryValue,
+          })
+          .then((response) => response)
           .then((data) => {
             let filtered = data.data;
             //並び替え条件に従って並び替える

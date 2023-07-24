@@ -94,6 +94,7 @@ export const SearchPage = () => {
         //   // `http://localhost:3000/api/itemSearchApi?category=${categoryValue}`
         //   'http://localhost:8000/api/items'
         // )
+<<<<<<< HEAD
         console.log("yaa");
         const response = await fetch(
           "http://localhost:8000/api/items/search?categoryname=" + categoryValue
@@ -111,6 +112,25 @@ export const SearchPage = () => {
               .slice()
               .sort((a: any, b: any) => a.price - b.price);
           }
+=======
+        const response = await axios
+          .post("http://localhost:8000/api/item/search", {
+            data: categoryValue,
+          })
+          .then((response) => response)
+          .then((data) => {
+            let filtered = data.data;
+            //並び替え条件に従って並び替える
+            if (sortPatternValue === "高い順") {
+              filtered = filtered
+                .slice()
+                .sort((a: any, b: any) => b.price - a.price);
+            } else if (sortPatternValue === "安い順") {
+              filtered = filtered
+                .slice()
+                .sort((a: any, b: any) => a.price - b.price);
+            }
+>>>>>>> 8dd274d5c53b4277fee9e1667d2fdc5d6fbebb5a
 
           //取得データをそれぞれ設定しておく
           setItemDataMap(filtered);

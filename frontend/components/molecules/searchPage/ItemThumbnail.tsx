@@ -5,6 +5,7 @@ import { ItemDataTypes } from "../../types/ItemDataTypes";
 import Image from "next/legacy/image";
 import { useWindowSize } from "../../../hooks/useWindowSize";
 import Typography from "@mui/material/Typography";
+import ItemImageUrl from "@/components/atoms/getItemImageUrl";
 
 type ItemThumbnailProps = {
   ItemData: ItemDataTypes;
@@ -19,6 +20,10 @@ export const ItemThumbnail = (props: ItemThumbnailProps) => {
   const router = useRouter();
   const itemUrl: string = `items/${ItemData._id}`;
   const { itemId } = router.query;
+  const ItemImagesUrl: string = ItemImageUrl(
+    ItemData.brandName,
+    ItemData.imagePath
+  );
 
   widthSize = width * 0.22;
 
@@ -27,7 +32,7 @@ export const ItemThumbnail = (props: ItemThumbnailProps) => {
       {/* 商品名　メーカー　を表示 */}
       <Link href={`/items/${ItemData._id}`}>
         <Image
-          src={`/images/items/${ItemData.brandName}/${ItemData.imagePath}`}
+          src={ItemImagesUrl}
           alt="example image"
           layout="responsive"
           width={widthSize}

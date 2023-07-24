@@ -45,7 +45,7 @@ class UserRegisterController extends Controller
         // 受け取ったユーザーデータをデータベースに保存するなどの処理を行う
         Log::info($request);
         UserRegister::create([
-            'userId' => $request['userId'],
+            'user_id' => $request['userId'],
             'name' => $request['name'],
             'email' => $request['email'],
             'created_at' => now(),

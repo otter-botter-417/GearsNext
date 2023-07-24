@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('user_registers', function (Blueprint $table) {
-            $table->string('userId',50)->primary(); // 主キーをuserIdに設定
+            $table->string('user_id',50)->primary(); // 主キーをuserIdに設定
             $table->string('name',20)->unique();
             $table->string('email', 255)->unique();
             $table->timestamps();

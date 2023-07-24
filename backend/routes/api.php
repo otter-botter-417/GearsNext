@@ -22,4 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/register',[ UserRegisterController::class, 'store']);
+Route::get('/items/search', [itemController::class, 'index']);
+
 Route::apiResource('/items', itemController::class);

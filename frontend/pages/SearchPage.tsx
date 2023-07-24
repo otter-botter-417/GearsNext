@@ -35,6 +35,7 @@ import { sortPatternValueState } from "@/components/atoms/state/searchPage/sortP
 import ItemTags from "@/components/molecules/searchPage/ItemTags";
 import ColorTags from "@/components/molecules/searchPage/ColorTags";
 import ItemThumbnailGrid from "@/components/organisms/searchPage/ItemThumbnailGrid";
+import axios from "axios";
 
 export const SearchPage = () => {
   //APIで最初に取得する全データ
@@ -89,34 +90,39 @@ export const SearchPage = () => {
       if (typeof window === "undefined") return;
 
       if (categoryValue) {
+        // const response = await fetch(
+        //   // `http://localhost:3000/api/itemSearchApi?category=${categoryValue}`
+        //   'http://localhost:8000/api/items'
+        // )
+        console.log("yaa");
         const response = await fetch(
-          `http://localhost:3000/api/itemSearchApi?category=${categoryValue}`
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            let filtered = data.data;
-            //並び替え条件に従って並び替える
-            if (sortPatternValue === "高い順") {
-              filtered = filtered
-                .slice()
-                .sort((a: any, b: any) => b.price - a.price);
-            } else if (sortPatternValue === "安い順") {
-              filtered = filtered
-                .slice()
-                .sort((a: any, b: any) => a.price - b.price);
-            }
+          "http://localhost:8000/api/items/search?categoryname=" + categoryValue
+        );
+        response.json().then((data) => {
+          console.log(data); // ここでレスポンスの中身を確認
+          let filtered = data;
+          //並び替え条件に従って並び替える
+          if (sortPatternValue === "高い順") {
+            filtered = filtered
+              .slice()
+              .sort((a: any, b: any) => b.price - a.price);
+          } else if (sortPatternValue === "安い順") {
+            filtered = filtered
+              .slice()
+              .sort((a: any, b: any) => a.price - b.price);
+          }
 
-            //取得データをそれぞれ設定しておく
-            setItemDataMap(filtered);
-            setFilteredProducts(filtered);
-            //価格スライダー用
-            const prices = filtered.map((item: ItemDataTypes) => item.price);
-            setPriceData(prices);
-            setPriceRange({
-              min: Math.min(...prices),
-              max: Math.max(...prices),
-            });
+          //取得データをそれぞれ設定しておく
+          setItemDataMap(filtered);
+          setFilteredProducts(filtered);
+          //価格スライダー用
+          const prices = filtered.map((item: ItemDataTypes) => item.price);
+          setPriceData(prices);
+          setPriceRange({
+            min: Math.min(...prices),
+            max: Math.max(...prices),
           });
+        });
       } else {
         const response = await fetch("http://localhost:3000/api/itemAll")
           .then((response) => response.json())

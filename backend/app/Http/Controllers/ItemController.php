@@ -14,9 +14,6 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\SubCategory;
 
-
-
-
 class ItemController extends Controller
 {
     /**
@@ -24,10 +21,26 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    //商品検索
+    public function index(Request $request)
     {
         //
-    }
+        Log::info($request);
+        $query = Item::query();
+
+        // 商品名での検索
+        if ($request->has('categoryname')) {
+            $category = Category::where('category_name', $request->get('categoryname'))->first(); 
+
+            $query->where('category_id',$category->category_id);
+
+        $items = $query->get();
+        
+        return response()->json($items, 200);
+    
+    }}
+    
+    
 
     /**
      * Show the form for creating a new resource.
@@ -126,7 +139,7 @@ class ItemController extends Controller
         //     'created_at' => now(),
         // ]);
 
-        return response()->json(['message' => 'User created successfully']);
+        return response()->json(['message' => 'Item created successfully']);
     }
 
     /**

@@ -27,6 +27,8 @@ return new class extends Migration
               ->onDelete('cascade');  // 参照先のレコードが削除されたとき、このテーブルのレコードも一緒に削除
             $table->string('attribute_name',50);
             $table->string('attribute_value',50);
+            $table->unique(['item_id', 'attribute_name']); // user_idとitem_idの組み合わせにユニーク制約を追加
+
         });
     }
 

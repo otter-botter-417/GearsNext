@@ -20,6 +20,8 @@ return new class extends Migration
         $table->unsignedInteger('item_tag_id');
         $table->foreign('item_id')->references('item_id')->on('items')->onDelete('cascade');
         $table->foreign('item_tag_id')->references('item_tag_id')->on('item_tags')->onDelete('cascade');
+        $table->unique(['item_id', 'item_tag_id']); // user_idとitem_idの組み合わせにユニーク制約を追加
+
     });}
 
     /**

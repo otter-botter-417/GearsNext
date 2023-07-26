@@ -9,13 +9,13 @@ type itemNameAndBrandType = {
   itemName: string;
   brandName: string;
   imagePath: string;
-  amazonUrl: string;
+  asin: string;
   matches: boolean;
 };
 
 //商品名　メーカー　画像を表示するコンポーネント
 export const ItemNameWithImage: FC<itemNameAndBrandType> = (props) => {
-  const { itemName, brandName, imagePath, amazonUrl, matches } = props;
+  const { itemName, brandName, imagePath, asin, matches } = props;
   //ウィンドウサイズによってwidthの数値を変えてレスポンシブ処理
   const [width] = useWindowSize();
   let widthSize: number;

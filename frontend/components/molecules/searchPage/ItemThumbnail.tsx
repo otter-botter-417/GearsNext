@@ -18,11 +18,10 @@ export const ItemThumbnail = (props: ItemThumbnailProps) => {
   let widthSize: number;
   //横画面時はウィンドウの50% 縦表示時は90%
   const router = useRouter();
-  const itemUrl: string = `items/${ItemData._id}`;
   const { itemId } = router.query;
   const ItemImagesUrl: string = ItemImageUrl(
-    ItemData.brandName,
-    ItemData.imagePath
+    ItemData.brand.brand_name,
+    ItemData.image_name
   );
 
   widthSize = width * 0.22;
@@ -30,7 +29,7 @@ export const ItemThumbnail = (props: ItemThumbnailProps) => {
   return (
     <>
       {/* 商品名　メーカー　を表示 */}
-      <Link href={`/items/${ItemData._id}`}>
+      <Link href={`/items/${ItemData.item_id}`}>
         <Image
           src={ItemImagesUrl}
           alt="example image"
@@ -51,9 +50,9 @@ export const ItemThumbnail = (props: ItemThumbnailProps) => {
         }}
       >
         {/* レスポンシブ画像 */}
-        <Typography variant={"body2"}>{ItemData.brandName}</Typography>
+        <Typography variant={"body2"}>{ItemData.brand.brand_name}</Typography>
 
-        <Typography variant={"h6"}>{ItemData.itemName}</Typography>
+        <Typography variant={"h6"}>{ItemData.item_name}</Typography>
         <Typography variant={"body2"}>メーカー希望小売価格</Typography>
         <Typography variant={"h6"}> ¥{ItemData.price}</Typography>
       </Box>

@@ -1,24 +1,27 @@
 import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
-import { useMediaQuery } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import themeOptions from "@/styles/themes/themeOptions";
-import { useItemApi } from "../../components/api/useItemApi";
 import { ItemDataTypes } from "@/components/types/ItemDataTypes";
 import { CategorySelecter } from "@/components/organisms/itemPage/CategorySelecter";
 import { ItemNameWithImage } from "@/components/molecules/itemPage/ItemNameWithImage";
+import { useGetItemDataApi } from "@/hooks/useGetItemDataApi";
+import { useIncrementViewCountApi } from "@/hooks/useIncrementViewCountApi";
 
 function ItemPage() {
   const router = useRouter();
   const itemId = router.query.itemId;
   const [itemDatas, setItemDatas] = useState<ItemDataTypes | null>(null);
-  const { getItemData } = useItemApi();
+  console.log(itemId);
 
   useEffect(() => {
     if (itemId) {
-      getItemData({ _id: itemId }).then((response) => {
-        setItemDatas(response.data[0]);
+      useIncrementViewCountApi(itemId);
+      useGetItemDataApi(itemId).then((response) => {
+        console.log(response[0]);
+        console.log("確認");
+        setItemDatas(response[0]);
       });
     }
   }, [itemId]);
@@ -40,10 +43,10 @@ function ItemPage() {
         }}
       >
         <ItemNameWithImage
-          itemName={itemDatas.itemName || ""}
-          brandName={itemDatas.brandName || ""}
-          imagePath={itemDatas.imagePath || ""}
-          amazonUrl={itemDatas.amazonUrl || ""}
+          itemName={itemDatas.item_name || ""}
+          brandName={itemDatas.brand.brand_name || ""}
+          imagePath={itemDatas.image_name || ""}
+          asin={itemDatas.asin || ""}
           matches={matches}
         />
         <CategorySelecter itemDatas={itemDatas} />

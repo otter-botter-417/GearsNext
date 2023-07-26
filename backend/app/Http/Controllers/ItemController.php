@@ -45,6 +45,8 @@ class ItemController extends Controller
         //カテゴリーが入ってなければ全件渡す
         else  {
             $items = Item::all();
+            $items = $query->with(['brand', 'category', 'subCategory', 'itemTags', 'colorTags', 'itemAttributes'])->get();
+
             Log::info($items);
             return response()->json($items, 200);
         }}
@@ -69,7 +71,7 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        Log::info($request);
+        // Log::info($request);
 
         $brand = Brand::where('brand_name', $request['itemDatas']['brandName'])->first(); 
         $category = Category::where('category_name', $request['itemDatas']['itemCategoryName'])->first(); 
@@ -139,8 +141,14 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-        //
-    }
+        //商品ページ用　個別の商品データを受け取ったidで検索して返す
+        $item = Item::find($id);
+         // Eager Loading: Itemに関連するすべてのデータをロード
+        $itemDatas = $item->with(['brand', 'category', 'subCategory', 'itemTags', 'colorTags', 'itemAttributes'])->get();
+        
+        return response()->json($itemDatas, 200);
+        }
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -150,7 +158,8 @@ class ItemController extends Controller
      */
     public function edit($id)
     {
-        //
+        
+    
     }
 
     /**

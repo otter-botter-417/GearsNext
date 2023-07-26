@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { useItemApi } from "../components/api/useItemApi";
+import { useItemApi } from "./useItemApi";
 
 // フォームの入力情報をmongoDBに送信するカスタムフック
 

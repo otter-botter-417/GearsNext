@@ -24,15 +24,14 @@ export type ItemDataTypes = {
     sub_category_id: number;
     sub_category_name: string;
   };
+  item_tags: Array<string>;
   updated_at: string;
   view_count: number;
   weight: number;
   colors: Array<string>;
-  tags: Array<string>;
 
-    capacity: number;
-    innerTent: string;
-    grandSheet: string;
-    fabrics: Array<string>;
-  };
+  capacity: number;
+  innerTent: string;
+  grandSheet: string;
+  fabrics: Array<string>;
 };

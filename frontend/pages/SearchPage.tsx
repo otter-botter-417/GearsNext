@@ -62,6 +62,7 @@ export const SearchPage = () => {
   const [sortPatternValue, setSortPatternValue] = useRecoilState(
     sortPatternValueState
   );
+  console.log(itemDataMap);
 
   //トグルボタンクリック時に絞り込み条件をORかANDか切り替え
   const handleChangeToggleButton = (
@@ -90,10 +91,6 @@ export const SearchPage = () => {
       if (typeof window === "undefined") return;
 
       if (categoryValue) {
-        // const response = await fetch(
-        //   // `http://localhost:3000/api/itemSearchApi?category=${categoryValue}`
-        //   'http://localhost:8000/api/items'
-        // )
         const response = await fetch(
           "http://localhost:8000/api/items/search?categoryname=" + categoryValue
         );
@@ -161,14 +158,14 @@ export const SearchPage = () => {
     //カテゴリーでの絞り込み
     if (categoryValue) {
       filtered = filtered.filter(
-        (product) => product.category === categoryValue
+        (product) => product.category.category_name === categoryValue
       );
     }
 
     //サブカテゴリーでの絞り込み
     if (subCategoryValue) {
       filtered = filtered.filter(
-        (product) => product.itemAbility.subCategorys === subCategoryValue
+        (product) => product.sub_category.sub_category_name === subCategoryValue
       );
     }
 

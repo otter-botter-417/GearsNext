@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class UserRegister extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'user_id';
+
 
     protected $fillable = [
-        'user_id',
+        'user_firebase_id',
         'name',
         'email',
         // 'created_at',

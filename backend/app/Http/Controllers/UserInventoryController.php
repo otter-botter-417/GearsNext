@@ -2,26 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\UserRegister;
 use Illuminate\Support\Facades\Log;
-use App\Http\Requests\StoreUserRegisterRequest;
+use App\Models\Item;
+use App\Models\UserRegister;
+use App\Models\UserInventory;
+use Illuminate\Http\Request;
 
-class UserRegisterController extends Controller
+class UserInventoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        // データの取得や処理を行う
-        // $users = User::all();
-
-        // データをJSON形式で返す
-        return response()->json($request);
-            
+        //
     }
 
     /**
@@ -42,20 +38,18 @@ class UserRegisterController extends Controller
      */
     public function store(Request $request)
     {
-        // 受け取ったユーザーデータをデータベースに保存するなどの処理を行う
-        Log::info($request);
-        UserRegister::create([
-            'user_firebase_id' => $request['userId'],
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'created_at' => now(),
-        ]);
+        //商品ページ用　個別の商品データを受け取ったidで検索して返す
+        $item = Item::find($request['data']['itemId'], 'item_id')->first();;
+        $user = UserRegister::where('user_firebase_id', $request['data']['userId'])->first();
 
-        return response()->json(['message' => 'User created successfully']);
 
-        // 必要に応じてレスポンスを返す
+        $userInventry = new UserInventory;
+            $userInventry->user_id = $user->user_id; // ユーザーIDを設定
+            $userInventry->item_id = $item->item_id; // 商品IDを設定
+            $userInventry->save();
         
-    }
+        return response()->json(['message' => 'userInventry update successfully']);
+}      
 
     /**
      * Display the specified resource.
@@ -65,7 +59,19 @@ class UserRegisterController extends Controller
      */
     public function show($id)
     {
-        //
+        //UserInventoryテーブルからuser_idを検索し、対応する商品を取得
+        Log::info($id);
+        $user = UserRegister::where('user_firebase_id', $id)->first();
+
+
+        $userInventryDatas = UserInventory::where('user_id', $user->user_id)->with(['items'])->get();
+        Log::info($userInventryDatas);
+
+
+        return response()->json($userInventryDatas, 200);
+
+
+
     }
 
     /**

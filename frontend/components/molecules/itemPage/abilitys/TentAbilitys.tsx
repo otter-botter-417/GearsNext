@@ -10,14 +10,16 @@ import { GrandSheet } from "../../../atoms/itemPage/ability/GrandSheet";
 import { Accessories } from "../../../atoms/itemPage/ability/Accessories";
 import { AmazonLink } from "../../../atoms/itemPage/ability/AmazonLink";
 import { Fabrics } from "../../../atoms/itemPage/ability/Fabrics";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { Buttons } from "../Buttons";
 import { itemDatas } from "../../../../typs/itemDatas";
+import { useUserInventoryApi } from "@/hooks/useUserInventoryApi";
 
 export const TentAbilitys: FC<itemDatas> = (props) => {
   const { itemDatas } = props;
   const err = { wide: 255, depth: 245, high: 120 };
-
+  const onClick = useUserInventoryApi(itemDatas.item_id);
+  const handleButtonClick = useUserInventoryApi(itemDatas.item_id);
   return (
     <Box>
       {/* いいね　と　共有ボタンの表示コンポーネント　共有時の情報を渡す */}
@@ -27,6 +29,8 @@ export const TentAbilitys: FC<itemDatas> = (props) => {
           "https://zenn.dev/ogakuzuko/articles/react-typescript-for-beginner"
         }
       />
+
+      <Button onClick={onClick}>持っている</Button>
 
       {/* テント各種データ */}
       <Price price={itemDatas.price} />

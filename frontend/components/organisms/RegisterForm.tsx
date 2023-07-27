@@ -1,5 +1,5 @@
 import React from "react";
-import { ItemInformationFields } from "../atoms/form/ItemInformationInputFields";
+import { ItemInformationInputFields } from "../atoms/form/ItemInformationInputFields";
 import { UseFormReturn } from "react-hook-form";
 import { RegisterInputFormFieldsList } from "../atoms/valueNameList/RegisterInputFormFieldsList";
 
@@ -12,7 +12,7 @@ const RegisterForm: React.FC<ItemInformationFieldsProps> = ({
 }) => {
   return (
     <>
-      <ItemInformationFields
+      <ItemInformationInputFields
         formMethods={formMethods}
         inputFormFieldsList={RegisterInputFormFieldsList()}
       />

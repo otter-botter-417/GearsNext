@@ -24,7 +24,7 @@ class StoreUserRegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'userId'=>['required', 'string', 'max:50','unique:user_registers'],
+            'user_id'=>['required', 'string', 'max:50','unique:user_registers'],
             'name'=>['required', 'string', 'max:20'],
             'email'=>['required', 'email', 'max:255','unique:user_registers'],
 

@@ -9,10 +9,6 @@ export const useIncrementViewCountApi = (id: any) => {
           method: "PUT",
         }
       );
-      console.log("333");
-
-      console.log(id);
-      console.log("333");
 
       return response.json();
     } catch (err) {

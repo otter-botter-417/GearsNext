@@ -24,4 +24,6 @@ class ItemViewCountController extends Controller
 
         return response()->json(['message' => 'view_count update successfully']);
         }
+        // 現在時刻を返す
+        
 }

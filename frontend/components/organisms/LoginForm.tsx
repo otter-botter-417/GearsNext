@@ -1,5 +1,5 @@
 import React from "react";
-import { ItemInformationFields } from "../atoms/form/ItemInformationInputFields";
+import { ItemInformationInputFields } from "../atoms/form/ItemInformationInputFields";
 import { UseFormReturn } from "react-hook-form";
 import { LoginInputFormFieldsList } from "../atoms/valueNameList/LoginInputFormFieldsList";
 
@@ -10,7 +10,7 @@ interface ItemInformationFieldsProps {
 const LoginForm: React.FC<ItemInformationFieldsProps> = ({ formMethods }) => {
   return (
     <>
-      <ItemInformationFields
+      <ItemInformationInputFields
         formMethods={formMethods}
         inputFormFieldsList={LoginInputFormFieldsList()}
       />

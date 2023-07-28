@@ -28,6 +28,9 @@ Route::get('/items/get/{id}', [itemController::class, 'show']);
 Route::put('/items/increment-view-count/{id}', [ItemViewCountController::class, 'update']);
 Route::post('/user/inventory/register', [UserInventoryController::class, 'store']);
 Route::post('/user/inventory/unregister', [UserInventoryController::class, 'destroy']);
+Route::post('/user/favorite/item/register', [FavoriteItemController::class, 'store']);
+Route::post('/user/favorite/item/unregister', [FavoriteItemController::class, 'destroy']);
+
 Route::get('/user/inventory/{id}', [UserInventoryController::class, 'show']);
 
 Route::apiResource('/items', itemController::class);

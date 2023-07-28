@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('favorite_item_relations', function (Blueprint $table) {
-            $table->increments('favorite_item_relations_id');
+        Schema::create('favorite_items', function (Blueprint $table) {
+            $table->increments('favorite_items_id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('item_id');
             $table->foreign('user_id')->references('user_id')->on('user_registers')->onDelete('cascade');
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('favorite_item_relations');
+        Schema::dropIfExists('favorite_item');
     }
 };

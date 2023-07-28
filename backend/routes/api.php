@@ -6,6 +6,7 @@ use App\Http\Controllers\UserRegisterController;
 use App\Http\Controllers\itemController;
 use App\Http\Controllers\ItemViewCountController;
 use App\Http\Controllers\UserInventoryController;
+use App\Http\Controllers\FavoriteItemController;
 
 /*
 |--------------------------------------------------------------------------

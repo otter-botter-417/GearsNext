@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class FavoriteItem extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'favorite_items';
+    protected $primaryKey = 'favorite_items_id';
 
     protected $fillable = [
         'user_id',

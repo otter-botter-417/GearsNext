@@ -2,13 +2,23 @@ import { IconButton, Tooltip } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useState } from "react";
+import { useFavoriteItemApi } from "@/hooks/useFavoriteItemApi";
 
-export const HeartIcon = () => {
+export const HeartIcon = (itemId: number) => {
   const [iconSwitch, setIconSwitch] = useState(false);
-  const onCkickIcon = () => setIconSwitch(!iconSwitch);
+  const favoriteItemApi = useFavoriteItemApi()
+  const onCrickIcon = () => {
+    if (iconSwitch) {
+    setIconSwitch(!iconSwitch);
+    favoriteItemApi.unregister(itemId)
+
+    } else {
+      setIconSwitch(!iconSwitch);
+      favoriteItemApi.register(itemId)
+  };}
   return (
     <Tooltip title="いいね" placement="left-start">
-      <IconButton onClick={onCkickIcon} disableFocusRipple={iconSwitch}>
+      <IconButton onClick={onCrickIcon} disableFocusRipple={iconSwitch}>
         {iconSwitch ? (
           <FavoriteIcon sx={{ color: "#FF1744", fontSize: 30 }} />
         ) : (

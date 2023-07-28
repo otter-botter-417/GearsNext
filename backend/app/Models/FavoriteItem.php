@@ -4,12 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Item;
 
-class UserInventory extends Model
+class FavoriteItem extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'user_inventories_id';
+    protected $primaryKey = 'favorite_items';
 
     protected $fillable = [
         'user_id',

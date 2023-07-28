@@ -28,13 +28,15 @@ class UserInventoryController extends Controller
             ->where('item_id', $item->item_id)
             ->first();
         // 登録されていない場合
-        if ($userInventory) {
+        Log::info($userInventory);
+        if (!$userInventory) {
             $userInventry = new UserInventory;
             $userInventry->user_id = $user->user_id; // ユーザーIDを設定
             $userInventry->item_id = $item->item_id; // 商品IDを設定
             $userInventry->save(); // 保存
             return response()->json(['message' => '持っている商品に登録しました']);
         } else {
+            Log::info("登録済み");
             return response()->json(['message' => '持っている商品に登録されています']);
         }
     }

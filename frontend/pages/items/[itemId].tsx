@@ -8,19 +8,17 @@ import { CategorySelecter } from "@/components/organisms/itemPage/CategorySelect
 import { ItemNameWithImage } from "@/components/molecules/itemPage/ItemNameWithImage";
 import { useGetItemDataApi } from "@/hooks/useGetItemDataApi";
 import { useIncrementViewCountApi } from "@/hooks/useIncrementViewCountApi";
+import { Buttons } from "@/components/molecules/itemPage/Buttons";
 
 function ItemPage() {
   const router = useRouter();
   const itemId = router.query.itemId;
   const [itemDatas, setItemDatas] = useState<ItemDataTypes | null>(null);
-  console.log(itemId);
 
   useEffect(() => {
     if (itemId) {
       useIncrementViewCountApi(itemId);
       useGetItemDataApi(itemId).then((response) => {
-        console.log(response[0]);
-        console.log("確認");
         setItemDatas(response[0]);
       });
     }
@@ -49,6 +47,15 @@ function ItemPage() {
           asin={itemDatas.asin || ""}
           matches={matches}
         />
+              {/* いいね　と　共有ボタンの表示コンポーネント　共有時の情報を渡す */}
+      <Buttons
+        itemName={itemDatas.item_name}
+        url={
+          "https://zenn.dev/ogakuzuko/articles/react-typescript-for-beginner"}
+        // userId= {}
+        itemId = {itemDatas.item_id}
+        
+      />
         <CategorySelecter itemDatas={itemDatas} />
       </Box>
     </ThemeProvider>

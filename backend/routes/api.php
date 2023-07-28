@@ -22,11 +22,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/register',[ UserRegisterController::class, 'store']);
+Route::post('/register', [UserRegisterController::class, 'store']);
 Route::get('/items/search', [itemController::class, 'index']);
 Route::get('/items/get/{id}', [itemController::class, 'show']);
 Route::put('/items/increment-view-count/{id}', [ItemViewCountController::class, 'update']);
 Route::post('/user/inventory/register', [UserInventoryController::class, 'store']);
+Route::post('/user/inventory/unregister', [UserInventoryController::class, 'destroy']);
 Route::get('/user/inventory/{id}', [UserInventoryController::class, 'show']);
 
 Route::apiResource('/items', itemController::class);

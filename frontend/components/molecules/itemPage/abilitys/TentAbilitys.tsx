@@ -22,14 +22,6 @@ export const TentAbilitys: FC<itemDatas> = (props) => {
   const handleButtonClick = useUserInventoryApi(itemDatas.item_id);
   return (
     <Box>
-      {/* いいね　と　共有ボタンの表示コンポーネント　共有時の情報を渡す */}
-      <Buttons
-        itemName={itemDatas.item_name}
-        url={
-          "https://zenn.dev/ogakuzuko/articles/react-typescript-for-beginner"
-        }
-      />
-
       <Button onClick={onClick}>持っている</Button>
 
       {/* テント各種データ */}

@@ -17,7 +17,8 @@ class UserInventory extends Model
 
         public function items()
         {
-            return $this->belongsToMany(Item::class, 'items', 'item_id', 'item_id');
+            // return $this->belongsToMany(Item::class, 'items', 'item_id', 'item_id');
+            return $this->belongsTo(Item::class, 'item_id');
 
         }
         

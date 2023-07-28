@@ -20,10 +20,10 @@ class ItemViewCountController extends Controller
             $item->increment('view_count');
             $item->save();
         }
-        
+
 
         return response()->json(['message' => 'view_count update successfully']);
-        }
-        // 現在時刻を返す
-        
+    }
+    // 現在時刻を返す
+
 }

@@ -18,11 +18,8 @@ import { useUserInventoryApi } from "@/hooks/useUserInventoryApi";
 export const TentAbilitys: FC<itemDatas> = (props) => {
   const { itemDatas } = props;
   const err = { wide: 255, depth: 245, high: 120 };
-  const onClick = useUserInventoryApi(itemDatas.item_id);
-  const handleButtonClick = useUserInventoryApi(itemDatas.item_id);
   return (
     <Box>
-      <Button onClick={onClick}>持っている</Button>
 
       {/* テント各種データ */}
       <Price price={itemDatas.price} />

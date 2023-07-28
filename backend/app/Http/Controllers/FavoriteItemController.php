@@ -19,17 +19,17 @@ class FavoriteItemController extends Controller
     public function store(Request $request)
     {
         //商品とユーザーのidを受け取って、FavoriteItemテーブルに保存する
-
+        Log::info($request);
         $item = Item::where('item_id', $request['data']['itemId'])->first();
         $user = UserRegister::where('user_firebase_id', $request['data']['userId'])->first();
 
         // 既に登録されているか確認
-        $item = FavoriteItem::where('user_id', $user->user_id)
+        $favorite = FavoriteItem::where('user_id', $user->user_id)
             ->where('item_id', $item->item_id)
             ->first();
         // 登録されていない場合
-        Log::info($item);
-        if (!$item) {
+        Log::info($favorite);
+        if (!$favorite) {
             $favoriteItem = new FavoriteItem;
             $favoriteItem->user_id = $user->user_id; // ユーザーIDを設定
             $favoriteItem->item_id = $item->item_id; // 商品IDを設定
@@ -69,6 +69,8 @@ class FavoriteItemController extends Controller
     public function destroy(Request $request)
     {
         //商品ページ用　個別の商品データを受け取ったidで検索して返す
+        Log::info($request);
+
         $item = Item::where('item_id', $request['data']['itemId'])->first();
         $user = UserRegister::where('user_firebase_id', $request['data']['userId'])->first();
 

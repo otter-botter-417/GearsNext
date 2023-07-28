@@ -12,7 +12,7 @@ export const Buttons: FC<Props> = (props) => {
   return (
     <Box>
       {/* いいねアイコン */}
-      <HeartIcon />
+      <HeartIcon  itemId={itemId}/>
       <ShareIconButton url={url} title={itemName} />
       <InventoryIconButton  itemId={itemId} />
     </Box>

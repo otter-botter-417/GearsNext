@@ -13,7 +13,7 @@ class FavoriteItemController extends Controller
     // お気に入り登録
 
     /**
-     * FavoriteItemテーブルに保存する
+     * FavoriteItemテーブルに保存
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -68,7 +68,7 @@ class FavoriteItemController extends Controller
     /**
      * FavoriteItemテーブルから削除する
      *
-     * @param  int  $id
+     * @param  int  $request
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)

@@ -13,5 +13,12 @@ class Category extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'category_name'];
+        'category_name'
+    ];
+
+    public function items()
+    // カテゴリーIDに紐づく商品を取得
+    {
+        return $this->hasMany(Item::class, 'category_id');
+    }
 }

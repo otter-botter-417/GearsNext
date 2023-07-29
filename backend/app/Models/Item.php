@@ -28,6 +28,7 @@ class Item extends Model
     // APIレスポンスから除外する属性
     protected $hidden = ['brand_id', 'category_id', 'sub_category_id'];
 
+    // リレーション
     public function brand()
     {
         return $this->belongsTo(Brand::class, 'brand_id');
@@ -56,6 +57,13 @@ class Item extends Model
         return $this->hasMany(ItemAttribute::class, 'item_id');
     }
 
+    // カテゴリーに関連するアイテムを取得
+    public static function getItemDataWithRelations($query)
+    {
+        return $query->with(['brand', 'category', 'subCategory', 'itemTags', 'colorTags', 'itemAttributes'])->get();
+    }
+
+    // お気に入りに追加
     public function addFavorite($userId)
     {
         FavoriteItem::create([
@@ -63,6 +71,8 @@ class Item extends Model
             'item_id' => $this->item_id,
         ]);
     }
+
+    // ユーザーの持っている商品に追加
     public function addInventory($userId)
     {
         UserInventory::create([
@@ -83,5 +93,64 @@ class Item extends Model
     {
         $this->increment('favorite_count');
         $this->save();
+    }
+
+    public static function createItemData($data)
+    {
+        $item = new self;
+        $item->item_name = $data['itemDatas']['itemName'];
+        $item->brand_id = $data->brand_id;
+        $item->price = $data['itemDatas']['price'];
+        $item->image_name = $data['itemDatas']['imageName'];
+        $item->asin = $data['itemDatas']['asin'];
+        $item->open_width = $data['itemDatas']['openWidth'];
+        $item->open_depth = $data['itemDatas']['openDepth'];
+        $item->open_height = $data['itemDatas']['openHeight'];
+        $item->storage_width = $data['itemDatas']['storageWidth'];
+        $item->storage_depth = $data['itemDatas']['storageDepth'];
+        $item->storage_height = $data['itemDatas']['storageHeight'];
+        $item->weight = $data['itemDatas']['weight'];
+        $item->category_id = $data->category_id;
+        $item->sub_category_id = $data->sub_category_id;
+
+        $item->save();
+
+        $item->addColorTags($data['colorTags']);
+        $item->addItemTags($data['itemTags']);
+        $item->addItemAttributes($data['details']);
+
+        return $item;
+    }
+
+    public function addColorTags($colorNames)
+    {
+        foreach ($colorNames as $colorName) {
+            $color = ColorTag::where('color_name', $colorName)->first();
+            if ($color) {
+                $this->colorTags()->attach($color->color_tag_id);
+            }
+        }
+    }
+
+    public function addItemTags($tagNames)
+    {
+        foreach ($tagNames as $tagName) {
+            $tag = ItemTag::where('item_tag_name', $tagName)->first();
+            if ($tag) {
+                $this->itemTags()->attach($tag->item_tag_id);
+            }
+        }
+    }
+
+    public function addItemAttributes($details)
+    {
+        if (is_array($details)) {
+            foreach ($details as $attributeName => $attributeValue) {
+                $this->itemAttributes()->create([
+                    'attribute_name' => $attributeName,
+                    'attribute_value' => $attributeValue
+                ]);
+            }
+        }
     }
 }

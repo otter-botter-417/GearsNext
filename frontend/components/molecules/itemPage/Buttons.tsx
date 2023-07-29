@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
 import { FC } from "react";
-import { HeartIcon } from "../../atoms/button/HeartIconButton";
+import { FavoriteIconBotton } from "../../atoms/button/FavoriteIconBotton";
 import { ShareIconButton } from "../../atoms/button/ShareIconButton";
 import { InventoryIconButton } from "@/components/atoms/button/InventoryIconButton";
 
-type Props = { itemName: string; url: string;itemId: number;};
+type Props = { itemName: string; url: string; itemId: number;};
 
 export const Buttons: FC<Props> = (props) => {
   const { itemName, url, itemId } = props;
@@ -12,7 +12,7 @@ export const Buttons: FC<Props> = (props) => {
   return (
     <Box>
       {/* いいねアイコン */}
-      <HeartIcon  itemId={itemId}/>
+      <FavoriteIconBotton  itemId={itemId}/>
       <ShareIconButton url={url} title={itemName} />
       <InventoryIconButton  itemId={itemId} />
     </Box>

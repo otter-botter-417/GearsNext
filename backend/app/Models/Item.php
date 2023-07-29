@@ -66,4 +66,11 @@ class Item extends Model
             'item_id' => $this->item_id,
         ]);
     }
+    public function addInventory($userId)
+    {
+        UserInventory::create([
+            'user_id' => $userId,
+            'item_id' => $this->item_id,
+        ]);
+    }
 }

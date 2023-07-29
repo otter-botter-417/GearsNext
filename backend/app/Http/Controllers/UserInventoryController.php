@@ -19,29 +19,25 @@ class UserInventoryController extends Controller
      */
     public function store(Request $request)
     {
-        // requestからidを取得して、itemとuserを検索
         $item = Item::where('item_id', $request['data']['itemId'])->first();
         $user = User::where('user_firebase_id', $request['data']['userId'])->first();
 
-        // itemとuserが存在するか確認
         if (!$item) {
-            return response()->json(['message' => '商品が見つかりませんでした']);
+            return response()->json(['message' => '商品が見つかりませんでした'], 404);
         } elseif (!$user) {
-            return response()->json(['message' => 'ユーザーが見つかりませんでした']);
+            return response()->json(['message' => 'ユーザーが見つかりませんでした'], 404);
         }
 
-        // 既に登録されているか確認
         $userInventory = UserInventory::where('user_id', $user->user_id)
             ->where('item_id', $item->item_id)
             ->first();
 
-        // 登録されていなければ登録
         if ($userInventory) {
-            return response()->json(['message' => '持っている商品に登録されています']);
-        } else {
-            $item->addInventory($user->user_id);
-            return response()->json(['message' => '持っている商品に登録しました']);
+            return response()->json(['message' => '持っている商品に登録されています'], 409);
         }
+
+        $item->addInventory($user->user_id);
+        return response()->json(['message' => '持っている商品に登録しました'], 201);
     }
 
     /**
@@ -52,16 +48,14 @@ class UserInventoryController extends Controller
      */
     public function show($id)
     {
-        // serInventoryテーブルからuser_idを取得
         $user = User::where('user_firebase_id', $id)->first();
 
-        // ユーザーがみつかれば、持っている商品を取得
-        if ($user) {
-            $userInventryDatas = UserInventory::where('user_id', $user->user_id)->with(['items'])->get();
-            return response()->json($userInventryDatas, 200);
-        } else {
-            return response()->json(['message' => 'ユーザーが見つかりませんでした']);
+        if (!$user) {
+            return response()->json(['message' => 'ユーザーが見つかりませんでした'], 404);
         }
+
+        $userInventryDatas = UserInventory::where('user_id', $user->user_id)->with(['items'])->get();
+        return response()->json($userInventryDatas, 200);
     }
     /**
      * UserInventoryテーブルから削除する
@@ -71,21 +65,17 @@ class UserInventoryController extends Controller
      */
     public function destroy(Request $request)
     {
-        // requestからidを取得して、itemとuserを検索
         $item = Item::where('item_id', $request['data']['itemId'])->first();
         $user = User::where('user_firebase_id', $request['data']['userId'])->first();
 
-        // 対応するレコードを検索
         $userInventory = UserInventory::where('user_id', $user->user_id)
             ->where('item_id', $item->item_id)
             ->first();
 
-        // 該当するレコードがあれば削除
-        if ($userInventory) {
-            $userInventory->delete();
-            return response()->json(['message' => '持っている商品から削除しました']);
-        } else {
-            return response()->json(['message' => '持っている商品に登録されていません']);
+        if (!$userInventory) {
+            return response()->json(['message' => '持っている商品に登録されていません'], 404);
         }
+        $userInventory->delete();
+        return response()->json(['message' => '持っている商品から削除しました'], 200);
     }
 }

@@ -19,28 +19,24 @@ class FavoriteItemController extends Controller
      */
     public function store(Request $request)
     {
-        // requestからidを取得して、itemとuserを検索
         $item = Item::where('item_id', $request['data']['itemId'])->first();
         $user = User::where('user_firebase_id', $request['data']['userId'])->first();
 
-        // itemとuserが存在するか確認
         if (!$item) {
-            return response()->json(['message' => '商品が見つかりませんでした']);
+            return response()->json(['message' => '商品が見つかりませんでした'], 404);
         } elseif (!$user) {
-            return response()->json(['message' => 'ユーザーが見つかりませんでした']);
+            return response()->json(['message' => 'ユーザーが見つかりませんでした'], 404);
         }
 
-        // 既に登録されているか確認
         $favorite = FavoriteItem::where('user_id', $user->user_id)
             ->where('item_id', $item->item_id)
             ->first();
         if ($favorite) {
-            return response()->json(['message' => 'お気に入りに登録されています']);
+            return response()->json(['message' => 'お気に入りに登録されています'], 409);
         }
 
-        // 登録処理
         $item->addFavorite($user->user_id);
-        return response()->json(['message' => 'お気に入りに登録しました']);
+        return response()->json(['message' => 'お気に入りに登録しました'], 201);
     }
 
     /**
@@ -51,16 +47,14 @@ class FavoriteItemController extends Controller
      */
     public function show($id)
     {
-        // Userテーブルからuser_idを取得
         $user = User::where('user_firebase_id', $id)->first();
 
-        // ユーザーがみつかれば、お気に入りに登録されている商品を取得
-        if ($user) {
-            $favoriteItemDatas = FavoriteItem::where('user_id', $user->user_id)->with(['items'])->get();
-            return response()->json($favoriteItemDatas, 200);
-        } else {
-            return response()->json(['message' => 'ユーザーが見つかりませんでした']);
+        if (!$user) {
+            return response()->json(['message' => 'ユーザーが見つかりませんでした'], 404);
         }
+
+        $favoriteItemDatas = FavoriteItem::where('user_id', $user->user_id)->with(['items'])->get();
+        return response()->json($favoriteItemDatas, 200);
     }
 
     /**
@@ -71,21 +65,18 @@ class FavoriteItemController extends Controller
      */
     public function destroy(Request $request)
     {
-        // requestからidを取得して、itemとuserを検索
         $item = Item::where('item_id', $request['data']['itemId'])->first();
         $user = User::where('user_firebase_id', $request['data']['userId'])->first();
 
-        // 対応するレコードを検索
         $favoriteItem = FavoriteItem::where('user_id', $user->user_id)
             ->where('item_id', $item->item_id)
             ->first();
 
-        // 該当するレコードがあれば削除
-        if ($favoriteItem) {
-            $favoriteItem->delete();
-            return response()->json(['message' => 'お気に入りから削除しました']);
-        } else {
-            return response()->json(['message' => 'お気に入りに登録されていません']);
+        if (!$favoriteItem) {
+            return response()->json(['message' => 'お気に入りに登録されていません'], 404);
         }
+
+        $favoriteItem->delete();
+        return response()->json(['message' => 'お気に入りから削除しました'], 200);
     }
 }

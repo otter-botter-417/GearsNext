@@ -13,12 +13,13 @@ class ItemViewCountController extends Controller
 
     public function update($id)
     {
-        // idからitemを検索して、itemが存在すればview_countを+1する
         $item = Item::find($id);
-        if ($item) {
-            $item->viewCountIncrement();
+
+        if (!$item) {
+            return response()->json(['message' => '商品が見つかりませんでした'], 404);
         }
 
-        return response()->json(['message' => '閲覧回数を更新しました。']);
+        $item->viewCountIncrement();
+        return response()->json(['message' => '閲覧回数を更新しました。'], 200);
     }
 }

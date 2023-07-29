@@ -30,7 +30,7 @@ class Item extends Model
 
     // APIレスポンスから除外する属性
     protected $hidden = ['brand_id', 'category_id', 'sub_category_id'];
-    
+
     public function brand()
     {
         return $this->belongsTo(Brand::class, 'brand_id');
@@ -56,6 +56,14 @@ class Item extends Model
     }
     public function itemAttributes()
     {
-        return $this->hasMany(ItemAttribute::class,'item_id');
+        return $this->hasMany(ItemAttribute::class, 'item_id');
+    }
+
+    public function addFavorite($userId)
+    {
+        FavoriteItem::create([
+            'user_id' => $userId,
+            'item_id' => $this->item_id,
+        ]);
     }
 }

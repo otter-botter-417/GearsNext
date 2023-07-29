@@ -10,16 +10,16 @@ use Illuminate\Http\Request;
 
 class FavoriteItemController extends Controller
 {
+    // お気に入り登録
+
     /**
-     * Store a newly created resource in storage.
+     * FavoriteItemテーブルに保存する
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        // 商品とユーザーのidを受け取って、FavoriteItemテーブルに保存する
-
         // requestからidを取得して、itemとuserを検索
         $item = Item::where('item_id', $request['data']['itemId'])->first();
         $user = UserRegister::where('user_firebase_id', $request['data']['userId'])->first();
@@ -37,46 +37,43 @@ class FavoriteItemController extends Controller
             ->first();
 
         // 登録されていなければ登録
-
-        if (!$favorite) {
+        if ($favorite) {
+            return response()->json(['message' => 'お気に入りに登録されています']);
+        } else {
             $item->addFavorite($user->user_id);
             return response()->json(['message' => 'お気に入りに登録しました']);
-        } else {
-            return response()->json(['message' => 'お気に入りに登録されています']);
         }
     }
 
     /**
-     * Display the specified resource.
+     * ユーザーのお気に入り商品を取得
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //UserRegisterテーブルからuser_idを検索し、対応する商品を取得
+        // UserRegisterテーブルからuser_idを取得
         $user = UserRegister::where('user_firebase_id', $id)->first();
-        //ユーザーがみつからなかった場合
-        if (!$user) {
-            return response()->json(['message' => 'ユーザーが見つかりませんでした']);
-            //ユーザーがみつかった場合
-        } elseif ($user) {
+
+        // ユーザーがみつかれば、お気に入りに登録されている商品を取得
+        if ($user) {
             $favoriteItemDatas = FavoriteItem::where('user_id', $user->user_id)->with(['items'])->get();
             return response()->json($favoriteItemDatas, 200);
+        } elseif (!$user) {
+            return response()->json(['message' => 'ユーザーが見つかりませんでした']);
         }
     }
 
     /**
-     * Remove the specified resource from storage.
+     * FavoriteItemテーブルから削除する
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
     {
-        //商品ページ用　個別の商品データを受け取ったidで検索して返す
-        Log::info($request);
-
+        // requestからidを取得して、itemとuserを検索
         $item = Item::where('item_id', $request['data']['itemId'])->first();
         $user = UserRegister::where('user_firebase_id', $request['data']['userId'])->first();
 
@@ -85,9 +82,8 @@ class FavoriteItemController extends Controller
             ->where('item_id', $item->item_id)
             ->first();
 
-
+        // 該当するレコードがあれば削除
         if ($favoriteItem) {
-            // 該当するレコードを削除
             $favoriteItem->delete();
             return response()->json(['message' => 'お気に入りから削除しました']);
         } else {

@@ -16,5 +16,6 @@ class ItemAttribute extends Model
         'item_id',
         'category_id',
         'attribute_name',
-        'attribute_value',];
+        'attribute_value',
+    ];
 }

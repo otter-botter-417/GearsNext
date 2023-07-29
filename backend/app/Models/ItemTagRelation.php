@@ -14,5 +14,6 @@ class ItemTagRelation extends Model
 
     protected $fillable = [
         'item_id',
-        'item_tag_id',];
+        'item_tag_id',
+    ];
 }

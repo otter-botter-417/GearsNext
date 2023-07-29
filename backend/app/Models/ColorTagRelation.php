@@ -14,7 +14,6 @@ class ColorTagRelation extends Model
 
     protected $fillable = [
         'item_id',
-        'color_tag_id',];
-
-
+        'color_tag_id',
+    ];
 }

@@ -13,7 +13,6 @@ class ColorTag extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'color_name'];
-
-
+        'color_name'
+    ];
 }

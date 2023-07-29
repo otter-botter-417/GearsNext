@@ -95,6 +95,7 @@ class Item extends Model
         $this->save();
     }
 
+    // 商品データを登録
     public static function createItemData($data)
     {
         $item = new self;
@@ -122,6 +123,7 @@ class Item extends Model
         return $item;
     }
 
+    // 商品のカラータグを登録
     public function addColorTags($colorNames)
     {
         foreach ($colorNames as $colorName) {
@@ -132,6 +134,7 @@ class Item extends Model
         }
     }
 
+    // 商品のアイテムタグを登録
     public function addItemTags($tagNames)
     {
         foreach ($tagNames as $tagName) {
@@ -142,6 +145,7 @@ class Item extends Model
         }
     }
 
+    // 商品の詳細を登録
     public function addItemAttributes($details)
     {
         if (is_array($details)) {

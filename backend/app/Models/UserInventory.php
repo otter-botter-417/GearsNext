@@ -16,6 +16,7 @@ class UserInventory extends Model
         'item_id',
     ];
 
+    // リレーション
     public function items()
     {
         return $this->belongsTo(Item::class, 'item_id');

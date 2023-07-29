@@ -16,8 +16,8 @@ class Category extends Model
         'category_name'
     ];
 
-    public function items()
     // カテゴリーIDに紐づく商品を取得
+    public function items()
     {
         return $this->hasMany(Item::class, 'category_id');
     }

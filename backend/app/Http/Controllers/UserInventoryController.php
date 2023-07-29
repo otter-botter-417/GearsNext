@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Log;
 use App\Models\Item;
-use App\Models\UserRegister;
+use App\Models\User;
 use App\Models\UserInventory;
 use Illuminate\Http\Request;
 
@@ -21,7 +21,7 @@ class UserInventoryController extends Controller
         //商品とユーザーのidを受け取って、userInventoryテーブルに保存する
 
         $item = Item::where('item_id', $request['data']['itemId'])->first();
-        $user = UserRegister::where('user_firebase_id', $request['data']['userId'])->first();
+        $user = User::where('user_firebase_id', $request['data']['userId'])->first();
 
         // 既に登録されているか確認
         $userInventory = UserInventory::where('user_id', $user->user_id)
@@ -50,7 +50,7 @@ class UserInventoryController extends Controller
     public function show($id)
     {
         //UserInventoryテーブルからuser_idを検索し、対応する商品を取得
-        $user = UserRegister::where('user_firebase_id', $id)->first();
+        $user = User::where('user_firebase_id', $id)->first();
         //ユーザーがみつからなかった場合
         if (!$user) {
             return response()->json(['message' => 'ユーザーが見つかりませんでした']);
@@ -70,7 +70,7 @@ class UserInventoryController extends Controller
     {
         //商品ページ用　個別の商品データを受け取ったidで検索して返す
         $item = Item::where('item_id', $request['data']['itemId'])->first();
-        $user = UserRegister::where('user_firebase_id', $request['data']['userId'])->first();
+        $user = User::where('user_firebase_id', $request['data']['userId'])->first();
 
         // 対応するレコードを検索
         $userInventory = UserInventory::where('user_id', $user->user_id)

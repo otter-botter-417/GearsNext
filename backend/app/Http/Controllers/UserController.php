@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\UserRegister;
+use App\Models\User;
 use Illuminate\Support\Facades\Log;
-use App\Http\Requests\StoreUserRegisterRequest;
+use App\Http\Requests\StoreUserRequest;
 
-class UserRegisterController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,7 +21,6 @@ class UserRegisterController extends Controller
 
         // データをJSON形式で返す
         return response()->json($request);
-            
     }
 
     /**
@@ -44,7 +43,7 @@ class UserRegisterController extends Controller
     {
         // 受け取ったユーザーデータをデータベースに保存するなどの処理を行う
         Log::info($request);
-        UserRegister::create([
+        User::create([
             'user_firebase_id' => $request['userId'],
             'name' => $request['name'],
             'email' => $request['email'],
@@ -54,7 +53,7 @@ class UserRegisterController extends Controller
         return response()->json(['message' => 'User created successfully']);
 
         // 必要に応じてレスポンスを返す
-        
+
     }
 
     /**

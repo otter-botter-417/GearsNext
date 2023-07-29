@@ -1,16 +1,15 @@
 import { IconButton, Tooltip } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-// import LibraryAddIcon  from "@mui/icons-material/Favorite";
 import LibraryAddRoundedIcon from '@mui/icons-material/LibraryAddRounded';
-import { useState } from "react";
-import { useRecoilState } from "recoil";
-import { userState } from "../state/userAuth.State";
+import { FC, useState } from "react";
 import { useUserInventoryApi } from "@/hooks/useUserInventoryApi";
 
 //持っているものに登録用アイコンボタン
+type InventoryIconButtonProps = {
+  itemId: number;
+};
 
-
-export const InventoryIconButton = (itemId: number) => {
+export const InventoryIconButton: FC<InventoryIconButtonProps> = ({ itemId }) => {
   const [iconSwitch, setIconSwitch] = useState(false);
   const userInventoryApi = useUserInventoryApi()
   const onCrickIcon = () => {

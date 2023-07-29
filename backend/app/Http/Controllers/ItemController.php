@@ -16,139 +16,94 @@ use App\Models\SubCategory;
 
 class ItemController extends Controller
 {
+    //商品に関するコントローラー
+
     /**
-     * Display a listing of the resource.
+     * 商品検索
      *
      * @return \Illuminate\Http\Response
      */
-    //商品検索
     public function index(Request $request)
     {
-        //
-        Log::info($request);
-        $query = Item::query();
-
-        // 商品名での検索
+        // requestにcategorynameが入っていればカテゴリーで検索
         if ($request->has('categoryname')) {
-            $category = Category::where('category_name', $request->get('categoryname'))->first(); 
+            // カテゴリーを検索
+            $category = Category::where('category_name', $request->get('categoryname'))->first();
 
-            $query->where('category_id',$category->category_id);
-
-        
-
-         // Eager Loading: Itemに関連するすべてのデータをロード
-        $items = $query->with(['brand', 'category', 'subCategory', 'itemTags', 'colorTags', 'itemAttributes'])->get();
-        
-        return response()->json($items, 200);
-    
+            // カテゴリーが見つかれば、カテゴリーに関連するアイテムを取得
+            if ($category) {
+                // カテゴリにー関連するアイテムを取得し、関連データも一緒にロード
+                $items = Item::getItemDataWithRelations($category->items());
+                return response()->json($items, 200);
+            } elseif (!$category) {
+                return response()->json(['message' => 'カテゴリーが見つかりませんでした']);
+            }
         }
         //カテゴリーが入ってなければ全件渡す
-        else  {
-            $items = Item::all();
-            $items = $query->with(['brand', 'category', 'subCategory', 'itemTags', 'colorTags', 'itemAttributes'])->get();
+        else {
+            $allItems = Item::query();
+            // 関連データも一緒にロード
+            $items = Item::getItemDataWithRelations($allItems);
 
-            Log::info($items);
             return response()->json($items, 200);
-        }}
-    
-    
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        }
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 商品登録
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        // Log::info($request);
-
-        $brand = Brand::where('brand_name', $request['itemDatas']['brandName'])->first(); 
-        $category = Category::where('category_name', $request['itemDatas']['itemCategoryName'])->first(); 
-        $subCategory = SubCategory::where('sub_category_name', $request['itemDatas']['subCategoryName'])->first(); 
-        Log::info($request['itemDatas']['details']);
-
-        $item = new Item;
-        $item->item_name = $request['itemDatas']['itemName'];
-        $item->brand_id = $brand->brand_id;
-        $item->price = $request['itemDatas']['price'];
-        $item->image_name = $request['itemDatas']['imageName'];
-        $item->asin = $request['itemDatas']['asin'];
-        $item->open_width = $request['itemDatas']['openWidth'];
-        $item->open_depth = $request['itemDatas']['openDepth'];
-        $item->open_height = $request['itemDatas']['openHeight'];
-        $item->storage_width = $request['itemDatas']['storageWidth'];
-        $item->storage_depth = $request['itemDatas']['storageDepth'];
-        $item->storage_height = $request['itemDatas']['storageHeight'];
-        $item->weight = $request['itemDatas']['weight'];
-        $item->category_id = $category->category_id;
-        $item->sub_category_id = $subCategory->sub_category_id;
-        $item->save();
-
-        // ColorモデルとTagモデルを使用して新しい色とタグを作成します
-        foreach ($request['itemDatas']['colorTags'] as $colorName) {
-            //colorテーブルからcolorNameを検索し、対応するIDを取得
-            $color = ColorTag::where('color_name', $colorName)->first(); // 例: Colorモデルを使用して名前から色を検索
-
-            if ($color) {
-                $colorTag = new ColorTagRelation;
-                $colorTag->color_tag_id = $color->color_tag_id; // 色のIDを設定
-                $colorTag->item_id = $item->item_id; // 先ほど作成したアイテムのIDを設定
-                $colorTag->save();
-            }}
-
-        foreach ($request['itemDatas']['itemTags'] as $tagName) {
-            //ItemTagテーブルからtagNameを検索し、対応するIDを取得
-            $tag = ItemTag::where('item_tag_name', $tagName)->first(); // 例: ItemTagモデルを使用して名前から色を検索
-            if ($tag) {
-                $itemTag = new ItemTagRelation;
-                $itemTag->item_tag_id = $tag->item_tag_id; // 色のIDを設定
-                $itemTag->item_id = $item->item_id; // 先ほど作成したアイテムのIDを設定
-                $itemTag->save();
-            }
+        // 既に登録されていればエラー ASINで検索
+        $item = Item::where('asin', $request['itemDatas']['asin'])->first();
+        if ($item) {
+            return response()->json(['message' => '既に登録されています'], 400);
         }
 
-        // ItemAbilityモデルを使用して新しいアイテム能力を作成します
+        // requestからbrandName, itemCategoryName, subCategoryNameを取得して、brand, category, subCategoryを検索
+        $brand = Brand::where('brand_name', $request['itemDatas']['brandName'])->first();
+        $category = Category::where('category_name', $request['itemDatas']['itemCategoryName'])->first();
+        $subCategory = SubCategory::where('sub_category_name', $request['itemDatas']['subCategoryName'])->first();
 
-        if (isset($request['itemDatas']['details']) && is_array($request['itemDatas']['details'])) {
-            foreach ($request['itemDatas']['details'] as $attributeName => $attributeValue) {
-                $itemAttribute = new ItemAttribute;
-                $itemAttribute->item_id = $item->item_id;
-                $itemAttribute->category_id = $category->category_id;
-                $itemAttribute->attribute_name = $attributeName;
-                $itemAttribute->attribute_value = $attributeValue;
-                $itemAttribute->save();
-        }}
+        // brand, category, subCategoryが存在するか確認
+        if (!$brand || !$category || !$subCategory) {
+            return response()->json(['message' => 'Brand, Category, or SubCategory not found'], 404);
+        }
 
-        return response()->json(['message' => 'Item created successfully']);
+        // requestからitemDatasを取得して、itemを作成
+        $data = $request['itemDatas'];
+        $data['brand_id'] = $brand->brand_id;
+        $data['category_id'] = $category->category_id;
+        $data['sub_category_id'] = $subCategory->sub_category_id;
+
+        Item::createItemData($data);
+
+        return response()->json(['message' => '商品登録が完了しました']);
     }
 
     /**
-     * Display the specified resource.
+     * 商品詳細を取得
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //商品ページ用　個別の商品データを受け取ったidで検索して返す
+        // Itemテーブルからitem_idを取得
         $item = Item::find($id);
-         // Eager Loading: Itemに関連するすべてのデータをロード
-        $itemDatas = $item->with(['brand', 'category', 'subCategory', 'itemTags', 'colorTags', 'itemAttributes'])->get();
-        
-        return response()->json($itemDatas, 200);
+
+        // itemがみつかれば、商品詳細を取得
+        if ($item) {
+            $itemData = Item::getItemDataWithRelations($item);
+            return response()->json($itemData, 200);
+        } else {
+            return response()->json(['message' => '商品が見つかりませんでした']);
         }
-    
+    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -158,8 +113,6 @@ class ItemController extends Controller
      */
     public function edit($id)
     {
-        
-    
     }
 
     /**

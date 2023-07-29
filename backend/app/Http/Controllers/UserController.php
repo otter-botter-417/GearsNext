@@ -9,51 +9,31 @@ use App\Http\Requests\StoreUserRequest;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {
-        // データの取得や処理を行う
-        // $users = User::all();
+    // ユーザー登録
 
-        // データをJSON形式で返す
-        return response()->json($request);
-    }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Userテーブルに保存
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        // 受け取ったユーザーデータをデータベースに保存するなどの処理を行う
-        Log::info($request);
-        User::create([
-            'user_firebase_id' => $request['userId'],
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'created_at' => now(),
-        ]);
+        // ユーザーが既に登録されていなければ登録
+        $user = User::where('user_firebase_id', $request['userId'])->first();
 
-        return response()->json(['message' => 'User created successfully']);
-
-        // 必要に応じてレスポンスを返す
-
+        if ($user) {
+            return response()->json(['message' => '既に登録されています'], 400);
+        } else {
+            User::create([
+                'user_firebase_id' => $request['userId'],
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'created_at' => now(),
+            ]);
+            return response()->json(['message' => 'ユーザー登録が完了しました']);
+        }
     }
 
     /**

@@ -9,21 +9,16 @@ use Illuminate\Support\Facades\Log;
 
 class ItemViewCountController extends Controller
 {
-    //
+    // 商品ページのview_countを更新する
+
     public function update($id)
     {
-        //商品ページ用　個別の商品データを受け取ったidで検索して返す
-        Log::info("カウントした");
+        // idからitemを検索して、itemが存在すればview_countを+1する
         $item = Item::find($id);
         if ($item) {
-            // +1する処理
-            $item->increment('view_count');
-            $item->save();
+            $item->viewCountIncrement();
         }
 
-
-        return response()->json(['message' => 'view_count update successfully']);
+        return response()->json(['message' => '閲覧回数を更新しました。']);
     }
-    // 現在時刻を返す
-
 }

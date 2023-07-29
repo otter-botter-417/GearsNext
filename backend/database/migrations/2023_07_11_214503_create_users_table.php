@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_registers', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->increments('user_id');
-            $table->string('user_firebase_id',50)->unique(); // 主キーをuserIdに設定
-            $table->string('name',20)->unique();
+            $table->string('user_firebase_id', 50)->unique(); // 主キーをuserIdに設定
+            $table->string('name', 20)->unique();
             $table->string('email', 255)->unique();
             $table->timestamps();
         });
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_registers');
+        Schema::dropIfExists('users');
     }
 };

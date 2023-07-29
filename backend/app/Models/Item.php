@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use App\Exceptions\ItemNotFoundException;
+use App\Exceptions\UserNotFoundException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
+use RuntimeException;
 
 class Item extends Model
 {
@@ -66,11 +70,19 @@ class Item extends Model
     // お気に入りに追加
     public function addFavorite($userId)
     {
+        if (FavoriteItem::alreadyExists($userId, $this->item_id)) {
+            throw new RuntimeException('お気に入りに登録されています。');
+        }
+
         FavoriteItem::create([
             'user_id' => $userId,
             'item_id' => $this->item_id,
         ]);
     }
+
+
+
+
 
     // ユーザーの持っている商品に追加
     public function addInventory($userId)

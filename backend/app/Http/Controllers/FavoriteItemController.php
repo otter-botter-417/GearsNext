@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\UserNotFoundException;
 use App\Models\Item;
 use App\Models\User;
 use App\Models\FavoriteItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use PgSql\Lob;
+use RuntimeException;
 
 class FavoriteItemController extends Controller
 {
@@ -19,24 +23,16 @@ class FavoriteItemController extends Controller
      */
     public function store(Request $request)
     {
-        $item = Item::where('item_id', $request['data']['itemId'])->first();
-        $user = User::where('user_firebase_id', $request['data']['userId'])->first();
-
-        if (!$item) {
-            return response()->json(['message' => '商品が見つかりませんでした'], 404);
-        } elseif (!$user) {
-            return response()->json(['message' => 'ユーザーが見つかりませんでした'], 404);
+        try {
+            $user = User::getUserIdByFirebaseId($request['data']['userId']);
+            $item = Item::findOrFail($request['data']['itemId']);
+            $item->addFavorite($user);
+        } catch (UserNotFoundException $e) {
+            return response()->json(['message' => $e->getMessage()], 404);
+        } catch (RuntimeException $e) {
+            return response()->json(['message' => $e->getMessage()], 409);
         }
-
-        $favorite = FavoriteItem::where('user_id', $user->user_id)
-            ->where('item_id', $item->item_id)
-            ->first();
-        if ($favorite) {
-            return response()->json(['message' => 'お気に入りに登録されています'], 409);
-        }
-
-        $item->addFavorite($user->user_id);
-        return response()->json(['message' => 'お気に入りに登録しました'], 201);
+        return response()->json(['message' => 'お気に入りに登録しました。'], 201);
     }
 
     /**
@@ -77,6 +73,6 @@ class FavoriteItemController extends Controller
         }
 
         $favoriteItem->delete();
-        return response()->json(['message' => 'お気に入りから削除しました'], 200);
+        return response()->json(['message' => 'お気に入りから削除しました'],);
     }
 }

@@ -59,7 +59,7 @@ class UserInventoryController extends Controller
         if ($user) {
             $userInventryDatas = UserInventory::where('user_id', $user->user_id)->with(['items'])->get();
             return response()->json($userInventryDatas, 200);
-        } elseif (!$user) {
+        } else {
             return response()->json(['message' => 'ユーザーが見つかりませんでした']);
         }
     }

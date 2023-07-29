@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Log;
 use App\Models\Item;
 use App\Models\User;
 use App\Models\FavoriteItem;
@@ -35,14 +34,13 @@ class FavoriteItemController extends Controller
         $favorite = FavoriteItem::where('user_id', $user->user_id)
             ->where('item_id', $item->item_id)
             ->first();
-
-        // 登録されていなければ登録
         if ($favorite) {
             return response()->json(['message' => 'お気に入りに登録されています']);
-        } else {
-            $item->addFavorite($user->user_id);
-            return response()->json(['message' => 'お気に入りに登録しました']);
         }
+
+        // 登録処理
+        $item->addFavorite($user->user_id);
+        return response()->json(['message' => 'お気に入りに登録しました']);
     }
 
     /**
@@ -60,7 +58,7 @@ class FavoriteItemController extends Controller
         if ($user) {
             $favoriteItemDatas = FavoriteItem::where('user_id', $user->user_id)->with(['items'])->get();
             return response()->json($favoriteItemDatas, 200);
-        } elseif (!$user) {
+        } else {
             return response()->json(['message' => 'ユーザーが見つかりませんでした']);
         }
     }

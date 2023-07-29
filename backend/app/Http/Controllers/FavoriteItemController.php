@@ -18,25 +18,30 @@ class FavoriteItemController extends Controller
      */
     public function store(Request $request)
     {
-        //商品とユーザーのidを受け取って、FavoriteItemテーブルに保存する
-        Log::info($request);
+        // 商品とユーザーのidを受け取って、FavoriteItemテーブルに保存する
+
+        // requestからidを取得して、itemとuserを検索
         $item = Item::where('item_id', $request['data']['itemId'])->first();
         $user = UserRegister::where('user_firebase_id', $request['data']['userId'])->first();
+
+        // itemとuserが存在するか確認
+        if (!$item) {
+            return response()->json(['message' => '商品が見つかりませんでした']);
+        } elseif (!$user) {
+            return response()->json(['message' => 'ユーザーが見つかりませんでした']);
+        }
 
         // 既に登録されているか確認
         $favorite = FavoriteItem::where('user_id', $user->user_id)
             ->where('item_id', $item->item_id)
             ->first();
-        // 登録されていない場合
-        Log::info($favorite);
+
+        // 登録されていなければ登録
+
         if (!$favorite) {
-            $favoriteItem = new FavoriteItem;
-            $favoriteItem->user_id = $user->user_id; // ユーザーIDを設定
-            $favoriteItem->item_id = $item->item_id; // 商品IDを設定
-            $favoriteItem->save(); // 保存
+            $item->addFavorite($user->user_id);
             return response()->json(['message' => 'お気に入りに登録しました']);
         } else {
-            Log::info("登録済み");
             return response()->json(['message' => 'お気に入りに登録されています']);
         }
     }
@@ -49,17 +54,18 @@ class FavoriteItemController extends Controller
      */
     public function show($id)
     {
-        //UserInventoryテーブルからuser_idを検索し、対応する商品を取得
+        //UserRegisterテーブルからuser_idを検索し、対応する商品を取得
         $user = UserRegister::where('user_firebase_id', $id)->first();
         //ユーザーがみつからなかった場合
         if (!$user) {
             return response()->json(['message' => 'ユーザーが見つかりませんでした']);
             //ユーザーがみつかった場合
-        } else if ($user) {
+        } elseif ($user) {
             $favoriteItemDatas = FavoriteItem::where('user_id', $user->user_id)->with(['items'])->get();
             return response()->json($favoriteItemDatas, 200);
         }
     }
+
     /**
      * Remove the specified resource from storage.
      *

@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserRegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,17 +12,3 @@ use App\Http\Controllers\UserRegisterController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::post('/register',[ UserRegisterController::class, 'store']);
-
-// Route::prefix('users')->middleware(['auth'])
-// ->controller(UserRegisterController::class)
-// ->name('user.')
-// ->group(function(){
-//     Route::post('/', 'index')->name('index');
-
-// });

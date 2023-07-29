@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Log;
 use App\Models\Item;
-use App\Models\UserRegister;
+use App\Models\User;
 use App\Models\FavoriteItem;
 use Illuminate\Http\Request;
 
@@ -22,7 +22,7 @@ class FavoriteItemController extends Controller
     {
         // requestからidを取得して、itemとuserを検索
         $item = Item::where('item_id', $request['data']['itemId'])->first();
-        $user = UserRegister::where('user_firebase_id', $request['data']['userId'])->first();
+        $user = User::where('user_firebase_id', $request['data']['userId'])->first();
 
         // itemとuserが存在するか確認
         if (!$item) {
@@ -53,8 +53,8 @@ class FavoriteItemController extends Controller
      */
     public function show($id)
     {
-        // UserRegisterテーブルからuser_idを取得
-        $user = UserRegister::where('user_firebase_id', $id)->first();
+        // Userテーブルからuser_idを取得
+        $user = User::where('user_firebase_id', $id)->first();
 
         // ユーザーがみつかれば、お気に入りに登録されている商品を取得
         if ($user) {
@@ -75,7 +75,7 @@ class FavoriteItemController extends Controller
     {
         // requestからidを取得して、itemとuserを検索
         $item = Item::where('item_id', $request['data']['itemId'])->first();
-        $user = UserRegister::where('user_firebase_id', $request['data']['userId'])->first();
+        $user = User::where('user_firebase_id', $request['data']['userId'])->first();
 
         // 対応するレコードを検索
         $favoriteItem = FavoriteItem::where('user_id', $user->user_id)

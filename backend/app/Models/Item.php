@@ -13,7 +13,6 @@ class Item extends Model
 
     protected $fillable = [
         'item_name',
-        // 'brand_id',
         'price',
         'image_name',
         'asin',
@@ -24,8 +23,6 @@ class Item extends Model
         'storage_depth',
         'storage_height',
         'weight',
-        // 'category_id',
-        // 'sub_category_id',
     ];
 
     // APIレスポンスから除外する属性
@@ -72,5 +69,19 @@ class Item extends Model
             'user_id' => $userId,
             'item_id' => $this->item_id,
         ]);
+    }
+
+    // 閲覧数をインクリメント
+    public function viewCountIncrement()
+    {
+        $this->increment('view_count');
+        $this->save();
+    }
+
+    // いいね数をインクリメント
+    public function favoriteCountIncrement()
+    {
+        $this->increment('favorite_count');
+        $this->save();
     }
 }

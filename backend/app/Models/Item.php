@@ -71,22 +71,6 @@ class Item extends Model
         return $query->with(['brand', 'category', 'subCategory', 'itemTags', 'colorTags', 'itemAttributes'])->get();
     }
 
-    /**
-     * ユーザーIDと商品IDを取得
-     *
-     * @param  string $userFirebaseId
-     * @param  int    $itemId
-     * @throws UserNotFoundException ユーザーが見つからない場合にスローされます。
-     * @throws ItemNotFoundException 商品が見つからない場合にスローされます。
-     * @return array
-     */
-    static function getUserIdAndItem($userFirebaseId, $itemId)
-    {
-        $userId = User::getUserIdByFirebaseId($userFirebaseId);
-        $item = self::checkIfNotExistThrowError($itemId);
-
-        return [$userId, $item];
-    }
 
     /**
      * 商品が存在するかチェックして、存在しなければエラーを投げる

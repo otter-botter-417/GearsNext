@@ -24,7 +24,7 @@ class FavoriteRequest extends FormRequest
     public function rules()
     {
         return [
-            'data.userId' => 'required|integer',
+            'data.userId' => 'required|string',
             'data.itemId' => 'required|integer',
         ];
     }
@@ -33,7 +33,7 @@ class FavoriteRequest extends FormRequest
         return [
             'data.userId.required' => 'ユーザーIDは必須です。',
             'data.itemId.required' => 'アイテムIDは必須です。',
-            'data.userId.integer'  => 'ユーザーIDは整数である必要があります。',
+            'data.userId.string'  => 'ユーザーIDは文字列である必要があります。',
             'data.itemId.integer'  => 'アイテムIDは整数である必要があります。',
         ];
     }

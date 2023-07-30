@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FavoriteRequest;
-use App\Models\FavoriteItem;
+use App\Models\User;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use PgSql\Lob;
 
 class FavoriteItemController extends Controller
 {
@@ -19,7 +21,7 @@ class FavoriteItemController extends Controller
      */
     public function index($id)
     {
-        $favoriteItems = FavoriteItem::showFavorite($id);
+        $favoriteItems = User::getFavoriteItems($id);
         return response()->json($favoriteItems, 200);
     }
 
@@ -31,7 +33,7 @@ class FavoriteItemController extends Controller
      */
     public function store(FavoriteRequest $request)
     {
-        FavoriteItem::addFavorite($request['data']['userId'], $request['data']['itemId']);
+        User::addFavoriteItem($request['data']['userId'], $request['data']['itemId']);
         return response()->json(['message' => 'お気に入りに登録しました。'], 201);
     }
 
@@ -43,7 +45,7 @@ class FavoriteItemController extends Controller
      */
     public function destroy(FavoriteRequest $request)
     {
-        FavoriteItem::removeFavorite($request['data']['userId'], $request['data']['itemId']);
+        User::removeFavorite($request['data']['userId'], $request['data']['itemId']);
         return response()->json(['message' => 'お気に入りから削除しました。'], 201);
     }
 }

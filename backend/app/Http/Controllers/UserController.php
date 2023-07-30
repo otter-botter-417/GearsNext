@@ -13,6 +13,7 @@ class UserController extends Controller
      * Userテーブルに保存
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     * @throws UserAlreadyRegisteredException ユーザーが既に登録されている場合にスローされます。
      */
     public function store(UserRegisterRequest $request)
     {

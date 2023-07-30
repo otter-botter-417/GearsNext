@@ -79,6 +79,11 @@ class Handler extends ExceptionHandler
             return response()->json(['message' => $exception->getMessage()], 409);
         }
 
+        // ユーザーが既に登録済みの場合の例外をキャッチ
+        if ($exception instanceof UserAlreadyRegisteredException) {
+            return response()->json(['message' => $exception->getMessage()], 409);
+        }
+
         // 上記の例外以外は、デフォルトの処理を行う
         return parent::render($request, $exception);
     }

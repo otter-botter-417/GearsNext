@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Exceptions\ItemAlreadyFavoritedException;
 use App\Exceptions\ItemNotFavoritedException;
+use App\Exceptions\UserAlreadyRegisteredException;
 use App\Exceptions\UserNotFoundException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,6 +25,30 @@ class User extends Model
     public function favorite()
     {
         return $this->hasMany(FavoriteItem::class, 'user_id');
+    }
+
+    /*
+    * ユーザー登録
+    *
+    * @param  string $userFirebaseId
+    * @param  string $name
+    * @param  string $email
+    * @return void
+    * @throws UserNotFoundException ユーザーが見つからない場合にスローされます。
+    */
+    static function register($userFirebaseId, $name, $email)
+    {
+
+        if (self::where('user_firebase_id', $userFirebaseId)->exists()) {
+            throw new UserAlreadyRegisteredException();
+        }
+
+        self::create([
+            'user_firebase_id' => $userFirebaseId,
+            'name' => $name,
+            'email' => $email,
+            'created_at' => now(),
+        ]);
     }
 
     /**

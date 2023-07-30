@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\InventoryRequest;
 use App\Models\Item;
 use App\Models\User;
 use App\Models\UserInventory;
@@ -9,73 +10,41 @@ use Illuminate\Http\Request;
 
 class UserInventoryController extends Controller
 {
-    // 持っている物登録
+    // 持っている物
 
     /**
-     * userInventoryテーブルに保存
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $item = Item::where('item_id', $request['data']['itemId'])->first();
-        $user = User::where('user_firebase_id', $request['data']['userId'])->first();
-
-        if (!$item) {
-            return response()->json(['message' => '商品が見つかりませんでした'], 404);
-        } elseif (!$user) {
-            return response()->json(['message' => 'ユーザーが見つかりませんでした'], 404);
-        }
-
-        $userInventory = UserInventory::where('user_id', $user->user_id)
-            ->where('item_id', $item->item_id)
-            ->first();
-
-        if ($userInventory) {
-            return response()->json(['message' => '持っている商品に登録されています'], 409);
-        }
-
-        $item->addInventory($user->user_id);
-        return response()->json(['message' => '持っている商品に登録しました'], 201);
-    }
-
-    /**
-     * ユーザーの持っている商品を取得
+     * ユーザーのお気に入り商品を取得
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function index($id)
     {
-        $user = User::where('user_firebase_id', $id)->first();
-
-        if (!$user) {
-            return response()->json(['message' => 'ユーザーが見つかりませんでした'], 404);
-        }
-
-        $userInventryDatas = UserInventory::where('user_id', $user->user_id)->with(['items'])->get();
-        return response()->json($userInventryDatas, 200);
+        $favoriteItems = User::getInventoryItems($id);
+        return response()->json($favoriteItems, 200);
     }
+
+    /**
+     * UserInventoryテーブルに保存
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(InventoryRequest $request)
+    {
+        User::addInventory($request['data']['userId'], $request['data']['itemId']);
+        return response()->json(['message' => '持っている物に登録しました。'], 201);
+    }
+
     /**
      * UserInventoryテーブルから削除する
      *
      * @param  int  $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(InventoryRequest $request)
     {
-        $item = Item::where('item_id', $request['data']['itemId'])->first();
-        $user = User::where('user_firebase_id', $request['data']['userId'])->first();
-
-        $userInventory = UserInventory::where('user_id', $user->user_id)
-            ->where('item_id', $item->item_id)
-            ->first();
-
-        if (!$userInventory) {
-            return response()->json(['message' => '持っている商品に登録されていません'], 404);
-        }
-        $userInventory->delete();
-        return response()->json(['message' => '持っている商品から削除しました'], 200);
+        User::removeInventory($request['data']['userId'], $request['data']['itemId']);
+        return response()->json(['message' => '持っている物から削除しました。'], 201);
     }
 }

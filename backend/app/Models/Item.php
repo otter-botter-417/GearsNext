@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
+use App\Exceptions\ItemAlreadyFavoritedException;
+use App\Exceptions\ItemNotFavoritedException;
 use App\Exceptions\ItemNotFoundException;
-use App\Exceptions\UserNotFoundException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
-use RuntimeException;
 
 class Item extends Model
 {
@@ -60,6 +60,10 @@ class Item extends Model
     {
         return $this->hasMany(ItemAttribute::class, 'item_id');
     }
+    public function favoriteItems()
+    {
+        return $this->hasMany(FavoriteItem::class, 'item_id');
+    }
 
     // カテゴリーに関連するアイテムを取得
     public static function getItemDataWithRelations($query)
@@ -67,22 +71,44 @@ class Item extends Model
         return $query->with(['brand', 'category', 'subCategory', 'itemTags', 'colorTags', 'itemAttributes'])->get();
     }
 
-    // お気に入りに追加
-    public function addFavorite($userId)
+    /**
+     * ユーザーIDと商品IDを取得
+     *
+     * @param  string $userFirebaseId
+     * @param  int    $itemId
+     * @throws UserNotFoundException ユーザーが見つからない場合にスローされます。
+     * @throws ItemNotFoundException 商品が見つからない場合にスローされます。
+     * @return array
+     */
+    static function getUserIdAndItem($userFirebaseId, $itemId)
     {
-        if (FavoriteItem::alreadyExists($userId, $this->item_id)) {
-            throw new RuntimeException('お気に入りに登録されています。');
-        }
+        $userId = User::getUserIdByFirebaseId($userFirebaseId);
+        $item = self::checkIfNotExistThrowError($itemId);
 
-        FavoriteItem::create([
-            'user_id' => $userId,
-            'item_id' => $this->item_id,
-        ]);
+        return [$userId, $item];
     }
 
-
-
-
+    /**
+     * 商品が存在するかチェックして、存在しなければエラーを投げる
+     * @param  int $itemId
+     * @throws ItemNotFoundException 商品が見つからない場合にスローされます。
+     * @return \App\Models\Item 商品のインスタンスを返します。
+     */
+    public static function checkIfNotExistThrowError($itemId)
+    {
+        $item = self::find($itemId);
+        if (!$item) {
+            Log::error(
+                '商品の存在を確認操作中にエラーが発生',
+                [
+                    'action' => 'checkIfNotExistThrowError',
+                    'itemId' => $itemId
+                ]
+            );
+            throw new ItemNotFoundException($itemId);
+        }
+        return $item;
+    }
 
     // ユーザーの持っている商品に追加
     public function addInventory($userId)

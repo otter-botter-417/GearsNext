@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use RuntimeException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -46,5 +47,30 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+    public function render($request, Throwable $exception)
+    {
+        // ユーザーが見つからない場合の例外をキャッチ
+        if ($exception instanceof UserNotFoundException) {
+            return response()->json(['message' => $exception->getMessage()], 404);
+        }
+
+        // 商品が見つからない場合の例外をキャッチ
+        if ($exception instanceof ItemNotFoundException) {
+            return response()->json(['message' => $exception->getMessage()], 404);
+        }
+
+        // お気に入りに商品が存在する場合の例外をキャッチ
+        if ($exception instanceof ItemAlreadyFavoritedException) {
+            return response()->json(['message' => $exception->getMessage()], 409);
+        }
+
+        // お気に入りに商品が存在しない場合の例外をキャッチ
+        if ($exception instanceof ItemNotFavoritedException) {
+            return response()->json(['message' => $exception->getMessage()], 409);
+        }
+
+        // 上記の例外以外は、デフォルトの処理を行う
+        return parent::render($request, $exception);
     }
 }

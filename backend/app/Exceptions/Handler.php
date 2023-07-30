@@ -3,7 +3,6 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use RuntimeException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -67,6 +66,21 @@ class Handler extends ExceptionHandler
 
         // お気に入りに商品が存在しない場合の例外をキャッチ
         if ($exception instanceof ItemNotFavoritedException) {
+            return response()->json(['message' => $exception->getMessage()], 409);
+        }
+
+        // 商品が既に持っている商品に存在する場合の例外をキャッチ
+        if ($exception instanceof ItemAlreadyInInventoryException) {
+            return response()->json(['message' => $exception->getMessage()], 409);
+        }
+
+        // 商品が持っている商品に存在しない場合の例外をキャッチ
+        if ($exception instanceof ItemNotInInventoryException) {
+            return response()->json(['message' => $exception->getMessage()], 409);
+        }
+
+        // ユーザーが既に登録済みの場合の例外をキャッチ
+        if ($exception instanceof UserAlreadyRegisteredException) {
             return response()->json(['message' => $exception->getMessage()], 409);
         }
 

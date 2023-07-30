@@ -103,11 +103,16 @@ class Item extends Model
         ]);
     }
 
-    // 閲覧数をインクリメント
-    public function viewCountIncrement()
+    /**
+     * 商品の閲覧数をインクリメント
+     * @param  int $id
+     * @throws ItemNotFoundException 商品が見つからない場合にスローされます。
+     * @return void
+     */
+    public static function viewCountIncrement($id)
     {
-        $this->increment('view_count');
-        $this->save();
+        $item = self::checkIfNotExistThrowError($id);
+        $item->increment('view_count');
     }
 
     // いいね数をインクリメント

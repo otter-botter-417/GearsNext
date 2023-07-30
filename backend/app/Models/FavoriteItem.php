@@ -47,18 +47,17 @@ class FavoriteItem extends Model
      * @throws ItemNotFoundException 商品が見つからない場合にスローされます。
      * @throws ItemAlreadyFavoritedException お気に入りに商品が存在する場合にスローされます。
      */
-    public static function addFavorite($userFirebaseId, $itemId)
+    public static function add($userFirebaseId, $itemId)
     {
-        list($userId, $item) = Item::getUserIdAndItem($userFirebaseId, $itemId);
+        list($userId, $item) = User::getUserIdAndItem($userFirebaseId, $itemId);
 
-        if (self::alreadyExists($userId, $itemId)) {
+        if (self::alreadyExists($userId, $item->item_id)) {
             Log::error(
                 'お気に入り追加操作中にエラーが発生',
                 [
                     'action' => 'addFavorite',
                     'userId' => $userId,
-                    'itemId' => $itemId,
-                    'userFirebaseId' => $userFirebaseId
+                    'itemId' => $item->item_id,
                 ]
             );
             throw new ItemAlreadyFavoritedException();
@@ -80,17 +79,17 @@ class FavoriteItem extends Model
      * @throws ItemNotFavoritedException お気に入りに商品が存在しない場合にスローされます。
 
      */
-    public static function removeFavorite($userFirebaseId, $itemId)
+    public static function remove($userFirebaseId, $itemId)
     {
-        list($userId, $item) = Item::getUserIdAndItem($userFirebaseId, $itemId);
+        list($userId, $item) = User::getUserIdAndItem($userFirebaseId, $itemId);
 
-        if (!self::alreadyExists($userId, $itemId)) {
+        if (!self::alreadyExists($userId, $item->item_id)) {
             Log::error(
                 'お気に入りから削除操作中にエラーが発生',
                 [
                     'action' => 'removeFavorite',
                     'userId' => $userId,
-                    'itemId' => $itemId,
+                    'itemId' => $item->item_id,
                     'userFirebaseId' => $userFirebaseId
                 ]
             );
@@ -109,7 +108,7 @@ class FavoriteItem extends Model
      * @throws UserNotFoundException ユーザーが見つからない場合にスローされます。
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public static function showFavorite($userFirebaseId)
+    public static function index($userFirebaseId)
     {
         $userId = User::getUserIdByFirebaseId($userFirebaseId);
         $favoriteItems = self::where('user_id', $userId)->with(['items'])->get();

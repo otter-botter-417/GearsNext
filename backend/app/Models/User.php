@@ -21,6 +21,27 @@ class User extends Model
         'email',
     ];
 
+    public function favorite()
+    {
+        return $this->hasMany(FavoriteItem::class, 'user_id');
+    }
+
+    /**
+     * ユーザーIDと商品IDを取得
+     *
+     * @param  string $userFirebaseId
+     * @param  int    $itemId
+     * @throws UserNotFoundException ユーザーが見つからない場合にスローされます。
+     * @throws ItemNotFoundException 商品が見つからない場合にスローされます。
+     * @return array
+     */
+    static function getUserIdAndItem($userFirebaseId, $itemId)
+    {
+        $userId = self::getUserIdByFirebaseId($userFirebaseId);
+        $item = Item::checkIfNotExistThrowError($itemId);
+        return [$userId, $item];
+    }
+
     /**
      * firebaseIdからユーザーIDを取得する
      *
@@ -30,7 +51,7 @@ class User extends Model
      */
     public static function getUserIdByFirebaseId($user_firebase_id)
     {
-        $user = User::where('user_firebase_id', $user_firebase_id)->first();
+        $user = self::where('user_firebase_id', $user_firebase_id)->first();
         if (!$user) {
             Log::error(
                 'firebaseIdからユーザーIDを取得中にエラーが発生',
@@ -53,27 +74,9 @@ class User extends Model
      * @throws ItemNotFoundException 商品が見つからない場合にスローされます。
      * @throws ItemAlreadyFavoritedException お気に入りに商品が存在する場合にスローされます。
      */
-    public static function addFavorite($userFirebaseId, $itemId)
+    public static function addFavoriteItem($userFirebaseId, $itemId)
     {
-        list($userId, $item) = Item::getUserIdAndItem($userFirebaseId, $itemId);
-
-        if (self::alreadyExists($userId, $itemId)) {
-            Log::error(
-                'お気に入り追加操作中にエラーが発生',
-                [
-                    'action' => 'addFavorite',
-                    'userId' => $userId,
-                    'itemId' => $itemId,
-                    'userFirebaseId' => $userFirebaseId
-                ]
-            );
-            throw new ItemAlreadyFavoritedException();
-        }
-
-        self::create([
-            'user_id' => $userId,
-            'item_id' => $item->item_id,
-        ]);
+        return FavoriteItem::add($userFirebaseId, $itemId);
     }
 
     /**
@@ -88,24 +91,7 @@ class User extends Model
      */
     public static function removeFavorite($userFirebaseId, $itemId)
     {
-        list($userId, $item) = Item::getUserIdAndItem($userFirebaseId, $itemId);
-
-        if (!self::alreadyExists($userId, $itemId)) {
-            Log::error(
-                'お気に入りから削除操作中にエラーが発生',
-                [
-                    'action' => 'removeFavorite',
-                    'userId' => $userId,
-                    'itemId' => $itemId,
-                    'userFirebaseId' => $userFirebaseId
-                ]
-            );
-            throw new ItemNotFavoritedException();
-        }
-
-        self::where('user_id', $userId)
-            ->where('item_id', $item->item_id)
-            ->delete();
+        return FavoriteItem::remove($userFirebaseId, $itemId);
     }
 
     /**
@@ -115,11 +101,8 @@ class User extends Model
      * @throws UserNotFoundException ユーザーが見つからない場合にスローされます。
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public static function showFavorite($userFirebaseId)
+    public static function getFavoriteItems($userFirebaseId)
     {
-        $userId = User::getUserIdByFirebaseId($userFirebaseId);
-        $favoriteItems = self::where('user_id', $userId)->with(['items'])->get();
-
-        return $favoriteItems;
+        return FavoriteItem::index($userFirebaseId);
     }
 }

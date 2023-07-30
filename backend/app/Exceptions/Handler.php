@@ -84,6 +84,31 @@ class Handler extends ExceptionHandler
             return response()->json(['message' => $exception->getMessage()], 409);
         }
 
+        // カテゴリーが見つからない場合の例外をキャッチ
+        if ($exception instanceof CategoryNotFoundException) {
+            return response()->json(['message' => $exception->getMessage()], 404);
+        }
+
+        // サブカテゴリーが見つからない場合の例外をキャッチ
+        if ($exception instanceof SubCategoryNotFoundException) {
+            return response()->json(['message' => $exception->getMessage()], 404);
+        }
+
+        // アイテムタグが見つからない場合の例外をキャッチ
+        if ($exception instanceof ItemTagNotFoundException) {
+            return response()->json(['message' => $exception->getMessage()], 404);
+        }
+
+        // カラータグが見つからない場合の例外をキャッチ
+        if ($exception instanceof ColorTagNotFoundException) {
+            return response()->json(['message' => $exception->getMessage()], 404);
+        }
+
+        // 商品が既に登録済みの場合の例外をキャッチ
+        if ($exception instanceof ItemAlreadyRegisteredException) {
+            return response()->json(['message' => $exception->getMessage()], 409);
+        }
+
         // 上記の例外以外は、デフォルトの処理を行う
         return parent::render($request, $exception);
     }

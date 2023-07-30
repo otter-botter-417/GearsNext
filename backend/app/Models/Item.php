@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Exceptions\CategoryNotFoundException;
 use App\Exceptions\ItemAlreadyFavoritedException;
+use App\Exceptions\ItemAlreadyRegisteredException;
 use App\Exceptions\ItemNotFavoritedException;
 use App\Exceptions\ItemNotFoundException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -29,7 +31,6 @@ class Item extends Model
         'weight',
     ];
 
-    // APIレスポンスから除外する属性
     protected $hidden = ['brand_id', 'category_id', 'sub_category_id'];
 
     // リレーション
@@ -65,7 +66,12 @@ class Item extends Model
         return $this->hasMany(FavoriteItem::class, 'item_id');
     }
 
-    // カテゴリーに関連するアイテムを取得
+    /**
+     * 商品に紐づく情報を取得
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  int $categoryId
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public static function getItemDataWithRelations($query)
     {
         return $query->with(['brand', 'category', 'subCategory', 'itemTags', 'colorTags', 'itemAttributes'])->get();
@@ -73,23 +79,22 @@ class Item extends Model
 
 
     /**
-     * 商品が存在するかチェックして、存在しなければエラーを投げる
      * @param  int $itemId
      * @throws ItemNotFoundException 商品が見つからない場合にスローされます。
      * @return \App\Models\Item 商品のインスタンスを返します。
      */
-    public static function checkIfNotExistThrowError($itemId)
+    public static function ensureExists($itemId)
     {
         $item = self::find($itemId);
         if (!$item) {
             Log::error(
                 '商品の存在を確認操作中にエラーが発生',
                 [
-                    'action' => 'checkIfNotExistThrowError',
+                    'action' => 'itemEnsureExists',
                     'itemId' => $itemId
                 ]
             );
-            throw new ItemNotFoundException($itemId);
+            throw new ItemNotFoundException();
         }
         return $item;
     }
@@ -111,7 +116,7 @@ class Item extends Model
      */
     public static function viewCountIncrement($id)
     {
-        $item = self::checkIfNotExistThrowError($id);
+        $item = self::ensureExists($id);
         $item->increment('view_count');
     }
 
@@ -122,66 +127,174 @@ class Item extends Model
         $this->save();
     }
 
-    // 商品データを登録
-    public static function createItemData($data)
+    /**
+     * 商品を登録する
+     * @param  \Illuminate\Http\Request $request
+     * @return void
+     * @throws ItemAlreadyRegisteredException 商品が既に登録されている場合にスローされます。
+     * @throws BrandNotFoundException ブランドが見つからない場合にスローされます。
+     * @throws CategoryNotFoundException カテゴリーが見つからない場合にスローされます。
+     * @throws SubCategoryNotFoundException サブカテゴリーが見つからない場合にスローされます。
+     * @throws ItemTagNotFoundException アイテムタグが見つからない場合にスローされます。
+     * @throws ColorTagNotFoundException カラータグが見つからない場合にスローされます。
+     */
+    public static function register($request)
+    {
+
+        $data = $request['itemDatas'];
+        // 既に登録されていればエラー ASINで検索
+        if (Item::where('asin', $data['asin'])->exists()) {
+            throw new ItemAlreadyRegisteredException();
+        }
+
+        $entities = self::ensureBrandAndCategoriesExist($data);
+
+        $data['brand_id'] = $entities['brand']->brand_id;
+        $data['category_id'] = $entities['category']->category_id;
+        $data['sub_category_id'] = $entities['subCategory']->sub_category_id;
+
+        Item::createItemData($data, $entities);
+    }
+
+    /**
+     * brand category subcategoryを確認して存在しなければ登録
+     * @param  array $data
+     * @return array brand category subcategoryのインスタンスを返します。
+     * @throws BrandNotFoundException ブランドが見つからない場合にスローされます。
+     * @throws CategoryNotFoundException カテゴリーが見つからない場合にスローされます。
+     * @throws SubCategoryNotFoundException サブカテゴリーが見つからない場合にスローされます。
+     */
+    public static function ensureBrandAndCategoriesExist($data)
+    {
+        $brand = Brand::ensureExists($data['brandName']);
+        $category = Category::ensureExists($data['itemCategoryName']);
+        $subCategory = SubCategory::ensureExists($data['subCategoryName']);
+        return ['brand' => $brand, 'category' => $category, 'subCategory' => $subCategory];
+    }
+
+
+    /**
+     * 商品データを登録
+     * @param  array $data
+     * @return \App\Models\Item
+     * @throws ItemTagNotFoundException アイテムタグが見つからない場合にスローされます。
+     * @throws ColorTagNotFoundException カラータグが見つからない場合にスローされます。
+     */
+    public static function createItemData($data, $entities)
     {
         $item = new self;
-        $item->item_name = $data['itemDatas']['itemName'];
-        $item->brand_id = $data->brand_id;
-        $item->price = $data['itemDatas']['price'];
-        $item->image_name = $data['itemDatas']['imageName'];
-        $item->asin = $data['itemDatas']['asin'];
-        $item->open_width = $data['itemDatas']['openWidth'];
-        $item->open_depth = $data['itemDatas']['openDepth'];
-        $item->open_height = $data['itemDatas']['openHeight'];
-        $item->storage_width = $data['itemDatas']['storageWidth'];
-        $item->storage_depth = $data['itemDatas']['storageDepth'];
-        $item->storage_height = $data['itemDatas']['storageHeight'];
-        $item->weight = $data['itemDatas']['weight'];
-        $item->category_id = $data->category_id;
-        $item->sub_category_id = $data->sub_category_id;
-
-        $item->save();
+        $item->item_name = $data['itemName'];
+        $item->brand_id = $entities['brand']->brand_id;
+        $item->price = $data['price'];
+        $item->image_name = $data['imageName'];
+        $item->asin = $data['asin'];
+        $item->open_width = $data['openWidth'];
+        $item->open_depth = $data['openDepth'];
+        $item->open_height = $data['openHeight'];
+        $item->storage_width = $data['storageWidth'];
+        $item->storage_depth = $data['storageDepth'];
+        $item->storage_height = $data['storageHeight'];
+        $item->weight = $data['weight'];
+        $item->category_id = $entities['category']->category_id;
+        $item->sub_category_id = $entities['subCategory']->sub_category_id;
 
         $item->addColorTags($data['colorTags']);
         $item->addItemTags($data['itemTags']);
-        $item->addItemAttributes($data['details']);
+        $item->addItemAttributes($data['details'], $item->category_id);
 
         return $item;
     }
 
-    // 商品のカラータグを登録
-    public function addColorTags($colorNames)
+    /**
+     * 商品のアイテムタグを登録
+     * @param  array $tagNames
+     * @return void
+     * @throws ItemTagNotFoundException アイテムタグが見つからない場合にスローされます。
+     */
+    public function addItemTags($itemTagNames)
     {
-        foreach ($colorNames as $colorName) {
-            $color = ColorTag::where('color_name', $colorName)->first();
-            if ($color) {
-                $this->colorTags()->attach($color->color_tag_id);
-            }
+        foreach ($itemTagNames as $itemTagName) {
+            $itemTag = ItemTag::ensureExists($itemTagName);
+            $this->itemTags()->attach($itemTag->item_tag_id);
         }
     }
 
-    // 商品のアイテムタグを登録
-    public function addItemTags($tagNames)
+    /**
+     * 商品のカラータグを登録
+     * @param  array $colorNames
+     * @return void
+     * @throws ColorTagNotFoundException カラータグが見つからない場合にスローされます。
+     */
+    public function addColorTags($colorTagNames)
     {
-        foreach ($tagNames as $tagName) {
-            $tag = ItemTag::where('item_tag_name', $tagName)->first();
-            if ($tag) {
-                $this->itemTags()->attach($tag->item_tag_id);
-            }
+        foreach ($colorTagNames as $colorTagName) {
+            $colorTag = ColorTag::ensureExists($colorTagName);
+            $this->colorTags()->attach($colorTag->color_tag_id);
         }
     }
 
-    // 商品の詳細を登録
-    public function addItemAttributes($details)
+    /**
+     * 商品の詳細を登録
+     * @param  array $details
+     * @param  int $categoryId
+     * @return void
+     */
+    public function addItemAttributes($details, $categoryId)
     {
-        if (is_array($details)) {
-            foreach ($details as $attributeName => $attributeValue) {
-                $this->itemAttributes()->create([
-                    'attribute_name' => $attributeName,
-                    'attribute_value' => $attributeValue
-                ]);
-            }
+        foreach ($details as $attributeName => $attributeValue) {
+            $this->itemAttributes()->create([
+                'category_id' => $categoryId,
+                'attribute_name' => $attributeName,
+                'attribute_value' => $attributeValue
+            ]);
         }
+    }
+
+    /**
+     * 商品の詳細な情報を取得
+     * @param  int $id
+     * @throws ItemNotFoundException 商品が見つからない場合にスローされます。
+     * @return \Illuminate\Database\Eloquent\Collection 商品の詳細を返します。
+     */
+    public static function getItemDetails($id)
+    {
+        $item = self::ensureExists($id);
+        $itemData = self::getItemDataWithRelations($item);
+
+        return $itemData;
+    }
+
+    /**
+     * 商品を検索して返す
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Database\Eloquent\Collection 商品の詳細を返します。
+     * @throws ItemNotFoundException 商品が見つからない場合にスローされます。
+     * @throws CategoryNotFoundException カテゴリーが見つからない場合にスローされます。
+     */
+    public static function getItems($request)
+    {
+        // requestにcategorynameが入っていればカテゴリーで検索
+        if ($request->has('categoryname')) {
+            $category = Category::where('category_name', $request->get('categoryname'))->first();
+
+            if (!$category) {
+                Log::error(
+                    '商品の検索操作中にエラーが発生',
+                    [
+                        'action' => 'getItems',
+                        'request' => $request
+                    ]
+                );
+                throw new CategoryNotFoundException();
+            }
+
+            $items = self::getItemDataWithRelations($category->items());
+            return $items;
+        }
+
+        //カテゴリーが入ってなければ全件渡す
+        $allItems = self::query();
+        $items = self::getItemDataWithRelations($allItems);
+        return $items;
     }
 }

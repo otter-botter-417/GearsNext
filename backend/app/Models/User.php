@@ -34,7 +34,7 @@ class User extends Model
     * @param  string $name
     * @param  string $email
     * @return void
-    * @throws UserNotFoundException ユーザーが見つからない場合にスローされます。
+    * @throws UserAlreadyRegisteredException ユーザーが既に登録されている場合にスローされます。
     */
     static function register($userFirebaseId, $name, $email)
     {

@@ -23,25 +23,4 @@ class Category extends Model
     {
         return $this->hasMany(Item::class, 'category_id');
     }
-
-    /**
-     * @param  string $categoryName
-     * @throws CategoryNotFoundException カテゴリーが見つからない場合にスローされます。
-     * @return \App\Models\Category カテゴリーのインスタンスを返します。
-     */
-    public static function ensureExists($categoryName)
-    {
-        $category = self::where('category_name', $categoryName)->first();
-        if (!$category) {
-            Log::error(
-                'カテゴリーの存在を確認操作中にエラーが発生',
-                [
-                    'action' => 'categoryEnsureExists',
-                    'categoryName' => $categoryName
-                ]
-            );
-            throw new CategoryNotFoundException($categoryName);
-        }
-        return $category;
-    }
 }

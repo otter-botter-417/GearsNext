@@ -39,4 +39,18 @@ class ColorTag extends Model
         }
         return $colorTag;
     }
+
+    /**
+     * 商品のカラータグを登録
+     * @param  array $colorNames
+     * @return void
+     * @throws ColorTagNotFoundException カラータグが見つからない場合にスローされます。
+     */
+    public function addColorTags($colorTagNames)
+    {
+        foreach ($colorTagNames as $colorTagName) {
+            $colorTag = ColorTag::ensureExists($colorTagName);
+            $this->colorTags()->attach($colorTag->color_tag_id);
+        }
+    }
 }

@@ -39,4 +39,18 @@ class ItemTag extends Model
         }
         return $itemTag;
     }
+
+    /**
+     * 商品のアイテムタグを登録
+     * @param  array $tagNames
+     * @return void
+     * @throws ItemTagNotFoundException アイテムタグが見つからない場合にスローされます。
+     */
+    public function addItemTags($itemTagNames)
+    {
+        foreach ($itemTagNames as $itemTagName) {
+            $itemTag = ItemTag::ensureExists($itemTagName);
+            $this->itemTags()->attach($itemTag->item_tag_id);
+        }
+    }
 }

@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use App\Models\Item;
+use App\Services\ItemService;
 
 class ItemController extends Controller
 {
+
+    protected $itemService;
+
+    public function __construct(ItemService $itemService)
+    {
+        $this->itemService = $itemService;
+    }
+
     //商品に関するコントローラー
 
     /**
@@ -17,7 +24,8 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
-        $items = Item::getItems($request);
+        // $items = Item::getItems($request);
+        $items = $this->itemService->getItems($request);
         return response()->json($items, 200);
     }
 
@@ -29,7 +37,7 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        Item::register($request);
+        $this->itemService->register($request);
         return response()->json(['message' => '商品登録が完了しました'], 201);
     }
 
@@ -41,7 +49,7 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-        $itemData = Item::getItemDetails($id);
+        $itemData = $this->itemService->getItemDetails($id);
         return response()->json($itemData, 200);
     }
 }

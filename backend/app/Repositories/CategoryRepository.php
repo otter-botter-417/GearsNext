@@ -44,7 +44,7 @@ class CategoryRepository implements CategoryRepositoryInterface
             Log::error(
                 'カテゴリーの存在を確認操作中にエラーが発生',
                 [
-                    'action' => 'categoryEnsureExists',
+                    'action' => 'getCategoryByNameOrThrow',
                     'categoryName' => $categoryName
                 ]
             );

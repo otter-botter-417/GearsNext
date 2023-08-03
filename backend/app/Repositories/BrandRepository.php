@@ -33,7 +33,7 @@ class BrandRepository implements BrandRepositoryInterface
             Log::error(
                 'ブランドの存在を確認操作中にエラーが発生',
                 [
-                    'action' => 'brandEnsureExists',
+                    'action' => 'getBrandByNameOrThrow',
                     'brandName' => $brandName
                 ]
             );

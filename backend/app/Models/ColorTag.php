@@ -50,7 +50,7 @@ class ColorTag extends Model
     {
         foreach ($colorTagNames as $colorTagName) {
             $colorTag = ColorTag::ensureExists($colorTagName);
-            $this->colorTags()->attach($colorTag->color_tag_id);
+            $this->attach($colorTag->color_tag_id);
         }
     }
 }

@@ -28,12 +28,13 @@ class SubCategoryRepository implements SubCategoryRepositoryInterface
      */
     public function getSubCategoryByNameOrThrow($subCategoryId)
     {
-        $subCategory = SubCategory::find($subCategoryId);
+        $subCategory = SubCategory::where('sub_category_name', $subCategoryId)->first();
+
         if (!$subCategory) {
             Log::error(
                 'サブカテゴリーの存在を確認操作中にエラーが発生',
                 [
-                    'action' => 'subCategoryEnsureExists',
+                    'action' => 'getSubCategoryByNameOrThrow',
                     'subCategoryId' => $subCategoryId
                 ]
             );

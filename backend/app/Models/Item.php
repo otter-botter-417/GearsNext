@@ -62,18 +62,4 @@ class Item extends Model
     {
         return $this->hasMany(FavoriteItem::class, 'item_id');
     }
-
-
-
-    // // ユーザーの持っている商品に追加
-    // public function addInventory($userId)
-    // {
-    //     UserInventory::create([
-    //         'user_id' => $userId,
-    //         'item_id' => $this->item_id,
-    //     ]);
-    // }
-
-
-
 }

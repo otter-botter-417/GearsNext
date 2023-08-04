@@ -69,7 +69,9 @@ class ItemService
     public function register(Request $request): void
     {
         //TODO バリデーション
-        $data = $request->all();
+        $data = $request['itemDatas'];
+
+        Log::info($request);
 
         $this->itemRepository->ensureItemNotExists($data['asin']);
 
@@ -132,7 +134,7 @@ class ItemService
             throw new CategoryNotFoundException();
         }
 
-        return $this->itemRepository->getItemsByCategory($category);
+        return $this->itemRepository->getItemsByCategory($category->category_id);
     }
 
     /**

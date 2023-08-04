@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\ItemService;
+use Illuminate\Support\Facades\Log;
 
 class ItemController extends Controller
 {
@@ -19,12 +20,11 @@ class ItemController extends Controller
 
     /**
      * 商品検索
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $request categorynameがあればカテゴリーで検索
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-        // $items = Item::getItems($request);
         $items = $this->itemService->getItems($request);
         return response()->json($items, 200);
     }
@@ -32,7 +32,7 @@ class ItemController extends Controller
     /**
      * 商品登録
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $request 
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)

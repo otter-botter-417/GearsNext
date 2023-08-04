@@ -7,6 +7,9 @@ use App\Exceptions\ItemNotFoundException;
 use App\Models\Item;
 use Illuminate\Support\Facades\Log;
 use App\Contracts\ItemRepositoryInterface;
+use App\Models\ColorTag;
+use App\Models\ItemAttribute;
+use App\Models\ItemTag;
 
 //静的メソッドはリポジトリのメソッドでは通常使わない
 //静的メソッドはモデルに書く
@@ -135,9 +138,18 @@ class EloquentItemRepository implements ItemRepositoryInterface
         $item->category_id = $entities['category']->category_id;
         $item->sub_category_id = $entities['subCategory']->sub_category_id;
 
-        $item->addColorTags($itemData['colorTags']);
-        $item->addItemTags($itemData['itemTags']);
-        $item->addItemAttributes($itemData['details'], $item->category_id);
+        // $colorTag = new ColorTag();
+        // $colorTag->addColorTags($itemData['colorTags']);
+        // $colorTag->save();
+
+        // $itemTag = new ItemTag();
+        // $itemTag->addItemTags($itemData['itemTags']);
+        // $itemTag->save();
+
+        // $itemAttributes = new ItemAttribute();
+        // $itemAttributes->addItemAttributes($itemAttributes, $item->category_id);
+        // $itemAttributes->save();
+
         $item->save();
         return $item;
     }

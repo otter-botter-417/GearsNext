@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ItemRegisterRequest;
 use Illuminate\Http\Request;
 use App\Services\ItemService;
 use Illuminate\Support\Facades\Log;
@@ -35,7 +36,7 @@ class ItemController extends Controller
      * @param  \Illuminate\Http\Request  $request 
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ItemRegisterRequest $request)
     {
         $this->itemService->register($request);
         return response()->json(['message' => '商品登録が完了しました'], 201);

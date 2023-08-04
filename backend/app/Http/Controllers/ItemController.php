@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\ItemService;
 use Illuminate\Support\Facades\Log;
-use PgSql\Lob;
 
 class ItemController extends Controller
 {
@@ -38,7 +37,6 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        Log::info($request);
         $this->itemService->register($request);
         return response()->json(['message' => '商品登録が完了しました'], 201);
     }

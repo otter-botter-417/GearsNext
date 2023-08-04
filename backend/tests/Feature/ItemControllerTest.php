@@ -18,33 +18,44 @@ class ItemControllerTest extends TestCase
     // }
 
 
-    public function test_index_returns_items()
+    /**
+     * 商品一覧をカテゴリーで取得
+     * @covers \App\Http\Controllers\ItemController::index
+     */
+    public function test_index_returns_items_category()
     {
-        // ファクトリを使用してテストデータを作成
         $this->seed();
         Item::factory()->create();
 
-        // 商品検索のエンドポイントにアクセス
         $response = $this->get('/api/items/search?categoryname=テント');
 
-
-        // レスポンスのステータスコードとデータを確認
         $response->assertStatus(200)
             ->assertJsonFragment(['item_name' => 'ソロベースEX']);
+    }
+
+    /**
+     * 商品一覧を全て取得
+     * @covers \App\Http\Controllers\ItemController::index
+     */
+    public function test_index_returns_items_all()
+    {
+        $this->seed();
+        Item::factory()->create();
 
         $response = $this->get('/api/items/search');
 
-
-        // レスポンスのステータスコードとデータを確認
         $response->assertStatus(200)
             //レスポンス中のどこかに指定JSONデータが含まれていることを宣言します。
             ->assertJsonFragment(['item_name' => 'ソロベースEX']);
     }
 
+    /**
+     * 商品登録
+     * @covers \App\Http\Controllers\ItemController::store
+     */
     public function test_store_registers_an_item()
     {
         $this->seed();
-        // テストデータを作成
         $itemData = [
             'itemDatas' => [
                 'itemName' => 'ソロベースEX',
@@ -80,31 +91,70 @@ class ItemControllerTest extends TestCase
             ],
         ];
 
-
-
-        // 商品登録のエンドポイントにPOSTリクエスト
         $response = $this->post('/api/items', $itemData);
 
-        // レスポンスのステータスコードとメッセージを確認
         $response->assertStatus(201)
             ->assertJson(['message' => '商品登録が完了しました']);
 
-        // データベースに商品が登録されたことを確認
         $this->assertDatabaseHas('items', ['item_name' => 'ソロベースEX']);
     }
 
+    /**
+     * 商品詳細を取得
+     * @covers \App\Http\Controllers\ItemController::show
+     */
     public function test_show_returns_item_details()
     {
-        // ファクトリを使用してテストデータを作成
         $this->seed();
 
         $item = Item::factory()->create();
 
-        // 商品詳細のエンドポイントにアクセス
         $response = $this->get("/api/items/{$item->item_id}");
 
-        // レスポンスのステータスコードとデータを確認
         $response->assertStatus(200)
             ->assertJsonFragment(['item_name' => $item->item_name]);
     }
+
+    /**
+     * 存在しない商品IDで商品詳細を取得
+     * @covers \App\Http\Controllers\ItemController::show
+     */
+    public function test_show_with_non_existent_item_id()
+    {
+        $nonExistentItemId = 9999; // 存在しない商品ID
+
+        $response = $this->get("/api/items/{$nonExistentItemId}");
+
+        $response->assertStatus(404)
+            ->assertJson(['message' => '商品が見つかりませんでした']);
+    }
+
+    /**
+     * 存在しないカテゴリー名で商品一覧をカテゴリーで取得
+     * @covers \App\Http\Controllers\ItemController::index
+     */
+    public function test_index_with_non_existent_category_name()
+    {
+        $this->seed();
+
+        $response = $this->get('/api/items/search?categoryname=カゴ');
+
+        $response->assertStatus(404)
+            ->assertJson(['message' => 'カテゴリーが見つかりませんでした。']);
+    }
+
+    // public function test_store_fails_when_trying_to_register_already_existing_item()
+    // {
+    //     $invalidItemData = [
+    //         'itemDatas' => [
+    //             'itemName' => '', // 無効な商品名（空文字）
+    //             // 他の必要なフィールドも同様に無効なデータを設定
+    //         ],
+    //     ];
+
+    //     $response = $this->post('/api/items', $invalidItemData);
+
+    //     $response->assertStatus(422) // 422 Unprocessable Entity
+    //         ->assertJson(['message' => 'Validation Error']);
+    // }
 }

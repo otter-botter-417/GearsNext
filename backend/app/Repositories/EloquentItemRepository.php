@@ -7,14 +7,6 @@ use App\Exceptions\ItemNotFoundException;
 use App\Models\Item;
 use Illuminate\Support\Facades\Log;
 use App\Contracts\ItemRepositoryInterface;
-use App\Models\ColorTag;
-use App\Models\ItemAttribute;
-use App\Models\ItemTag;
-
-//静的メソッドはリポジトリのメソッドでは通常使わない
-//静的メソッドはモデルに書く
-//リポジトリはデータベースの操作を行う
-//リポジトリはモデルの操作を行わない
 
 
 /**
@@ -24,16 +16,9 @@ use App\Models\ItemTag;
  */
 class EloquentItemRepository implements ItemRepositoryInterface
 {
-    // クラス内のプロパティ（変数）の宣言部分
-    // public: どこからでもアクセス可能。
-    // protected: そのクラス自体と、そのクラスを継承した子クラスからのみアクセス可能。
-    // private: そのクラス内からのみアクセス可能。
+
     protected $model;
 
-    // コンストラクタとは？
-    // コンストラクタは、オブジェクト指向プログラミングにおいて、
-    // クラスからオブジェクトを生成する際に自動的に呼び出される特殊なメソッドです。
-    // クラスのインスタンスが作成されるときに、初期設定や値の設定などを行うために使用されます。
     public function __construct(Item $item)
     {
         $this->model = $item;

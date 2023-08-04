@@ -15,10 +15,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(
-            'App\Contracts\ItemRepositoryInterface',
-            'App\Repositories\EloquentItemRepository'
-        );
+        if (config('app.env') === 'testing') {
+            // テスト環境の場合、モックリポジトリをバインド
+            $this->app->bind(ItemRepositoryInterface::class, MockEloquentItemRepository::class);
+        } else {
+            // それ以外の環境では、実際のリポジトリをバインド
+            $this->app->bind(ItemRepositoryInterface::class, EloquentItemRepository::class);
+        }
         $this->app->bind(
             'App\Contracts\BrandRepositoryInterface',
             'App\Repositories\BrandRepository'

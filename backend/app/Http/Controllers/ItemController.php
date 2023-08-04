@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ItemIndexRequest;
 use App\Http\Requests\ItemRegisterRequest;
-use Illuminate\Http\Request;
 use App\Services\ItemService;
-use Illuminate\Support\Facades\Log;
 
 class ItemController extends Controller
 {
@@ -24,7 +23,7 @@ class ItemController extends Controller
      * @param  \Illuminate\Http\Request  $request categorynameがあればカテゴリーで検索
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(ItemIndexRequest $request)
     {
         $items = $this->itemService->getItems($request);
         return response()->json($items, 200);

@@ -2,15 +2,11 @@
 
 namespace App\Providers;
 
-use App\Repositories\EloquentItemRepository;
-use App\Repositories\ItemRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     /**
-     * Register any application services.
-     *
      * @return void
      */
     public function register()
@@ -32,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\SubCategoryRepository'
         );
 
+        //Brandとかのモックを作ってないからItemだけモックを採用するとエラーが発生する為一時的にコメントアウト
         // if (config('app.env') === 'testing') {
         //     // テスト環境の場合、モックリポジトリをバインド
         //     $this->app->bind(ItemRepositoryInterface::class, MockEloquentItemRepository::class);
@@ -42,8 +39,6 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * Bootstrap any application services.
-     *
      * @return void
      */
     public function boot()

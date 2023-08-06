@@ -3,15 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\InventoryRequest;
-use App\Models\Item;
 use App\Models\User;
-use App\Models\UserInventory;
-use Illuminate\Http\Request;
 
+// 持っている物
 class UserInventoryController extends Controller
 {
-    // 持っている物
-
     /**
      * ユーザーのお気に入り商品を取得
      *

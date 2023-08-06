@@ -27,7 +27,6 @@ class Item extends Model
 
     protected $hidden = ['brand_id', 'category_id', 'sub_category_id'];
 
-    // リレーション
     public function brand()
     {
         return $this->belongsTo(Brand::class, 'brand_id');
@@ -50,7 +49,7 @@ class Item extends Model
 
     public function colorTags()
     {
-        return $this->belongsToMany(ItemTag::class, 'color_tag_relations', 'item_id', 'color_tag_id');
+        return $this->belongsToMany(ColorTag::class, 'color_tag_relations', 'item_id', 'color_tag_id');
     }
 
     public function itemAttributes()

@@ -10,6 +10,7 @@ class ItemAttribute extends Model
     use HasFactory;
 
     protected $primaryKey = 'item_attributes_id';
+
     public $timestamps = false;
 
     protected $fillable = [

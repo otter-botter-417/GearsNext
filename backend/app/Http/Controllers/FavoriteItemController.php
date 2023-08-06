@@ -5,14 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\FavoriteRequest;
 use App\Models\User;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use PgSql\Lob;
-
+// お気に入り
 class FavoriteItemController extends Controller
 {
-    // お気に入り
-
     /**
      * ユーザーのお気に入り商品を取得
      *

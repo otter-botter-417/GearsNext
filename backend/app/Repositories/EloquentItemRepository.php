@@ -4,14 +4,13 @@ namespace App\Repositories;
 
 use App\Exceptions\ItemAlreadyRegisteredException;
 use App\Exceptions\ItemNotFoundException;
+use App\Contracts\ItemRepositoryInterface;
 use App\Models\Item;
 use Illuminate\Support\Facades\Log;
-use App\Contracts\ItemRepositoryInterface;
 
 
 /**
  * 商品リポジトリ
- * 
  * @mixin ItemRepositoryInterface
  */
 class EloquentItemRepository implements ItemRepositoryInterface
@@ -122,9 +121,14 @@ class EloquentItemRepository implements ItemRepositoryInterface
         $item->weight = $itemData['weight'];
         $item->category_id = $entities['category']->category_id;
         $item->sub_category_id = $entities['subCategory']->sub_category_id;
+        //TODO　失敗したら例外を投げる
+        $item->save();
+
+        //まだここの処理でエラーが出ているので、一旦コメントアウト
 
         // $colorTag = new ColorTag();
-        // $colorTag->addColorTags($itemData['colorTags']);
+        // Log::info($item);
+        // $colorTag->addColorTags($itemData['colorTags'], $item->item_id);
         // $colorTag->save();
 
         // $itemTag = new ItemTag();
@@ -134,8 +138,23 @@ class EloquentItemRepository implements ItemRepositoryInterface
         // $itemAttributes = new ItemAttribute();
         // $itemAttributes->addItemAttributes($itemAttributes, $item->category_id);
         // $itemAttributes->save();
+        // if ($item->item_id === null) {
+        //     Log::error(
+        //         'aaa'
+        //     );
+        // }
+        // if (isset($itemData['itemTags'])) {
+        //     $item->addItemTags()->sync($itemData['itemTags']);
+        // }
 
-        $item->save();
+        // if (isset($itemData['colorTags'])) {
+        //     $item->colorTags()->sync($itemData['colorTags']);
+        // }
+
+        // if (isset($itemData['itemAttributes'])) {
+        //     $item->itemAttributes()->sync($itemData['itemAttributes']);
+        // }
+
         return $item;
     }
 

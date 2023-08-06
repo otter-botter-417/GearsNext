@@ -5,18 +5,19 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\Item;
-use Illuminate\Support\Facades\Log;
 
 class ItemControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    // public function testDatabase()
-    // {
-    //     // Run your seeder
-    //     $this->seed();
-    // }
+    protected function setUp(): void
+    {
+        parent::setUp();
 
+        $this->seed();
+
+        Item::factory()->create();
+    }
 
     /**
      * 商品一覧をカテゴリーで取得
@@ -24,9 +25,6 @@ class ItemControllerTest extends TestCase
      */
     public function test_index_returns_items_category()
     {
-        $this->seed();
-        Item::factory()->create();
-
         $response = $this->get('/api/items/search?categoryname=テント');
 
         $response->assertStatus(200)
@@ -39,9 +37,6 @@ class ItemControllerTest extends TestCase
      */
     public function test_index_returns_items_all()
     {
-        $this->seed();
-        Item::factory()->create();
-
         $response = $this->get('/api/items/search');
 
         $response->assertStatus(200)
@@ -55,7 +50,6 @@ class ItemControllerTest extends TestCase
      */
     public function test_store_registers_an_item()
     {
-        $this->seed();
         $itemData = [
             'itemDatas' => [
                 'itemName' => 'ソロベースEX',
@@ -105,8 +99,6 @@ class ItemControllerTest extends TestCase
      */
     public function test_show_returns_item_details()
     {
-        $this->seed();
-
         $item = Item::factory()->create();
 
         $response = $this->get("/api/items/{$item->item_id}");
@@ -135,8 +127,6 @@ class ItemControllerTest extends TestCase
      */
     public function test_index_with_non_existent_category_name()
     {
-        $this->seed();
-
         $response = $this->get('/api/items/search?categoryname=カゴ');
 
         $response->assertStatus(404)
@@ -157,4 +147,5 @@ class ItemControllerTest extends TestCase
     //     $response->assertStatus(422) // 422 Unprocessable Entity
     //         ->assertJson(['message' => 'Validation Error']);
     // }
+
 }

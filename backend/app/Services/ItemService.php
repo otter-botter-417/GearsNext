@@ -71,8 +71,6 @@ class ItemService
         //TODO バリデーション
         $data = $request['itemDatas'];
 
-        Log::info($request);
-
         $this->itemRepository->ensureItemNotExists($data['asin']);
 
         $entities = $this->ensureBrandAndCategoriesExist($data);
@@ -82,13 +80,13 @@ class ItemService
 
     /**
      * 商品の詳細な情報を取得
-     * @param  int $id
+     * @param  int $itemId
      * @throws ItemNotFoundException 商品が見つからない場合
      * @return \Illuminate\Database\Eloquent\Collection 商品の詳細を返します。
      */
-    public function getItemDetails(int $id): \Illuminate\Database\Eloquent\Collection
+    public function getItemDetails(int $itemId): \Illuminate\Database\Eloquent\Collection
     {
-        $item = $this->itemRepository->ensureExists($id);
+        $item = $this->itemRepository->ensureExists($itemId);
         $itemData = $this->itemRepository->getItemDataWithRelations($item);
 
         return $itemData;
@@ -165,4 +163,7 @@ class ItemService
 
         return ['brand' => $brand, 'category' => $category, 'subCategory' => $subCategory];
     }
+
+    //商品のいいね数をインクリメント
+
 }

@@ -4,14 +4,13 @@ namespace App\Repositories;
 
 use App\Exceptions\ItemAlreadyRegisteredException;
 use App\Exceptions\ItemNotFoundException;
+use App\Contracts\ItemRepositoryInterface;
 use App\Models\Item;
 use Illuminate\Support\Facades\Log;
-use App\Contracts\ItemRepositoryInterface;
-use App\Models\ColorTag;
+
 
 /**
  * 商品リポジトリ
- * 
  * @mixin ItemRepositoryInterface
  */
 class EloquentItemRepository implements ItemRepositoryInterface

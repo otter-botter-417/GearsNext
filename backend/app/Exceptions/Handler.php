@@ -54,19 +54,18 @@ class Handler extends ExceptionHandler
             return response()->json(['message' => $exception->getMessage()], 404);
         }
 
+        // ユーザーが既に登録済みの場合の例外をキャッチ
+        if ($exception instanceof UserAlreadyRegisteredException) {
+            return response()->json(['message' => $exception->getMessage()], 409);
+        }
+        // 商品が既に登録済みの場合の例外をキャッチ
+        if ($exception instanceof ItemAlreadyRegisteredException) {
+            return response()->json(['message' => $exception->getMessage()], 409);
+        }
+
         // 商品が見つからない場合の例外をキャッチ
         if ($exception instanceof ItemNotFoundException) {
             return response()->json(['message' => $exception->getMessage()], 404);
-        }
-
-        // お気に入りに商品が存在する場合の例外をキャッチ
-        if ($exception instanceof ItemAlreadyFavoritedException) {
-            return response()->json(['message' => $exception->getMessage()], 409);
-        }
-
-        // お気に入りに商品が存在しない場合の例外をキャッチ
-        if ($exception instanceof ItemNotFavoritedException) {
-            return response()->json(['message' => $exception->getMessage()], 409);
         }
 
         // 商品が既に持っている商品に存在する場合の例外をキャッチ
@@ -79,8 +78,13 @@ class Handler extends ExceptionHandler
             return response()->json(['message' => $exception->getMessage()], 409);
         }
 
-        // ユーザーが既に登録済みの場合の例外をキャッチ
-        if ($exception instanceof UserAlreadyRegisteredException) {
+        // お気に入りに商品が存在する場合の例外をキャッチ
+        if ($exception instanceof ItemAlreadyFavoritedException) {
+            return response()->json(['message' => $exception->getMessage()], 409);
+        }
+
+        // お気に入りに商品が存在しない場合の例外をキャッチ
+        if ($exception instanceof ItemNotFavoritedException) {
             return response()->json(['message' => $exception->getMessage()], 409);
         }
 
@@ -104,10 +108,7 @@ class Handler extends ExceptionHandler
             return response()->json(['message' => $exception->getMessage()], 404);
         }
 
-        // 商品が既に登録済みの場合の例外をキャッチ
-        if ($exception instanceof ItemAlreadyRegisteredException) {
-            return response()->json(['message' => $exception->getMessage()], 409);
-        }
+
 
         // 上記の例外以外は、デフォルトの処理を行う
         return parent::render($request, $exception);

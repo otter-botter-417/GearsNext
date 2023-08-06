@@ -23,12 +23,12 @@ class ColorTagTableSeeder extends Seeder
             "ホワイト",
             "ベージュ",
             "ブラウン",
-            ];
-                
-            foreach ($categories as $category) {
-                DB::table('color_tags')->insert([
-                    'color_name' => $category,
-                ]);
-            }
+        ];
+
+        foreach ($categories as $category) {
+            DB::table('color_tags')->insert([
+                'color_tag_name' => $category,
+            ]);
+        }
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\Item;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ItemControllerTest extends TestCase
 {
@@ -22,10 +23,25 @@ class ItemControllerTest extends TestCase
      * 商品一覧をカテゴリーで取得
      * @covers \App\Http\Controllers\ItemController::index
      */
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->seed();
+
+        Item::factory()->create();
+    }
+
+
+    /**
+     * 商品一覧をカテゴリーで取得
+     * @covers \App\Http\Controllers\ItemController::index
+     */
     public function test_index_returns_items_category()
     {
-        $this->seed();
-        Item::factory()->create();
+
+        // Item::factory()->create();
 
         $response = $this->get('/api/items/search?categoryname=テント');
 
@@ -33,14 +49,15 @@ class ItemControllerTest extends TestCase
             ->assertJsonFragment(['item_name' => 'ソロベースEX']);
     }
 
+
     /**
      * 商品一覧を全て取得
      * @covers \App\Http\Controllers\ItemController::index
      */
     public function test_index_returns_items_all()
     {
-        $this->seed();
-        Item::factory()->create();
+        // $this->seed();
+        // Item::factory()->create();
 
         $response = $this->get('/api/items/search');
 
@@ -55,7 +72,7 @@ class ItemControllerTest extends TestCase
      */
     public function test_store_registers_an_item()
     {
-        $this->seed();
+        // $this->seed();
         $itemData = [
             'itemDatas' => [
                 'itemName' => 'ソロベースEX',
@@ -105,7 +122,7 @@ class ItemControllerTest extends TestCase
      */
     public function test_show_returns_item_details()
     {
-        $this->seed();
+        // $this->seed();
 
         $item = Item::factory()->create();
 
@@ -135,7 +152,7 @@ class ItemControllerTest extends TestCase
      */
     public function test_index_with_non_existent_category_name()
     {
-        $this->seed();
+        // $this->seed();
 
         $response = $this->get('/api/items/search?categoryname=カゴ');
 
@@ -157,4 +174,5 @@ class ItemControllerTest extends TestCase
     //     $response->assertStatus(422) // 422 Unprocessable Entity
     //         ->assertJson(['message' => 'Validation Error']);
     // }
+
 }

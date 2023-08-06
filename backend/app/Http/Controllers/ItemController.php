@@ -6,6 +6,7 @@ use App\Http\Requests\ItemIndexRequest;
 use App\Http\Requests\ItemRegisterRequest;
 use App\Services\ItemService;
 
+//商品に関するコントローラー
 class ItemController extends Controller
 {
 
@@ -15,8 +16,6 @@ class ItemController extends Controller
     {
         $this->itemService = $itemService;
     }
-
-    //商品に関するコントローラー
 
     /**
      * 商品検索
@@ -31,7 +30,6 @@ class ItemController extends Controller
 
     /**
      * 商品登録
-     *
      * @param  \Illuminate\Http\Request  $request 
      * @return \Illuminate\Http\Response
      */
@@ -43,8 +41,7 @@ class ItemController extends Controller
 
     /**
      * 商品詳細を取得
-     *
-     * @param  int  $id
+     * @param  int  $itemId
      * @return \Illuminate\Http\Response
      */
     public function show($itemId)

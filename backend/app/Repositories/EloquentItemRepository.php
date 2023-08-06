@@ -125,6 +125,7 @@ class EloquentItemRepository implements ItemRepositoryInterface
         $item->save();
 
         //まだここの処理でエラーが出ているので、一旦コメントアウト
+        // TODO 以下のコードを修正
 
         // $colorTag = new ColorTag();
         // Log::info($item);

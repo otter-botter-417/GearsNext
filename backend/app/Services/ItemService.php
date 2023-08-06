@@ -154,7 +154,7 @@ class ItemService
      * @throws CategoryNotFoundException カテゴリーが見つからない場合
      * @throws SubCategoryNotFoundException サブカテゴリーが見つからない場合
      */
-    public function ensureBrandAndCategoriesExist(array $data): array
+    private function ensureBrandAndCategoriesExist(array $data): array
     {
         $brand = $this->brandRepository->getBrandByNameOrThrow($data['brandName']);
         $category = $this->categoryRepository->getCategoryByNameOrThrow($data['itemCategoryName']);
@@ -164,5 +164,6 @@ class ItemService
     }
 
     //商品のいいね数をインクリメント
+    //TODO 累計いいね数の取得
 
 }

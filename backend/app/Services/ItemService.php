@@ -12,6 +12,8 @@ use App\Contracts\SubCategoryRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
+//TODO 他コードも含め引数名の見直し、統一、明確な命名　id ではなくitem_id等
+
 /**
  * 商品に関するサービスクラス
  * @package App\Services
@@ -135,6 +137,7 @@ class ItemService
     }
 
     /**
+     * TODO　param名の変更　idをitem_idに
      * 商品の閲覧数をインクリメント
      * @param  int $id
      * @throws ItemNotFoundException 商品が見つからない場合

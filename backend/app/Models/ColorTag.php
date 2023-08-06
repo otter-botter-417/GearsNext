@@ -32,6 +32,7 @@ class ColorTag extends Model
 
     // 
     /**
+     * カラータグの存在を確認
      * @param  string $colorTagName
      * @throws colorTagNotFoundException カラータグが見つからない場合にスローされます。
      * @return \App\Models\colorTag カラータグのインスタンスを返します。

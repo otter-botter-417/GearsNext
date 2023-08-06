@@ -7,22 +7,17 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
-     *
      * @return void
      */
     public function up()
     {
         Schema::create('item_tags', function (Blueprint $table) {
             $table->increments('item_tag_id');
-            $table->string('item_tag_name',50);
-            
+            $table->string('item_tag_name', 50);
         });
     }
 
     /**
-     * Reverse the migrations.
-     *
      * @return void
      */
     public function down()

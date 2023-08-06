@@ -7,8 +7,6 @@ use Illuminate\Foundation\Http\FormRequest;
 class InventoryRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
-     *
      * @return bool
      */
     public function authorize()
@@ -17,8 +15,6 @@ class InventoryRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
      * @return array<string, mixed>
      */
     public function rules()
@@ -28,6 +24,10 @@ class InventoryRequest extends FormRequest
             'data.itemId' => 'required|integer',
         ];
     }
+
+    /**
+     * @return array<string, string>
+     */
     public function messages()
     {
         return [

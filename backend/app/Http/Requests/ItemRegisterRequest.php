@@ -6,11 +6,17 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ItemRegisterRequest extends FormRequest
 {
+    /**
+     * @return bool
+     */
     public function authorize()
     {
         return true;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function rules()
     {
         return [
@@ -37,6 +43,9 @@ class ItemRegisterRequest extends FormRequest
         ];
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function messages()
     {
         return [

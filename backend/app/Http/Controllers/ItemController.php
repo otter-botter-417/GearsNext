@@ -9,7 +9,6 @@ use App\Services\ItemService;
 //商品に関するコントローラー
 class ItemController extends Controller
 {
-
     protected $itemService;
 
     public function __construct(ItemService $itemService)

@@ -27,7 +27,6 @@ class Item extends Model
 
     protected $hidden = ['brand_id', 'category_id', 'sub_category_id'];
 
-    // リレーション
     public function brand()
     {
         return $this->belongsTo(Brand::class, 'brand_id');

@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Item;
 use App\Exceptions\ItemAlreadyInInventoryException;
 use App\Exceptions\ItemNotInInventoryException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Item;
 use Illuminate\Support\Facades\Log;
+
+
 
 class UserInventory extends Model
 {
@@ -25,8 +27,8 @@ class UserInventory extends Model
         return $this->belongsTo(Item::class, 'item_id');
     }
 
-    // 既にテーブルに追加されているか確認
     /*
+    * 持っている物に商品が存在するか確認
     * @param int $userId
     * @param int $itemId
     * @return bool
@@ -40,7 +42,6 @@ class UserInventory extends Model
 
     /**
      * 持っている物に追加
-     *
      * @param  string $userFirebaseId
      * @param  int    $itemId
      * @throws UserNotFoundException ユーザーが見つからない場合にスローされます。
@@ -71,7 +72,6 @@ class UserInventory extends Model
 
     /**
      * 持っている物から削除
-     *
      * @param  string $userFirebaseId
      * @param  int    $itemId
      * @throws UserNotFoundException ユーザーが見つからない場合にスローされます。
@@ -103,7 +103,6 @@ class UserInventory extends Model
 
     /**
      * ユーザーの持っている物商品を取得
-     *
      * @param  string $userFirebaseId
      * @throws UserNotFoundException ユーザーが見つからない場合にスローされます。
      * @return \Illuminate\Database\Eloquent\Collection

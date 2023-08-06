@@ -4,13 +4,12 @@ namespace App\Repositories;
 
 use App\Contracts\ItemRepositoryInterface;
 use App\Exceptions\ItemAlreadyRegisteredException;
-use Illuminate\Database\Eloquent\Collection;
 use App\Exceptions\ItemNotFoundException;
+use Illuminate\Database\Eloquent\Collection;
 
 
 /**
  * 商品リポジトリ モック
- * 
  * @mixin ItemRepositoryInterface
  */
 class MockEloquentItemRepository implements ItemRepositoryInterface

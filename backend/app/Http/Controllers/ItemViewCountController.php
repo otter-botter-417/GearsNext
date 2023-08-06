@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+// 商品ページのview_countを更新する
 class ItemViewCountController extends Controller
 {
-    // 商品ページのview_countを更新する
-
     public function update($item_id)
     {
         // Item::viewCountIncrement($id);

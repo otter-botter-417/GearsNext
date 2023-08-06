@@ -20,6 +20,7 @@ class ItemTag extends Model
 
     // 
     /**
+     * アイテムタグ名に紐づくアイテムタグIDが存在するか確認
      * @param  string $itemTagName
      * @throws ItemTagNotFoundException アイテムタグが見つからない場合にスローされます。
      * @return \App\Models\ItemTag アイテムタグのインスタンスを返します。

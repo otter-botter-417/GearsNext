@@ -29,7 +29,6 @@ class User extends Model
 
     /*
     * ユーザー登録
-    *
     * @param  string $userFirebaseId
     * @param  string $name
     * @param  string $email
@@ -53,7 +52,6 @@ class User extends Model
 
     /**
      * ユーザーIDと商品IDを取得
-     *
      * @param  string $userFirebaseId
      * @param  int    $itemId
      * @throws UserNotFoundException ユーザーが見つからない場合にスローされます。
@@ -69,7 +67,6 @@ class User extends Model
 
     /**
      * firebaseIdからユーザーIDを取得する
-     *
      * @param  string $user_firebase_id
      * @return int User ID.
      * @throws UserNotFoundException If user not found.
@@ -92,7 +89,6 @@ class User extends Model
 
     /**
      * お気に入りに追加
-     *
      * @param  string $userFirebaseId
      * @param  int    $itemId
      * @throws UserNotFoundException ユーザーが見つからない場合にスローされます。
@@ -106,7 +102,6 @@ class User extends Model
 
     /**
      * お気に入りから削除
-     *
      * @param  string $userFirebaseId
      * @param  int    $itemId
      * @throws UserNotFoundException ユーザーが見つからない場合にスローされます。
@@ -121,7 +116,6 @@ class User extends Model
 
     /**
      * ユーザーのお気に入り商品を取得
-     *
      * @param  string $userFirebaseId
      * @throws UserNotFoundException ユーザーが見つからない場合にスローされます。
      * @return \Illuminate\Database\Eloquent\Collection
@@ -132,7 +126,6 @@ class User extends Model
     }
     /**
      * 持っている物に追加
-     *
      * @param  string $userFirebaseId
      * @param  int    $itemId
      * @throws UserNotFoundException ユーザーが見つからない場合にスローされます。
@@ -146,7 +139,6 @@ class User extends Model
 
     /**
      * 持っている物から削除
-     *
      * @param  string $userFirebaseId
      * @param  int    $itemId
      * @throws UserNotFoundException ユーザーが見つからない場合にスローされます。
@@ -161,7 +153,6 @@ class User extends Model
 
     /**
      * ユーザーの持っている商品を取得
-     *
      * @param  string $userFirebaseId
      * @throws UserNotFoundException ユーザーが見つからない場合にスローされます。
      * @return \Illuminate\Database\Eloquent\Collection

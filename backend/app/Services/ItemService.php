@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-use App\Contracts\ItemRepositoryInterface;
 use App\Exceptions\CategoryNotFoundException;
 use App\Exceptions\ItemAlreadyRegisteredException;
 use App\Exceptions\ItemNotFoundException;
+use App\Contracts\ItemRepositoryInterface;
 use App\Contracts\BrandRepositoryInterface;
 use App\Contracts\CategoryRepositoryInterface;
 use App\Contracts\SubCategoryRepositoryInterface;
@@ -68,7 +68,6 @@ class ItemService
      */
     public function register(Request $request): void
     {
-        //TODO バリデーション
         $data = $request['itemDatas'];
 
         $this->itemRepository->ensureItemNotExists($data['asin']);

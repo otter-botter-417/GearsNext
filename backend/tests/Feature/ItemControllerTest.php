@@ -5,24 +5,10 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\Item;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ItemControllerTest extends TestCase
 {
     use RefreshDatabase;
-
-    // public function testDatabase()
-    // {
-    //     // Run your seeder
-    //     $this->seed();
-    // }
-
-
-    /**
-     * 商品一覧をカテゴリーで取得
-     * @covers \App\Http\Controllers\ItemController::index
-     */
 
     protected function setUp(): void
     {
@@ -33,22 +19,17 @@ class ItemControllerTest extends TestCase
         Item::factory()->create();
     }
 
-
     /**
      * 商品一覧をカテゴリーで取得
      * @covers \App\Http\Controllers\ItemController::index
      */
     public function test_index_returns_items_category()
     {
-
-        // Item::factory()->create();
-
         $response = $this->get('/api/items/search?categoryname=テント');
 
         $response->assertStatus(200)
             ->assertJsonFragment(['item_name' => 'ソロベースEX']);
     }
-
 
     /**
      * 商品一覧を全て取得
@@ -56,9 +37,6 @@ class ItemControllerTest extends TestCase
      */
     public function test_index_returns_items_all()
     {
-        // $this->seed();
-        // Item::factory()->create();
-
         $response = $this->get('/api/items/search');
 
         $response->assertStatus(200)
@@ -72,7 +50,6 @@ class ItemControllerTest extends TestCase
      */
     public function test_store_registers_an_item()
     {
-        // $this->seed();
         $itemData = [
             'itemDatas' => [
                 'itemName' => 'ソロベースEX',
@@ -122,8 +99,6 @@ class ItemControllerTest extends TestCase
      */
     public function test_show_returns_item_details()
     {
-        // $this->seed();
-
         $item = Item::factory()->create();
 
         $response = $this->get("/api/items/{$item->item_id}");
@@ -152,8 +127,6 @@ class ItemControllerTest extends TestCase
      */
     public function test_index_with_non_existent_category_name()
     {
-        // $this->seed();
-
         $response = $this->get('/api/items/search?categoryname=カゴ');
 
         $response->assertStatus(404)

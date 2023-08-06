@@ -15,8 +15,20 @@ class ColorTag extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'color_name'
+        'color_tag_name'
     ];
+
+
+    /**
+     * 商品とカラータグの関係を定義
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function colorTags()
+    {
+        // return $this->belongsToMany(ColorTagRelation::class, 'color_tag_relations', 'item_id', 'color_tag_id');
+        return $this->belongsToMany(ColorTagRelation::class, 'color_tag_relations', 'item_id', 'color_tag_id');
+    }
+
 
     // 
     /**
@@ -27,9 +39,10 @@ class ColorTag extends Model
     public static function ensureExists($colorTagName)
     {
         $colorTag = self::where('color_tag_name', $colorTagName)->first();
-        if (!$colorTag) {
+
+        if (!$colorTag) {;
             Log::error(
-                'アイテムタグの存在を確認操作中にエラーが発生',
+                'カラータグの存在を確認操作中にエラーが発生',
                 [
                     'action' => 'colorTagEnsureExists',
                     'colorTagName' => $colorTagName
@@ -37,20 +50,23 @@ class ColorTag extends Model
             );
             throw new ColorTagNotFoundException($colorTagName);
         }
+
         return $colorTag;
     }
 
     /**
      * 商品のカラータグを登録
      * @param  array $colorNames
+     * @param  int $item_id
      * @return void
      * @throws ColorTagNotFoundException カラータグが見つからない場合にスローされます。
      */
-    public function addColorTags($colorTagNames)
+    public function addColorTags($colorTagNames, $item_id)
     {
         foreach ($colorTagNames as $colorTagName) {
             $colorTag = ColorTag::ensureExists($colorTagName);
-            $this->attach($colorTag->color_tag_id);
+            // $this->colorTags()->attach($colorTag->color_tag_id);
+            $this->colorTags()->attach(['item_id' => $item_id], $colorTag->color_tag_id); // item_idを指定してカラータグを商品に関連付ける
         }
     }
 }

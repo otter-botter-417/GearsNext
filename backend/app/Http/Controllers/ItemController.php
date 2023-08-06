@@ -47,9 +47,9 @@ class ItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($itemId)
     {
-        $itemData = $this->itemService->getItemDetails($id);
+        $itemData = $this->itemService->getItemDetails($itemId);
         return response()->json($itemData, 200);
     }
 }

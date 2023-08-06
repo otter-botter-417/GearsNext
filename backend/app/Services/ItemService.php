@@ -12,6 +12,8 @@ use App\Contracts\SubCategoryRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
+//TODO 他コードも含め引数名の見直し、統一、明確な命名　id ではなくitem_id等
+
 /**
  * 商品に関するサービスクラス
  * @package App\Services
@@ -135,6 +137,7 @@ class ItemService
     }
 
     /**
+     * TODO　param名の変更　idをitem_idに
      * 商品の閲覧数をインクリメント
      * @param  int $id
      * @throws ItemNotFoundException 商品が見つからない場合
@@ -154,7 +157,7 @@ class ItemService
      * @throws CategoryNotFoundException カテゴリーが見つからない場合
      * @throws SubCategoryNotFoundException サブカテゴリーが見つからない場合
      */
-    public function ensureBrandAndCategoriesExist(array $data): array
+    private function ensureBrandAndCategoriesExist(array $data): array
     {
         $brand = $this->brandRepository->getBrandByNameOrThrow($data['brandName']);
         $category = $this->categoryRepository->getCategoryByNameOrThrow($data['itemCategoryName']);
@@ -164,5 +167,6 @@ class ItemService
     }
 
     //商品のいいね数をインクリメント
+    //TODO 累計いいね数の取得
 
 }

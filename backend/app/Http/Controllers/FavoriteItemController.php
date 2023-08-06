@@ -8,6 +8,8 @@ use App\Models\User;
 // お気に入り
 class FavoriteItemController extends Controller
 {
+    // TODO リポジトリとサービスの実装
+
     /**
      * ユーザーのお気に入り商品を取得
      *

@@ -8,6 +8,8 @@ use App\Models\User;
 // 持っている物
 class UserInventoryController extends Controller
 {
+
+    // TODO サービスとリポジトリの実装
     /**
      * ユーザーのお気に入り商品を取得
      *

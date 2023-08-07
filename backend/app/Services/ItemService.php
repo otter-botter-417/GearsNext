@@ -59,7 +59,7 @@ class ItemService
 
     /**
      * 商品を登録する
-     * @param  \Illuminate\Http\Request $request
+     * @param  array $itemData
      * @return void
      * @throws ItemAlreadyRegisteredException 商品が既に登録されている場合
      * @throws BrandNotFoundException ブランドが見つからない場合
@@ -68,15 +68,13 @@ class ItemService
      * @throws ItemTagNotFoundException アイテムタグが見つからない場合
      * @throws ColorTagNotFoundException カラータグが見つからない場合
      */
-    public function register(Request $request): void
+    public function register(array $itemData): void
     {
-        $data = $request['itemDatas'];
+        $this->itemRepository->ensureItemNotExists($itemData['asin']);
 
-        $this->itemRepository->ensureItemNotExists($data['asin']);
+        $entities = $this->ensureBrandAndCategoriesExist($itemData);
 
-        $entities = $this->ensureBrandAndCategoriesExist($data);
-
-        $this->itemRepository->createItemData($data, $entities);
+        $this->itemRepository->createItemData($itemData, $entities);
     }
 
     /**
@@ -95,16 +93,16 @@ class ItemService
 
     /**
      * 商品を検索して返す
-     * @param  \Illuminate\Http\Request $request
+     * @param  string $categoryName
      * @return \Illuminate\Database\Eloquent\Collection 商品の詳細を返します。
      * @throws ItemNotFoundException 商品が見つからない場合
      * @throws CategoryNotFoundException カテゴリーが見つからない場合
      */
-    public function getItems(Request $request): \Illuminate\Database\Eloquent\Collection
+    public function getItems(?string $categoryName): \Illuminate\Database\Eloquent\Collection
     {
         // requestにcategorynameが入っていればカテゴリーで検索
-        if ($request->has('categoryname')) {
-            return $this->getItemsByCategoryName($request->categoryname);
+        if ($categoryName) {
+            return $this->getItemsByCategoryName($categoryName);
         }
 
         //カテゴリーが入ってなければ全件渡す
@@ -151,17 +149,17 @@ class ItemService
 
     /**
      * brand category subcategoryをそれぞれ名前で検索してインスタンスを返す
-     * @param  array $data
+     * @param  array $itemData
      * @return array brand category subcategoryのインスタンスを返します。
      * @throws BrandNotFoundException ブランドが見つからない場合
      * @throws CategoryNotFoundException カテゴリーが見つからない場合
      * @throws SubCategoryNotFoundException サブカテゴリーが見つからない場合
      */
-    private function ensureBrandAndCategoriesExist(array $data): array
+    private function ensureBrandAndCategoriesExist(array $itemData): array
     {
-        $brand = $this->brandRepository->getBrandByNameOrThrow($data['brandName']);
-        $category = $this->categoryRepository->getCategoryByNameOrThrow($data['itemCategoryName']);
-        $subCategory = $this->subCategoryRepository->getSubCategoryByNameOrThrow($data['subCategoryName']);
+        $brand = $this->brandRepository->getBrandByNameOrThrow($itemData['brandName']);
+        $category = $this->categoryRepository->getCategoryByNameOrThrow($itemData['itemCategoryName']);
+        $subCategory = $this->subCategoryRepository->getSubCategoryByNameOrThrow($itemData['subCategoryName']);
 
         return ['brand' => $brand, 'category' => $category, 'subCategory' => $subCategory];
     }

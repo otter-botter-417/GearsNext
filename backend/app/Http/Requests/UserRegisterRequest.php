@@ -20,9 +20,9 @@ class UserRegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'userFirebaseId' => 'required|string',
-            'name' => 'required|string',
-            'email' => 'required|email',
+            'userFirebaseId' => 'required|string|max:50',
+            'name' => 'required|string|max:20',
+            'email' => 'required|email|max:255',
         ];
     }
 
@@ -34,10 +34,13 @@ class UserRegisterRequest extends FormRequest
         return [
             'userFirebaseId.required' => 'firebaseIDは必須です。',
             'userFirebaseId.string' => 'firebaseIDは文字列である必要があります。',
+            'userFirebaseId.max' => 'firebaseIDは50文字以内である必要があります。',
             'name.required' => '名前は必須です。',
             'name.string' => '名前は文字列である必要があります。',
+            'name.max' => '名前は20文字以内である必要があります。',
             'email.required' => 'メールアドレスは必須です。',
             'email.email' => 'メールアドレスの形式が正しくありません。',
+            'email.max' => 'メールアドレスは255文字以内である必要があります。',
         ];
     }
 }

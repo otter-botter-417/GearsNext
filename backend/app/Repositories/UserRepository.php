@@ -25,6 +25,7 @@ class UserRepository implements UserRepositoryInterface
     /**
      * ユーザーが既に登録されているか確認する
      * @param string $userFirebaseId
+     * @return void
      * @throws UserAlreadyRegisteredException ユーザーが既に登録されている場合
      */
     public function ensureUserNotExists(string $userFirebaseId): void
@@ -45,6 +46,7 @@ class UserRepository implements UserRepositoryInterface
     /**
      * メールアドレスが既に登録されているか確認する
      * @param string $email
+     * @return void
      * @throws EmailAlreadyUsedException メールアドレスが既に登録されている場合
      */
     public function ensureEmailNotExists(string $email): void
@@ -65,6 +67,9 @@ class UserRepository implements UserRepositoryInterface
     /**
      * ユーザーを登録する
      * @param string $userFirebaseId
+     * @param string $name
+     * @param string $email
+     * @return void
      * @throws UserAlreadyRegisteredException ユーザーが既に登録されている場合
      */
     public function createUserData(string $userFirebaseId, string $name, string $email): void
@@ -79,8 +84,8 @@ class UserRepository implements UserRepositoryInterface
     /**
      * firebaseIdからユーザーIDを取得する
      * @param  string $user_firebase_id
-     * @return int User ID.
-     * @throws UserNotFoundException If user not found.
+     * @return int user_id
+     * @throws UserNotFoundException ユーザーが見つからない場合
      */
     public function getUserIdByFirebaseId($user_firebase_id)
     {

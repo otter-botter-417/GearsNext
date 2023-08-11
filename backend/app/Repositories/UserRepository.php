@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Contracts\UserRepositoryInterface;
 use App\Exceptions\EmailAlreadyUsedException;
 use App\Exceptions\UserAlreadyRegisteredException;
+use App\Exceptions\UserNotFoundException;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 
@@ -73,5 +74,27 @@ class UserRepository implements UserRepositoryInterface
             'name' => $name,
             'email' => $email,
         ]);
+    }
+
+    /**
+     * firebaseIdからユーザーIDを取得する
+     * @param  string $user_firebase_id
+     * @return int User ID.
+     * @throws UserNotFoundException If user not found.
+     */
+    public function getUserIdByFirebaseId($user_firebase_id)
+    {
+        $user = $this->model->where('user_firebase_id', $user_firebase_id)->first();
+        if (!$user) {
+            Log::error(
+                'firebaseIdからユーザーIDを取得中にエラーが発生',
+                [
+                    'action' => 'getUserIdByFirebaseId',
+                    'userFirebaseId' => $user_firebase_id
+                ]
+            );
+            throw new UserNotFoundException();
+        }
+        return $user->user_id;
     }
 }

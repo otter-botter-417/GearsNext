@@ -30,7 +30,7 @@ interface ItemRepositoryInterface
      * @throws ItemNotFoundException 商品が見つからない場合
      * @return \App\Models\Item
      */
-    public function ensureExists(int $itemId): \App\Models\Item;
+    public function ensureItemExists(int $itemId): \App\Models\Item;
 
     /**
      * 商品が既に登録されているか確認

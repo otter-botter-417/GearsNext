@@ -49,14 +49,14 @@ class EloquentItemRepository implements ItemRepositoryInterface
      * @throws ItemNotFoundException 商品が見つからない場合
      * @return \App\Models\Item
      */
-    public function ensureExists(int $itemId): \App\Models\Item
+    public function ensureItemExists(int $itemId): \App\Models\Item
     {
         $item = $this->find($itemId);
         if (!$item) {
             Log::error(
                 '商品の存在を確認操作中にエラーが発生',
                 [
-                    'action' => 'itemEnsureExists',
+                    'action' => 'ensureItemExists',
                     'itemId' => $itemId
                 ]
             );

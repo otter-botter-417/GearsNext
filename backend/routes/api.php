@@ -31,8 +31,10 @@ Route::post('/user/inventory/register', [UserInventoryController::class, 'store'
 Route::post('/user/inventory/unregister', [UserInventoryController::class, 'destroy']);
 Route::post('/user/favorite/item/register', [FavoriteItemController::class, 'store']);
 Route::post('/user/favorite/item/unregister', [FavoriteItemController::class, 'destroy']);
+Route::get('/user/favorite/items/{id}', [FavoriteItemController::class, 'show']);
 
 Route::get('/user/inventory/{id}', [UserInventoryController::class, 'show']);
 
 // Route::apiResource('/items', ItemController::class);
 Route::apiResource('items', ItemController::class)->only(['index', 'show', 'store']);
+// Route::apiResource('items', FavoriteItemController::class)->only(['index', 'show', 'store']);

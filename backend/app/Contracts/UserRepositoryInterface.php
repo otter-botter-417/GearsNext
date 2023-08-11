@@ -25,4 +25,12 @@ interface UserRepositoryInterface
      * @param string $email
      */
     public function createUserData(string $userFirebaseId, string $name, string $email): void;
+
+    /**
+     * firebaseIdからユーザーIDを取得する
+     * @param  string $userFirebaseId
+     * @return int user_id
+     * @throws UserNotFoundException ユーザーが見つからない場合
+     */
+    public function getUserIdByFirebaseId($userFirebaseId);
 }

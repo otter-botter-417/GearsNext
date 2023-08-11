@@ -3,12 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FavoriteRequest;
-use App\Models\User;
+use App\Services\FavoriteItemService;
+use Illuminate\Support\Facades\Log;
 
 // お気に入り
 class FavoriteItemController extends Controller
 {
-    // TODO リポジトリとサービスの実装
+    protected $favoriteItemService;
+
+    public function __construct(FavoriteItemService $favoriteItemService)
+    {
+        $this->favoriteItemService = $favoriteItemService;
+    }
+
+    // TODO 編集と削除の実装
 
     /**
      * ユーザーのお気に入り商品を取得
@@ -16,9 +24,9 @@ class FavoriteItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function show($id)
     {
-        $favoriteItems = User::getFavoriteItems($id);
+        $favoriteItems = $this->favoriteItemService->getFavoriteItems($id);
         return response()->json($favoriteItems, 200);
     }
 
@@ -30,19 +38,19 @@ class FavoriteItemController extends Controller
      */
     public function store(FavoriteRequest $request)
     {
-        User::addFavoriteItem($request['data']['userId'], $request['data']['itemId']);
+        $this->favoriteItemService->addFavoriteItem($request->userFirebaseId, $request->itemId);
         return response()->json(['message' => 'お気に入りに登録しました。'], 201);
     }
 
     /**
      * FavoriteItemテーブルから削除する
      *
-     * @param  int  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function destroy(FavoriteRequest $request)
     {
-        User::removeFavorite($request['data']['userId'], $request['data']['itemId']);
+        $this->favoriteItemService->removeFavoriteItem($request->userFirebaseId, $request->itemId);
         return response()->json(['message' => 'お気に入りから削除しました。'], 201);
     }
 }

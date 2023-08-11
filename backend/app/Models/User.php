@@ -43,27 +43,7 @@ class User extends Model
         return [$userId, $item];
     }
 
-    /**
-     * firebaseIdからユーザーIDを取得する
-     * @param  string $user_firebase_id
-     * @return int User ID.
-     * @throws UserNotFoundException If user not found.
-     */
-    public static function getUserIdByFirebaseId($user_firebase_id)
-    {
-        $user = self::where('user_firebase_id', $user_firebase_id)->first();
-        if (!$user) {
-            Log::error(
-                'firebaseIdからユーザーIDを取得中にエラーが発生',
-                [
-                    'action' => 'getUserIdByFirebaseId',
-                    'userFirebaseId' => $user_firebase_id
-                ]
-            );
-            throw new UserNotFoundException();
-        }
-        return $user->user_id;
-    }
+
 
     /**
      * お気に入りに追加

@@ -27,28 +27,6 @@ class User extends Model
         return $this->hasMany(FavoriteItem::class, 'user_id');
     }
 
-    /*
-    * ユーザー登録
-    * @param  string $userFirebaseId
-    * @param  string $name
-    * @param  string $email
-    * @return void
-    * @throws UserAlreadyRegisteredException ユーザーが既に登録されている場合にスローされます。
-    */
-    static function register($userFirebaseId, $name, $email)
-    {
-
-        if (self::where('user_firebase_id', $userFirebaseId)->exists()) {
-            throw new UserAlreadyRegisteredException();
-        }
-
-        self::create([
-            'user_firebase_id' => $userFirebaseId,
-            'name' => $name,
-            'email' => $email,
-            'created_at' => now(),
-        ]);
-    }
 
     /**
      * ユーザーIDと商品IDを取得

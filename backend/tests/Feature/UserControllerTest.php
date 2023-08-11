@@ -61,9 +61,61 @@ class UserControllerTest extends TestCase
             'name' => 'test_user_name',
             'email' => 'test@test.com',
         ];
-        $response = $this->post('/api/users', $userData);
+        $response = $this->postJson('/api/users', $userData);
 
         $response->assertStatus(409)
             ->assertJson(['message' => 'メールアドレスは既に登録されています。']);
+    }
+
+    /**
+     * ユーザー登録時にバリデーションエラーが発生　必須項目が空
+     * @covers \App\Http\Controllers\UserController::store
+     */
+    public function test_store_register_an_user_with_required_empty()
+    {
+        $userData = [
+            'userFirebaseId' => '',
+            'name' => '',
+            'email' => '',
+        ];
+        $response = $this->postJson('/api/users', $userData);
+
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'userFirebaseId',
+                'name',
+                'email',
+            ])
+            ->assertJsonFragment([
+                "userFirebaseId" => ["firebaseIDは必須です。"],
+                "name" => ["名前は必須です。"],
+                "email" => ["メールアドレスは必須です。"],
+            ]);
+    }
+
+    /**
+     * ユーザー登録時にバリデーションエラーが発生　項目の型が不正
+     * @covers \App\Http\Controllers\ItemController::store
+     */
+    public function test_store_register_an_user_with_invalid_type()
+    {
+        $userData = [
+            'userFirebaseId' => 123,
+            'name' => 123123123123123123123123123123123123123,
+            'email' => 123,
+        ];
+        $response = $this->postJson('/api/users', $userData);
+
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'userFirebaseId',
+                'name',
+                'email',
+            ])
+            ->assertJsonFragment([
+                "userFirebaseId" => ["firebaseIDは文字列である必要があります。"],
+                "name" => ["名前は文字列である必要があります。"],
+                "email" => ["メールアドレスの形式が正しくありません。"],
+            ]);
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Exceptions;
 
+use Dotenv\Exception\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Response;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -49,6 +51,10 @@ class Handler extends ExceptionHandler
     }
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof ValidationException) {
+            return response()->json(['message' => 'バリデーションエラーが発生しました。', 'errors' => $exception->getMessage()], 422);
+        }
+
         // ユーザーが見つからない場合の例外をキャッチ
         if ($exception instanceof UserNotFoundException) {
             return response()->json(['message' => $exception->getMessage()], 404);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ItemIndexRequest;
 use App\Http\Requests\ItemRegisterRequest;
 use App\Services\ItemService;
+use Illuminate\Support\Facades\Log;
 
 //商品に関するコントローラー
 class ItemController extends Controller
@@ -26,7 +27,7 @@ class ItemController extends Controller
      */
     public function index(ItemIndexRequest $request)
     {
-        $items = $this->itemService->getItems($request);
+        $items = $this->itemService->getItems($request->categoryname);
         return response()->json($items, 200);
     }
 
@@ -37,7 +38,7 @@ class ItemController extends Controller
      */
     public function store(ItemRegisterRequest $request)
     {
-        $this->itemService->register($request);
+        $this->itemService->register($request->itemDatas);
         return response()->json(['message' => '商品登録が完了しました'], 201);
     }
 

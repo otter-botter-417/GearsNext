@@ -24,8 +24,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('users', [UserController::class, 'store']);
-Route::get('/items', [ItemController::class, 'index']);
-Route::get('/items/{id}', [ItemController::class, 'show']);
+// Route::get('/items', [ItemController::class, 'index']);
+// Route::get('/items/{id}', [ItemController::class, 'show']);
 Route::put('/items/increment-view-count/{id}', [ItemViewCountController::class, 'update']);
 Route::post('/user/inventory/register', [UserInventoryController::class, 'store']);
 Route::post('/user/inventory/unregister', [UserInventoryController::class, 'destroy']);
@@ -34,4 +34,5 @@ Route::post('/user/favorite/item/unregister', [FavoriteItemController::class, 'd
 
 Route::get('/user/inventory/{id}', [UserInventoryController::class, 'show']);
 
-Route::apiResource('/items', itemController::class);
+// Route::apiResource('/items', ItemController::class);
+Route::apiResource('items', ItemController::class)->only(['index', 'show', 'store']);

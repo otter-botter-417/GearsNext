@@ -64,6 +64,12 @@ class Handler extends ExceptionHandler
         if ($exception instanceof UserAlreadyRegisteredException) {
             return response()->json(['message' => $exception->getMessage()], 409);
         }
+
+        // メールアドレスが既に登録済みの場合の例外をキャッチ
+        if ($exception instanceof EmailAlreadyUsedException) {
+            return response()->json(['message' => $exception->getMessage()], 409);
+        }
+
         // 商品が既に登録済みの場合の例外をキャッチ
         if ($exception instanceof ItemAlreadyRegisteredException) {
             return response()->json(['message' => $exception->getMessage()], 409);

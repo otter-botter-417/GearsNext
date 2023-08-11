@@ -85,7 +85,7 @@ class ItemService
      */
     public function getItemDetails(int $itemId): \Illuminate\Database\Eloquent\Collection
     {
-        $item = $this->itemRepository->ensureExists($itemId);
+        $item = $this->itemRepository->ensureItemExists($itemId);
         $itemData = $this->itemRepository->getItemDataWithRelations($item);
 
         return $itemData;
@@ -143,7 +143,7 @@ class ItemService
      */
     public function viewCountIncrement(int $id): void
     {
-        $item = $this->itemRepository->ensureExists($id);
+        $item = $this->itemRepository->ensureItemExists($id);
         $this->itemRepository->incrementViewCount($item);
     }
 

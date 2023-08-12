@@ -18,6 +18,13 @@ interface ItemRepositoryInterface
     public function find(int $id): ?\App\Models\Item;
 
     /**
+     * 指定されたIDの配列を元に関連する商品データを取得
+     * @param  array $itemIds
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getItemsByIds(array $itemIds): \Illuminate\Database\Eloquent\Collection;
+
+    /**
      * カテゴリに基づいて商品を取得
      * @param int $categoryId カテゴリID
      * @return \Illuminate\Database\Eloquent\Collection

@@ -50,6 +50,6 @@ class FavoriteItemController extends Controller
     public function destroy(FavoriteRequest $request): \Illuminate\Http\JsonResponse
     {
         $this->favoriteItemService->removeFavoriteItem($request->userFirebaseId, $request->itemId);
-        return response()->json(['message' => 'お気に入りから削除しました。'], 201);
+        return response()->json(['message' => 'お気に入りから削除しました。'], 200);
     }
 }

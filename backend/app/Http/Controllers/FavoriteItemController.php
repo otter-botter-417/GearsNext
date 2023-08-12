@@ -20,10 +20,10 @@ class FavoriteItemController extends Controller
     /**
      * ユーザーのお気に入り商品を取得
      *
-     * @param  int  $id
+     * @param  string  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(int $id): \Illuminate\Http\JsonResponse
+    public function show(string $id): \Illuminate\Http\JsonResponse
     {
         $favoriteItems = $this->favoriteItemService->getFavoriteItems($id);
         return response()->json($favoriteItems, 200);

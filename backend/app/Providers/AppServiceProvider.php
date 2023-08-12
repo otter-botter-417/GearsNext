@@ -35,6 +35,10 @@ class AppServiceProvider extends ServiceProvider
             'App\Contracts\FavoriteItemRepositoryInterface',
             'App\Repositories\FavoriteItemRepository'
         );
+        $this->app->bind(
+            'App\Contracts\UserInventoryRepositoryInterface',
+            'App\Repositories\UserInventoryRepository'
+        );
 
         //Brandとかのモックを作ってないからItemだけモックを採用するとエラーが発生する為一時的にコメントアウト
         // if (config('app.env') === 'testing') {

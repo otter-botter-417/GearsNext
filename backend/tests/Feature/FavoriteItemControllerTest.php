@@ -110,7 +110,7 @@ class FavoriteItemControllerTest extends TestCase
 
         $response = $this->post('/api/user/favorite/item/unregister', $userData);
 
-        $response->assertStatus(201)
+        $response->assertStatus(200)
             ->assertJson(['message' => 'お気に入りから削除しました。']);
 
         $this->assertDatabaseMissing('favorite_items', ['item_id' => 1]);

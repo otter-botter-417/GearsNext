@@ -6,5 +6,5 @@ use Exception;
 
 class ItemNotInInventoryException extends Exception
 {
-    protected $message = 'お気に入りに登録されていません。';
+    protected $message = '持っている商品に登録されていません。';
 }

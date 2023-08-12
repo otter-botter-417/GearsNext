@@ -20,8 +20,8 @@ class InventoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'data.userId' => 'required|string',
-            'data.itemId' => 'required|integer',
+            'userFirebaseId' => 'required|string',
+            'itemId' => 'required|integer',
         ];
     }
 
@@ -31,10 +31,10 @@ class InventoryRequest extends FormRequest
     public function messages()
     {
         return [
-            'data.userId.required' => 'ユーザーIDは必須です。',
-            'data.itemId.required' => 'アイテムIDは必須です。',
-            'data.userId.string'  => 'ユーザーIDは文字列である必要があります。',
-            'data.itemId.integer'  => 'アイテムIDは整数である必要があります。',
+            'userFirebaseId.required' => 'ユーザーIDは必須です。',
+            'userFirebaseId.string'  => 'ユーザーIDは文字列である必要があります。',
+            'itemId.required' => 'アイテムIDは必須です。',
+            'itemId.integer'  => 'アイテムIDは整数である必要があります。',
         ];
     }
 }

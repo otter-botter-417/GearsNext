@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\FavoriteRequest;
 use App\Services\FavoriteItemService;
-use Illuminate\Support\Facades\Log;
 
 // お気に入り
 class FavoriteItemController extends Controller
 {
-    protected $favoriteItemService;
+    protected FavoriteItemService $favoriteItemService;
 
     public function __construct(FavoriteItemService $favoriteItemService)
     {
@@ -21,10 +20,10 @@ class FavoriteItemController extends Controller
     /**
      * ユーザーのお気に入り商品を取得
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  string  $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    public function show(string $id): \Illuminate\Http\JsonResponse
     {
         $favoriteItems = $this->favoriteItemService->getFavoriteItems($id);
         return response()->json($favoriteItems, 200);
@@ -34,9 +33,9 @@ class FavoriteItemController extends Controller
      * FavoriteItemテーブルに保存
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(FavoriteRequest $request)
+    public function store(FavoriteRequest $request): \Illuminate\Http\JsonResponse
     {
         $this->favoriteItemService->addFavoriteItem($request->userFirebaseId, $request->itemId);
         return response()->json(['message' => 'お気に入りに登録しました。'], 201);
@@ -46,11 +45,11 @@ class FavoriteItemController extends Controller
      * FavoriteItemテーブルから削除する
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(FavoriteRequest $request)
+    public function destroy(FavoriteRequest $request): \Illuminate\Http\JsonResponse
     {
         $this->favoriteItemService->removeFavoriteItem($request->userFirebaseId, $request->itemId);
-        return response()->json(['message' => 'お気に入りから削除しました。'], 201);
+        return response()->json(['message' => 'お気に入りから削除しました。'], 200);
     }
 }

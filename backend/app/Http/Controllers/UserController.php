@@ -18,10 +18,10 @@ class UserController extends Controller
     /**
      * Userテーブルに保存
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      * @throws UserAlreadyRegisteredException ユーザーが既に登録されている場合にスローされます。
      */
-    public function store(UserRegisterRequest $request)
+    public function store(UserRegisterRequest $request): \Illuminate\Http\JsonResponse
     {
         $this->userService->register($request->userFirebaseId, $request->name, $request->email);
         return response()->json(['message' => 'ユーザー登録が完了しました'], 201);

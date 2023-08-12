@@ -23,9 +23,9 @@ class ItemController extends Controller
     /**
      * 商品検索
      * @param  \Illuminate\Http\Request  $request categorynameがあればカテゴリーで検索
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function index(ItemIndexRequest $request)
+    public function index(ItemIndexRequest $request): \Illuminate\Http\JsonResponse
     {
         $items = $this->itemService->getItems($request->categoryname);
         return response()->json($items, 200);
@@ -34,9 +34,9 @@ class ItemController extends Controller
     /**
      * 商品登録
      * @param  \Illuminate\Http\Request  $request 
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(ItemRegisterRequest $request)
+    public function store(ItemRegisterRequest $request): \Illuminate\Http\JsonResponse
     {
         $this->itemService->register($request->itemDatas);
         return response()->json(['message' => '商品登録が完了しました'], 201);
@@ -45,9 +45,9 @@ class ItemController extends Controller
     /**
      * 商品詳細を取得
      * @param  int  $itemId
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show($itemId)
+    public function show($itemId): \Illuminate\Http\JsonResponse
     {
         $itemData = $this->itemService->getItemDetails($itemId);
         return response()->json($itemData, 200);

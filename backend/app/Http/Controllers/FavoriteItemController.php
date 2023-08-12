@@ -21,7 +21,7 @@ class FavoriteItemController extends Controller
      * ユーザーのお気に入り商品を取得
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(int $id): \Illuminate\Http\JsonResponse
     {
@@ -33,7 +33,7 @@ class FavoriteItemController extends Controller
      * FavoriteItemテーブルに保存
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(FavoriteRequest $request): \Illuminate\Http\JsonResponse
     {
@@ -45,7 +45,7 @@ class FavoriteItemController extends Controller
      * FavoriteItemテーブルから削除する
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(FavoriteRequest $request): \Illuminate\Http\JsonResponse
     {

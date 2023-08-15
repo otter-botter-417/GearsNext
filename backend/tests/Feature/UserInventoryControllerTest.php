@@ -28,7 +28,7 @@ class UserInventoryControllerTest extends TestCase
             'userFirebaseId' => 'userFirebaseId',
             'itemId' => 1,
         ];
-        $response = $this->post('/api/user/inventory/register', $userData);
+        $response = $this->post('/api/user/inventory', $userData);
 
         $response->assertStatus(201)
             ->assertJson(['message' => '持っている商品に登録しました。']);
@@ -46,14 +46,14 @@ class UserInventoryControllerTest extends TestCase
             'userFirebaseId' => 'userFirebaseId',
             'itemId' => 1,
         ];
-        $response = $this->post('/api/user/inventory/register', $userData);
+        $response = $this->post('/api/user/inventory', $userData);
 
         $response->assertStatus(201)
             ->assertJson(['message' => '持っている商品に登録しました。']);
 
         $this->assertDatabaseHas('user_inventories', ['item_id' => 1]);
 
-        $response = $this->post('/api/user/inventory/register', $userData);
+        $response = $this->post('/api/user/inventory', $userData);
 
         $response->assertStatus(409)
             ->assertJson(['message' => '既に持っている商品に登録されています。']);
@@ -69,7 +69,7 @@ class UserInventoryControllerTest extends TestCase
             'userFirebaseId' => 'userFirebaseId',
             'itemId' => 999,
         ];
-        $response = $this->post('/api/user/inventory/register', $userData);
+        $response = $this->post('/api/user/inventory', $userData);
 
         $response->assertStatus(404)
             ->assertJson(['message' => '商品が見つかりませんでした']);
@@ -85,7 +85,7 @@ class UserInventoryControllerTest extends TestCase
             'userFirebaseId' => 'notFoundUser',
             'itemId' => 1,
         ];
-        $response = $this->post('/api/user/inventory/register', $userData);
+        $response = $this->post('/api/user/inventory', $userData);
 
         $response->assertStatus(404)
             ->assertJson(['message' => 'ユーザーが見つかりませんでした']);
@@ -101,14 +101,15 @@ class UserInventoryControllerTest extends TestCase
             'userFirebaseId' => 'userFirebaseId',
             'itemId' => 1,
         ];
-        $response = $this->post('/api/user/inventory/register', $userData);
+        $response = $this->post('/api/user/inventory', $userData);
 
         $response->assertStatus(201)
             ->assertJson(['message' => '持っている商品に登録しました。']);
 
         $this->assertDatabaseHas('user_inventories', ['item_id' => 1]);
 
-        $response = $this->post('/api/user/inventory/unregister', $userData);
+        $response = $this->delete('/api/user/inventory', $userData);
+        
 
         $response->assertStatus(200)
             ->assertJson(['message' => '持っている商品から削除しました。']);
@@ -126,7 +127,7 @@ class UserInventoryControllerTest extends TestCase
             'userFirebaseId' => 'userFirebaseId',
             'itemId' => 1,
         ];
-        $response = $this->post('/api/user/inventory/register', $userData);
+        $response = $this->post('/api/user/inventory', $userData);
 
         $response->assertStatus(201)
             ->assertJson(['message' => '持っている商品に登録しました。']);

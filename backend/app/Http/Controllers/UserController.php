@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRegisterRequest;
 use App\Services\UserService;
+use Illuminate\Support\Facades\Log;
 
 // ユーザー登録
 class UserController extends Controller
@@ -23,7 +24,8 @@ class UserController extends Controller
      */
     public function store(UserRegisterRequest $request): \Illuminate\Http\JsonResponse
     {
-        $this->userService->register($request->userFirebaseId, $request->name, $request->email);
-        return response()->json(['message' => 'ユーザー登録が完了しました'], 201);
+        $user = $this->userService->register($request->name, $request->email, $request->password);
+        $token = $this->userService->createToken($user);
+        return response()->json(['token' => $token], 201);
     }
 }

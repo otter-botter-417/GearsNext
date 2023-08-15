@@ -28,7 +28,7 @@ class FavoriteItemControllerTest extends TestCase
             'userFirebaseId' => 'userFirebaseId',
             'itemId' => 1,
         ];
-        $response = $this->post('/api/user/favorite/item/register', $userData);
+        $response = $this->post('/api/user/favorite/items', $userData);
 
         $response->assertStatus(201)
             ->assertJson(['message' => 'お気に入りに登録しました。']);
@@ -46,14 +46,14 @@ class FavoriteItemControllerTest extends TestCase
             'userFirebaseId' => 'userFirebaseId',
             'itemId' => 1,
         ];
-        $response = $this->post('/api/user/favorite/item/register', $userData);
+        $response = $this->post('/api/user/favorite/items', $userData);
 
         $response->assertStatus(201)
             ->assertJson(['message' => 'お気に入りに登録しました。']);
 
         $this->assertDatabaseHas('favorite_items', ['item_id' => 1]);
 
-        $response = $this->post('/api/user/favorite/item/register', $userData);
+        $response = $this->post('/api/user/favorite/items', $userData);
 
         $response->assertStatus(409)
             ->assertJson(['message' => 'お気に入りに登録されています']);
@@ -69,7 +69,7 @@ class FavoriteItemControllerTest extends TestCase
             'userFirebaseId' => 'userFirebaseId',
             'itemId' => 99999999999,
         ];
-        $response = $this->post('/api/user/favorite/item/register', $userData);
+        $response = $this->post('/api/user/favorite/items', $userData);
 
         $response->assertStatus(404)
             ->assertJson(['message' => '商品が見つかりませんでした']);
@@ -85,7 +85,8 @@ class FavoriteItemControllerTest extends TestCase
             'userFirebaseId' => 'notFoundUserFirebaseId',
             'itemId' => 1,
         ];
-        $response = $this->post('/api/user/favorite/item/register', $userData);
+        $response = $this->post('/api/user/favorite/items', $userData);
+
 
         $response->assertStatus(404)
             ->assertJson(['message' => 'ユーザーが見つかりませんでした']);
@@ -101,14 +102,14 @@ class FavoriteItemControllerTest extends TestCase
             'userFirebaseId' => 'userFirebaseId',
             'itemId' => 1,
         ];
-        $response = $this->post('/api/user/favorite/item/register', $userData);
+        $response = $this->post('/api/user/favorite/items', $userData);
 
         $response->assertStatus(201)
             ->assertJson(['message' => 'お気に入りに登録しました。']);
 
         $this->assertDatabaseHas('favorite_items', ['item_id' => 1]);
 
-        $response = $this->post('/api/user/favorite/item/unregister', $userData);
+        $response = $this->delete('/api/user/favorite/items', $userData);
 
         $response->assertStatus(200)
             ->assertJson(['message' => 'お気に入りから削除しました。']);
@@ -129,13 +130,13 @@ class FavoriteItemControllerTest extends TestCase
             'userFirebaseId' => 'userFirebaseId',
             'itemId' => $item1->item_id,
         ];
-        $response = $this->post('/api/user/favorite/item/register', $userData);
+        $response = $this->post('/api/user/favorite/items', $userData);
 
         $userData = [
             'userFirebaseId' => 'userFirebaseId',
             'itemId' => $item2->item_id,
         ];
-        $response = $this->post('/api/user/favorite/item/register', $userData);
+        $response = $this->post('/api/user/favorite/items', $userData);
 
 
         $response = $this->get('/api/user/favorite/items/userFirebaseId');

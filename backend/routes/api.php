@@ -19,23 +19,17 @@ use App\Http\Controllers\FavoriteItemController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
+// ユーザー関連のルート
 Route::post('users', [UserController::class, 'store']);
-// Route::get('/items', [ItemController::class, 'index']);
-// Route::get('/items/{id}', [ItemController::class, 'show']);
-Route::put('/items/increment-view-count/{id}', [ItemViewCountController::class, 'update']);
-Route::post('/user/inventory/register', [UserInventoryController::class, 'store']);
-Route::post('/user/inventory/unregister', [UserInventoryController::class, 'destroy']);
-Route::get('/user/inventory/{id}', [UserInventoryController::class, 'show']);
-Route::post('/user/favorite/item/register', [FavoriteItemController::class, 'store']);
-Route::post('/user/favorite/item/unregister', [FavoriteItemController::class, 'destroy']);
-Route::get('/user/favorite/items/{id}', [FavoriteItemController::class, 'show']);
 
-
-
-// Route::apiResource('/items', ItemController::class);
+// アイテム関連のルート
 Route::apiResource('items', ItemController::class)->only(['index', 'show', 'store']);
-// Route::apiResource('items', FavoriteItemController::class)->only(['index', 'show', 'store']);
+Route::put('/items/increment-view-count/{id}', [ItemViewCountController::class, 'update']);
+
+// ユーザーのインベントリ関連のルート
+Route::apiResource('user/inventory', UserInventoryController::class)
+    ->only(['store', 'destroy', 'show']);
+
+// ユーザーのお気に入りアイテム関連のルート
+Route::apiResource('user/favorite/items', FavoriteItemController::class)
+    ->only(['store', 'destroy', 'show']);

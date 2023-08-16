@@ -10,7 +10,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserInventoryControllerTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private $token;
@@ -30,8 +29,8 @@ class UserInventoryControllerTest extends TestCase
     /**
      * ユーザーエンドポイントにリクエストを送信する
      * @param string $method HTTPメソッド（GET, POST, PUT, DELETEなど）
-     * @param string $url エンドポイントのURL
-     * @param array $data 送信するデータ
+     * @param string $url
+     * @param array $data
      * @return \Illuminate\Foundation\Testing\TestResponse
      */
     private function authorizedRequest($method, $url, $data = [])

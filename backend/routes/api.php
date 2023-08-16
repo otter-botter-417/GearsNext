@@ -34,10 +34,12 @@ Route::prefix('user')->group(function () {
 Route::apiResource('items', ItemController::class)->only(['index', 'show', 'store']);
 Route::put('/items/increment-view-count/{id}', [ItemViewCountController::class, 'update']);
 
-// ユーザーのインベントリ関連のルート
-Route::apiResource('user/inventory', UserInventoryController::class)
-    ->only(['store', 'destroy', 'show']);
 
-// ユーザーのお気に入りアイテム関連のルート
-Route::apiResource('user/favorite/items', FavoriteItemController::class)
-    ->only(['store', 'destroy', 'show']);
+Route::middleware(['auth:api'])->group(function () {
+    // ユーザーのインベントリ関連のルート
+    Route::apiResource('user/inventory', UserInventoryController::class)
+        ->only(['index', 'store', 'destroy']);
+    // ユーザーのお気に入りアイテム関連のルート
+    Route::apiResource('user/favorite/items', FavoriteItemController::class)
+        ->only(['store', 'destroy', 'show']);
+});

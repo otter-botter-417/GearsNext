@@ -43,12 +43,4 @@ interface UserRepositoryInterface
      * @return void
      */
     public function deleteUserData($userId);
-
-    /**
-     * firebaseIdからユーザーIDを取得する
-     * @param  string $userFirebaseId
-     * @return int user_id
-     * @throws UserNotFoundException ユーザーが見つからない場合
-     */
-    public function getUserIdByFirebaseId($userFirebaseId);
 }

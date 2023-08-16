@@ -66,20 +66,46 @@ class UserRepository implements UserRepositoryInterface
 
     /**
      * ユーザーを登録する
-     * @param string $userFirebaseId
      * @param string $name
      * @param string $email
-     * @return void
-     * @throws UserAlreadyRegisteredException ユーザーが既に登録されている場合
+     * @param string $password
+     * @return User
      */
-    public function createUserData(string $userFirebaseId, string $name, string $email): void
+    public function createUserData(string $name, string $email, string $password): User
     {
-        $this->model->create([
-            'user_firebase_id' => $userFirebaseId,
+
+        $user = $this->model->create([
             'name' => $name,
             'email' => $email,
+            'password' => $password
         ]);
+        return $user;
     }
+
+    /**
+     * ユーザー情報を更新する
+     * @param int $userId
+     * @param array $data
+     * @return void
+     */
+    public function updateUserData($userId, $data)
+    {
+        $user = $this->model->find($userId);
+        $user->fill($data);
+        $user->save();
+    }
+
+    /**
+     * ユーザーを削除する
+     * @param int $userId
+     * @return void
+     */
+    public function deleteUserData($userId)
+    {
+        $user = $this->model->find($userId);
+        $user->delete();
+    }
+
 
     /**
      * firebaseIdからユーザーIDを取得する

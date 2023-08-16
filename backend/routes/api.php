@@ -20,7 +20,15 @@ use App\Http\Controllers\FavoriteItemController;
 */
 
 // ユーザー関連のルート
-Route::post('users', [UserController::class, 'store']);
+Route::prefix('user')->group(function () {
+    Route::post('register', [UserController::class, 'register']);
+    Route::post('login', [UserController::class, 'login']);
+    Route::middleware(['auth:api'])->group(function () {
+        Route::post('logout', [UserController::class, 'logout']);
+        Route::post('update', [UserController::class, 'update']);
+        Route::post('delete', [UserController::class, 'delete']);
+    });
+});
 
 // アイテム関連のルート
 Route::apiResource('items', ItemController::class)->only(['index', 'show', 'store']);

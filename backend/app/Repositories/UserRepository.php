@@ -105,27 +105,4 @@ class UserRepository implements UserRepositoryInterface
         $user = $this->model->find($userId);
         $user->delete();
     }
-
-
-    /**
-     * firebaseIdからユーザーIDを取得する
-     * @param  string $userFirebaseId
-     * @return int user_id
-     * @throws UserNotFoundException ユーザーが見つからない場合
-     */
-    public function getUserIdByFirebaseId($userFirebaseId)
-    {
-        $user = $this->model->where('user_firebase_id', $userFirebaseId)->first();
-        if (!$user) {
-            Log::error(
-                'firebaseIdからユーザーIDを取得中にエラーが発生',
-                [
-                    'action' => 'getUserIdByFirebaseId',
-                    'userFirebaseId' => $userFirebaseId
-                ]
-            );
-            throw new UserNotFoundException();
-        }
-        return $user->user_id;
-    }
 }

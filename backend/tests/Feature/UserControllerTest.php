@@ -132,7 +132,7 @@ class UserControllerTest extends TestCase
         $response = $this->post('/api/user/register', $userData);
 
         $response->assertStatus(422)
-            ->assertJsonStructure(['password']);
+            ->assertJsonStructure(['email']);
     }
 
     /**

@@ -3,7 +3,12 @@
 namespace App\Services;
 
 use App\Contracts\UserRepositoryInterface;
+use App\Exceptions\LoginFailedException;
 use App\Exceptions\UserAlreadyRegisteredException;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 /**
  * 商品に関するサービスクラス
@@ -28,30 +33,96 @@ class UserService
     }
 
     /**
+     * JWTトークンを発行する
+     * @param User $user
+     * @return string
+     */
+    public function createToken(User $user): string
+    {
+        return JWTAuth::fromUser($user);
+    }
+
+    /**
+     * パスワードをハッシュ化する
+     * @param string $password
+     * @return string
+     */
+    public function hashPassword(string $password): string
+    {
+        return bcrypt($password);
+    }
+
+
+    /**
      * ユーザーを登録する
-     * @param string $userFirebaseId
      * @param string $name
      * @param string $email
-     * @return void
-     * @throws UserAlreadyRegisteredException 商品が既に登録されている場合
-     * @throws EmailAlreadyUsedException メールアドレスが既に登録されている場合
+     * @param string $password
+     * @return User
+     * @throws UserAlreadyRegisteredException 商品が既に登録されている
+     * @throws EmailAlreadyUsedException メールアドレスが既に登録されている
      */
-    public function register(string $userFirebaseId, string $name, string $email): void
+    public function register(string $name, string $email, string $password): User
     {
-        $this->userRepository->ensureUserNotExists($userFirebaseId);
-
         $this->userRepository->ensureEmailNotExists($email);
 
-        $this->userRepository->createUserData($userFirebaseId, $name, $email);
+        $password = $this->hashPassword($password);
+
+        $user = $this->userRepository->createUserData($name, $email, $password);
+
+        return $user;
+    }
+
+    /**
+     * ユーザーをログインさせる
+     * @param string $email
+     * @param string $password
+     * @return User
+     * @throws LoginFailedException 認証情報が無効
+     */
+    public function login(string $email, string $password): User
+    {
+        $credentials = [
+            'email' => $email,
+            'password' => $password,
+        ];
+        // 認証に失敗
+        if (!Auth::attempt($credentials)) {
+            throw new LoginFailedException();
+        }
+        $user = Auth::user();
+
+        return $user;
+    }
+
+    /**
+     * ユーザー情報を変更する
+     * @param int $userId
+     * @param array $data
+     * @return void
+     */
+    public function updateUserData(int $userId, array $data): void
+    {
+        $this->userRepository->updateUserData($userId, $data);
+    }
+
+    /**
+     * ユーザーを削除する
+     * @param int $userId
+     * @return void
+     */
+    public function deleteUserData(int $userId): void
+    {
+        $this->userRepository->deleteUserData($userId);
     }
 
     /**
      * お気に入りに商品を追加
      * @param  string $userFirebaseId
      * @param  int    $itemId
-     * @throws UserNotFoundException ユーザーが見つからない場合にスローされます。
-     * @throws ItemNotFoundException 商品が見つからない場合にスローされます。
-     * @throws ItemAlreadyFavoritedException お気に入りに商品が存在する場合にスローされます。
+     * @throws UserNotFoundException ユーザーが見つからない
+     * @throws ItemNotFoundException 商品が見つからない
+     * @throws ItemAlreadyFavoritedException お気に入りに商品が存在する
      */
     public function addFavoriteItem(string $userFirebaseId, int $itemId): void
     {
@@ -62,9 +133,9 @@ class UserService
      * お気に入りから商品を削除
      * @param  string $userFirebaseId
      * @param  int    $itemId
-     * @throws UserNotFoundException ユーザーが見つからない場合にスローされます。
-     * @throws ItemNotFoundException 商品が見つからない場合にスローされます。
-     * @throws ItemNotFavoritedException お気に入りに商品が存在しない場合にスローされます。
+     * @throws UserNotFoundException ユーザーが見つからない
+     * @throws ItemNotFoundException 商品が見つからない
+     * @throws ItemNotFavoritedException お気に入りに商品が存在しない
      */
     public function removeFavoriteItem(string $userFirebaseId, int $itemId): void
     {

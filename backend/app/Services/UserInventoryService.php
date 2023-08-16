@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Contracts\UserInventoryRepositoryInterface;
 use App\Contracts\ItemRepositoryInterface;
 use App\Contracts\UserRepositoryInterface;
-use Illuminate\Support\Facades\Log;
 
 /**
  * ユーザーの持っている商品に関するサービスクラス
@@ -41,10 +40,9 @@ class UserInventoryService
 
     /**
      * 持っている商品に追加
-     * @param  string $userFirebaseId
+     * @param  string $userId
      * @param  int    $itemId
      * @return void
-     * @throws UserNotFoundException ユーザーが見つからない場合
      * @throws ItemNotFoundException 商品が見つからない場合
      * @throws ItemAlreadyInInventoryException 既に持っている商品の場合
      */
@@ -60,7 +58,6 @@ class UserInventoryService
      * @param  string $userId
      * @param  int    $itemId
      * @return void
-     * @throws UserNotFoundException ユーザーが見つからない場合
      * @throws ItemNotFoundException 商品が見つからない場合
      * @throws ItemNotInInventoryException 持っている商品が見つからない場合
      */

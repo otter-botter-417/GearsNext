@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
+use Tests\TestCase;
 use App\Models\Item;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserInventoryControllerTest extends TestCase
 {

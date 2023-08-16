@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('user_id');
-            $table->string('user_firebase_id', 50)->unique(); // 主キーをuserIdに設定
             $table->string('name', 20)->unique();
             $table->string('email', 255)->unique();
+            $table->string('password', 255);
             $table->timestamps();
         });
     }

@@ -41,5 +41,5 @@ Route::middleware(['auth:api'])->group(function () {
         ->only(['index', 'store', 'destroy']);
     // ユーザーのお気に入りアイテム関連のルート
     Route::apiResource('user/favorite/items', FavoriteItemController::class)
-        ->only(['store', 'destroy', 'show']);
+        ->only(['index', 'store', 'destroy']);
 });

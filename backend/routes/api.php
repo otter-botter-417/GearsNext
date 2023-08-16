@@ -20,8 +20,6 @@ Route::prefix('user')->group(function () {
 
 // アイテム関連のルート
 Route::apiResource('items', ItemController::class)->only(['index', 'show', 'store']);
-Route::put('/items/increment-view-count/{id}', [ItemViewCountController::class, 'update']);
-
 
 Route::middleware(['auth:api'])->group(function () {
     // ユーザーのインベントリ関連のルート

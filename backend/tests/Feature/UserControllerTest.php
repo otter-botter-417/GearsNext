@@ -3,94 +3,154 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * テスト用のユーザーデータ
+     * @var array
+     */
+    private $userData = [
+        'name' => 'storeTestUserName',
+        'email' => 'storetestUser@test.com',
+        'password' => 'storeTestUserPassword',
+    ];
+
+    /**
+     * テスト用のトークン
+     * @var string
+     */
+    private $token;
+
+    /**
+     * ユーザーエンドポイントにPOSTする
+     * @param string $method
+     * @param string $token
+     * @param array $data
+     * @return \Illuminate\Foundation\Testing\TestResponse
+     */
+    private function postToUserEndpointWithToken(string $method, string $token, array $data = [])
+    {
+        return $this->withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+        ])->post('/api/user/' . $method, $data);
+    }
+
+    /**
+     * テスト前にユーザー登録を行いトークンを取得
+     */
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->seed();
+        $response = $this->post('/api/user/register', $this->userData);
+        $this->token = $response->json('token');
     }
 
     /**
+     * ユーザー登録
+     * @covers \App\Http\Controllers\UserController::register
+     */
+    public function test_user_can_register()
+    {
+        $this->assertDatabaseHas('users', ['name' => 'storeTestUserName']);
+    }
+
+    /**
+     * ログイン
+     * @covers \App\Http\Controllers\UserController::login
+     */
+    public function test_user_can_login()
+    {
+        $response = $this->post('/api/user/login', $this->userData);
+
+        $response->assertStatus(200);
+    }
+
+    /**
+     * ログアウト
+     * @covers \App\Http\Controllers\UserController::logout
+     */
+    public function test_user_can_logout()
+    {
+        $response = $this->postToUserEndpointWithToken('logout', $this->token);
+
+        $response->assertStatus(200);
+
+        $this->assertFalse(JWTAuth::setToken($this->token)->check());
+    }
+
+    /**
+     * ユーザー情報更新
+     * @covers \App\Http\Controllers\UserController::update
+     */
+    public function test_user_can_update()
+    {
+        $updateUserData = [
+            'name' => 'updateStoreTestUserName',
+            'email' => 'updateStoretestUser@test.com',
+            'password' => 'updateStoreTestUserPassword',
+            'password_confirmation' => 'updateStoreTestUserPassword',
+        ];
+
+        $response = $this->postToUserEndpointWithToken('update', $this->token, $updateUserData);
+
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('users', ['name' => 'updateStoreTestUserName']);
+    }
+
+    /**
+     * ユーザー削除
+     * @covers \App\Http\Controllers\UserController::delete
+     */
+    public function test_user_can_delete()
+    {
+        $response = $this->postToUserEndpointWithToken('delete', $this->token);
+
+        $response->assertStatus(200);
+
+        $this->assertDatabaseMissing('users', ['name' => 'storeTestUserName']);
+    }
+
+    /**
+     * 存在するユーザーのメールアドレスで登録を行うとエラー
      * @covers \App\Http\Controllers\UserController::store
      */
-    public function test_store_register_an_user()
+    public function test_registration_fails_with_duplicate_email()
     {
         $userData = [
-            'userFirebaseId' => 'store_test_user_firebase_id',
-            'name' => 'storeTestUserName',
+            'name' => 'testStoreTestUserName',
             'email' => 'storetestUser@test.com',
+            'password' => 'testStoreTestUserPassword',
         ];
-        $response = $this->post('/api/users', $userData);
 
-        $response->assertStatus(201)
-            ->assertJson(['message' => 'ユーザー登録が完了しました']);
+        $response = $this->post('/api/user/register', $userData);
 
-        $this->assertDatabaseHas('users', ['user_firebase_id' => 'store_test_user_firebase_id']);
-    }
-
-    /**
-     * @covers \App\Http\Controllers\UserController::store
-     */
-    public function test_store_register_an_user_with_already_registered_user()
-    {
-        $userData = [
-            'userFirebaseId' => 'userFirebaseId',
-            'name' => 'test_user_name',
-            'email' => 'store_test@test.co.jp',
-        ];
-        $response = $this->post('/api/users', $userData);
-
-        $response->assertStatus(409)
-            ->assertJson(['message' => 'ユーザーは既に登録されています。']);
-    }
-
-    /**
-     * @covers \App\Http\Controllers\UserController::store
-     */
-    public function test_store_register_an_user_with_already_registered_email()
-    {
-        $userData = [
-            'userFirebaseId' => 'testUserFirebaseId',
-            'name' => 'test_user_name',
-            'email' => 'test@test.com',
-        ];
-        $response = $this->postJson('/api/users', $userData);
-
-        $response->assertStatus(409)
-            ->assertJson(['message' => 'メールアドレスは既に登録されています。']);
+        $response->assertStatus(422)
+            ->assertJsonStructure(['password']);
     }
 
     /**
      * ユーザー登録時にバリデーションエラーが発生　必須項目が空
      * @covers \App\Http\Controllers\UserController::store
      */
-    public function test_store_register_an_user_with_required_empty()
+    public function test_registration_fails_with_empty_required_fields()
     {
         $userData = [
-            'userFirebaseId' => '',
             'name' => '',
             'email' => '',
+            'password' => '',
         ];
-        $response = $this->postJson('/api/users', $userData);
+
+        $response = $this->post('/api/user/register', $userData);
 
         $response->assertStatus(422)
-            ->assertJsonValidationErrors([
-                'userFirebaseId',
-                'name',
-                'email',
-            ])
-            ->assertJsonFragment([
-                "userFirebaseId" => ["firebaseIDは必須です。"],
-                "name" => ["名前は必須です。"],
-                "email" => ["メールアドレスは必須です。"],
-            ]);
+            ->assertJsonStructure(['name', 'email', 'password']);
     }
 
     /**
@@ -100,22 +160,13 @@ class UserControllerTest extends TestCase
     public function test_store_register_an_user_with_invalid_type()
     {
         $userData = [
-            'userFirebaseId' => 123,
-            'name' => 123123123123123123123123123123123123123,
-            'email' => 123,
+            'name' => 123,
+            'email' => 123123123123123,
+            'password' => 123331,
         ];
-        $response = $this->postJson('/api/users', $userData);
+        $response = $this->post('/api/user/register', $userData);
 
         $response->assertStatus(422)
-            ->assertJsonValidationErrors([
-                'userFirebaseId',
-                'name',
-                'email',
-            ])
-            ->assertJsonFragment([
-                "userFirebaseId" => ["firebaseIDは文字列である必要があります。"],
-                "name" => ["名前は文字列である必要があります。"],
-                "email" => ["メールアドレスの形式が正しくありません。"],
-            ]);
+            ->assertJsonStructure(['name', 'email', 'password']);
     }
 }

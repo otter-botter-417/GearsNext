@@ -141,9 +141,9 @@ class ItemService
      * @throws ItemNotFoundException 商品が見つからない場合
      * @return void
      */
-    public function viewCountIncrement(int $id): void
+    public function viewCountIncrement(int $itemId): void
     {
-        $item = $this->itemRepository->ensureItemExists($id);
+        $item = $this->itemRepository->ensureItemExists($itemId);
         $this->itemRepository->incrementViewCount($item);
     }
 

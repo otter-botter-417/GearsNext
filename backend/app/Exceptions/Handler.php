@@ -55,6 +55,11 @@ class Handler extends ExceptionHandler
             return response()->json(['message' => 'バリデーションエラーが発生しました。', 'errors' => $exception->getMessage()], 422);
         }
 
+        // ログインに失敗した場合の例外をキャッチ
+        if ($exception instanceof LoginFailedException) {
+            return response()->json(['message' => $exception->getMessage()], 401);
+        }
+
         // ユーザーが見つからない場合の例外をキャッチ
         if ($exception instanceof UserNotFoundException) {
             return response()->json(['message' => $exception->getMessage()], 404);

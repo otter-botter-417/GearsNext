@@ -2,12 +2,10 @@
 
 namespace App\Services;
 
-use App\Contracts\FavoriteItemRepositoryInterface;
-use App\Contracts\ItemRepositoryInterface;
 use App\Contracts\UserRepositoryInterface;
-use App\Exceptions\FavoriteItemAlreadyRegisteredException;
-use App\Models\User;
-use Illuminate\Support\Facades\Log;
+use App\Contracts\ItemRepositoryInterface;
+use App\Contracts\FavoriteItemRepositoryInterface;
+
 
 /**
  * お気に入り商品に関するサービスクラス
@@ -15,11 +13,6 @@ use Illuminate\Support\Facades\Log;
  */
 class FavoriteItemService
 {
-    /**
-     * @var FavoriteItemRepositoryInterface
-     */
-    protected $favoriteItemRepository;
-
     /**
      * @var UserRepositoryInterface
      */
@@ -30,64 +23,57 @@ class FavoriteItemService
      */
     protected $itemRepository;
 
-    public function __construct(
-        FavoriteItemRepositoryInterface $favoriteItemRepository,
-        UserRepositoryInterface $userRepository,
-        ItemRepositoryInterface $itemRepository
+    /**
+     * @var FavoriteItemRepositoryInterface
+     */
+    protected $favoriteItemRepository;
 
+    public function __construct(
+        UserRepositoryInterface $userRepository,
+        ItemRepositoryInterface $itemRepository,
+        FavoriteItemRepositoryInterface $favoriteItemRepository
     ) {
-        $this->favoriteItemRepository = $favoriteItemRepository;
         $this->userRepository = $userRepository;
         $this->itemRepository = $itemRepository;
+        $this->favoriteItemRepository = $favoriteItemRepository;
     }
 
     /**
      * お気に入りに追加
-     * @param  string $userFirebaseId
+     * @param  string $userId
      * @param  int    $itemId
-     * @throws UserNotFoundException ユーザーが見つからない場合
-     * @throws ItemNotFoundException 商品が見つからない場合
-     * @throws ItemAlreadyFavoritedException お気に入りに商品が存在する場合
+     * @throws ItemNotFoundException 商品が見つからない
+     * @throws ItemAlreadyFavoritedException お気に入りに商品が存在する
      */
-    public function addFavoriteItem($userFirebaseId, $itemId)
+    public function addFavoriteItem($userId, $itemId)
     {
-        $userId = $this->userRepository->getUserIdByFirebaseId($userFirebaseId);
-
         $this->itemRepository->ensureItemExists($itemId);
-
         $this->favoriteItemRepository->favoriteItemAlreadyExists($userId, $itemId);
-
         $this->favoriteItemRepository->addFavoriteItemData($userId, $itemId);
     }
 
     /**
      * お気に入りから削除
-     * @param  string $userFirebaseId
+     * @param  string $userId
      * @param  int    $itemId
-     * @throws UserNotFoundException ユーザーが見つからない場合
-     * @throws ItemNotFoundException 商品が見つからない場合
-     * @throws ItemNotFavoritedException お気に入りに商品が存在しない場合
+     * @throws ItemNotFoundException 商品が見つからない
+     * @throws ItemNotFavoritedException お気に入りに商品が存在しない
      */
-    public function removeFavoriteItem($userFirebaseId, $itemId)
+    public function removeFavoriteItem($userId, $itemId)
     {
-        $userId = $this->userRepository->getUserIdByFirebaseId($userFirebaseId);
-
         $this->itemRepository->ensureItemExists($itemId);
-
         $this->favoriteItemRepository->removeFavoriteItemData($userId, $itemId);
     }
 
     /**
      * ユーザーのお気に入り商品を取得
-     * @param  string $userFirebaseId
-     * @throws UserNotFoundException ユーザーが見つからない場合にスローされます。
+     * @param  string $userId
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function getFavoriteItems($userFirebaseId)
+    public function getFavoriteItems($userId)
     {
-        $userId = $this->userRepository->getUserIdByFirebaseId($userFirebaseId);
-        $favoriteItems = $this->favoriteItemRepository->getFavoriteItems($userId);
-
-        return $favoriteItems;
+        $favoriteItemIds = $this->favoriteItemRepository->getFavoriteItems($userId);
+        $userInventories = $this->itemRepository->getItemsByIds($favoriteItemIds);
+        return $userInventories;
     }
 }

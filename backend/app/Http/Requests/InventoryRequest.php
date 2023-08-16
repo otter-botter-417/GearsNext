@@ -20,7 +20,6 @@ class InventoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'userFirebaseId' => 'required|string',
             'itemId' => 'required|integer',
         ];
     }
@@ -31,8 +30,6 @@ class InventoryRequest extends FormRequest
     public function messages()
     {
         return [
-            'userFirebaseId.required' => 'ユーザーIDは必須です。',
-            'userFirebaseId.string'  => 'ユーザーIDは文字列である必要があります。',
             'itemId.required' => 'アイテムIDは必須です。',
             'itemId.integer'  => 'アイテムIDは整数である必要があります。',
         ];

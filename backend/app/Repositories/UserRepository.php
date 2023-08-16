@@ -66,40 +66,43 @@ class UserRepository implements UserRepositoryInterface
 
     /**
      * ユーザーを登録する
-     * @param string $userFirebaseId
      * @param string $name
      * @param string $email
-     * @return void
-     * @throws UserAlreadyRegisteredException ユーザーが既に登録されている場合
+     * @param string $password
+     * @return User
      */
-    public function createUserData(string $userFirebaseId, string $name, string $email): void
+    public function createUserData(string $name, string $email, string $password): User
     {
-        $this->model->create([
-            'user_firebase_id' => $userFirebaseId,
+
+        $user = $this->model->create([
             'name' => $name,
             'email' => $email,
+            'password' => $password
         ]);
+        return $user;
     }
 
     /**
-     * firebaseIdからユーザーIDを取得する
-     * @param  string $userFirebaseId
-     * @return int user_id
-     * @throws UserNotFoundException ユーザーが見つからない場合
+     * ユーザー情報を更新する
+     * @param int $userId
+     * @param array $data
+     * @return void
      */
-    public function getUserIdByFirebaseId($userFirebaseId)
+    public function updateUserData($userId, $data)
     {
-        $user = $this->model->where('user_firebase_id', $userFirebaseId)->first();
-        if (!$user) {
-            Log::error(
-                'firebaseIdからユーザーIDを取得中にエラーが発生',
-                [
-                    'action' => 'getUserIdByFirebaseId',
-                    'userFirebaseId' => $userFirebaseId
-                ]
-            );
-            throw new UserNotFoundException();
-        }
-        return $user->user_id;
+        $user = $this->model->find($userId);
+        $user->fill($data);
+        $user->save();
+    }
+
+    /**
+     * ユーザーを削除する
+     * @param int $userId
+     * @return void
+     */
+    public function deleteUserData($userId)
+    {
+        $user = $this->model->find($userId);
+        $user->delete();
     }
 }

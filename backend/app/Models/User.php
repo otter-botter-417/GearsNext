@@ -2,25 +2,34 @@
 
 namespace App\Models;
 
-use App\Exceptions\ItemAlreadyFavoritedException;
-use App\Exceptions\ItemNotFavoritedException;
-use App\Exceptions\UserAlreadyRegisteredException;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use App\Exceptions\UserNotFoundException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Log;
 
-class User extends Model
+class User extends Authenticatable implements JWTSubject
 {
     use HasFactory;
     protected $primaryKey = 'user_id';
 
 
     protected $fillable = [
-        'user_firebase_id',
         'name',
         'email',
+        'password',
     ];
+
+    // 以下のメソッドを追加
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 
     public function favorite()
     {

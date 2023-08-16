@@ -50,6 +50,7 @@ class ItemController extends Controller
     public function show($itemId): \Illuminate\Http\JsonResponse
     {
         $itemData = $this->itemService->getItemDetails($itemId);
+        $this->itemService->viewCountIncrement($itemId);
         return response()->json($itemData, 200);
     }
 }

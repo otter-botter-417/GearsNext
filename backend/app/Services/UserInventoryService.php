@@ -40,54 +40,42 @@ class UserInventoryService
 
     /**
      * 持っている商品に追加
-     * @param  string $userFirebaseId
+     * @param  string $userId
      * @param  int    $itemId
      * @return void
-     * @throws UserNotFoundException ユーザーが見つからない場合
      * @throws ItemNotFoundException 商品が見つからない場合
      * @throws ItemAlreadyInInventoryException 既に持っている商品の場合
      */
-    public function addUserInventory(string $userFirebaseId, int $itemId): void
+    public function addUserInventory(string $userId, int $itemId): void
     {
-        $userId = $this->userRepository->getUserIdByFirebaseId($userFirebaseId);
-
         $this->itemRepository->ensureItemExists($itemId);
-
         $this->userInventoryRepository->userInventoryAlreadyExists($userId, $itemId);
-
         $this->userInventoryRepository->addUserInventoryData($userId, $itemId);
     }
 
     /**
      * 持っている商品から削除
-     * @param  string $userFirebaseId
+     * @param  string $userId
      * @param  int    $itemId
      * @return void
-     * @throws UserNotFoundException ユーザーが見つからない場合
      * @throws ItemNotFoundException 商品が見つからない場合
      * @throws ItemNotInInventoryException 持っている商品が見つからない場合
      */
-    public function removeUserInventory(string $userFirebaseId, int $itemId): void
+    public function removeUserInventory(string $userId, int $itemId): void
     {
-        $userId = $this->userRepository->getUserIdByFirebaseId($userFirebaseId);
-
         $this->itemRepository->ensureItemExists($itemId);
-
         $this->userInventoryRepository->removeUserInventoryData($userId, $itemId);
     }
 
     /**
      * ユーザーの持っている商品一覧を取得
-     * @param  string $userFirebaseId
+     * @param  string $userId
      * @return \Illuminate\Database\Eloquent\Collection
-     * @throws UserNotFoundException ユーザーが見つからない場合
      */
-    public function getUserInventories(string $userFirebaseId): \Illuminate\Database\Eloquent\Collection
+    public function getUserInventories(string $userId): \Illuminate\Database\Eloquent\Collection
     {
-        $userId = $this->userRepository->getUserIdByFirebaseId($userFirebaseId);
         $userInventoryItemIds = $this->userInventoryRepository->getUserInventoryItemIds($userId);
         $userInventories = $this->itemRepository->getItemsByIds($userInventoryItemIds);
-
         return $userInventories;
     }
 }

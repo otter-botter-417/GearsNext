@@ -40,7 +40,7 @@ class EloquentItemRepository implements ItemRepositoryInterface
      */
     public function getItemsByIds(array $itemIds): \Illuminate\Database\Eloquent\Collection
     {
-        return $this->model->whereIn('id', $itemIds)->get();
+        return $this->model->whereIn('item_id', $itemIds)->get();
     }
 
     /**

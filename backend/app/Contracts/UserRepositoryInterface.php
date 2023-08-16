@@ -2,6 +2,8 @@
 
 namespace App\Contracts;
 
+use App\Models\User;
+
 interface UserRepositoryInterface
 {
     /**
@@ -20,17 +22,25 @@ interface UserRepositoryInterface
 
     /**
      * ユーザーを登録する
-     * @param string $userFirebaseId
      * @param string $name
      * @param string $email
+     * @param string $password
+     * @return User
      */
-    public function createUserData(string $userFirebaseId, string $name, string $email): void;
+    public function createUserData(string $name, string $email, string $password): User;
 
     /**
-     * firebaseIdからユーザーIDを取得する
-     * @param  string $userFirebaseId
-     * @return int user_id
-     * @throws UserNotFoundException ユーザーが見つからない場合
+     * ユーザー情報を更新する
+     * @param int $userId
+     * @param array $data
+     * @return void
      */
-    public function getUserIdByFirebaseId($userFirebaseId);
+    public function updateUserData($userId, $data);
+
+    /**
+     * ユーザーを削除する
+     * @param int $userId
+     * @return void
+     */
+    public function deleteUserData($userId);
 }

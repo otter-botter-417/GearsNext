@@ -28,7 +28,6 @@ class UserInventoryController extends Controller
 
     /**
      * UserInventoryテーブルに保存
-     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */

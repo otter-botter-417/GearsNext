@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ItemIndexRequest;
 use App\Http\Requests\ItemRegisterRequest;
 use App\Services\ItemService;
-use Illuminate\Support\Facades\Log;
 
 //商品に関するコントローラー
 class ItemController extends Controller

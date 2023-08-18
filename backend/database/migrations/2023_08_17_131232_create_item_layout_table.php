@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedInteger('layout_id');
             $table->foreign('item_id')->references('item_id')->on('items')->onDelete('cascade');
             $table->foreign('layout_id')->references('layout_id')->on('layouts')->onDelete('cascade');
+            $table->unique(['layout_id', 'item_id']);
         });
     }
 

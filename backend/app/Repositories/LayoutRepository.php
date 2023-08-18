@@ -88,7 +88,6 @@ class LayoutRepository implements LayoutRepositoryInterface
     {
         $layout->fill($data);
         $layout->save();
-        return;
     }
 
     /**
@@ -101,7 +100,6 @@ class LayoutRepository implements LayoutRepositoryInterface
     {
         TagPosition::where('layout_id', $layout->layout_id)->delete();
         $this->createLayoutItems($layout, $items);
-        return;
     }
 
     /**
@@ -112,6 +110,5 @@ class LayoutRepository implements LayoutRepositoryInterface
     public function removeLayout(Layout  $layout): void
     {
         $layout->delete();
-        return;
     }
 }

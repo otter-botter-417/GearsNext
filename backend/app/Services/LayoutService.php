@@ -55,7 +55,6 @@ class LayoutService
         $this->itemRepository->checkItemsExists($itemIds);
         $layout = $this->layoutRepository->createLayout($data['text'], $userId);
         $this->layoutRepository->createLayoutItems($layout, $data['items']);
-        return;
     }
 
     /**
@@ -82,8 +81,6 @@ class LayoutService
         $this->itemRepository->checkItemsExists($itemIds);
         $this->layoutRepository->updateLayout($layout, $data);
         $this->layoutRepository->updateLayoutItems($layout, $data['items']);
-
-        return;
     }
 
     /**
@@ -94,6 +91,5 @@ class LayoutService
     public function removeLayout(Layout  $layout): void
     {
         $this->layoutRepository->removeLayout($layout);
-        return;
     }
 }

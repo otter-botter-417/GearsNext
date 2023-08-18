@@ -86,7 +86,7 @@ class LayoutService
      * @param  \App\Models\Layout  $layout
      * @return void
      */
-    public function removeLayout(Layout  $layout): void
+    public function removeLayout(Layout $layout): void
     {
         $this->layoutRepository->removeLayout($layout);
     }

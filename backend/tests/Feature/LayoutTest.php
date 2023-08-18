@@ -17,9 +17,19 @@ class LayoutTest extends TestCase
     private $user;
 
     private $layoutData = [
-        'itemIds' => [1, 2, 3, 4],
-        'imageMap' => 'storeTestUserPassword',
         'text' => 'これはテストです。',
+        'items' => [
+            [
+                'item_id' => 1,
+                'x_position' => 10,
+                'y_position' => 20,
+            ],
+            [
+                'item_id' => 2,
+                'x_position' => 100,
+                'y_position' => 200,
+            ],
+        ]
     ];
 
     protected function setUp(): void
@@ -74,6 +84,8 @@ class LayoutTest extends TestCase
                     'updated_at',
                     'items' => [
                         '*' => [
+                            'x_position',
+                            'y_position',
                             'item_id',
                             'item_name',
                             'image_name'
@@ -105,8 +117,11 @@ class LayoutTest extends TestCase
                     'updated_at',
                     'items' => [
                         '*' => [
+                            'x_position',
+                            'y_position',
                             'item_id',
                             'item_name',
+                            'image_name'
                         ]
                     ]
                 ]
@@ -120,13 +135,28 @@ class LayoutTest extends TestCase
     public function test_user_can_update_layout()
     {
         $updateLayoutData = [
-            'itemIds' => [1, 2, 4],
-            'imageMap' => 'storeTestUserPassword',
             'text' => 'これは更新テストです。',
+            'items' => [
+                [
+                    'item_id' => 3,
+                    'x_position' => 20,
+                    'y_position' => 10,
+                ],
+                [
+                    'item_id' => 2,
+                    'x_position' => 100,
+                    'y_position' => 200,
+                ],
+            ]
         ];
         $response = $this->authorizedRequest('PUT', '/api/user/layout/1', $updateLayoutData);
         $response->assertStatus(200);
         $this->assertDatabaseHas('layouts', ['text' => 'これは更新テストです。']);
+        $this->assertDatabaseHas('tag_positions', [
+            'item_id' => 3,
+            'x_position' => 20,
+            'y_position' => 10,
+        ]);
     }
 
     /**

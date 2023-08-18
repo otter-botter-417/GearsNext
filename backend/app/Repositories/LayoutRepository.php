@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Layout;
 use App\Contracts\LayoutRepositoryInterface;
 use App\Exceptions\LayoutNotFoundException;
-
+use App\Models\TagPosition;
 
 /**
  * レイアウトに関するリポジトリクラス
@@ -48,12 +48,19 @@ class LayoutRepository implements LayoutRepositoryInterface
     /**
      * レイアウトに使われている商品を登録する
      * @param Layout $layout
-     * @param array $itemIds
+     * @param array $items
      * @return void
      */
-    public function createLayoutItems(Layout $layout, array $itemIds): void
+    public function createLayoutItems(Layout $layout, array $items): void
     {
-        $layout->items()->attach($itemIds);
+        foreach ($items as $itemData) {
+            TagPosition::create([
+                'layout_id' => $layout->layout_id,
+                'item_id' => $itemData['item_id'],
+                'x_position' => $itemData['x_position'],
+                'y_position' => $itemData['y_position']
+            ]);
+        }
     }
 
     /**
@@ -81,6 +88,19 @@ class LayoutRepository implements LayoutRepositoryInterface
     {
         $layout->fill($data);
         $layout->save();
+        return;
+    }
+
+    /**
+     * レイアウトに使われている商品を更新する
+     * @param Layout $layout
+     * @param array $items
+     * @return void
+     */
+    public function updateLayoutItems(Layout $layout, array $items): void
+    {
+        TagPosition::where('layout_id', $layout->layout_id)->delete();
+        $this->createLayoutItems($layout, $items);
         return;
     }
 

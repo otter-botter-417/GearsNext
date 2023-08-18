@@ -23,10 +23,10 @@ interface LayoutRepositoryInterface
     /**
      * レイアウトに使われている商品を登録する
      * @param Layout $layout
-     * @param array $itemIds
+     * @param array $items
      * @return void
      */
-    public function createLayoutItems(Layout $layout, array $itemIds): void;
+    public function createLayoutItems(Layout $layout, array $items): void;
 
     /**
      * レイアウトの詳細を取得する
@@ -43,6 +43,14 @@ interface LayoutRepositoryInterface
      * @return void
      */
     public function updateLayout(Layout $layout, array $data): void;
+
+    /**
+     * レイアウトに使われている商品を更新する
+     * @param Layout $layout
+     * @param array $items
+     * @return void
+     */
+    public function updateLayoutItems(Layout $layout, array $items): void;
 
     /**
      * レイアウトを削除する

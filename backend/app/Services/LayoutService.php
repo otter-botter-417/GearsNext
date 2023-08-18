@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Models\Layout;
 use App\Contracts\ItemRepositoryInterface;
 use App\Contracts\LayoutRepositoryInterface;
-
+use Illuminate\Support\Facades\Log;
 
 /**
  * 商品に関するサービスクラス
@@ -51,9 +51,10 @@ class LayoutService
      */
     public function createLayout(array $data, int $userId,): void
     {
-        $this->itemRepository->checkItemsExists($data['itemIds']);
+        $itemIds = array_column($data['items'], 'item_id');
+        $this->itemRepository->checkItemsExists($itemIds);
         $layout = $this->layoutRepository->createLayout($data['text'], $userId);
-        $this->layoutRepository->createLayoutItems($layout, $data['itemIds']);
+        $this->layoutRepository->createLayoutItems($layout, $data['items']);
         return;
     }
 
@@ -77,8 +78,11 @@ class LayoutService
      */
     public function updateLayout(Layout $layout, array $data): void
     {
-        $this->itemRepository->checkItemsExists($data['itemIds']);
+        $itemIds = array_column($data['items'], 'item_id');
+        $this->itemRepository->checkItemsExists($itemIds);
         $this->layoutRepository->updateLayout($layout, $data);
+        $this->layoutRepository->updateLayoutItems($layout, $data['items']);
+
         return;
     }
 

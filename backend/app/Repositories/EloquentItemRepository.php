@@ -76,6 +76,20 @@ class EloquentItemRepository implements ItemRepositoryInterface
     }
 
     /**
+     * 複数の商品が既に登録されているか確認
+     * @param  array $itemIds
+     * @return void
+     * @throws ItemNotFoundException 商品が見つからない場合
+     */
+    public function checkItemsExists(array $itemIds): void
+    {
+        $items = $this->model->whereIn('item_id', $itemIds)->get();
+        if ($items->count() !== count($itemIds)) {
+            throw new ItemNotFoundException();
+        }
+    }
+
+    /**
      * 商品が既に登録されているか確認
      * @param  string $asin
      * @throws ItemAlreadyRegisteredException 商品が既に登録されている場合

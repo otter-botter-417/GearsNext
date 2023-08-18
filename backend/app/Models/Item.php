@@ -61,4 +61,9 @@ class Item extends Model
     {
         return $this->hasMany(FavoriteItem::class, 'item_id');
     }
+
+    public function layouts()
+    {
+        return $this->belongsToMany(Layout::class, 'item_layout', 'item_id', 'layout_id');
+    }
 }

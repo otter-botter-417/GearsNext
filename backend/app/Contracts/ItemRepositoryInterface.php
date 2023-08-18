@@ -39,6 +39,15 @@ interface ItemRepositoryInterface
      */
     public function ensureItemExists(int $itemId): \App\Models\Item;
 
+
+    /**
+     * 複数の商品が既に登録されているか確認
+     * @param  array $itemIds
+     * @return void
+     * @throws ItemNotFoundException 商品が見つからない場合
+     */
+    public function checkItemsExists(array $itemIds): void;
+
     /**
      * 商品が既に登録されているか確認
      * @param  string $asin

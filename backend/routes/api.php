@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserInventoryController;
 use App\Http\Controllers\FavoriteItemController;
+use App\Http\Controllers\LayoutController;
 
 // ユーザー関連のルート
 Route::prefix('user')->group(function () {
@@ -20,7 +21,10 @@ Route::prefix('user')->group(function () {
 // アイテム関連のルート
 Route::apiResource('items', ItemController::class)->only(['index', 'show', 'store']);
 
+
 Route::middleware(['auth:api'])->group(function () {
+    Route::apiResource('user/layout', LayoutController::class);
+
     // ユーザーのインベントリ関連のルート
     Route::apiResource('user/inventory', UserInventoryController::class)
         ->only(['index', 'store', 'destroy']);

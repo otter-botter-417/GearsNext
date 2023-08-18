@@ -79,7 +79,6 @@ class LayoutService
         $itemIds = array_column($data['items'], 'item_id');
         $this->itemRepository->checkItemsExists($itemIds);
         $this->layoutRepository->updateLayout($layout, $data);
-        $this->layoutRepository->updateLayoutItems($layout, $data['items']);
     }
 
     /**

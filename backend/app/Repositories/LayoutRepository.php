@@ -73,7 +73,7 @@ class LayoutRepository implements LayoutRepositoryInterface
     {
         $layout = $this->model->with(['items', 'user'])->find($layoutId);
         if (!$layout) {
-            throw new LayoutNotFoundException('レイアウトが見つかりませんでした。');
+            throw new LayoutNotFoundException();
         }
         return $layout;
     }

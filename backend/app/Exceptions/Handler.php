@@ -125,6 +125,11 @@ class Handler extends ExceptionHandler
             return response()->json(['message' => $exception->getMessage()], 404);
         }
 
+        // レイアウトが見つからない場合の例外をキャッチ
+        if ($exception instanceof LayoutNotFoundException) {
+            return response()->json(['message' => $exception->getMessage()], 404);
+        }
+
 
 
         // 上記の例外以外は、デフォルトの処理を行う

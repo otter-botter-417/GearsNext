@@ -61,6 +61,7 @@ class LayoutController extends Controller
      */
     public function update(UpdateLayoutRequest $request, Layout $layout)
     {
+        $this->authorize('update', $layout);
         $data = $request->only(['text', 'itemIds']);
         $this->layoutService->updateLayout($layout, $data);
         return response()->json(['message' => 'レイアウト更新が完了しました。'], 200);
@@ -72,6 +73,7 @@ class LayoutController extends Controller
      */
     public function destroy(Layout $layout)
     {
+        $this->authorize('delete', $layout);
         $this->layoutService->removeLayout($layout);
         return response(null, 204);
     }

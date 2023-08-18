@@ -88,18 +88,8 @@ class LayoutRepository implements LayoutRepositoryInterface
     {
         $layout->fill($data);
         $layout->save();
-    }
-
-    /**
-     * レイアウトに使われている商品を更新する
-     * @param Layout $layout
-     * @param array $items
-     * @return void
-     */
-    public function updateLayoutItems(Layout $layout, array $items): void
-    {
         TagPosition::where('layout_id', $layout->layout_id)->delete();
-        $this->createLayoutItems($layout, $items);
+        $this->createLayoutItems($layout, $data['items']);
     }
 
     /**

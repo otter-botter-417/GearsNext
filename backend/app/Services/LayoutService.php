@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Models\Layout;
 use App\Contracts\ItemRepositoryInterface;
 use App\Contracts\LayoutRepositoryInterface;
-use Illuminate\Support\Facades\Log;
 
 /**
  * 商品に関するサービスクラス

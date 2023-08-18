@@ -3,9 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\Layout;
+use App\Models\TagPosition;
 use App\Contracts\LayoutRepositoryInterface;
 use App\Exceptions\LayoutNotFoundException;
-use App\Models\TagPosition;
 
 /**
  * レイアウトに関するリポジトリクラス

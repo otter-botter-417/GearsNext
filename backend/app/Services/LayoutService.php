@@ -44,9 +44,10 @@ class LayoutService
 
     /**
      * レイアウトを登録
-     * @param array $data
+     * @param array $data レイアウトデータ
      * @param int $userId
      * @return void
+     * @throws ItemNotFoundException 商品が見つからない
      */
     public function createLayout(array $data, int $userId,): void
     {
@@ -71,8 +72,9 @@ class LayoutService
     /**
      * レイアウトを更新
      * @param  \App\Models\Layout  $layout
-     * @param array $data
+     * @param array $data レイアウトデータ
      * @return void
+     * @throws ItemNotFoundException 商品が見つからない
      */
     public function updateLayout(Layout $layout, array $data): void
     {

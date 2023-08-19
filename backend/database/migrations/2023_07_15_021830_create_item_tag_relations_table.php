@@ -14,10 +14,8 @@ return new class extends Migration
         Schema::create('item_tag_relations', function (Blueprint $table) {
 
             $table->id('item_tag_relations_id');
-            $table->unsignedInteger('item_id');
-            $table->unsignedInteger('item_tag_id');
-            $table->foreign('item_id')->references('item_id')->on('items')->onDelete('cascade');
-            $table->foreign('item_tag_id')->references('item_tag_id')->on('item_tags')->onDelete('cascade');
+            $table->foreignId('item_id')->constrained('items', 'item_id')->onDelete('cascade');
+            $table->foreignId('item_tag_id')->constrained('item_tags', 'item_tag_id')->onDelete('cascade');
             $table->unique(['item_id', 'item_tag_id']); // user_idとitem_idの組み合わせにユニーク制約を追加
 
         });

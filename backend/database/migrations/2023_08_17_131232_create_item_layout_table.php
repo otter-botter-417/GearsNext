@@ -13,10 +13,8 @@ return new class extends Migration
     {
         Schema::create('item_layout', function (Blueprint $table) {
             $table->id('item_layout_id');
-            $table->unsignedInteger('item_id');
-            $table->unsignedInteger('layout_id');
-            $table->foreign('item_id')->references('item_id')->on('items')->onDelete('cascade');
-            $table->foreign('layout_id')->references('layout_id')->on('layouts')->onDelete('cascade');
+            $table->foreignId('item_id')->constrained('items', 'item_id')->onDelete('cascade');
+            $table->foreignId('layout_id')->constrained('layouts', 'layout_id')->onDelete('cascade');
             $table->unique(['layout_id', 'item_id']);
         });
     }

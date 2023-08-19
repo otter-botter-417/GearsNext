@@ -16,16 +16,7 @@ return new class extends Migration
         Schema::create('layouts', function (Blueprint $table) {
             $table->id('layout_id');
             $table->text('text', 50);
-            // $table->unsignedInteger('image_map_id');
-            // $table->foreign('image_map_id')
-            //     ->references('image_map_id')
-            //     ->on('image_maps')
-            //     ->onDelete('cascade');
-            $table->unsignedInteger('user_id');
-            $table->foreign('user_id')
-                ->references('user_id')
-                ->on('users')
-                ->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users', 'user_id')->onDelete('cascade');
             $table->integer('favorite_count')->default(0);
             $table->integer('view_count')->default(0);
             $table->timestamps();

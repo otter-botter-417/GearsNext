@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('view_item_histories', function (Blueprint $table) {
             $table->id('view_item_history_id');
             $table->foreignId('user_id')->constrained('users', 'user_id')->onDelete('cascade');
-            // $table->foreignId('item_id')->constrained()->onDelete('cascade');
+            $table->foreignId('item_id')->constrained('items', 'item_id')->onDelete('cascade');
             $table->timestamp('timestamp')->useCurrent();
             $table->timestamps();
         });

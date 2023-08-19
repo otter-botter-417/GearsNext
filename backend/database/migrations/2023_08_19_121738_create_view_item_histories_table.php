@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
-     *
      * @return void
      */
     public function up()
@@ -18,13 +16,12 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users', 'user_id')->onDelete('cascade');
             $table->foreignId('item_id')->constrained('items', 'item_id')->onDelete('cascade');
             $table->unique(['user_id', 'item_id']);
+            $table->index(['user_id', 'item_id']);
             $table->timestamps();
         });
     }
 
     /**
-     * Reverse the migrations.
-     *
      * @return void
      */
     public function down()

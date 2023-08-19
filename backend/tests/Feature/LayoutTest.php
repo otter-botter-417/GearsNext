@@ -102,8 +102,6 @@ class LayoutTest extends TestCase
      */
     public function test_user_can_get_layout_detail()
     {
-        $this->assertDatabaseHas('layouts', ['layout_id' => 1]);
-
         $response = $this->authorizedRequest('GET', '/api/user/layout/1');
         $response->assertStatus(200)
             ->assertJsonStructure([

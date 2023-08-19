@@ -5,6 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * レイアウトに関するモデルクラスです。
+ * @package App\Models
+ * @property int $layout_id
+ * @property string $text
+ * @property int $user_id
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ * 
+ */
+
 class Layout extends Model
 {
     use HasFactory;
@@ -15,13 +26,6 @@ class Layout extends Model
         'text',
         'user_id',
     ];
-
-    protected $hidden = ['image_map_id'];
-
-    public function imageMap()
-    {
-        return $this->hasMany(ImageMap::class, 'image_map_id');
-    }
 
     public function items()
     {

@@ -43,6 +43,10 @@ class AppServiceProvider extends ServiceProvider
             'App\Contracts\LayoutRepositoryInterface',
             'App\Repositories\LayoutRepository'
         );
+        $this->app->bind(
+            'App\Contracts\ViewItemHistoryRepositoryInterface',
+            'App\Repositories\ViewItemHistoryRepository'
+        );
 
         //Brandとかのモックを作ってないからItemだけモックを採用するとエラーが発生する為一時的にコメントアウト
         // if (config('app.env') === 'testing') {

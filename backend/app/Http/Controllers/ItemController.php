@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ItemIndexRequest;
 use App\Http\Requests\ItemRegisterRequest;
 use App\Services\ItemService;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 //商品に関するコントローラー
 class ItemController extends Controller
@@ -48,7 +50,7 @@ class ItemController extends Controller
      */
     public function show($itemId): \Illuminate\Http\JsonResponse
     {
-        $itemData = $this->itemService->getItemDetails($itemId);
+        $itemData = $this->itemService->getItemDetails($itemId, Auth::id());
         $this->itemService->viewCountIncrement($itemId);
         return response()->json($itemData, 200);
     }

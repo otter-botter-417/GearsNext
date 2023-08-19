@@ -47,7 +47,7 @@ class LayoutController extends Controller
     /**
      * @param  int  $id layoutId
      * @return \Illuminate\Http\Response
-     * @throws LayoutNotFoundException
+     * @throws LayoutNotFoundException レイアウトが見つからない
      * 
      */
     public function show(int $id)

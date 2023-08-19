@@ -12,7 +12,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('items', function (Blueprint $table) {
-            $table->increments('item_id'); // 主キーをuserIdに設定
+            $table->id('item_id'); // 主キーをuserIdに設定
             $table->string('item_name', 50);
             $table->unsignedInteger('brand_id'); // brand_idカラムを追加
             $table->foreign('brand_id') // 外部キーとするカラム

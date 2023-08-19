@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('color_tag_relations', function (Blueprint $table) {
 
-            $table->increments('color_tag_relations_id');
+            $table->id('color_tag_relations_id');
             $table->unsignedInteger('item_id');
             $table->unsignedInteger('color_tag_id');
             $table->foreign('item_id')->references('item_id')->on('items')->onDelete('cascade');

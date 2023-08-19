@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('layouts', function (Blueprint $table) {
-            $table->increments('layout_id');
+            $table->id('layout_id');
             $table->text('text', 50);
             // $table->unsignedInteger('image_map_id');
             // $table->foreign('image_map_id')

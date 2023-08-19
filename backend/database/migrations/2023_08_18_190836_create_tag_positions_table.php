@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tag_positions', function (Blueprint $table) {
-            $table->increments('tag_position_id');
+            $table->id('tag_position_id');
             $table->unsignedInteger('layout_id');
             $table->unsignedInteger('item_id');
             $table->integer('x_position');

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('user_inventories', function (Blueprint $table) {
-            $table->increments('user_inventories_id');
+            $table->id('user_inventories_id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('item_id');
             $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');

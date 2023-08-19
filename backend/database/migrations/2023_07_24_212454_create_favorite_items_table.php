@@ -12,7 +12,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('favorite_items', function (Blueprint $table) {
-            $table->increments('favorite_items_id');
+            $table->id('favorite_items_id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('item_id');
             $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');

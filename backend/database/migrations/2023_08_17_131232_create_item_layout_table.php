@@ -12,7 +12,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('item_layout', function (Blueprint $table) {
-            $table->id();
+            $table->id('item_layout_id');
             $table->unsignedInteger('item_id');
             $table->unsignedInteger('layout_id');
             $table->foreign('item_id')->references('item_id')->on('items')->onDelete('cascade');

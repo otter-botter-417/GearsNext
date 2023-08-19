@@ -7,7 +7,7 @@ use App\Contracts\ItemRepositoryInterface;
 use App\Contracts\LayoutRepositoryInterface;
 
 /**
- * 商品に関するサービスクラス
+ * レイアウトに関するサービスクラス
  * @package App\Services
  */
 class LayoutService
@@ -43,6 +43,16 @@ class LayoutService
     }
 
     /**
+     * 全てのレイアウトを取得
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getLayoutsAll(): \Illuminate\Database\Eloquent\Collection
+    {
+        $layouts = $this->layoutRepository->getLayoutsAll();
+        return $layouts;
+    }
+
+    /**
      * レイアウトを登録
      * @param array $data レイアウトデータ
      * @param int $userId
@@ -67,6 +77,27 @@ class LayoutService
     {
         $layout = $this->layoutRepository->getLayout($layoutId);
         return $layout;
+    }
+
+    /**
+     * レイアウトの閲覧数をインクリメント
+     * @param  \App\Models\Layout  $layout
+     * @return void
+     */
+    public function incrementLayoutViewCount(Layout $layout): void
+    {
+        $this->layoutRepository->incrementLayoutViewCount($layout);
+    }
+
+    /**
+     * レイアウトの閲覧履歴を保存
+     * @param  \App\Models\Layout  $layout
+     * @param int $userId
+     * @return void
+     */
+    public function saveViewLayoutHistory(Layout $layout, int $userId): void
+    {
+        $this->layoutRepository->saveViewLayoutHistory($layout, $userId);
     }
 
     /**

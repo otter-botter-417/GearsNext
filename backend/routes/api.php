@@ -19,12 +19,12 @@ Route::prefix('user')->group(function () {
 });
 
 // アイテム関連のルート
-Route::apiResource('items', ItemController::class)->only(['index', 'show', 'store']);
+Route::apiResource('items', ItemController::class)->only(['index', 'store']);
+Route::get('items/{id}', [ItemController::class, 'show'])->middleware('AttachUserIdToRequest');
 
 
 Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('user/layout', LayoutController::class);
-
     // ユーザーのインベントリ関連のルート
     Route::apiResource('user/inventory', UserInventoryController::class)
         ->only(['index', 'store', 'destroy']);

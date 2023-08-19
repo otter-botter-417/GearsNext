@@ -14,6 +14,12 @@ interface LayoutRepositoryInterface
     public function getLayouts(int $userId): \Illuminate\Database\Eloquent\Collection;
 
     /**
+     * 全てのレイアウトを取得する
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getLayoutsAll(): \Illuminate\Database\Eloquent\Collection;
+
+    /**
      * レイアウトを登録する
      * @param string $text
      * @param int $userId
@@ -36,6 +42,21 @@ interface LayoutRepositoryInterface
      * @throws LayoutNotFoundException
      */
     public function getLayout(int $layoutId): Layout;
+
+    /**
+     * レイアウトの閲覧数をインクリメント
+     * @param  \App\Models\Layout  $layout
+     * @return void
+     */
+    public function incrementLayoutViewCount(Layout $layout): void;
+
+    /**
+     * レイアウトの閲覧履歴を保存する
+     * @param  \App\Models\Layout  $layout
+     * @param int $userId
+     * @return void
+     */
+    public function saveViewLayoutHistory(Layout $layout, int $userId): void;
 
     /**
      * レイアウトを更新する

@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Layout;
 use App\Models\TagPosition;
+use App\Models\ViewLayoutHistory;
 use App\Contracts\LayoutRepositoryInterface;
 use App\Exceptions\LayoutNotFoundException;
 
@@ -28,6 +29,16 @@ class LayoutRepository implements LayoutRepositoryInterface
     public function getLayouts(int $userId): \Illuminate\Database\Eloquent\Collection
     {
         $layouts = $this->model->where('user_id', $userId)->with(['items', 'user'])->get();
+        return $layouts;
+    }
+
+    /**
+     * 全てのレイアウトを取得する
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getLayoutsAll(): \Illuminate\Database\Eloquent\Collection
+    {
+        $layouts = $this->model->with(['items', 'user'])->get();
         return $layouts;
     }
 
@@ -79,6 +90,29 @@ class LayoutRepository implements LayoutRepositoryInterface
         return $layout;
     }
 
+    /**
+     * レイアウトの閲覧数をインクリメント
+     * @param  \App\Models\Layout  $layout
+     * @return void
+     */
+    public function incrementLayoutViewCount(Layout $layout): void
+    {
+        $layout->increment('view_count');
+    }
+
+    /**
+     * レイアウトの閲覧履歴を保存する
+     * @param  \App\Models\Layout  $layout
+     * @param int $userId
+     * @return void
+     */
+    public function saveViewLayoutHistory(Layout $layout, int $userId): void
+    {
+        ViewLayoutHistory::updateOrInsert(
+            ['user_id' => $userId, 'layout_id' => $layout->layout_id],
+            ['updated_at' => now()]
+        );
+    }
     /**
      * レイアウトを更新
      * @param  \App\Models\Layout  $layout

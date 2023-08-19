@@ -9,6 +9,7 @@ use App\Contracts\ItemRepositoryInterface;
 use App\Contracts\BrandRepositoryInterface;
 use App\Contracts\CategoryRepositoryInterface;
 use App\Contracts\SubCategoryRepositoryInterface;
+use App\Contracts\ViewItemHistoryRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -40,6 +41,12 @@ class ItemService
      */
     protected $subCategoryRepository;
 
+    /**
+     * @var ViewItemHistoryRepositoryInterface
+     */
+    protected $viewItemHistoryRepository;
+
+
 
     // コンストラクタとは？
     // コンストラクタは、オブジェクト指向プログラミングにおいて、
@@ -49,12 +56,14 @@ class ItemService
         ItemRepositoryInterface $itemRepository,
         BrandRepositoryInterface $brandRepository,
         CategoryRepositoryInterface $categoryRepository,
-        SubCategoryRepositoryInterface $subCategoryRepository
+        SubCategoryRepositoryInterface $subCategoryRepository,
+        ViewItemHistoryRepositoryInterface $viewItemHistoryRepository
     ) {
         $this->itemRepository = $itemRepository;
         $this->brandRepository = $brandRepository;
         $this->categoryRepository = $categoryRepository;
         $this->subCategoryRepository = $subCategoryRepository;
+        $this->viewItemHistoryRepository = $viewItemHistoryRepository;
     }
 
     /**
@@ -80,13 +89,17 @@ class ItemService
     /**
      * 商品の詳細な情報を取得
      * @param  int $itemId
+     * @param  int $userId
      * @throws ItemNotFoundException 商品が見つからない場合
      * @return \Illuminate\Database\Eloquent\Collection 商品の詳細を返します。
      */
-    public function getItemDetails(int $itemId): \Illuminate\Database\Eloquent\Collection
+    public function getItemDetails(int $itemId,  ?int $userId = null): \Illuminate\Database\Eloquent\Collection
     {
         $item = $this->itemRepository->ensureItemExists($itemId);
         $itemData = $this->itemRepository->getItemDataWithRelations($item);
+        if ($userId) {
+            $this->viewItemHistoryRepository->saveViewItemHistory($userId, $itemId);
+        }
 
         return $itemData;
     }

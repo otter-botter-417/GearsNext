@@ -43,6 +43,7 @@ class ItemController extends Controller
 
     /**
      * 商品詳細を取得
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $itemId
      * @return \Illuminate\Http\JsonResponse
      */

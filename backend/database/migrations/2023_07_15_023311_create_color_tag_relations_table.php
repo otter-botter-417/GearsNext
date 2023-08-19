@@ -13,11 +13,9 @@ return new class extends Migration
     {
         Schema::create('color_tag_relations', function (Blueprint $table) {
 
-            $table->increments('color_tag_relations_id');
-            $table->unsignedInteger('item_id');
-            $table->unsignedInteger('color_tag_id');
-            $table->foreign('item_id')->references('item_id')->on('items')->onDelete('cascade');
-            $table->foreign('color_tag_id')->references('color_tag_id')->on('color_tags')->onDelete('cascade');
+            $table->id('color_tag_relations_id');
+            $table->foreignId('item_id')->constrained('items', 'item_id')->onDelete('cascade');
+            $table->foreignId('color_tag_id')->constrained('color_tags', 'color_tag_id')->onDelete('cascade');
             $table->unique(['item_id', 'color_tag_id']); // user_idとitem_idの組み合わせにユニーク制約を追加
         });
     }

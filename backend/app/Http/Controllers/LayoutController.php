@@ -35,6 +35,7 @@ class LayoutController extends Controller
     /**
      * @param  \App\Http\Requests\StoreLayoutRequest  $request
      * @return \Illuminate\Http\Response
+     * @throws ItemNotFoundException 商品が見つからない
      */
     public function store(StoreLayoutRequest $request)
     {
@@ -47,6 +48,7 @@ class LayoutController extends Controller
      * @param  int  $id layoutId
      * @return \Illuminate\Http\Response
      * @throws LayoutNotFoundException
+     * 
      */
     public function show(int $id)
     {
@@ -58,6 +60,7 @@ class LayoutController extends Controller
      * @param  \App\Http\Requests\UpdateLayoutRequest  $request
      * @param  \App\Models\Layout  $layout
      * @return \Illuminate\Http\Response
+     * @throws ItemNotFoundException 商品が見つからない
      */
     public function update(UpdateLayoutRequest $request, Layout $layout)
     {

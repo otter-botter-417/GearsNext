@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tag_positions', function (Blueprint $table) {
-            $table->id('tag_position_id');
+        Schema::create('view_item_histories', function (Blueprint $table) {
+            $table->id('view_item_history_id');
+            $table->foreignId('user_id')->constrained('users', 'user_id')->onDelete('cascade');
             $table->foreignId('item_id')->constrained('items', 'item_id')->onDelete('cascade');
-            $table->foreignId('layout_id')->constrained('layouts', 'layout_id')->onDelete('cascade');
-            $table->integer('x_position');
-            $table->integer('y_position');
+            $table->unique(['user_id', 'item_id']);
             $table->timestamps();
-            $table->unique(['layout_id', 'item_id']);
         });
     }
 
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tag_positions');
+        Schema::dropIfExists('view_item_histories');
     }
 };

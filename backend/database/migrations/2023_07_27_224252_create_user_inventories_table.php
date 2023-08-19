@@ -12,11 +12,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('user_inventories', function (Blueprint $table) {
-            $table->increments('user_inventories_id');
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('item_id');
-            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
-            $table->foreign('item_id')->references('item_id')->on('items')->onDelete('cascade');
+            $table->id('user_inventories_id');
+            $table->foreignId('user_id')->constrained('users', 'user_id')->onDelete('cascade');
+            $table->foreignId('item_id')->constrained('items', 'item_id')->onDelete('cascade');
             $table->unique(['user_id', 'item_id']); // user_idとitem_idの組み合わせにユニーク制約を追加
             $table->timestamps();
         });

@@ -102,7 +102,7 @@ class LayoutTest extends TestCase
      */
     public function test_user_can_get_layout_detail()
     {
-        $response = $this->authorizedRequest('GET', '/api/user/layout/1');
+        $response = $this->authorizedRequest('GET', '/api/user/layout/2');
         $response->assertStatus(200)
             ->assertJsonStructure([
                 'data' => [
@@ -147,7 +147,7 @@ class LayoutTest extends TestCase
                 ],
             ]
         ];
-        $response = $this->authorizedRequest('PUT', '/api/user/layout/1', $updateLayoutData);
+        $response = $this->authorizedRequest('PUT', '/api/user/layout/2', $updateLayoutData);
         $response->assertStatus(200);
         $this->assertDatabaseHas('layouts', ['text' => 'これは更新テストです。']);
         $this->assertDatabaseHas('tag_positions', [
@@ -163,8 +163,8 @@ class LayoutTest extends TestCase
      */
     public function test_user_can_delete_layout()
     {
-        $response = $this->authorizedRequest('DELETE', '/api/user/layout/1');
+        $response = $this->authorizedRequest('DELETE', '/api/user/layout/2');
         $response->assertStatus(204);
-        $this->assertDatabaseMissing('layouts', ['layout_id' => 1]);
+        $this->assertDatabaseMissing('layouts', ['layout_id' => 2]);
     }
 }

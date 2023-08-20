@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
  * このクラスではレイアウトの作成、更新、削除などの操作を提供します。
  * すべてのメソッドは認証が必要です。
  */
-class LayoutController extends Controller
+class PrivateLayoutController extends Controller
 {
     protected $layoutService;
 

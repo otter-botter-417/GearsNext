@@ -6,7 +6,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserInventoryController;
 use App\Http\Controllers\FavoriteItemController;
 use App\Http\Controllers\FavoriteLayoutController;
-use App\Http\Controllers\LayoutController;
+use App\Http\Controllers\PrivateLayoutController;
 use App\Http\Controllers\PublicLayoutController;
 
 // ユーザー関連のルート
@@ -31,12 +31,13 @@ Route::get('layout/{id}', [PublicLayoutController::class, 'show'])
 
 // アイテム関連のルート
 Route::apiResource('items', ItemController::class)->only(['index', 'store']);
-Route::get('items/{id}', [ItemController::class, 'show'])->middleware('AttachUserIdToRequest');
+Route::get('items/{id}', [ItemController::class, 'show'])
+    ->middleware('AttachUserIdToRequest');
 
 // 認証が必要なルート
 Route::middleware(['auth:api'])->group(function () {
     // ユーザーのレイアウト関連のルート
-    Route::apiResource('user/layout', LayoutController::class);
+    Route::apiResource('user/layout', PrivateLayoutController::class);
 
     // ユーザーのインベントリ関連のルート
     Route::apiResource('user/inventory', UserInventoryController::class)

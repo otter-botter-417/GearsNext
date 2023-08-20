@@ -58,7 +58,7 @@ class LayoutTest extends TestCase
 
     /**
      * レイアウトを登録
-     * @covers \App\Http\Controllers\User\LayoutController::store
+     * @covers \App\Http\Controllers\User\PrivateLayoutController::store
      */
     public function test_user_can_layout_create()
     {
@@ -67,7 +67,7 @@ class LayoutTest extends TestCase
 
     /**
      * レイアウトを取得
-     * @covers \App\Http\Controllers\User\LayoutController::index
+     * @covers \App\Http\Controllers\User\PrivateLayoutController::index
      */
     public function test_user_can_get_layouts()
     {
@@ -98,7 +98,7 @@ class LayoutTest extends TestCase
 
     /**
      * レイアウトの詳細を取得
-     * @covers \App\Http\Controllers\User\LayoutController::show
+     * @covers \App\Http\Controllers\User\PrivateLayoutController::show
      */
     public function test_user_can_get_layout_detail()
     {
@@ -128,7 +128,7 @@ class LayoutTest extends TestCase
 
     /**
      * レイアウトを更新
-     * @covers \App\Http\Controllers\User\LayoutController::update
+     * @covers \App\Http\Controllers\User\PrivateLayoutController::update
      */
     public function test_user_can_update_layout()
     {
@@ -159,7 +159,7 @@ class LayoutTest extends TestCase
 
     /**
      * レイアウトを削除
-     * @covers \App\Http\Controllers\User\LayoutController::destroy
+     * @covers \App\Http\Controllers\User\PrivateLayoutController::destroy
      */
     public function test_user_can_delete_layout()
     {

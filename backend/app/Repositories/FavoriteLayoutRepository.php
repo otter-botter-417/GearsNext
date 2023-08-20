@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Contracts\FavoriteLayoutRepositoryInterface;
 use App\Exceptions\LayoutAlreadyFavoritedException;
-use App\Exceptions\LayoutNotFavoritedException;
 use App\Models\FavoriteLayout;
 use App\Models\Layout;
 use Illuminate\Support\Facades\Log;
@@ -43,7 +42,7 @@ class FavoriteLayoutRepository implements FavoriteLayoutRepositoryInterface
                     'layoutId' => $layoutId
                 ]
             );
-            // throw new LayoutAlreadyFavoritedException();
+            throw new LayoutAlreadyFavoritedException();
         }
     }
 

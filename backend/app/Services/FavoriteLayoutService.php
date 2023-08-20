@@ -43,12 +43,10 @@ class FavoriteLayoutService
      * お気に入りに追加
      * @param  string $userId
      * @param  int    $layoutId
-     * @throws LayoutNotFoundException レイアウトが見つからない
      * @throws LayoutAlreadyFavoritedException お気に入りにレイアウトが存在する
      */
     public function addFavoriteLayout($userId, $layoutId)
     {
-        // $this->layoutRepository->ensureLayoutExists($layoutId);
         $this->favoriteLayoutRepository->favoriteLayoutAlreadyExists($userId, $layoutId);
         $this->favoriteLayoutRepository->addFavoriteLayoutData($userId, $layoutId);
     }

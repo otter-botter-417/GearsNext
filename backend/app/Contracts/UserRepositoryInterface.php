@@ -22,12 +22,12 @@ interface UserRepositoryInterface
 
     /**
      * ユーザーを登録する
-     * @param string $name
+     * @param string $userName
      * @param string $email
      * @param string $password
      * @return User
      */
-    public function createUserData(string $name, string $email, string $password): User;
+    public function createUserData(string $userName, string $email, string $password): User;
 
     /**
      * ユーザー情報を更新する

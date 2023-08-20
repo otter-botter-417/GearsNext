@@ -55,20 +55,20 @@ class UserService
 
     /**
      * ユーザーを登録する
-     * @param string $name
+     * @param string $userName
      * @param string $email
      * @param string $password
      * @return User
      * @throws UserAlreadyRegisteredException 商品が既に登録されている
      * @throws EmailAlreadyUsedException メールアドレスが既に登録されている
      */
-    public function register(string $name, string $email, string $password): User
+    public function register(string $userName, string $email, string $password): User
     {
         $this->userRepository->ensureEmailNotExists($email);
 
         $password = $this->hashPassword($password);
 
-        $user = $this->userRepository->createUserData($name, $email, $password);
+        $user = $this->userRepository->createUserData($userName, $email, $password);
 
         return $user;
     }
@@ -103,6 +103,11 @@ class UserService
      */
     public function updateUserData(int $userId, array $data): void
     {
+        $data = [
+            'user_name' => $data['userName'],
+            'email' => $data['email'],
+            'password' => $data['password'],
+        ];
         $this->userRepository->updateUserData($userId, $data);
     }
 

@@ -22,7 +22,7 @@ class UserRegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:50',
+            'userName' => 'required|string|max:50',
             'email' => 'required|email|max:255|unique:users,email,',
             'password' => 'required|string|between:6,100',
         ];
@@ -34,9 +34,9 @@ class UserRegisterRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => '名前は必須です。',
-            'name.string' => '名前は文字列である必要があります。',
-            'name.max' => '名前は20文字以内である必要があります。',
+            'userName.required' => '名前は必須です。',
+            'userName.string' => '名前は文字列である必要があります。',
+            'userName.max' => '名前は20文字以内である必要があります。',
             'email.required' => 'メールアドレスは必須です。',
             'email.email' => 'メールアドレスの形式が正しくありません。',
             'email.max' => 'メールアドレスは255文字以内である必要があります。',

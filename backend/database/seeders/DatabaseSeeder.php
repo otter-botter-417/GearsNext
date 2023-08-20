@@ -17,13 +17,15 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            UsersTableSeeder::class,
             CategoryTableSeeder::class,
             SubCategoryTableSeeder::class,
             BrandTableSeeder::class,
             ItemTagTableSeeder::class,
             ColorTagTableSeeder::class,
             ItemsTableSeeder::class,
-            UsersTableSeeder::class,
+
+            LayoutSeeder::class,
         ]);
     }
 }

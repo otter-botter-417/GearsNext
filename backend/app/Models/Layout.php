@@ -36,4 +36,9 @@ class Layout extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function tagPositions()
+    {
+        return $this->hasMany(TagPosition::class, 'layout_id');
+    }
 }

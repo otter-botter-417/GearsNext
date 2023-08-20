@@ -28,7 +28,7 @@ class LayoutRepository implements LayoutRepositoryInterface
      */
     public function getLayouts(int $userId): \Illuminate\Database\Eloquent\Collection
     {
-        $layouts = $this->model->where('user_id', $userId)->with(['items', 'user'])->get();
+        $layouts = $this->model->where('user_id', $userId)->with(['items', 'tagPositions'])->get();
         return $layouts;
     }
 
@@ -40,6 +40,16 @@ class LayoutRepository implements LayoutRepositoryInterface
     {
         $layouts = $this->model->with(['items', 'user'])->get();
         return $layouts;
+    }
+
+    /**
+     * 指定されたIDの配列を元に関連するレイアウトデータを取得
+     * @param  array $layoutIds
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getLayoutsByIds(array $layoutIds): \Illuminate\Database\Eloquent\Collection
+    {
+        return $this->model->whereIn('layout_id', $layoutIds)->with(['user', 'tagPositions'])->get();
     }
 
     /**

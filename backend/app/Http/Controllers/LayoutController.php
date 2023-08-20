@@ -74,7 +74,7 @@ class LayoutController extends Controller
      * @param  \App\Models\Layout  $layout
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Layout $layout)
+    public function destroy(Layout $layout): \Illuminate\Http\Response
     {
         $this->authorize('delete', $layout);
         $this->layoutService->removeLayout($layout);

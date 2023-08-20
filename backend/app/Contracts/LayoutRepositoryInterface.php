@@ -20,6 +20,13 @@ interface LayoutRepositoryInterface
     public function getLayoutsAll(): \Illuminate\Database\Eloquent\Collection;
 
     /**
+     * 指定されたIDの配列を元に関連するレイアウトデータを取得
+     * @param  array $layoutIds
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getLayoutsByIds(array $layoutIds): \Illuminate\Database\Eloquent\Collection;
+
+    /**
      * レイアウトを登録する
      * @param string $text
      * @param int $userId

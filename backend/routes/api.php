@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserInventoryController;
 use App\Http\Controllers\FavoriteItemController;
+use App\Http\Controllers\FavoriteLayoutController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\PublicLayoutController;
 
@@ -44,4 +45,8 @@ Route::middleware(['auth:api'])->group(function () {
     // ユーザーのお気に入りアイテム関連のルート
     Route::apiResource('user/favorite/items', FavoriteItemController::class)
         ->only(['index', 'store', 'destroy']);
+    // ユーザーのお気に入りレイアウト関連のルート
+    Route::apiResource('user/favorite/layouts', FavoriteLayoutController::class)
+        ->only(['index', 'destroy']);
+    Route::post('user/favorite/layouts/{layout}', [FavoriteLayoutController::class, 'store']);
 });

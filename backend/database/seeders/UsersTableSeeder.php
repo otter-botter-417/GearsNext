@@ -17,7 +17,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'name' => "testName",
+            'user_name' => "testName",
             'email' => "test@test.com",
             'password' => Hash::make('password'), // パスワードのハッシュ化
             'created_at' => Carbon::now(),

@@ -15,7 +15,7 @@ class UserControllerTest extends TestCase
      * @var array
      */
     private $userData = [
-        'name' => 'storeTestUserName',
+        'userName' => 'storeTestUserName',
         'email' => 'storetestUser@test.com',
         'password' => 'storeTestUserPassword',
     ];
@@ -57,7 +57,7 @@ class UserControllerTest extends TestCase
      */
     public function test_user_can_register()
     {
-        $this->assertDatabaseHas('users', ['name' => 'storeTestUserName']);
+        $this->assertDatabaseHas('users', ['user_name' => 'storeTestUserName']);
     }
 
     /**
@@ -91,7 +91,7 @@ class UserControllerTest extends TestCase
     public function test_user_can_update()
     {
         $updateUserData = [
-            'name' => 'updateStoreTestUserName',
+            'userName' => 'updateStoreTestUserName',
             'email' => 'updateStoretestUser@test.com',
             'password' => 'updateStoreTestUserPassword',
             'password_confirmation' => 'updateStoreTestUserPassword',
@@ -101,7 +101,7 @@ class UserControllerTest extends TestCase
 
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas('users', ['name' => 'updateStoreTestUserName']);
+        $this->assertDatabaseHas('users', ['user_name' => 'updateStoreTestUserName']);
     }
 
     /**
@@ -114,7 +114,7 @@ class UserControllerTest extends TestCase
 
         $response->assertStatus(200);
 
-        $this->assertDatabaseMissing('users', ['name' => 'storeTestUserName']);
+        $this->assertDatabaseMissing('users', ['user_name' => 'storeTestUserName']);
     }
 
     /**
@@ -124,7 +124,7 @@ class UserControllerTest extends TestCase
     public function test_registration_fails_with_duplicate_email()
     {
         $userData = [
-            'name' => 'testStoreTestUserName',
+            'userName' => 'testStoreTestUserName',
             'email' => 'storetestUser@test.com',
             'password' => 'testStoreTestUserPassword',
         ];
@@ -142,7 +142,7 @@ class UserControllerTest extends TestCase
     public function test_registration_fails_with_empty_required_fields()
     {
         $userData = [
-            'name' => '',
+            'userName' => '',
             'email' => '',
             'password' => '',
         ];
@@ -150,7 +150,7 @@ class UserControllerTest extends TestCase
         $response = $this->post('/api/user/register', $userData);
 
         $response->assertStatus(422)
-            ->assertJsonStructure(['name', 'email', 'password']);
+            ->assertJsonStructure(['userName', 'email', 'password']);
     }
 
     /**
@@ -160,13 +160,13 @@ class UserControllerTest extends TestCase
     public function test_store_register_an_user_with_invalid_type()
     {
         $userData = [
-            'name' => 123,
+            'userName' => 123,
             'email' => 123123123123123,
             'password' => 123331,
         ];
         $response = $this->post('/api/user/register', $userData);
 
         $response->assertStatus(422)
-            ->assertJsonStructure(['name', 'email', 'password']);
+            ->assertJsonStructure(['userName', 'email', 'password']);
     }
 }

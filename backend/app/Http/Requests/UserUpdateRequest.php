@@ -21,7 +21,7 @@ class UserUpdateRequest extends FormRequest
     {
         $user = $this->user();
         return [
-            'name' => 'required|string|max:255',
+            'userName' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $user->user_id,
             'password' => 'sometimes|required|string|min:8|confirmed',
         ];
@@ -33,9 +33,9 @@ class UserUpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => '名前は必須です。',
-            'name.string' => '名前は文字列である必要があります。',
-            'name.max' => '名前は20文字以内である必要があります。',
+            'userName.required' => '名前は必須です。',
+            'userName.string' => '名前は文字列である必要があります。',
+            'userName.max' => '名前は20文字以内である必要があります。',
             'email.required' => 'メールアドレスは必須です。',
             'email.email' => 'メールアドレスの形式が正しくありません。',
             'email.max' => 'メールアドレスは255文字以内である必要があります。',

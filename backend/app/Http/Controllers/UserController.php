@@ -7,6 +7,7 @@ use App\Http\Requests\UserUpdateRequest;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 // ユーザー登録
 class UserController extends Controller
@@ -24,7 +25,7 @@ class UserController extends Controller
      */
     public function register(UserRegisterRequest $request): \Illuminate\Http\JsonResponse
     {
-        $user = $this->userService->register($request->name, $request->email, $request->password);
+        $user = $this->userService->register($request->userName, $request->email, $request->password);
         $token = $this->userService->createToken($user);
         return response()->json(['token' => $token], 201);
     }
@@ -61,7 +62,7 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request): \Illuminate\Http\JsonResponse
     {
-        $data = $request->only(['name', 'email', 'password']);
+        $data = $request->only(['userName', 'email', 'password']);
         $this->userService->updateUserData(Auth::id(), $data);
         return response()->json(['message' => 'Profile updated successfully'], 200);
     }

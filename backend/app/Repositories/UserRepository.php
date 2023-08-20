@@ -66,16 +66,15 @@ class UserRepository implements UserRepositoryInterface
 
     /**
      * ユーザーを登録する
-     * @param string $name
+     * @param string $userName
      * @param string $email
      * @param string $password
      * @return User
      */
-    public function createUserData(string $name, string $email, string $password): User
+    public function createUserData(string $userName, string $email, string $password): User
     {
-
         $user = $this->model->create([
-            'name' => $name,
+            'user_name' => $userName,
             'email' => $email,
             'password' => $password
         ]);

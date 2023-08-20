@@ -130,6 +130,11 @@ class Handler extends ExceptionHandler
             return response()->json(['message' => $exception->getMessage()], 404);
         }
 
+        // レイアウトが既にお気に入りに登録されている場合の例外をキャッチ
+        if ($exception instanceof LayoutAlreadyFavoritedException) {
+            return response()->json(['message' => $exception->getMessage()], 409);
+        }
+
 
 
         // 上記の例外以外は、デフォルトの処理を行う

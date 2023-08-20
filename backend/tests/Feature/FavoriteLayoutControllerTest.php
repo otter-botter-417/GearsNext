@@ -65,51 +65,50 @@ class FavoriteLayoutControllerTest extends TestCase
     public function test_index_get_favorite_items()
     {
         $response = $this->authorizedRequest('GET', '/api/user/favorite/layouts');
-        $response->dump();
         $response->assertStatus(200)
             ->assertJsonStructure([
-                '*' => [
-                    'layout_id',
-                    'text',
-                    'user_name',
-                    'favorite_count',
-                    'view_count',
-                    'created_at',
-                    'updated_at',
-                    'items' => [
-                        '*' => [
-                            'x_position',
-                            'y_position',
-                            'item_id',
-                            'item_name',
-                            'image_name'
+                'data' => [
+                    '*' => [
+                        'layout_id',
+                        'text',
+                        'user_name',
+                        'favorite_count',
+                        'view_count',
+                        'created_at',
+                        'updated_at',
+                        'items' => [
+                            '*' => [
+                                'x_position',
+                                'y_position',
+                                'item_id',
+                                'item_name',
+                                'image_name'
+                            ]
                         ]
-                    ]
 
+                    ]
                 ]
             ]);
     }
 
-    // /**
-    //  * お気に入りに商品を追加時に既にお気に入りに商品が登録されている場合
-    //  * @covers \App\Http\Controllers\FavoriteItemController::store
-    //  */
-    // public function test_store_add_an_favorite_item_with_already_favorited_item()
-    // {
-    //     $userData = ['itemId' => 1];
-    //     $response = $this->authorizedRequest('POST', '/api/user/favorite/items', $userData);
-    //     $response->assertStatus(409)
-    //         ->assertJson(['message' => 'お気に入りに登録されています']);
-    // }
-    // /**
-    //  * お気に入りに商品を追加時に商品が見つからない場合
-    //  * @covers \App\Http\Controllers\FavoriteItemController::store
-    //  */
-    // public function test_store_add_an_favorite_item_with_not_found_item()
-    // {
-    //     $userData = ['itemId' => 999];
-    //     $response = $this->authorizedRequest('POST', '/api/user/favorite/items', $userData);
-    //     $response->assertStatus(404)
-    //         ->assertJson(['message' => '商品が見つかりませんでした']);
-    // }
+    /**
+     * お気に入りに商品を追加時に既にお気に入りに商品が登録されている場合
+     * @covers \App\Http\Controllers\FavoriteItemController::store
+     */
+    public function test_store_add_an_favorite_item_with_already_favorited_item()
+    {
+        $response = $this->authorizedRequest('POST', '/api/user/favorite/layouts/1');
+        $response->assertStatus(409)
+            ->assertJson(['message' => 'レイアウトが既にお気に入りに登録されています。']);
+    }
+
+    /**
+     * お気に入りに商品を追加時に商品が見つからない場合
+     * @covers \App\Http\Controllers\FavoriteItemController::store
+     */
+    public function test_store_add_an_favorite_item_with_not_found_item()
+    {
+        $response = $this->authorizedRequest('POST', '/api/user/favorite/layouts/1000');
+        $response->assertStatus(404);
+    }
 }

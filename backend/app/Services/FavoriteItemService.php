@@ -39,6 +39,18 @@ class FavoriteItemService
     }
 
     /**
+     * ユーザーのお気に入り商品を取得
+     * @param  string $userId
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getFavoriteItems($userId)
+    {
+        $favoriteItemIds = $this->favoriteItemRepository->getFavoriteItems($userId);
+        $userInventories = $this->itemRepository->getItemsByIds($favoriteItemIds);
+        return $userInventories;
+    }
+
+    /**
      * お気に入りに追加
      * @param  string $userId
      * @param  int    $itemId
@@ -63,17 +75,5 @@ class FavoriteItemService
     {
         $this->itemRepository->ensureItemExists($itemId);
         $this->favoriteItemRepository->removeFavoriteItemData($userId, $itemId);
-    }
-
-    /**
-     * ユーザーのお気に入り商品を取得
-     * @param  string $userId
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function getFavoriteItems($userId)
-    {
-        $favoriteItemIds = $this->favoriteItemRepository->getFavoriteItems($userId);
-        $userInventories = $this->itemRepository->getItemsByIds($favoriteItemIds);
-        return $userInventories;
     }
 }

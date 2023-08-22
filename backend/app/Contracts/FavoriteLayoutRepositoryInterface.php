@@ -16,17 +16,15 @@ interface FavoriteLayoutRepositoryInterface
 
     /**
      * お気に入りにレイアウトを追加
-     * @param  string $userId
-     * @param  int    $layoutId
-     * @throws LayoutNotFoundException レイアウトが見つからない場合
-     * @throws LayoutAlreadyFavoritedException お気に入りにレイアウトが存在する場合
+     * @param  int $userId
+     * @param  int $layoutId
      */
     public function addFavoriteLayoutData(int $userId, int $layoutId): void;
 
     /**
      * お気に入りからレイアウトを削除
      * @param  int $userId
-     * @param  Layout $layout
+     * @param  int $layoutId
      * @return void
      */
     public function removeFavoriteLayoutData(int $userId, Layout $layout): void;

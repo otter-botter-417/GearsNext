@@ -22,31 +22,6 @@ class FavoriteLayoutRepository implements FavoriteLayoutRepositoryInterface
     }
 
     /**
-     * 既にお気に入りにレイアウトが追加されているか確認
-     * @param int $userId
-     * @param int $layoutId
-     * @return void
-     * @throws LayoutAlreadyFavoritedException お気に入りにレイアウトが存在する場合
-     */
-    public function favoriteLayoutAlreadyExists(int $userId, int $layoutId): void
-    {
-        $favoriteLayout =  $this->model->where('user_id', $userId)
-            ->where('layout_id', $layoutId)
-            ->exists();
-        if ($favoriteLayout) {
-            Log::error(
-                'レイアウトが既にお気に入りに登録されています',
-                [
-                    'action' => 'favoriteLayoutAlreadyExists',
-                    'userId' => $userId,
-                    'layoutId' => $layoutId
-                ]
-            );
-            throw new LayoutAlreadyFavoritedException();
-        }
-    }
-
-    /**
      * お気に入りにレイアウトを追加
      * @param  int    $userId
      * @param  int    $layoutId

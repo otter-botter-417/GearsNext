@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Contracts\FavoriteLayoutRepositoryInterface;
-use App\Exceptions\LayoutAlreadyFavoritedException;
+use App\Exceptions\LayoutNotFavoritedException;
 use App\Models\FavoriteLayout;
 use App\Models\Layout;
 use Illuminate\Support\Facades\Log;
@@ -43,9 +43,21 @@ class FavoriteLayoutRepository implements FavoriteLayoutRepositoryInterface
      */
     public function removeFavoriteLayoutData(int $userId, int $layoutId): void
     {
-        $this->model->where('user_id', $userId)
+        $favoriteLayout = $this->model->where('user_id', $userId)
             ->where('layout_id', $layoutId)
-            ->delete();
+            ->first();
+        if (!$favoriteLayout) {
+            Log::error(
+                'お気に入りにレイアウトが存在しません',
+                [
+                    'action' => 'removeFavoriteLayoutData',
+                    'userId' => $userId,
+                    'itemId' => $layoutId
+                ]
+            );
+            throw new LayoutNotFavoritedException();
+        }
+        $favoriteLayout->delete();
     }
 
     /**

@@ -46,10 +46,11 @@ class UserInventoryController extends Controller
      * ユーザーの持っている商品から削除する
      * @param int $id
      * @return \Illuminate\Http\Response
+     * @throws ItemNotInInventoryException 持っている商品に存在しない
      */
-    public function destroy(int $id): \Illuminate\Http\Response
+    public function destroy(Item $item): \Illuminate\Http\Response
     {
-        $this->userInventoryService->removeUserInventory(Auth::id(), $id);
+        $this->userInventoryService->removeUserInventory(Auth::id(), $item->item_id);
         return response(null, 204);
     }
 }

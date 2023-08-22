@@ -7,14 +7,11 @@ use App\Models\Item;
 use App\Models\User;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-
+use Tests\Traits\AuthorizesRequests;
 
 class LayoutTest extends TestCase
 {
-    use RefreshDatabase;
-
-    private $token;
-    private $user;
+    use RefreshDatabase, AuthorizesRequests;
 
     private $layoutData = [
         'text' => 'これはテストです。',
@@ -35,25 +32,9 @@ class LayoutTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->seed();
-        $this->user = User::factory()->create();
-        $this->token = JWTAuth::fromUser($this->user);
+        $this->initializeAuthorization();
         Item::factory(5)->create();
         $this->authorizedRequest('POST', '/api/user/layout', $this->layoutData);
-    }
-
-    /**
-     * ユーザーエンドポイントにリクエストを送信する
-     * @param string $method HTTPメソッド（GET, POST, PUT, DELETEなど）
-     * @param string $url
-     * @param array $data
-     * @return \Illuminate\Foundation\Testing\TestResponse
-     */
-    private function authorizedRequest($method, $url, $data = [])
-    {
-        return $this->withHeaders([
-            'Authorization' => 'Bearer ' . $this->token,
-        ])->json($method, $url, $data);
     }
 
     /**

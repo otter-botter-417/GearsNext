@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\UserInventory;
 use App\Contracts\UserInventoryRepositoryInterface;
-use App\Exceptions\ItemAlreadyInInventoryException;
 use App\Exceptions\ItemNotInInventoryException;
 use Illuminate\Support\Facades\Log;
 

@@ -66,7 +66,6 @@ class FavoriteItemService
      * @param  int  $userId
      * @param  int  $itemId
      * @return void
-     * @throws ItemNotFoundException 商品が見つからない
      * @throws ItemNotFavoritedException お気に入りに商品が存在しない
      */
     public function removeFavoriteItem(int $userId, int $itemId): void

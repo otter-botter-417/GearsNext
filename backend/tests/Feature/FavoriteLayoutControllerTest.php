@@ -10,9 +10,6 @@ class FavoriteLayoutControllerTest extends TestCase
 {
     use RefreshDatabase, AuthorizesRequests;
 
-    private $token;
-    private $user;
-
     protected function setUp(): void
     {
         parent::setUp();

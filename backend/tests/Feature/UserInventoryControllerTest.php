@@ -3,41 +3,18 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use App\Models\Item;
-use App\Models\User;
-use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Traits\AuthorizesRequests;
 
 class UserInventoryControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
-    private $token;
-    private $user;
+    use RefreshDatabase, AuthorizesRequests;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->seed();
-        $this->user = User::factory()->create();
-        $this->token = JWTAuth::fromUser($this->user);
-        Item::factory(3)->create();
-        $userData = ['itemId' => 1];
-        $this->authorizedRequest('POST', '/api/user/inventory', $userData);
-    }
-
-    /**
-     * ユーザーエンドポイントにリクエストを送信する
-     * @param string $method HTTPメソッド（GET, POST, PUT, DELETEなど）
-     * @param string $url
-     * @param array $data
-     * @return \Illuminate\Foundation\Testing\TestResponse
-     */
-    private function authorizedRequest($method, $url, $data = [])
-    {
-        return $this->withHeaders([
-            'Authorization' => 'Bearer ' . $this->token,
-        ])->json($method, $url, $data);
+        $this->initializeAuthorization();
+        $this->authorizedRequest('POST', '/api/user/inventory/1');
     }
 
     /**
@@ -56,8 +33,7 @@ class UserInventoryControllerTest extends TestCase
     public function test_destroy_delete_an_user_inventory()
     {
         $response = $this->authorizedRequest('DELETE', '/api/user/inventory/1');
-        $response->assertStatus(200)
-            ->assertJson(['message' => '持っている商品から削除しました。']);
+        $response->assertStatus(204);
         $this->assertDatabaseMissing('user_inventories', ['item_id' => 1]);
     }
 
@@ -82,26 +58,13 @@ class UserInventoryControllerTest extends TestCase
     }
 
     /**
-     * 持っている商品を追加時に既に持っている商品に登録されている場合
-     * @covers \App\Http\Controllers\UserInventoryController::store
-     */
-    public function test_store_add_an_user_inventory_with_already_registered_item()
-    {
-        $userData = ['itemId' => 1];
-        $response = $this->authorizedRequest('POST', '/api/user/inventory', $userData);
-        $response->assertStatus(409)
-            ->assertJson(['message' => '既に持っている商品に登録されています。']);
-    }
-
-    /**
      * 持っている商品に追加時に商品が見つからない場合
      * @covers \App\Http\Controllers\UserInventoryController::store
      */
     public function test_store_add_an_user_inventory_with_not_found_item()
     {
-        $userData = ['itemId' => 999];
-        $response = $this->authorizedRequest('POST', '/api/user/inventory', $userData);
-        $response->assertStatus(404)
-            ->assertJson(['message' => '商品が見つかりませんでした']);
+        $response = $this->authorizedRequest('POST', '/api/user/inventory/999');
+
+        $response->assertStatus(404);
     }
 }

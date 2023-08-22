@@ -54,7 +54,7 @@ class FavoriteLayoutRepository implements FavoriteLayoutRepositoryInterface
      */
     public function addFavoriteLayoutData(int $userId, int $layoutId): void
     {
-        $this->model->create([
+        $this->model->firstOrCreate([
             'user_id' => $userId,
             'layout_id' => $layoutId,
         ]);

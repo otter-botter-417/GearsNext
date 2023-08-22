@@ -66,8 +66,7 @@ class FavoriteItemControllerTest extends TestCase
      */
     public function test_store_add_an_favorite_item_with_not_found_item()
     {
-        $userData = ['itemId' => 999];
-        $response = $this->authorizedRequest('POST', '/api/user/favorite/items/1');
+        $response = $this->authorizedRequest('POST', '/api/user/favorite/items/999');
         $response->assertStatus(404);
     }
 }

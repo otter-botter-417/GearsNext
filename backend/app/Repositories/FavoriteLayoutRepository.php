@@ -22,6 +22,16 @@ class FavoriteLayoutRepository implements FavoriteLayoutRepositoryInterface
     }
 
     /**
+     * お気に入りのレイアウト一覧を取得
+     * @param  string $userId
+     * @return array
+     */
+    public function getFavoriteLayouts(int $userId)
+    {
+        return $this->model->where('user_id', $userId)->pluck('layout_id')->toArray();
+    }
+
+    /**
      * お気に入りにレイアウトを追加
      * @param  int    $userId
      * @param  int    $layoutId
@@ -58,15 +68,5 @@ class FavoriteLayoutRepository implements FavoriteLayoutRepositoryInterface
             throw new LayoutNotFavoritedException();
         }
         $favoriteLayout->delete();
-    }
-
-    /**
-     * お気に入りのレイアウト一覧を取得
-     * @param  string $userId
-     * @return array
-     */
-    public function getFavoriteLayouts(int $userId)
-    {
-        return $this->model->where('user_id', $userId)->pluck('layout_id')->toArray();
     }
 }

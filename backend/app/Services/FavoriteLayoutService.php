@@ -55,7 +55,6 @@ class FavoriteLayoutService
      * お気に入りに追加
      * @param  int  $userId
      * @param  int  $layoutId
-     * @throws LayoutAlreadyFavoritedException お気に入りにレイアウトが存在する
      */
     public function addFavoriteLayout($userId, $layoutId)
     {

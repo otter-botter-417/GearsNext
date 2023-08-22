@@ -9,6 +9,11 @@ use App\Http\Resources\LayoutResource;
 use App\Models\Layout;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * ユーザーのお気に入りレイアウトに関する操作を管理するコントローラークラスです。
+ * このクラスではユーザーのお気に入りレイアウトの取得、追加、削除などの操作を提供します。
+ * すべてのメソッドは認証が必要です。
+ */
 class FavoriteLayoutController extends Controller
 {
     protected FavoriteLayoutService $favoriteLayoutService;

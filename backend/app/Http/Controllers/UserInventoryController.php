@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\InventoryRequest;
+use App\Models\Item;
 use App\Services\UserInventoryService;
 use Illuminate\Support\Facades\Auth;
 
 // 持っている物
+/**
+ * ユーザーの持っている商品に関する操作を管理するコントローラークラスです。
+ * このクラスではユーザーの持っている商品の取得、追加、削除などの操作を提供します。
+ * すべてのメソッドは認証が必要です。
+ */
 class UserInventoryController extends Controller
 {
     protected UserInventoryService $userInventoryService;
@@ -22,23 +27,23 @@ class UserInventoryController extends Controller
      */
     public function index(): \Illuminate\Http\JsonResponse
     {
-        $userInventorys = $this->userInventoryService->getUserInventories(Auth::id());
-        return response()->json($userInventorys, 200);
+        $userInventories = $this->userInventoryService->getUserInventories(Auth::id());
+        return response()->json($userInventories, 200);
     }
 
     /**
-     * UserInventoryテーブルに保存
+     * ユーザーの持っている商品に保存
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(InventoryRequest $request): \Illuminate\Http\JsonResponse
+    public function store(Item $item): \Illuminate\Http\JsonResponse
     {
-        $this->userInventoryService->addUserInventory(Auth::id(), $request->itemId);
+        $this->userInventoryService->addUserInventory(Auth::id(), $item->item_id);
         return response()->json(['message' => '持っている商品に登録しました。'], 201);
     }
 
     /**
-     * UserInventoryテーブルから削除する
+     * ユーザーの持っている商品から削除する
      * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */

@@ -16,7 +16,7 @@ interface UserInventoryRepositoryInterface
      * @param  int  $userId
      * @param  int  $itemId
      * @return void
-     * @throws ItemNotFavoritedException 持っている商品に存在しない
+     * @throws ItemNotInInventoryException 持っている商品に存在しない
      */
     public function removeUserInventoryData(int $userId, int $itemId): void;
 

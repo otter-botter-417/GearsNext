@@ -28,7 +28,7 @@ interface FavoriteLayoutRepositoryInterface
      * @param  int $layoutId
      * @return void
      */
-    public function removeFavoriteLayoutData(int $userId, Layout $layout): void;
+    public function removeFavoriteLayoutData(int $userId, int $layoutId): void;
 
     /**
      * お気に入りのレイアウト一覧を取得

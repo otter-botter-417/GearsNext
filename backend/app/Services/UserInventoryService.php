@@ -29,14 +29,13 @@ class UserInventoryService
     protected $itemRepository;
 
     public function __construct(
-        UserInventoryRepositoryInterface $userInventoryRepository,
         UserRepositoryInterface $userRepository,
-        ItemRepositoryInterface $itemRepository
-
+        ItemRepositoryInterface $itemRepository,
+        UserInventoryRepositoryInterface $userInventoryRepository
     ) {
-        $this->userInventoryRepository = $userInventoryRepository;
         $this->userRepository = $userRepository;
         $this->itemRepository = $itemRepository;
+        $this->userInventoryRepository = $userInventoryRepository;
     }
 
     /**

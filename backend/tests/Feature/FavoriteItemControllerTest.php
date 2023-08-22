@@ -3,11 +3,9 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use App\Models\Item;
-use App\Models\User;
-use Tymon\JWTAuth\Facades\JWTAuth;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\Traits\AuthorizesRequests;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
 
 class FavoriteItemControllerTest extends TestCase
 {

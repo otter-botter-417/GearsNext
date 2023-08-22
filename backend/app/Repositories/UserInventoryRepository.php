@@ -44,7 +44,6 @@ class UserInventoryRepository implements UserInventoryRepositoryInterface
         ]);
     }
 
-
     /**
      * 持っている商品から削除
      * @param  string $userId

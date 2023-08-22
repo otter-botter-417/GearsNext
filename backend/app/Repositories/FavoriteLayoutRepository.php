@@ -38,13 +38,13 @@ class FavoriteLayoutRepository implements FavoriteLayoutRepositoryInterface
     /**
      * お気に入りからレイアウトを削除
      * @param  int $userId
-     * @param  Layout $layout
+     * @param  int  $layoutId
      * @return void
      */
-    public function removeFavoriteLayoutData(int $userId, Layout $layout): void
+    public function removeFavoriteLayoutData(int $userId, int $layoutId): void
     {
         $this->model->where('user_id', $userId)
-            ->where('layout_id', $layout->id)
+            ->where('layout_id', $layoutId)
             ->delete();
     }
 

@@ -2,10 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Models\FavoriteLayout;
 use App\Contracts\FavoriteLayoutRepositoryInterface;
 use App\Exceptions\LayoutNotFavoritedException;
-use App\Models\FavoriteLayout;
-use App\Models\Layout;
 use Illuminate\Support\Facades\Log;
 
 /**

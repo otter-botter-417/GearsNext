@@ -40,7 +40,7 @@ class FavoriteItemService
 
     /**
      * ユーザーのお気に入り商品を取得
-     * @param  string $userId
+     * @param  int  $userId
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getFavoriteItems(int $userId): \Illuminate\Database\Eloquent\Collection
@@ -52,8 +52,8 @@ class FavoriteItemService
 
     /**
      * お気に入りに追加
-     * @param  string $userId
-     * @param  int    $itemId
+     * @param  int  $userId
+     * @param  int  $itemId
      * @return void
      * @throws ItemNotFoundException 商品が見つからない
      * @throws ItemAlreadyFavoritedException お気に入りに商品が存在する
@@ -67,8 +67,8 @@ class FavoriteItemService
 
     /**
      * お気に入りから削除
-     * @param  string $userId
-     * @param  int    $itemId
+     * @param  int  $userId
+     * @param  int  $itemId
      * @return void
      * @throws ItemNotFoundException 商品が見つからない
      * @throws ItemNotFavoritedException お気に入りに商品が存在しない

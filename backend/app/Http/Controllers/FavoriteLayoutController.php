@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use App\Services\FavoriteLayoutService;
-use App\Http\Requests\FavoriteRequest;
-use App\Http\Resources\LayoutResource;
 use App\Models\Layout;
-use Illuminate\Support\Facades\Log;
+use App\Services\FavoriteLayoutService;
+use App\Http\Resources\LayoutResource;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * ユーザーのお気に入りレイアウトに関する操作を管理するコントローラークラスです。
@@ -52,7 +50,7 @@ class FavoriteLayoutController extends Controller
      */
     public function destroy(Layout $layout): \Illuminate\Http\Response
     {
-        $this->favoriteLayoutService->removeFavoriteLayout(Auth::id(), $layout);
+        $this->favoriteLayoutService->removeFavoriteLayout(Auth::id(), $layout->layout_id);
         return response(null, 204);
     }
 }

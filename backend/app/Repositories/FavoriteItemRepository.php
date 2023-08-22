@@ -22,7 +22,7 @@ class FavoriteItemRepository implements FavoriteItemRepositoryInterface
 
     /**
      * お気に入りの商品一覧を取得
-     * @param   $userId
+     * @param  int  $userId
      * @return array
      */
     public function getFavoriteItems(int $userId): array
@@ -46,8 +46,8 @@ class FavoriteItemRepository implements FavoriteItemRepositoryInterface
 
     /**
      * お気に入りから商品を削除
-     * @param  string $userId
-     * @param  int    $itemId
+     * @param  int  $userId
+     * @param  int  $itemId
      * @return void
      * @throws ItemNotFavoritedException お気に入りに商品が存在しない場合
      */

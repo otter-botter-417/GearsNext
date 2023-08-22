@@ -43,7 +43,7 @@ class UserInventoryController extends Controller
 
     /**
      * ユーザーの持っている商品から削除する
-     * @param int $id
+     * @param Item  $item
      * @return \Illuminate\Http\Response
      * @throws ItemNotInInventoryException 持っている商品に存在しない
      */

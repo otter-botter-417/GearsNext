@@ -39,6 +39,18 @@ class UserInventoryService
     }
 
     /**
+     * ユーザーの持っている商品一覧を取得
+     * @param  string $userId
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getUserInventories(string $userId): \Illuminate\Database\Eloquent\Collection
+    {
+        $userInventoryItemIds = $this->userInventoryRepository->getUserInventoryItemIds($userId);
+        $userInventories = $this->itemRepository->getItemsByIds($userInventoryItemIds);
+        return $userInventories;
+    }
+
+    /**
      * 持っている商品に追加
      * @param  string $userId
      * @param  int    $itemId
@@ -48,8 +60,6 @@ class UserInventoryService
      */
     public function addUserInventory(string $userId, int $itemId): void
     {
-        // $this->itemRepository->ensureItemExists($itemId);
-        $this->userInventoryRepository->userInventoryAlreadyExists($userId, $itemId);
         $this->userInventoryRepository->addUserInventoryData($userId, $itemId);
     }
 
@@ -65,17 +75,5 @@ class UserInventoryService
     {
         $this->itemRepository->ensureItemExists($itemId);
         $this->userInventoryRepository->removeUserInventoryData($userId, $itemId);
-    }
-
-    /**
-     * ユーザーの持っている商品一覧を取得
-     * @param  string $userId
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function getUserInventories(string $userId): \Illuminate\Database\Eloquent\Collection
-    {
-        $userInventoryItemIds = $this->userInventoryRepository->getUserInventoryItemIds($userId);
-        $userInventories = $this->itemRepository->getItemsByIds($userInventoryItemIds);
-        return $userInventories;
     }
 }

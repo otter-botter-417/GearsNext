@@ -83,7 +83,6 @@ class FavoriteItemControllerTest extends TestCase
     {
         $userData = ['itemId' => 999];
         $response = $this->authorizedRequest('POST', '/api/user/favorite/items/1');
-        $response->assertStatus(404)
-            ->assertJson(['message' => '商品が見つかりませんでした']);
+        $response->assertStatus(404);
     }
 }

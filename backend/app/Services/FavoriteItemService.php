@@ -43,7 +43,7 @@ class FavoriteItemService
      * @param  string $userId
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function getFavoriteItems($userId)
+    public function getFavoriteItems(int $userId): \Illuminate\Database\Eloquent\Collection
     {
         $favoriteItemIds = $this->favoriteItemRepository->getFavoriteItems($userId);
         $userInventories = $this->itemRepository->getItemsByIds($favoriteItemIds);
@@ -54,10 +54,11 @@ class FavoriteItemService
      * お気に入りに追加
      * @param  string $userId
      * @param  int    $itemId
+     * @return void
      * @throws ItemNotFoundException 商品が見つからない
      * @throws ItemAlreadyFavoritedException お気に入りに商品が存在する
      */
-    public function addFavoriteItem($userId, $itemId)
+    public function addFavoriteItem(int $userId, int $itemId): void
     {
         $this->itemRepository->ensureItemExists($itemId);
         $this->favoriteItemRepository->favoriteItemAlreadyExists($userId, $itemId);
@@ -68,10 +69,11 @@ class FavoriteItemService
      * お気に入りから削除
      * @param  string $userId
      * @param  int    $itemId
+     * @return void
      * @throws ItemNotFoundException 商品が見つからない
      * @throws ItemNotFavoritedException お気に入りに商品が存在しない
      */
-    public function removeFavoriteItem($userId, $itemId)
+    public function removeFavoriteItem(int $userId, int $itemId): void
     {
         $this->itemRepository->ensureItemExists($itemId);
         $this->favoriteItemRepository->removeFavoriteItemData($userId, $itemId);

@@ -41,7 +41,7 @@ class FavoriteLayoutService
 
     /**
      * ユーザーのお気に入りレイアウトを取得
-     * @param  string $userId
+     * @param  int  $userId
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getFavoriteLayouts($userId)
@@ -53,8 +53,8 @@ class FavoriteLayoutService
 
     /**
      * お気に入りに追加
-     * @param  string $userId
-     * @param  int    $layoutId
+     * @param  int  $userId
+     * @param  int  $layoutId
      * @throws LayoutAlreadyFavoritedException お気に入りにレイアウトが存在する
      */
     public function addFavoriteLayout($userId, $layoutId)
@@ -65,9 +65,8 @@ class FavoriteLayoutService
 
     /**
      * お気に入りから削除
-     * @param  int $userId
-     * @param  Layout $layout
-     * @param  int    $layoutId
+     * @param  int  $userId
+     * @param  int  $layoutId
      */
     public function removeFavoriteLayout(int $userId, Layout $layout)
     {

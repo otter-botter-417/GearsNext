@@ -36,27 +36,15 @@ class UserInventoryRepository implements UserInventoryRepositoryInterface
      * @param  int    $userId
      * @param  int    $itemId
      * @return void
-     * @throws ItemAlreadyInInventoryException 既にお気に入りに登録されている場合
      */
     public function addUserInventoryData(int $userId, int $itemId): void
     {
-        try {
-            $this->model->create([
-                'user_id' => $userId,
-                'item_id' => $itemId,
-            ]);
-        } catch (\Illuminate\Database\QueryException $e) {
-            Log::error(
-                '既に持っている商品に追加されています',
-                [
-                    'action' => 'addUserInventoryData',
-                    'userId' => $userId,
-                    'itemId' => $itemId
-                ]
-            );
-            throw new ItemAlreadyInInventoryException();
-        }
+        $this->model->firstOrCreate([
+            'user_id' => $userId,
+            'item_id' => $itemId,
+        ]);
     }
+
 
     /**
      * 持っている商品から削除

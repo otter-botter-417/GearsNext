@@ -54,7 +54,6 @@ class UserInventoryService
      * @param  int  $userId
      * @param  int  $itemId
      * @return void
-     * @throws ItemAlreadyInInventoryException 既に持っている商品に登録されている
      */
     public function addUserInventory(int $userId, int $itemId): void
     {

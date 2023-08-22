@@ -2,19 +2,20 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use App\Models\Item;
-use App\Models\User;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use Tests\TestCase;
+use Tests\Traits\AuthorizesRequests;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-
+/**
+ * PublicLayoutTest
+ * 
+ * このクラスは、パブリックなレイアウト管理に関連するエンドポイントのテストを担当します。
+ * それには、レイアウトの取得、レイアウトの詳細の取得などの操作が含まれます。
+ */
 class PublicLayoutTest extends TestCase
 {
-    use RefreshDatabase;
-
-    private $token;
-    private $user;
+    use RefreshDatabase, AuthorizesRequests;
 
     private $layoutData = [
         'text' => 'これはテストです。',
@@ -35,32 +36,16 @@ class PublicLayoutTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->seed();
-        $this->user = User::factory()->create();
-        $this->token = JWTAuth::fromUser($this->user);
+        $this->initializeAuthorization();
         Item::factory(5)->create();
         $this->authorizedRequest('POST', '/api/user/layout', $this->layoutData);
-    }
-
-    /**
-     * ユーザーエンドポイントにリクエストを送信する
-     * @param string $method HTTPメソッド（GET, POST, PUT, DELETEなど）
-     * @param string $url
-     * @param array $data
-     * @return \Illuminate\Foundation\Testing\TestResponse
-     */
-    private function authorizedRequest($method, $url, $data = [])
-    {
-        return $this->withHeaders([
-            'Authorization' => 'Bearer ' . $this->token,
-        ])->json($method, $url, $data);
     }
 
     /**
      * レイアウトを取得
      * @covers \App\Http\Controllers\User\LayoutController::index
      */
-    public function test_user_can_get_layouts()
+    public function test_can_get_layouts()
     {
         $response = $this->authorizedRequest('GET', '/api/layout');
         $response->assertJsonStructure([
@@ -91,7 +76,7 @@ class PublicLayoutTest extends TestCase
      * レイアウトの詳細を取得
      * @covers \App\Http\Controllers\User\LayoutController::show
      */
-    public function test_user_can_get_layout_detail()
+    public function test_can_get_layout_detail()
     {
         $response = $this->authorizedRequest('GET', '/api/layout/1');
         $response->assertStatus(200)

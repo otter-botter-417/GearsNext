@@ -37,24 +37,35 @@ const RegisterPage = () => {
         const user = userCredential.user;
         console.log("firebase OK");
 
+        // Get the Firebase ID token (JWT)
+        user.getIdToken().then((idToken: string) => {
+          const expirationTime = new Date().getTime() + 30 * 24 * 3600 * 1000; // 30日後
+          localStorage.setItem('idToken', idToken);
+          localStorage.setItem('tokenExpirationTime', expirationTime.toString());
+
         // LaravelのエンドポイントにPOSTリクエストを送信
         const response = axios
-          .post("http://localhost:8000/api/register", {
+        .post(
+          "http://localhost:8000/api/register",
+          {
             userId: user.uid,
             name: data.name,
             email: user.email,
-          })
-          .then((response) => {
-            //レスポンスをログに出力
-            console.log(response);
-          })
-          .catch((error) => {
-            console.error("Error occurred while calling API: ", error);
-          });
+          }
+          
+        )
+        .then((response) => {
+          //レスポンスをログに出力
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error("Error occurred while calling API: ", error);
+        });
         router.push("/"); // リダイレクト
 
         // ...
-      })
+      });
+    })
       .catch((error) => {
         console.log(error.response);
         const errorCode = error.code;

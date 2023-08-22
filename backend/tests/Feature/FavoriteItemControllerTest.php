@@ -28,7 +28,7 @@ class FavoriteItemControllerTest extends TestCase
      * お気に入りに商品を追加
      * @covers \App\Http\Controllers\FavoriteItemController::store
      */
-    public function test_user_can_add_item_to_favorite()
+    public function test_can_add_item_to_favorite()
     {
         $this->assertDatabaseHas('favorite_items', ['item_id' => 1, 'user_id' => $this->userId]);
     }
@@ -37,7 +37,7 @@ class FavoriteItemControllerTest extends TestCase
      * お気に入りから商品を削除
      * @covers \App\Http\Controllers\FavoriteItemController::destroy
      */
-    public function test_destroy_remove_an_favorite_item()
+    public function test_can_delete_item_from_favorite_item()
     {
         $response = $this->authorizedRequest('DELETE', '/api/user/favorite/items/1');
         $response->assertStatus(204);
@@ -48,7 +48,7 @@ class FavoriteItemControllerTest extends TestCase
      * 登録されているお気に入り商品を取得
      * @covers \App\Http\Controllers\FavoriteItemController::show
      */
-    public function test_index_get_favorite_items()
+    public function test_can_get_favorite_items()
     {
         $response = $this->authorizedRequest('GET', '/api/user/favorite/items');
         $response->assertStatus(200)
@@ -68,7 +68,7 @@ class FavoriteItemControllerTest extends TestCase
      * お気に入りに商品を追加時に商品が見つからない場合
      * @covers \App\Http\Controllers\FavoriteItemController::store
      */
-    public function test_store_add_an_favorite_item_with_not_found_item()
+    public function test_cannot_add_non_existent_item_to_favorite_item()
     {
         $response = $this->authorizedRequest('POST', '/api/user/favorite/items/999');
         $response->assertStatus(404);

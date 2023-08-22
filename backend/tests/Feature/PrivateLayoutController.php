@@ -2,19 +2,21 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use App\Models\Item;
-use App\Models\User;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use Tests\TestCase;
+use Tests\Traits\AuthorizesRequests;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-
+/**
+ * PrivateLayoutController
+ * 
+ * このクラスは、ユーザーのレイアウト管理に関連するエンドポイントのテストを担当します。
+ * それには、レイアウトの登録、取得、更新、削除などの操作が含まれます。
+ * AuthorizesRequestsトレイトを使用して、認証済みのリクエストをシミュレートします。
+ */
 class LayoutTest extends TestCase
 {
-    use RefreshDatabase;
-
-    private $token;
-    private $user;
+    use RefreshDatabase, AuthorizesRequests;
 
     private $layoutData = [
         'text' => 'これはテストです。',
@@ -35,32 +37,16 @@ class LayoutTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->seed();
-        $this->user = User::factory()->create();
-        $this->token = JWTAuth::fromUser($this->user);
+        $this->initializeAuthorization();
         Item::factory(5)->create();
         $this->authorizedRequest('POST', '/api/user/layout', $this->layoutData);
-    }
-
-    /**
-     * ユーザーエンドポイントにリクエストを送信する
-     * @param string $method HTTPメソッド（GET, POST, PUT, DELETEなど）
-     * @param string $url
-     * @param array $data
-     * @return \Illuminate\Foundation\Testing\TestResponse
-     */
-    private function authorizedRequest($method, $url, $data = [])
-    {
-        return $this->withHeaders([
-            'Authorization' => 'Bearer ' . $this->token,
-        ])->json($method, $url, $data);
     }
 
     /**
      * レイアウトを登録
      * @covers \App\Http\Controllers\User\PrivateLayoutController::store
      */
-    public function test_user_can_layout_create()
+    public function test_can_create_layout()
     {
         $this->assertDatabaseHas('layouts', ['text' => 'これはテストです。']);
     }
@@ -69,7 +55,7 @@ class LayoutTest extends TestCase
      * レイアウトを取得
      * @covers \App\Http\Controllers\User\PrivateLayoutController::index
      */
-    public function test_user_can_get_layouts()
+    public function test_can_get_layouts()
     {
         $response = $this->authorizedRequest('GET', '/api/user/layout');
         $response->assertJsonStructure([
@@ -100,7 +86,7 @@ class LayoutTest extends TestCase
      * レイアウトの詳細を取得
      * @covers \App\Http\Controllers\User\PrivateLayoutController::show
      */
-    public function test_user_can_get_layout_detail()
+    public function test_can_get_layout_detail()
     {
         $response = $this->authorizedRequest('GET', '/api/user/layout/2');
         $response->assertStatus(200)
@@ -130,7 +116,7 @@ class LayoutTest extends TestCase
      * レイアウトを更新
      * @covers \App\Http\Controllers\User\PrivateLayoutController::update
      */
-    public function test_user_can_update_layout()
+    public function test_can_update_layout()
     {
         $updateLayoutData = [
             'text' => 'これは更新テストです。',
@@ -161,7 +147,7 @@ class LayoutTest extends TestCase
      * レイアウトを削除
      * @covers \App\Http\Controllers\User\PrivateLayoutController::destroy
      */
-    public function test_user_can_delete_layout()
+    public function test_can_delete_layout()
     {
         $response = $this->authorizedRequest('DELETE', '/api/user/layout/2');
         $response->assertStatus(204);

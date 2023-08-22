@@ -7,6 +7,8 @@ use App\Services\LayoutService;
 
 /**
  * パブリックなレイアウトに関する操作を管理するコントローラークラスです。
+ * このクラスではパブリックなレイアウトの取得、詳細の取得などの操作を提供します。
+ * 認証は不要です。
  */
 class PublicLayoutController extends Controller
 {

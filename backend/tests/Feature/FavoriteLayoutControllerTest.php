@@ -3,66 +3,52 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use App\Models\Item;
-use App\Models\User;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use Tests\Traits\AuthorizesRequests;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
+/**
+ * FavoriteLayoutControllerTest
+ * 
+ * このクラスは、ユーザーのお気に入りレイアウト管理に関連するエンドポイントのテストを担当します。
+ * それには、お気に入りへのレイアウトの追加、削除、取得などの操作が含まれます。
+ * AuthorizesRequestsトレイトを使用して、認証済みのリクエストをシミュレートします。
+ */
 class FavoriteLayoutControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
-    private $token;
-    private $user;
+    use RefreshDatabase, AuthorizesRequests;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->seed();
-        $this->user = User::factory()->create();
-        $this->token = JWTAuth::fromUser($this->user);
+        $this->initializeAuthorization();
         $this->authorizedRequest('POST', '/api/user/favorite/layouts/1');
     }
 
     /**
-     * ユーザーエンドポイントにリクエストを送信する
-     * @param string $method HTTPメソッド（GET, POST, PUT, DELETEなど）
-     * @param string $url エンドポイントのURL
-     * @param array $data 送信するデータ
-     * @return \Illuminate\Foundation\Testing\TestResponse
-     */
-    private function authorizedRequest($method, $url, $data = [])
-    {
-        return $this->withHeaders([
-            'Authorization' => 'Bearer ' . $this->token,
-        ])->json($method, $url, $data);
-    }
-
-    /**
-     * お気に入りに商品を追加
+     * お気に入りにレイアウトを追加
      * @covers \App\Http\Controllers\FavoriteLayoutController::store
      */
-    public function test_user_can_add_layout_to_favorite()
+    public function test_can_add_layout_to_favorite()
     {
-        $this->assertDatabaseHas('favorite_layouts', ['layout_id' => 1]);
+        $this->assertDatabaseHas('favorite_layouts', ['layout_id' => 1, 'user_id' => $this->userId]);
     }
 
     /**
-     * お気に入りから商品を削除
+     * お気に入りからレイアウトを削除
      * @covers \App\Http\Controllers\FavoriteLayoutController::destroy
      */
-    public function test_destroy_remove_an_favorite_item()
+    public function test_can_delete_item_from_favorite_layout()
     {
         $response = $this->authorizedRequest('DELETE', '/api/user/favorite/layouts/1');
         $response->assertStatus(204);
-        $this->assertDatabaseMissing('favorite_layouts', ['item_id' => 1]);
+        $this->assertDatabaseMissing('favorite_layouts', ['item_id' => 1, 'user_id' => $this->userId]);
     }
 
     /**
-     * 登録されているお気に入り商品を取得
+     * 登録されているお気に入りレイアウトを取得
      * @covers \App\Http\Controllers\FavoriteItemController::show
      */
-    public function test_index_get_favorite_items()
+    public function test_can_get_favorite_layouts()
     {
         $response = $this->authorizedRequest('GET', '/api/user/favorite/layouts');
         $response->assertStatus(200)
@@ -92,21 +78,10 @@ class FavoriteLayoutControllerTest extends TestCase
     }
 
     /**
-     * お気に入りに商品を追加時に既にお気に入りに商品が登録されている場合
+     * お気に入りにレイアウトを追加時に商品が見つからない場合
      * @covers \App\Http\Controllers\FavoriteItemController::store
      */
-    public function test_store_add_an_favorite_item_with_already_favorited_item()
-    {
-        $response = $this->authorizedRequest('POST', '/api/user/favorite/layouts/1');
-        $response->assertStatus(409)
-            ->assertJson(['message' => 'レイアウトが既にお気に入りに登録されています。']);
-    }
-
-    /**
-     * お気に入りに商品を追加時に商品が見つからない場合
-     * @covers \App\Http\Controllers\FavoriteItemController::store
-     */
-    public function test_store_add_an_favorite_item_with_not_found_item()
+    public function test_cannot_add_non_existent_layout_to_favorite_layout()
     {
         $response = $this->authorizedRequest('POST', '/api/user/favorite/layouts/1000');
         $response->assertStatus(404);

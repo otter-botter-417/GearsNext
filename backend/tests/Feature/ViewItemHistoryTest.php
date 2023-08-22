@@ -4,13 +4,12 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\Item;
-use App\Models\User;
-use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Traits\AuthorizesRequests;
 
 class ViewItemHistory extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, AuthorizesRequests;
 
     private $token;
     private $user;
@@ -18,23 +17,7 @@ class ViewItemHistory extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->seed();
-        $this->user = User::factory()->create();
-        $this->token = JWTAuth::fromUser($this->user);
-    }
-
-    /**
-     * ユーザーエンドポイントにリクエストを送信する
-     * @param string $method HTTPメソッド（GET, POST, PUT, DELETEなど）
-     * @param string $url
-     * @param array $data
-     * @return \Illuminate\Foundation\Testing\TestResponse
-     */
-    private function authorizedRequest($method, $url, $data = [])
-    {
-        return $this->withHeaders([
-            'Authorization' => 'Bearer ' . $this->token,
-        ])->json($method, $url, $data);
+        $this->initializeAuthorization();
     }
 
     /**

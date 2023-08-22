@@ -5,8 +5,6 @@ namespace App\Services;
 use App\Contracts\UserRepositoryInterface;
 use App\Contracts\LayoutRepositoryInterface;
 use App\Contracts\FavoriteLayoutRepositoryInterface;
-use App\Models\Layout;
-use Illuminate\Support\Facades\Log;
 
 /**
  * お気に入りレイアウトに関するサービスクラス

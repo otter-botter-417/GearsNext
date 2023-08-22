@@ -38,7 +38,7 @@ class FavoriteItemRepository implements FavoriteItemRepositoryInterface
      */
     public function addFavoriteItemData(int $userId, int $itemId): void
     {
-        $this->model->create([
+        $this->model->firstOrCreate([
             'user_id' => $userId,
             'item_id' => $itemId,
         ]);

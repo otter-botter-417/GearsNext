@@ -31,31 +31,6 @@ class FavoriteItemRepository implements FavoriteItemRepositoryInterface
     }
 
     /**
-     * 既にお気に入りに商品が追加されているか確認
-     * @param int $userId
-     * @param int $itemId
-     * @return void
-     * @throws ItemAlreadyFavoritedException お気に入りに商品が存在する場合
-     */
-    public function favoriteItemAlreadyExists(int $userId, int $itemId): void
-    {
-        $favoriteItem =  $this->model->where('user_id', $userId)
-            ->where('item_id', $itemId)
-            ->exists();
-        if ($favoriteItem) {
-            Log::error(
-                '商品が既にお気に入りに登録されています',
-                [
-                    'action' => 'favoriteItemAlreadyExists',
-                    'userId' => $userId,
-                    'itemId' => $itemId
-                ]
-            );
-            throw new ItemAlreadyFavoritedException();
-        }
-    }
-
-    /**
      * お気に入りに商品を追加
      * @param  int    $userId
      * @param  int    $itemId

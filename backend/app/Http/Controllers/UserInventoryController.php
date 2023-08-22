@@ -45,11 +45,11 @@ class UserInventoryController extends Controller
     /**
      * ユーザーの持っている商品から削除する
      * @param int $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
-    public function destroy(int $id): \Illuminate\Http\JsonResponse
+    public function destroy(int $id): \Illuminate\Http\Response
     {
         $this->userInventoryService->removeUserInventory(Auth::id(), $id);
-        return response()->json(['message' => '持っている商品から削除しました。'], 200);
+        return response(null, 204);
     }
 }

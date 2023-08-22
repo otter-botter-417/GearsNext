@@ -32,6 +32,8 @@ class UserInventoryRepository implements UserInventoryRepositoryInterface
 
     /**
      * 持っている商品に追加
+     * ユーザーIDとアイテムIDが一致するレコードが存在する場合はそのレコードを返し、
+     * 存在しない場合は新しいレコードを作成します。
      * @param  int    $userId
      * @param  int    $itemId
      * @return void

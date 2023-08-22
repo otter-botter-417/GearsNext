@@ -71,7 +71,6 @@ class FavoriteItemService
      */
     public function removeFavoriteItem(int $userId, int $itemId): void
     {
-        $this->itemRepository->ensureItemExists($itemId);
         $this->favoriteItemRepository->removeFavoriteItemData($userId, $itemId);
     }
 }

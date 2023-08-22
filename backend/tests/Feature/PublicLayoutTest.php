@@ -2,12 +2,10 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use App\Models\Item;
-use App\Models\User;
-use Tymon\JWTAuth\Facades\JWTAuth;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 use Tests\Traits\AuthorizesRequests;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class PublicLayoutTest extends TestCase
 {
@@ -41,7 +39,7 @@ class PublicLayoutTest extends TestCase
      * レイアウトを取得
      * @covers \App\Http\Controllers\User\LayoutController::index
      */
-    public function test_user_can_get_layouts()
+    public function test_can_get_layouts()
     {
         $response = $this->authorizedRequest('GET', '/api/layout');
         $response->assertJsonStructure([
@@ -72,7 +70,7 @@ class PublicLayoutTest extends TestCase
      * レイアウトの詳細を取得
      * @covers \App\Http\Controllers\User\LayoutController::show
      */
-    public function test_user_can_get_layout_detail()
+    public function test_can_get_layout_detail()
     {
         $response = $this->authorizedRequest('GET', '/api/layout/1');
         $response->assertStatus(200)

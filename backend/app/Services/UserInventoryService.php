@@ -6,7 +6,6 @@ use App\Contracts\UserRepositoryInterface;
 use App\Contracts\ItemRepositoryInterface;
 use App\Contracts\UserInventoryRepositoryInterface;
 
-
 /**
  * ユーザーの持っている商品に関するサービスクラス
  * @package App\Services
@@ -55,8 +54,7 @@ class UserInventoryService
      * @param  string $userId
      * @param  int    $itemId
      * @return void
-     * @throws ItemNotFoundException 商品が見つからない場合
-     * @throws ItemAlreadyInInventoryException 既に持っている商品の場合
+     * @throws ItemAlreadyInInventoryException 既に持っている商品に登録されている
      */
     public function addUserInventory(string $userId, int $itemId): void
     {
@@ -68,12 +66,10 @@ class UserInventoryService
      * @param  string $userId
      * @param  int    $itemId
      * @return void
-     * @throws ItemNotFoundException 商品が見つからない場合
-     * @throws ItemNotInInventoryException 持っている商品が見つからない場合
+     * @throws ItemNotInInventoryException 持っている商品に登録されていない
      */
     public function removeUserInventory(string $userId, int $itemId): void
     {
-        $this->itemRepository->ensureItemExists($itemId);
         $this->userInventoryRepository->removeUserInventoryData($userId, $itemId);
     }
 }

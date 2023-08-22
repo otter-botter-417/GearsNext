@@ -2,14 +2,13 @@
 
 namespace App\Repositories;
 
-use App\Contracts\FavoriteItemRepositoryInterface;
-use App\Exceptions\ItemAlreadyFavoritedException;
-use App\Exceptions\ItemNotFavoritedException;
 use App\Models\FavoriteItem;
+use App\Contracts\FavoriteItemRepositoryInterface;
+use App\Exceptions\ItemNotFavoritedException;
 use Illuminate\Support\Facades\Log;
 
 /**
- * お気に入り商品に関するリポジトリクラス
+ * ユーザーのお気に入り商品に関するリポジトリクラス
  * @mixin FavoriteItemRepositoryInterface
  */
 class FavoriteItemRepository implements FavoriteItemRepositoryInterface
@@ -19,6 +18,16 @@ class FavoriteItemRepository implements FavoriteItemRepositoryInterface
     public function __construct(FavoriteItem $favoriteItem)
     {
         $this->model = $favoriteItem;
+    }
+
+    /**
+     * お気に入りの商品一覧を取得
+     * @param   $userId
+     * @return array
+     */
+    public function getFavoriteItems(int $userId): array
+    {
+        return $this->model->where('user_id', $userId)->pluck('item_id')->toArray();
     }
 
     /**
@@ -84,15 +93,5 @@ class FavoriteItemRepository implements FavoriteItemRepositoryInterface
             throw new ItemNotFavoritedException();
         }
         $favoriteItem->delete();
-    }
-
-    /**
-     * お気に入りの商品一覧を取得
-     * @param  string $userId
-     * @return array
-     */
-    public function getFavoriteItems(int $userId): array
-    {
-        return $this->model->where('user_id', $userId)->pluck('item_id')->toArray();
     }
 }

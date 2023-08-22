@@ -5,6 +5,13 @@ namespace App\Contracts;
 interface UserInventoryRepositoryInterface
 {
     /**
+     * 持っている商品一覧を取得
+     * @param  int $userId
+     * @return array
+     */
+    public function getUserInventoryItemIds(int $userId): array;
+
+    /**
      * 持っている商品に追加
      * @param  int  $userId
      * @param  int  $itemId
@@ -19,11 +26,4 @@ interface UserInventoryRepositoryInterface
      * @throws ItemNotInInventoryException 持っている商品に存在しない
      */
     public function removeUserInventoryData(int $userId, int $itemId): void;
-
-    /**
-     * 持っている商品一覧を取得
-     * @param  int $userId
-     * @return array
-     */
-    public function getUserInventoryItemIds(int $userId): array;
 }

@@ -41,13 +41,17 @@ Route::middleware(['auth:api'])->group(function () {
 
     // ユーザーのインベントリ関連のルート
     Route::apiResource('user/inventory', UserInventoryController::class)
-        ->only(['index', 'store', 'destroy']);
+        ->only(['index']);
 
     // ユーザーのお気に入りアイテム関連のルート
     Route::apiResource('user/favorite/items', FavoriteItemController::class)
-        ->only(['index', 'store', 'destroy']);
+        ->only(['index']);
     // ユーザーのお気に入りレイアウト関連のルート
     Route::apiResource('user/favorite/layouts', FavoriteLayoutController::class)
         ->only(['index', 'destroy']);
     Route::post('user/favorite/layouts/{layout}', [FavoriteLayoutController::class, 'store']);
+    Route::post('user/inventory/{item}', [UserInventoryController::class, 'store']);
+    Route::delete('user/inventory/{item}', [UserInventoryController::class, 'destroy']);
+    Route::post('user/favorite/items/{item}', [FavoriteItemController::class, 'store']);
+    Route::delete('user/favorite/items/{item}', [FavoriteItemController::class, 'destroy']);
 });

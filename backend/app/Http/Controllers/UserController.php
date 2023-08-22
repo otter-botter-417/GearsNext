@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRegisterRequest;
-use App\Http\Requests\UserUpdateRequest;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+use App\Http\Requests\UserUpdateRequest;
+use App\Http\Requests\UserRegisterRequest;
 
-// ユーザー登録
+
+/**
+ * ユーザー情報に関する操作を管理するコントローラークラスです。
+ * このクラスではユーザーの登録、ログイン、ログアウト、更新、削除などの操作を提供します。
+ * すべてのメソッドは認証が必要です。
+ */
 class UserController extends Controller
 {
     protected $userService;
@@ -69,12 +73,13 @@ class UserController extends Controller
 
     /**
      * ユーザーの削除
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
-    public function delete(Request $request): \Illuminate\Http\JsonResponse
+    public function delete(): \Illuminate\Http\Response
     {
+
         $this->userService->deleteUserData(Auth::id());
-        return response()->json(['message' => 'User deleted successfully'], 200);
+        auth('api')->logout(); // トークンを無効化
+        return response(null, 204);
     }
 }

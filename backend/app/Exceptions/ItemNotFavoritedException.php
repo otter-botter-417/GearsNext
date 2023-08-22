@@ -6,5 +6,5 @@ use Exception;
 
 class ItemNotFavoritedException extends Exception
 {
-    protected $message = 'お気に入りに登録されていません。';
+    protected $message = 'お気に入りに商品が登録されていません。';
 }

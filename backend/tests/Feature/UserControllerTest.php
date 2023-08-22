@@ -112,7 +112,7 @@ class UserControllerTest extends TestCase
     {
         $response = $this->postToUserEndpointWithToken('delete', $this->token);
 
-        $response->assertStatus(200);
+        $response->assertStatus(204);
 
         $this->assertDatabaseMissing('users', ['user_name' => 'storeTestUserName']);
     }

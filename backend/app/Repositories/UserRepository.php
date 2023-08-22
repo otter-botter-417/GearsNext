@@ -2,11 +2,10 @@
 
 namespace App\Repositories;
 
+use App\Models\User;
 use App\Contracts\UserRepositoryInterface;
 use App\Exceptions\EmailAlreadyUsedException;
 use App\Exceptions\UserAlreadyRegisteredException;
-use App\Exceptions\UserNotFoundException;
-use App\Models\User;
 use Illuminate\Support\Facades\Log;
 
 /**

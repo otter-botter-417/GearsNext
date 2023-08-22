@@ -120,7 +120,12 @@ export const SearchPage = () => {
           });
         });
       } else {
-        const response = await fetch("http://localhost:8000/api/items/search");
+        const token = localStorage.getItem('idToken');
+        const response = await fetch("http://localhost:8000/api/items/search",{
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
         response.json().then((data) => {
           let filtered = data;
           //並び替え条件に従って並び替える

@@ -32,6 +32,9 @@ const LoginPage = () => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
+        user.getIdToken().then((idToken: string) => {
+          localStorage.setItem('idToken', idToken);
+        });
         console.log(user);
         router.push("/"); // リダイレクト
         // ...

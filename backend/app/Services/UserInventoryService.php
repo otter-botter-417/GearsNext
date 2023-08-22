@@ -2,9 +2,10 @@
 
 namespace App\Services;
 
-use App\Contracts\UserInventoryRepositoryInterface;
-use App\Contracts\ItemRepositoryInterface;
 use App\Contracts\UserRepositoryInterface;
+use App\Contracts\ItemRepositoryInterface;
+use App\Contracts\UserInventoryRepositoryInterface;
+
 
 /**
  * ユーザーの持っている商品に関するサービスクラス
@@ -48,7 +49,7 @@ class UserInventoryService
      */
     public function addUserInventory(string $userId, int $itemId): void
     {
-        $this->itemRepository->ensureItemExists($itemId);
+        // $this->itemRepository->ensureItemExists($itemId);
         $this->userInventoryRepository->userInventoryAlreadyExists($userId, $itemId);
         $this->userInventoryRepository->addUserInventoryData($userId, $itemId);
     }

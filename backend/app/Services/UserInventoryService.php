@@ -13,11 +13,6 @@ use App\Contracts\UserInventoryRepositoryInterface;
 class UserInventoryService
 {
     /**
-     * @var UserInventoryRepositoryInterface
-     */
-    protected $userInventoryRepository;
-
-    /**
      * @var UserRepositoryInterface
      */
     protected $userRepository;
@@ -26,6 +21,11 @@ class UserInventoryService
      * @var ItemRepositoryInterface
      */
     protected $itemRepository;
+
+    /**
+     * @var UserInventoryRepositoryInterface
+     */
+    protected $userInventoryRepository;
 
     public function __construct(
         UserRepositoryInterface $userRepository,

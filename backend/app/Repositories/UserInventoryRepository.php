@@ -22,7 +22,7 @@ class UserInventoryRepository implements UserInventoryRepositoryInterface
 
     /**
      * 持っている商品一覧を取得
-     * @param  string $userId
+     * @param  int $userId
      * @return array
      */
     public function getUserInventoryItemIds(int $userId): array
@@ -48,7 +48,7 @@ class UserInventoryRepository implements UserInventoryRepositoryInterface
 
     /**
      * 持っている商品から削除
-     * @param  string $userId
+     * @param  int $userId
      * @param  int    $itemId
      * @return void
      * @throws ItemNotInInventoryException 持っている商品に存在しない場合

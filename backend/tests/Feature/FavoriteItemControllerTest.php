@@ -7,10 +7,11 @@ use App\Models\Item;
 use App\Models\User;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Traits\AuthorizesRequests;
 
 class FavoriteItemControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, AuthorizesRequests;
 
     private $token;
     private $user;
@@ -18,12 +19,8 @@ class FavoriteItemControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->seed();
-        $this->user = User::factory()->create();
-        $this->token = JWTAuth::fromUser($this->user);
-        Item::factory(3)->create();
-        $userData = ['itemId' => 1];
-        $this->authorizedRequest('POST', '/api/user/favorite/items', $userData);
+        $this->initializeAuthorization();
+        $this->authorizedRequest('POST', '/api/user/favorite/items/1');
     }
 
     /**

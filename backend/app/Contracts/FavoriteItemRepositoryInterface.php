@@ -5,14 +5,6 @@ namespace App\Contracts;
 interface FavoriteItemRepositoryInterface
 {
     /**
-     * 既にお気に入りに商品が追加されているか確認
-     * @param int $userId
-     * @param int $itemId
-     * @return void
-     */
-    public function favoriteItemAlreadyExists(int $userId, int $itemId): void;
-
-    /**
      * お気に入りに商品を追加
      * @param  string $userId
      * @param  int    $itemId

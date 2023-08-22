@@ -33,13 +33,13 @@ class UserInventoryController extends Controller
 
     /**
      * ユーザーの持っている商品に保存
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param  Item  $item
+     * @return \Illuminate\Http\Response
      */
-    public function store(Item $item): \Illuminate\Http\JsonResponse
+    public function store(Item $item): \Illuminate\Http\Response
     {
         $this->userInventoryService->addUserInventory(Auth::id(), $item->item_id);
-        return response()->json(['message' => '持っている商品に登録しました。'], 201);
+        return response(null, 201);
     }
 
     /**

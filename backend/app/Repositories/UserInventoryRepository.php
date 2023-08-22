@@ -2,10 +2,10 @@
 
 namespace App\Repositories;
 
+use App\Models\UserInventory;
 use App\Contracts\UserInventoryRepositoryInterface;
 use App\Exceptions\ItemAlreadyInInventoryException;
 use App\Exceptions\ItemNotInInventoryException;
-use App\Models\UserInventory;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -22,28 +22,13 @@ class UserInventoryRepository implements UserInventoryRepositoryInterface
     }
 
     /**
-     * 既に持っている商品に追加されているか確認
-     * @param int $userId
-     * @param int $itemId
-     * @return void
-     * @throws ItemAlreadyInInventoryException 既にお気に入りに登録されている場合
+     * 持っている商品一覧を取得
+     * @param  string $userId
+     * @return array
      */
-    public function userInventoryAlreadyExists(int $userId, int $itemId): void
+    public function getUserInventoryItemIds(int $userId): array
     {
-        $userInventory =  $this->model->where('user_id', $userId)
-            ->where('item_id', $itemId)
-            ->exists();
-        if ($userInventory) {
-            Log::error(
-                '既に持っている商品に追加されています',
-                [
-                    'action' => 'userInventoryAlreadyExists',
-                    'userId' => $userId,
-                    'itemId' => $itemId
-                ]
-            );
-            throw new ItemAlreadyInInventoryException();
-        }
+        return $this->model->where('user_id', $userId)->pluck('item_id')->toArray();
     }
 
     /**
@@ -51,13 +36,26 @@ class UserInventoryRepository implements UserInventoryRepositoryInterface
      * @param  int    $userId
      * @param  int    $itemId
      * @return void
+     * @throws ItemAlreadyInInventoryException 既にお気に入りに登録されている場合
      */
     public function addUserInventoryData(int $userId, int $itemId): void
     {
-        $this->model->create([
-            'user_id' => $userId,
-            'item_id' => $itemId,
-        ]);
+        try {
+            $this->model->create([
+                'user_id' => $userId,
+                'item_id' => $itemId,
+            ]);
+        } catch (\Illuminate\Database\QueryException $e) {
+            Log::error(
+                '既に持っている商品に追加されています',
+                [
+                    'action' => 'addUserInventoryData',
+                    'userId' => $userId,
+                    'itemId' => $itemId
+                ]
+            );
+            throw new ItemAlreadyInInventoryException();
+        }
     }
 
     /**
@@ -84,15 +82,5 @@ class UserInventoryRepository implements UserInventoryRepositoryInterface
             throw new ItemNotInInventoryException();
         }
         $userInventory->delete();
-    }
-
-    /**
-     * 持っている商品一覧を取得
-     * @param  string $userId
-     * @return array
-     */
-    public function getUserInventoryItemIds(int $userId): array
-    {
-        return $this->model->where('user_id', $userId)->pluck('item_id')->toArray();
     }
 }

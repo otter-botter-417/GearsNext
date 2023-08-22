@@ -39,8 +39,7 @@ class FavoriteItemControllerTest extends TestCase
     public function test_destroy_remove_an_favorite_item()
     {
         $response = $this->authorizedRequest('DELETE', '/api/user/favorite/items/1');
-        $response->assertStatus(204)
-            ->assertJson(['message' => 'お気に入りから削除しました。']);
+        $response->assertStatus(204);
         $this->assertDatabaseMissing('favorite_items', ['item_id' => 1, 'user_id' => $this->userId]);
     }
 

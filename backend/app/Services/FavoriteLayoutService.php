@@ -40,6 +40,18 @@ class FavoriteLayoutService
     }
 
     /**
+     * ユーザーのお気に入りレイアウトを取得
+     * @param  string $userId
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getFavoriteLayouts($userId)
+    {
+        $favoriteLayoutIds = $this->favoriteLayoutRepository->getFavoriteLayouts($userId);
+        $favoriteLayouts = $this->layoutRepository->getLayoutsByIds($favoriteLayoutIds);
+        return $favoriteLayouts;
+    }
+
+    /**
      * お気に入りに追加
      * @param  string $userId
      * @param  int    $layoutId
@@ -60,21 +72,5 @@ class FavoriteLayoutService
     public function removeFavoriteLayout(int $userId, Layout $layout)
     {
         $this->favoriteLayoutRepository->removeFavoriteLayoutData($userId, $layout);
-    }
-
-    /**
-     * ユーザーのお気に入りレイアウトを取得
-     * @param  string $userId
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function getFavoriteLayouts($userId)
-    {
-        $favoriteLayoutIds = $this->favoriteLayoutRepository->getFavoriteLayouts($userId);
-        Log::debug($favoriteLayoutIds);
-
-        $favoriteLayouts = $this->layoutRepository->getLayoutsByIds($favoriteLayoutIds);
-        Log::debug($favoriteLayouts);
-
-        return $favoriteLayouts;
     }
 }

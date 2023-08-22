@@ -18,6 +18,7 @@ interface FavoriteLayoutRepositoryInterface
      * お気に入りにレイアウトを追加
      * @param  int $userId
      * @param  int $layoutId
+     * @return void
      */
     public function addFavoriteLayoutData(int $userId, int $layoutId): void;
 

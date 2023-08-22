@@ -39,7 +39,7 @@ class LayoutTest extends TestCase
      * レイアウトを登録
      * @covers \App\Http\Controllers\User\PrivateLayoutController::store
      */
-    public function test_user_can_layout_create()
+    public function test_can_create_layout()
     {
         $this->assertDatabaseHas('layouts', ['text' => 'これはテストです。']);
     }
@@ -48,7 +48,7 @@ class LayoutTest extends TestCase
      * レイアウトを取得
      * @covers \App\Http\Controllers\User\PrivateLayoutController::index
      */
-    public function test_user_can_get_layouts()
+    public function test_can_get_layouts()
     {
         $response = $this->authorizedRequest('GET', '/api/user/layout');
         $response->assertJsonStructure([
@@ -79,7 +79,7 @@ class LayoutTest extends TestCase
      * レイアウトの詳細を取得
      * @covers \App\Http\Controllers\User\PrivateLayoutController::show
      */
-    public function test_user_can_get_layout_detail()
+    public function test_can_get_layout_detail()
     {
         $response = $this->authorizedRequest('GET', '/api/user/layout/2');
         $response->assertStatus(200)
@@ -109,7 +109,7 @@ class LayoutTest extends TestCase
      * レイアウトを更新
      * @covers \App\Http\Controllers\User\PrivateLayoutController::update
      */
-    public function test_user_can_update_layout()
+    public function test_can_update_layout()
     {
         $updateLayoutData = [
             'text' => 'これは更新テストです。',
@@ -140,7 +140,7 @@ class LayoutTest extends TestCase
      * レイアウトを削除
      * @covers \App\Http\Controllers\User\PrivateLayoutController::destroy
      */
-    public function test_user_can_delete_layout()
+    public function test_can_delete_layout()
     {
         $response = $this->authorizedRequest('DELETE', '/api/user/layout/2');
         $response->assertStatus(204);

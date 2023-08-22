@@ -25,7 +25,7 @@ class FavoriteLayoutControllerTest extends TestCase
     }
 
     /**
-     * お気に入りに商品を追加
+     * お気に入りにレイアウトを追加
      * @covers \App\Http\Controllers\FavoriteLayoutController::store
      */
     public function test_can_add_layout_to_favorite()
@@ -34,7 +34,7 @@ class FavoriteLayoutControllerTest extends TestCase
     }
 
     /**
-     * お気に入りから商品を削除
+     * お気に入りからレイアウトを削除
      * @covers \App\Http\Controllers\FavoriteLayoutController::destroy
      */
     public function test_can_delete_item_from_favorite_layout()
@@ -45,7 +45,7 @@ class FavoriteLayoutControllerTest extends TestCase
     }
 
     /**
-     * 登録されているお気に入り商品を取得
+     * 登録されているお気に入りレイアウトを取得
      * @covers \App\Http\Controllers\FavoriteItemController::show
      */
     public function test_can_get_favorite_layouts()
@@ -78,7 +78,7 @@ class FavoriteLayoutControllerTest extends TestCase
     }
 
     /**
-     * お気に入りに商品を追加時に商品が見つからない場合
+     * お気に入りにレイアウトを追加時に商品が見つからない場合
      * @covers \App\Http\Controllers\FavoriteItemController::store
      */
     public function test_cannot_add_non_existent_layout_to_favorite_layout()

@@ -29,7 +29,7 @@ class FavoriteItemControllerTest extends TestCase
      */
     public function test_user_can_add_item_to_favorite()
     {
-        $this->assertDatabaseHas('favorite_items', ['item_id' => 1]);
+        $this->assertDatabaseHas('favorite_items', ['item_id' => 1, 'user_id' => $this->userId]);
     }
 
     /**
@@ -39,9 +39,9 @@ class FavoriteItemControllerTest extends TestCase
     public function test_destroy_remove_an_favorite_item()
     {
         $response = $this->authorizedRequest('DELETE', '/api/user/favorite/items/1');
-        $response->assertStatus(200)
+        $response->assertStatus(204)
             ->assertJson(['message' => 'お気に入りから削除しました。']);
-        $this->assertDatabaseMissing('favorite_items', ['item_id' => 1]);
+        $this->assertDatabaseMissing('favorite_items', ['item_id' => 1, 'user_id' => $this->userId]);
     }
 
     /**
@@ -71,7 +71,7 @@ class FavoriteItemControllerTest extends TestCase
     public function test_store_add_an_favorite_item_with_already_favorited_item()
     {
         $userData = ['itemId' => 1];
-        $response = $this->authorizedRequest('POST', '/api/user/favorite/items', $userData);
+        $response = $this->authorizedRequest('POST', '/api/user/favorite/items/1');
         $response->assertStatus(409)
             ->assertJson(['message' => 'お気に入りに登録されています']);
     }
@@ -82,7 +82,7 @@ class FavoriteItemControllerTest extends TestCase
     public function test_store_add_an_favorite_item_with_not_found_item()
     {
         $userData = ['itemId' => 999];
-        $response = $this->authorizedRequest('POST', '/api/user/favorite/items', $userData);
+        $response = $this->authorizedRequest('POST', '/api/user/favorite/items/1');
         $response->assertStatus(404)
             ->assertJson(['message' => '商品が見つかりませんでした']);
     }

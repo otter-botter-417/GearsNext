@@ -24,20 +24,6 @@ class FavoriteItemControllerTest extends TestCase
     }
 
     /**
-     * ユーザーエンドポイントにリクエストを送信する
-     * @param string $method HTTPメソッド（GET, POST, PUT, DELETEなど）
-     * @param string $url エンドポイントのURL
-     * @param array $data 送信するデータ
-     * @return \Illuminate\Foundation\Testing\TestResponse
-     */
-    private function authorizedRequest($method, $url, $data = [])
-    {
-        return $this->withHeaders([
-            'Authorization' => 'Bearer ' . $this->token,
-        ])->json($method, $url, $data);
-    }
-
-    /**
      * お気に入りに商品を追加
      * @covers \App\Http\Controllers\FavoriteItemController::store
      */

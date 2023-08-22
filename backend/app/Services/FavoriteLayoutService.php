@@ -57,7 +57,6 @@ class FavoriteLayoutService
      */
     public function addFavoriteLayout($userId, $layoutId)
     {
-        $this->favoriteLayoutRepository->favoriteLayoutAlreadyExists($userId, $layoutId);
         $this->favoriteLayoutRepository->addFavoriteLayoutData($userId, $layoutId);
     }
 

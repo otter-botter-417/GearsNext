@@ -53,6 +53,7 @@ class FavoriteLayoutService
      * お気に入りに追加
      * @param  int  $userId
      * @param  int  $layoutId
+     * @return void
      */
     public function addFavoriteLayout($userId, $layoutId)
     {
@@ -64,6 +65,8 @@ class FavoriteLayoutService
      * お気に入りから削除
      * @param  int  $userId
      * @param  int  $layoutId
+     * @return void
+     * @throws LayoutNotFavoritedException　お気に入りにレイアウトが存在しない
      */
     public function removeFavoriteLayout(int $userId, int $layoutId)
     {

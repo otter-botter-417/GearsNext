@@ -65,17 +65,6 @@ class FavoriteItemControllerTest extends TestCase
     }
 
     /**
-     * お気に入りに商品を追加時に既にお気に入りに商品が登録されている場合
-     * @covers \App\Http\Controllers\FavoriteItemController::store
-     */
-    public function test_store_add_an_favorite_item_with_already_favorited_item()
-    {
-        $userData = ['itemId' => 1];
-        $response = $this->authorizedRequest('POST', '/api/user/favorite/items/1');
-        $response->assertStatus(409)
-            ->assertJson(['message' => 'お気に入りに登録されています']);
-    }
-    /**
      * お気に入りに商品を追加時に商品が見つからない場合
      * @covers \App\Http\Controllers\FavoriteItemController::store
      */

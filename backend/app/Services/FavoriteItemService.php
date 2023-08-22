@@ -39,41 +39,37 @@ class FavoriteItemService
     }
 
     /**
-     * お気に入りに追加
-     * @param  string $userId
-     * @param  int    $itemId
-     * @throws ItemNotFoundException 商品が見つからない
-     * @throws ItemAlreadyFavoritedException お気に入りに商品が存在する
+     * ユーザーのお気に入り商品を取得
+     * @param  int  $userId
+     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function addFavoriteItem($userId, $itemId)
+    public function getFavoriteItems(int $userId): \Illuminate\Database\Eloquent\Collection
     {
-        $this->itemRepository->ensureItemExists($itemId);
-        $this->favoriteItemRepository->favoriteItemAlreadyExists($userId, $itemId);
+        $favoriteItemIds = $this->favoriteItemRepository->getFavoriteItems($userId);
+        $userInventories = $this->itemRepository->getItemsByIds($favoriteItemIds);
+        return $userInventories;
+    }
+
+    /**
+     * お気に入りに追加
+     * @param  int  $userId
+     * @param  int  $itemId
+     * @return void
+     */
+    public function addFavoriteItem(int $userId, int $itemId): void
+    {
         $this->favoriteItemRepository->addFavoriteItemData($userId, $itemId);
     }
 
     /**
      * お気に入りから削除
-     * @param  string $userId
-     * @param  int    $itemId
-     * @throws ItemNotFoundException 商品が見つからない
+     * @param  int  $userId
+     * @param  int  $itemId
+     * @return void
      * @throws ItemNotFavoritedException お気に入りに商品が存在しない
      */
-    public function removeFavoriteItem($userId, $itemId)
+    public function removeFavoriteItem(int $userId, int $itemId): void
     {
-        $this->itemRepository->ensureItemExists($itemId);
         $this->favoriteItemRepository->removeFavoriteItemData($userId, $itemId);
-    }
-
-    /**
-     * ユーザーのお気に入り商品を取得
-     * @param  string $userId
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function getFavoriteItems($userId)
-    {
-        $favoriteItemIds = $this->favoriteItemRepository->getFavoriteItems($userId);
-        $userInventories = $this->itemRepository->getItemsByIds($favoriteItemIds);
-        return $userInventories;
     }
 }

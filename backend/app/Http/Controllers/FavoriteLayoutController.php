@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use App\Services\FavoriteLayoutService;
-use App\Http\Requests\FavoriteRequest;
-use App\Http\Resources\LayoutResource;
 use App\Models\Layout;
-use Illuminate\Support\Facades\Log;
+use App\Services\FavoriteLayoutService;
+use App\Http\Resources\LayoutResource;
+use Illuminate\Support\Facades\Auth;
 
+/**
+ * ユーザーのお気に入りレイアウトに関する操作を管理するコントローラークラスです。
+ * このクラスではユーザーのお気に入りレイアウトの取得、追加、削除などの操作を提供します。
+ * すべてのメソッドは認証が必要です。
+ */
 class FavoriteLayoutController extends Controller
 {
     protected FavoriteLayoutService $favoriteLayoutService;
@@ -29,25 +32,25 @@ class FavoriteLayoutController extends Controller
     }
 
     /**
-     * FavoriteLayoutテーブルに保存
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * ユーザーのお気に入りレイアウトに保存
+     * @param  Layout  $layout
+     * @return \Illuminate\Http\Response
      */
-    public function store(Layout $layout): \Illuminate\Http\JsonResponse
+    public function store(Layout $layout): \Illuminate\Http\Response
     {
         $this->favoriteLayoutService->addFavoriteLayout(Auth::id(), $layout->layout_id);
-        return response()->json(['message' => 'お気に入りに登録しました。'], 201);
+        return response(null, 201);
     }
 
     /**
-     * FavoriteLayoutテーブルから削除する
+     * ユーザーのお気に入りレイアウトから削除する
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Layout  $layout
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Layout $layout): \Illuminate\Http\Response
     {
-        $this->favoriteLayoutService->removeFavoriteLayout(Auth::id(), $layout);
+        $this->favoriteLayoutService->removeFavoriteLayout(Auth::id(), $layout->layout_id);
         return response(null, 204);
     }
 }

@@ -2,14 +2,13 @@
 
 namespace App\Repositories;
 
-use App\Contracts\FavoriteItemRepositoryInterface;
-use App\Exceptions\ItemAlreadyFavoritedException;
-use App\Exceptions\ItemNotFavoritedException;
 use App\Models\FavoriteItem;
+use App\Contracts\FavoriteItemRepositoryInterface;
+use App\Exceptions\ItemNotFavoritedException;
 use Illuminate\Support\Facades\Log;
 
 /**
- * お気に入り商品に関するリポジトリクラス
+ * ユーザーのお気に入り商品に関するリポジトリクラス
  * @mixin FavoriteItemRepositoryInterface
  */
 class FavoriteItemRepository implements FavoriteItemRepositoryInterface
@@ -22,28 +21,13 @@ class FavoriteItemRepository implements FavoriteItemRepositoryInterface
     }
 
     /**
-     * 既にお気に入りに商品が追加されているか確認
-     * @param int $userId
-     * @param int $itemId
-     * @return void
-     * @throws ItemAlreadyFavoritedException お気に入りに商品が存在する場合
+     * お気に入りの商品一覧を取得
+     * @param  int  $userId
+     * @return array
      */
-    public function favoriteItemAlreadyExists(int $userId, int $itemId): void
+    public function getFavoriteItems(int $userId): array
     {
-        $favoriteItem =  $this->model->where('user_id', $userId)
-            ->where('item_id', $itemId)
-            ->exists();
-        if ($favoriteItem) {
-            Log::error(
-                '商品が既にお気に入りに登録されています',
-                [
-                    'action' => 'favoriteItemAlreadyExists',
-                    'userId' => $userId,
-                    'itemId' => $itemId
-                ]
-            );
-            throw new ItemAlreadyFavoritedException();
-        }
+        return $this->model->where('user_id', $userId)->pluck('item_id')->toArray();
     }
 
     /**
@@ -54,7 +38,7 @@ class FavoriteItemRepository implements FavoriteItemRepositoryInterface
      */
     public function addFavoriteItemData(int $userId, int $itemId): void
     {
-        $this->model->create([
+        $this->model->firstOrCreate([
             'user_id' => $userId,
             'item_id' => $itemId,
         ]);
@@ -62,8 +46,8 @@ class FavoriteItemRepository implements FavoriteItemRepositoryInterface
 
     /**
      * お気に入りから商品を削除
-     * @param  string $userId
-     * @param  int    $itemId
+     * @param  int  $userId
+     * @param  int  $itemId
      * @return void
      * @throws ItemNotFavoritedException お気に入りに商品が存在しない場合
      */
@@ -84,15 +68,5 @@ class FavoriteItemRepository implements FavoriteItemRepositoryInterface
             throw new ItemNotFavoritedException();
         }
         $favoriteItem->delete();
-    }
-
-    /**
-     * お気に入りの商品一覧を取得
-     * @param  string $userId
-     * @return array
-     */
-    public function getFavoriteItems(int $userId): array
-    {
-        return $this->model->where('user_id', $userId)->pluck('item_id')->toArray();
     }
 }

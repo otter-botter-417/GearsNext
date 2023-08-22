@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use App\Contracts\UserInventoryRepositoryInterface;
-use App\Contracts\ItemRepositoryInterface;
 use App\Contracts\UserRepositoryInterface;
+use App\Contracts\ItemRepositoryInterface;
+use App\Contracts\UserInventoryRepositoryInterface;
 
 /**
  * ユーザーの持っている商品に関するサービスクラス
@@ -12,11 +12,6 @@ use App\Contracts\UserRepositoryInterface;
  */
 class UserInventoryService
 {
-    /**
-     * @var UserInventoryRepositoryInterface
-     */
-    protected $userInventoryRepository;
-
     /**
      * @var UserRepositoryInterface
      */
@@ -27,55 +22,54 @@ class UserInventoryService
      */
     protected $itemRepository;
 
-    public function __construct(
-        UserInventoryRepositoryInterface $userInventoryRepository,
-        UserRepositoryInterface $userRepository,
-        ItemRepositoryInterface $itemRepository
+    /**
+     * @var UserInventoryRepositoryInterface
+     */
+    protected $userInventoryRepository;
 
+    public function __construct(
+        UserRepositoryInterface $userRepository,
+        ItemRepositoryInterface $itemRepository,
+        UserInventoryRepositoryInterface $userInventoryRepository
     ) {
-        $this->userInventoryRepository = $userInventoryRepository;
         $this->userRepository = $userRepository;
         $this->itemRepository = $itemRepository;
+        $this->userInventoryRepository = $userInventoryRepository;
+    }
+
+    /**
+     * ユーザーの持っている商品一覧を取得
+     * @param  int  $userId
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getUserInventories(int $userId): \Illuminate\Database\Eloquent\Collection
+    {
+        $userInventoryItemIds = $this->userInventoryRepository->getUserInventoryItemIds($userId);
+        $userInventories = $this->itemRepository->getItemsByIds($userInventoryItemIds);
+        return $userInventories;
     }
 
     /**
      * 持っている商品に追加
-     * @param  string $userId
-     * @param  int    $itemId
+     * @param  int  $userId
+     * @param  int  $itemId
      * @return void
-     * @throws ItemNotFoundException 商品が見つからない場合
-     * @throws ItemAlreadyInInventoryException 既に持っている商品の場合
      */
-    public function addUserInventory(string $userId, int $itemId): void
+    public function addUserInventory(int $userId, int $itemId): void
     {
-        $this->itemRepository->ensureItemExists($itemId);
-        $this->userInventoryRepository->userInventoryAlreadyExists($userId, $itemId);
+
         $this->userInventoryRepository->addUserInventoryData($userId, $itemId);
     }
 
     /**
      * 持っている商品から削除
-     * @param  string $userId
-     * @param  int    $itemId
+     * @param  int  $userId
+     * @param  int  $itemId
      * @return void
-     * @throws ItemNotFoundException 商品が見つからない場合
-     * @throws ItemNotInInventoryException 持っている商品が見つからない場合
+     * @throws ItemNotInInventoryException 持っている商品に登録されていない
      */
-    public function removeUserInventory(string $userId, int $itemId): void
+    public function removeUserInventory(int $userId, int $itemId): void
     {
-        $this->itemRepository->ensureItemExists($itemId);
         $this->userInventoryRepository->removeUserInventoryData($userId, $itemId);
-    }
-
-    /**
-     * ユーザーの持っている商品一覧を取得
-     * @param  string $userId
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function getUserInventories(string $userId): \Illuminate\Database\Eloquent\Collection
-    {
-        $userInventoryItemIds = $this->userInventoryRepository->getUserInventoryItemIds($userId);
-        $userInventories = $this->itemRepository->getItemsByIds($userInventoryItemIds);
-        return $userInventories;
     }
 }

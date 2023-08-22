@@ -5,8 +5,6 @@ namespace App\Services;
 use App\Contracts\UserRepositoryInterface;
 use App\Contracts\LayoutRepositoryInterface;
 use App\Contracts\FavoriteLayoutRepositoryInterface;
-use App\Models\Layout;
-use Illuminate\Support\Facades\Log;
 
 /**
  * お気に入りレイアウトに関するサービスクラス
@@ -40,10 +38,21 @@ class FavoriteLayoutService
     }
 
     /**
+     * ユーザーのお気に入りレイアウトを取得
+     * @param  int  $userId
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getFavoriteLayouts($userId)
+    {
+        $favoriteLayoutIds = $this->favoriteLayoutRepository->getFavoriteLayouts($userId);
+        $favoriteLayouts = $this->layoutRepository->getLayoutsByIds($favoriteLayoutIds);
+        return $favoriteLayouts;
+    }
+
+    /**
      * お気に入りに追加
-     * @param  string $userId
-     * @param  int    $layoutId
-     * @throws LayoutAlreadyFavoritedException お気に入りにレイアウトが存在する
+     * @param  int  $userId
+     * @param  int  $layoutId
      */
     public function addFavoriteLayout($userId, $layoutId)
     {
@@ -53,28 +62,11 @@ class FavoriteLayoutService
 
     /**
      * お気に入りから削除
-     * @param  int $userId
-     * @param  Layout $layout
-     * @param  int    $layoutId
+     * @param  int  $userId
+     * @param  int  $layoutId
      */
-    public function removeFavoriteLayout(int $userId, Layout $layout)
+    public function removeFavoriteLayout(int $userId, int $layoutId)
     {
-        $this->favoriteLayoutRepository->removeFavoriteLayoutData($userId, $layout);
-    }
-
-    /**
-     * ユーザーのお気に入りレイアウトを取得
-     * @param  string $userId
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function getFavoriteLayouts($userId)
-    {
-        $favoriteLayoutIds = $this->favoriteLayoutRepository->getFavoriteLayouts($userId);
-        Log::debug($favoriteLayoutIds);
-
-        $favoriteLayouts = $this->layoutRepository->getLayoutsByIds($favoriteLayoutIds);
-        Log::debug($favoriteLayouts);
-
-        return $favoriteLayouts;
+        $this->favoriteLayoutRepository->removeFavoriteLayoutData($userId, $layoutId);
     }
 }

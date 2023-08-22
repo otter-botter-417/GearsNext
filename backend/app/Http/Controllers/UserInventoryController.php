@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\InventoryRequest;
+use App\Models\Item;
 use App\Services\UserInventoryService;
 use Illuminate\Support\Facades\Auth;
 
-// 持っている物
+/**
+ * ユーザーの持っている商品に関する操作を管理するコントローラークラスです。
+ * このクラスではユーザーの持っている商品の取得、追加、削除などの操作を提供します。
+ * すべてのメソッドは認証が必要です。
+ */
 class UserInventoryController extends Controller
 {
     protected UserInventoryService $userInventoryService;
@@ -22,29 +26,30 @@ class UserInventoryController extends Controller
      */
     public function index(): \Illuminate\Http\JsonResponse
     {
-        $userInventorys = $this->userInventoryService->getUserInventories(Auth::id());
-        return response()->json($userInventorys, 200);
+        $userInventories = $this->userInventoryService->getUserInventories(Auth::id());
+        return response()->json($userInventories, 200);
     }
 
     /**
-     * UserInventoryテーブルに保存
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * ユーザーの持っている商品に保存
+     * @param  Item  $item
+     * @return \Illuminate\Http\Response
      */
-    public function store(InventoryRequest $request): \Illuminate\Http\JsonResponse
+    public function store(Item $item): \Illuminate\Http\Response
     {
-        $this->userInventoryService->addUserInventory(Auth::id(), $request->itemId);
-        return response()->json(['message' => '持っている商品に登録しました。'], 201);
+        $this->userInventoryService->addUserInventory(Auth::id(), $item->item_id);
+        return response(null, 201);
     }
 
     /**
-     * UserInventoryテーブルから削除する
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
+     * ユーザーの持っている商品から削除する
+     * @param Item  $item
+     * @return \Illuminate\Http\Response
+     * @throws ItemNotInInventoryException 持っている商品に存在しない
      */
-    public function destroy(int $id): \Illuminate\Http\JsonResponse
+    public function destroy(Item $item): \Illuminate\Http\Response
     {
-        $this->userInventoryService->removeUserInventory(Auth::id(), $id);
-        return response()->json(['message' => '持っている商品から削除しました。'], 200);
+        $this->userInventoryService->removeUserInventory(Auth::id(), $item->item_id);
+        return response(null, 204);
     }
 }

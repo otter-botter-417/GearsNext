@@ -2,10 +2,9 @@
 
 namespace App\Repositories;
 
-use App\Contracts\UserInventoryRepositoryInterface;
-use App\Exceptions\ItemAlreadyInInventoryException;
-use App\Exceptions\ItemNotInInventoryException;
 use App\Models\UserInventory;
+use App\Contracts\UserInventoryRepositoryInterface;
+use App\Exceptions\ItemNotInInventoryException;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -22,39 +21,26 @@ class UserInventoryRepository implements UserInventoryRepositoryInterface
     }
 
     /**
-     * 既に持っている商品に追加されているか確認
-     * @param int $userId
-     * @param int $itemId
-     * @return void
-     * @throws ItemAlreadyInInventoryException 既にお気に入りに登録されている場合
+     * 持っている商品一覧を取得
+     * @param  int $userId
+     * @return array
      */
-    public function userInventoryAlreadyExists(int $userId, int $itemId): void
+    public function getUserInventoryItemIds(int $userId): array
     {
-        $userInventory =  $this->model->where('user_id', $userId)
-            ->where('item_id', $itemId)
-            ->exists();
-        if ($userInventory) {
-            Log::error(
-                '既に持っている商品に追加されています',
-                [
-                    'action' => 'userInventoryAlreadyExists',
-                    'userId' => $userId,
-                    'itemId' => $itemId
-                ]
-            );
-            throw new ItemAlreadyInInventoryException();
-        }
+        return $this->model->where('user_id', $userId)->pluck('item_id')->toArray();
     }
 
     /**
      * 持っている商品に追加
+     * ユーザーIDとアイテムIDが一致するレコードが存在する場合はそのレコードを返し、
+     * 存在しない場合は新しいレコードを作成します。
      * @param  int    $userId
      * @param  int    $itemId
      * @return void
      */
     public function addUserInventoryData(int $userId, int $itemId): void
     {
-        $this->model->create([
+        $this->model->firstOrCreate([
             'user_id' => $userId,
             'item_id' => $itemId,
         ]);
@@ -62,7 +48,7 @@ class UserInventoryRepository implements UserInventoryRepositoryInterface
 
     /**
      * 持っている商品から削除
-     * @param  string $userId
+     * @param  int $userId
      * @param  int    $itemId
      * @return void
      * @throws ItemNotInInventoryException 持っている商品に存在しない場合
@@ -84,15 +70,5 @@ class UserInventoryRepository implements UserInventoryRepositoryInterface
             throw new ItemNotInInventoryException();
         }
         $userInventory->delete();
-    }
-
-    /**
-     * 持っている商品一覧を取得
-     * @param  string $userId
-     * @return array
-     */
-    public function getUserInventoryItemIds(int $userId): array
-    {
-        return $this->model->where('user_id', $userId)->pluck('item_id')->toArray();
     }
 }

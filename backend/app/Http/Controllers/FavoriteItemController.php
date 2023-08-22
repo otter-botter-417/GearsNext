@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
+use App\Models\Item;
 use App\Services\FavoriteItemService;
-use App\Http\Requests\FavoriteRequest;
+use Illuminate\Support\Facades\Auth;
 
-// お気に入り
+/**
+ * ユーザーのお気に入り商品に関する操作を管理するコントローラークラスです。
+ * このクラスではユーザーのお気に入り商品の取得、追加、削除などの操作を提供します。
+ * すべてのメソッドは認証が必要です。
+ */
 class FavoriteItemController extends Controller
 {
     protected FavoriteItemService $favoriteItemService;
@@ -27,25 +31,26 @@ class FavoriteItemController extends Controller
     }
 
     /**
-     * FavoriteItemテーブルに保存
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * ユーザーのお気に入り商品に保存
+     * @param  Item  $item
+     * @return \Illuminate\Http\Response
      */
-    public function store(FavoriteRequest $request): \Illuminate\Http\JsonResponse
+    public function store(Item $item): \Illuminate\Http\Response
     {
-        $this->favoriteItemService->addFavoriteItem(Auth::id(), $request->itemId);
-        return response()->json(['message' => 'お気に入りに登録しました。'], 201);
+        $this->favoriteItemService->addFavoriteItem(Auth::id(), $item->item_id);
+        return response(null, 201);
     }
 
     /**
-     * FavoriteItemテーブルから削除する
+     * ユーザーの持っている商品から削除する
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param  Item $item
+     * @return \Illuminate\Http\Response
+     * 
      */
-    public function destroy(int $id): \Illuminate\Http\JsonResponse
+    public function destroy(Item $item): \Illuminate\Http\Response
     {
-        $this->favoriteItemService->removeFavoriteItem(Auth::id(), $id);
-        return response()->json(['message' => 'お気に入りから削除しました。'], 200);
+        $this->favoriteItemService->removeFavoriteItem(Auth::id(), $item->item_id);
+        return response(null, 204);
     }
 }

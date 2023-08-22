@@ -15,6 +15,7 @@ interface UserInventoryRepositoryInterface
      * 持っている商品に追加
      * @param  int  $userId
      * @param  int  $itemId
+     * @return void
      */
     public function addUserInventoryData(int $userId, int $itemId): void;
 

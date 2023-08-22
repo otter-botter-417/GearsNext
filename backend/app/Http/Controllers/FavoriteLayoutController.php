@@ -34,20 +34,20 @@ class FavoriteLayoutController extends Controller
     }
 
     /**
-     * FavoriteLayoutテーブルに保存
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * ユーザーのお気に入りレイアウトに保存
+     * @param  Layout  $layout
+     * @return \Illuminate\Http\Response
      */
-    public function store(Layout $layout): \Illuminate\Http\JsonResponse
+    public function store(Layout $layout): \Illuminate\Http\Response
     {
         $this->favoriteLayoutService->addFavoriteLayout(Auth::id(), $layout->layout_id);
-        return response()->json(['message' => 'お気に入りに登録しました。'], 201);
+        return response(null, 201);
     }
 
     /**
-     * FavoriteLayoutテーブルから削除する
+     * ユーザーのお気に入りレイアウトから削除する
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Layout  $layout
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Layout $layout): \Illuminate\Http\Response

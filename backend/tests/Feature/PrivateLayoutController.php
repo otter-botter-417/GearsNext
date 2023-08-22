@@ -10,8 +10,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 /**
  * PrivateLayoutController
  * 
- * このクラスは、ユーザーのお気に入りレイアウト管理に関連するエンドポイントのテストを担当します。
- * それには、お気に入りへのレイアウトの追加、削除、取得などの操作が含まれます。
+ * このクラスは、ユーザーのレイアウト管理に関連するエンドポイントのテストを担当します。
+ * それには、レイアウトの登録、取得、更新、削除などの操作が含まれます。
  * AuthorizesRequestsトレイトを使用して、認証済みのリクエストをシミュレートします。
  */
 class LayoutTest extends TestCase

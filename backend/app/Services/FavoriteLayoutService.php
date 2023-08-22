@@ -65,7 +65,7 @@ class FavoriteLayoutService
      * @param  int  $userId
      * @param  int  $layoutId
      * @return void
-     * @throws LayoutNotFavoritedException　お気に入りにレイアウトが存在しない
+     * @throws LayoutNotFavoritedException お気に入りにレイアウトが存在しない
      */
     public function removeFavoriteLayout(int $userId, int $layoutId)
     {

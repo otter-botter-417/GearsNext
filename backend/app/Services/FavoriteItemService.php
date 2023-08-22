@@ -55,13 +55,9 @@ class FavoriteItemService
      * @param  int  $userId
      * @param  int  $itemId
      * @return void
-     * @throws ItemNotFoundException 商品が見つからない
-     * @throws ItemAlreadyFavoritedException お気に入りに商品が存在する
      */
     public function addFavoriteItem(int $userId, int $itemId): void
     {
-        $this->itemRepository->ensureItemExists($itemId);
-        $this->favoriteItemRepository->favoriteItemAlreadyExists($userId, $itemId);
         $this->favoriteItemRepository->addFavoriteItemData($userId, $itemId);
     }
 

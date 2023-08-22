@@ -6,7 +6,6 @@ use App\Models\Item;
 use App\Services\UserInventoryService;
 use Illuminate\Support\Facades\Auth;
 
-// 持っている物
 /**
  * ユーザーの持っている商品に関する操作を管理するコントローラークラスです。
  * このクラスではユーザーの持っている商品の取得、追加、削除などの操作を提供します。

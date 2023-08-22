@@ -68,8 +68,8 @@ class FavoriteLayoutService
      * @param  int  $userId
      * @param  int  $layoutId
      */
-    public function removeFavoriteLayout(int $userId, Layout $layout)
+    public function removeFavoriteLayout(int $userId, int $layoutId)
     {
-        $this->favoriteLayoutRepository->removeFavoriteLayoutData($userId, $layout);
+        $this->favoriteLayoutRepository->removeFavoriteLayoutData($userId, $layoutId);
     }
 }

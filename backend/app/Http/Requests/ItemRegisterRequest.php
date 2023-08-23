@@ -24,7 +24,7 @@ class ItemRegisterRequest extends FormRequest
         return [
             'baseData.item_name' => 'required|string|max:255',
             'baseData.asin' => 'required|string|size:10',
-            'baseData.image_ame' => 'required|string|max:255',
+            'baseData.image_name' => 'required|string|max:255',
             'baseData.price' => $numericRule,
             'baseData.open_width' => $numericRule,
             'baseData.open_depth' => $numericRule,

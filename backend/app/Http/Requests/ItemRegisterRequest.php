@@ -53,7 +53,7 @@ class ItemRegisterRequest extends FormRequest
     {
         return [
             'baseData.item_name.required' => $this->requiredMessage('商品名'),
-            'baseData.item_name.string' => $this->stringMessage('商品名'),,
+            'baseData.item_name.string' => $this->stringMessage('商品名'),
             'baseData.item_name.max' => '商品名は最大255文字までです。',
             'baseData.asin.required' => $this->requiredMessage('ASIN'),
             'baseData.asin.size' => 'ASINは10文字である必要があります。',
@@ -100,15 +100,15 @@ class ItemRegisterRequest extends FormRequest
             'details.fabrics.string' => $this->stringMessage('素材の詳細')
         ];
     }
-    private function stringMessage($field)
+    private function stringMessage(string $field): string
     {
         return "{$field}は文字列である必要があります。";
     }
-    private function numericMessage($field)
+    private function numericMessage(string $field): string
     {
         return "{$field}は数値である必要があります。";
     }
-    private function requiredMessage($field)
+    private function requiredMessage(string $field): string
     {
         return "{$field}は必須です。";
     }

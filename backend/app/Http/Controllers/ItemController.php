@@ -49,11 +49,11 @@ class ItemController extends Controller
      * @param  int  $itemId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(\Illuminate\Http\Request $request, $itemId): \Illuminate\Http\JsonResponse
+    public function show(\Illuminate\Http\Request $request, Item $item): \Illuminate\Http\JsonResponse
     {
         $userId = $request->attributes->get('user_id');;
-        $itemData = $this->itemService->getItemDetails($itemId, $userId);
-        $this->itemService->viewCountIncrement($itemId);
+        $itemData = $this->itemService->getItemDetails($item, $userId);
+        $this->itemService->viewCountIncrement($item);
         return response()->json($itemData, 200);
     }
 

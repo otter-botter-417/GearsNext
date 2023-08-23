@@ -100,6 +100,53 @@ class ItemControllerTest extends TestCase
     }
 
     /**
+     * 商品情報の更新
+     * @covers \App\Http\Controllers\ItemController::update
+     */
+    public function test_update_updates_item()
+    {
+        $item = Item::factory()->create();
+        $itemData = [
+            'itemDatas' => [
+                'itemName' => 'ソロベースEXtest',
+                'asin' => 'B08B7ZZCST',
+                'imageName' => 'solobase_ex',
+                'price' => 25000,
+                'openWidth' => '321',
+                'openDepth' => '312',
+                'openHeight' => '321',
+                'storageWidth' => '321',
+                'storageDepth' => '312',
+                'storageHeight' => '321',
+                'weight' => '3.34',
+                'brandName' => 'BUNDOK',
+                'itemCategoryName' => 'テント',
+                'subCategoryName' => 'ドームテント',
+                'itemTags' =>
+                [
+                    0 => '無骨',
+                    1 => '難燃素材',
+                ],
+                'colorTags' =>
+                [
+                    0 => 'オリーブ',
+                ],
+                'details' =>
+                [
+                    'capacity' => '1',
+                    'innerTent' => '付属',
+                    'grandSheet' => '無し',
+                    'fabrics' => 'TC',
+                ],
+            ],
+        ];
+
+        $response = $this->put("/api/items/{$item->item_id}", $itemData);
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('items', ['item_name' => 'ソロベースEXtest']);
+    }
+
+    /**
      * 商品の削除
      * @covers \App\Http\Controllers\ItemController::destroy
      */
@@ -110,7 +157,7 @@ class ItemControllerTest extends TestCase
         $response->assertStatus(204);
         $this->assertDatabaseMissing('items', ['item_id' => $item->item_id]);
     }
-    
+
     /**
      * 存在しない商品IDで商品詳細を取得
      * @covers \App\Http\Controllers\ItemController::show

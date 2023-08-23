@@ -52,64 +52,69 @@ class ItemRegisterRequest extends FormRequest
     public function messages()
     {
         return [
-            'baseData.item_name.required' => $this->requiredMessage('商品名'),
-            'baseData.item_name.string' => $this->stringMessage('商品名'),
-            'baseData.item_name.max' => '商品名は最大255文字までです。',
-            'baseData.asin.required' => $this->requiredMessage('ASIN'),
+            'baseData.item_name.required' => $this->generateMessage('required', '商品名'),
+
+            'baseData.item_name.required' => $this->generateMessage('required', '商品名'),
+            'baseData.item_name.string' => $this->generateMessage('string', '商品名'),
+            'baseData.item_name.max' => $this->generateMessage('max', '商品名', '255'),
+            'baseData.asin.required' => $this->generateMessage('required', 'ASIN'),
             'baseData.asin.size' => 'ASINは10文字である必要があります。',
-            'baseData.asin.string' => $this->stringMessage('ASIN'),
-            'baseData.image_name.required' => $this->requiredMessage('画像名'),
-            'baseData.image_name.max' => '画像名は最大255文字までです。',
-            'baseData.image_name.string' => $this->stringMessage('画像名'),
-            'baseData.price.required' => $this->requiredMessage('価格'),
-            'baseData.price.numeric' => $this->numericMessage('価格'),
-            'baseData.open_width.required' => $this->requiredMessage('展開時の幅'),
-            'baseData.open_width.numeric' => $this->numericMessage('展開時の幅'),
-            'baseData.open_depth.required' => $this->requiredMessage('展開時の奥行き'),
-            'baseData.open_depth.numeric' => $this->numericMessage('展開時の奥行き'),
-            'baseData.open_height.required' => $this->requiredMessage('展開時の高さ'),
-            'baseData.open_height.numeric' => $this->numericMessage('展開時の高さ'),
-            'baseData.storage_width.required' => $this->requiredMessage('収納時の幅'),
-            'baseData.storage_width.numeric' => $this->numericMessage('収納時の幅'),
-            'baseData.storage_depth.required' => $this->requiredMessage('収納時の奥行き'),
-            'baseData.storage_depth.numeric' => $this->numericMessage('収納時の奥行き'),
-            'baseData.storage_height.required' => $this->requiredMessage('収納時の高さ'),
-            'baseData.storage_height.numeric' => $this->numericMessage('収納時の高さ'),
-            'baseData.weight.required' => $this->requiredMessage('重量'),
-            'baseData.weight.numeric' => $this->numericMessage('重量'),
-            'baseData.brand_name.required' => $this->requiredMessage('ブランド名'),
-            'baseData.brand_name.string' => $this->stringMessage('画像名'),
-            'baseData.brand_name.max' => 'ブランド名は最大50文字までです。',
-            'baseData.item_category_name.required' => $this->requiredMessage('商品カテゴリー名'),
-            'baseData.item_category_name.string' => $this->stringMessage('商品カテゴリー名'),
-            'baseData.item_category_name.max' => '商品カテゴリー名は最大50文字までです。',
-            'baseData.sub_category_name.required' => $this->requiredMessage('サブカテゴリー名'),
-            'baseData.sub_category_name.string' => $this->stringMessage('サブカテゴリー名'),
-            'baseData.sub_category_name.max' => 'サブカテゴリー名は最大50文字までです。',
-            'itemTags.*.max' => 'アイテムタグは最大50文字までです。',
-            'itemTags.*.string' => $this->stringMessage('アイテムタグ'),
-            'colorTags.required' => $this->requiredMessage('カラータグ'),
-            'colorTags.*.max' => 'カラータグは最大20文字までです。',
-            'colorTags.*.string' => $this->stringMessage('カラータグ'),
-            'details.capacity.numeric' => $this->numericMessage('容量'),
-            'details.inner_tent.max' => 'インナーテントの詳細は最大255文字までです。',
-            'details.inner_tent.string' => $this->stringMessage('インナーテントの詳細'),
-            'details.grand_sheet.max' => 'グランドシートの詳細は最大255文字までです。',
-            'details.grand_sheet.string' => $this->stringMessage('グランドシートの詳細'),
-            'details.fabrics.max' => '素材の詳細は最大255文字までです。',
-            'details.fabrics.string' => $this->stringMessage('素材の詳細')
+            'baseData.asin.string' => $this->generateMessage('string', 'ASIN'),
+            'baseData.image_name.required' => $this->generateMessage('required', '画像名'),
+            'baseData.image_name.max' => $this->generateMessage('max', '画像名', '255'),
+            'baseData.image_name.string' => $this->generateMessage('string', '画像名'),
+            'baseData.price.required' => $this->generateMessage('required', '価格'),
+            'baseData.price.numeric' => $this->generateMessage('numeric', '価格'),
+            'baseData.open_width.required' => $this->generateMessage('required', '展開時の幅'),
+            'baseData.open_width.numeric' => $this->generateMessage('numeric', '展開時の幅'),
+            'baseData.open_depth.required' => $this->generateMessage('required', '展開時の奥行き'),
+            'baseData.open_depth.numeric' => $this->generateMessage('numeric', '展開時の奥行き'),
+            'baseData.open_height.required' => $this->generateMessage('required', '展開時の高さ'),
+            'baseData.open_height.numeric' => $this->generateMessage('numeric', '展開時の高さ'),
+            'baseData.storage_width.required' => $this->generateMessage('required', '収納時の幅'),
+            'baseData.storage_width.numeric' => $this->generateMessage('numeric', '収納時の幅'),
+            'baseData.storage_depth.required' => $this->generateMessage('required', '収納時の奥行き'),
+            'baseData.storage_depth.numeric' => $this->generateMessage('numeric', '収納時の奥行き'),
+            'baseData.storage_height.required' => $this->generateMessage('required', '収納時の高さ'),
+            'baseData.storage_height.numeric' => $this->generateMessage('numeric', '収納時の高さ'),
+            'baseData.weight.required' => $this->generateMessage('required', '重量'),
+            'baseData.weight.numeric' => $this->generateMessage('numeric', '重量'),
+            'baseData.brand_name.required' => $this->generateMessage('required', 'ブランド名'),
+            'baseData.brand_name.string' => $this->generateMessage('string', '画像名'),
+            'baseData.brand_name.max' => $this->generateMessage('max', 'ブランド名', '50'),
+            'baseData.item_category_name.required' => $this->generateMessage('required', '商品カテゴリー名'),
+            'baseData.item_category_name.string' => $this->generateMessage('string', '商品カテゴリー名'),
+            'baseData.item_category_name.max' => $this->generateMessage('max', '商品カテゴリー名', '50'),
+            'baseData.sub_category_name.required' => $this->generateMessage('required', 'サブカテゴリー名'),
+            'baseData.sub_category_name.string' => $this->generateMessage('string', 'サブカテゴリー名'),
+            'baseData.sub_category_name.max' => $this->generateMessage('max', 'サブカテゴリー名', '50'),
+            'itemTags.*.max' => $this->generateMessage('max', 'アイテムタグ', '50'),
+            'itemTags.*.string' => $this->generateMessage('string', 'アイテムタグ'),
+            'colorTags.required' => $this->generateMessage('required', 'カラータグ'),
+            'colorTags.*.max' => $this->generateMessage('max', 'カラータグ', '20'),
+            'colorTags.*.string' => $this->generateMessage('string', 'カラータグ'),
+            'details.capacity.numeric' => $this->generateMessage('numeric', '容量'),
+            'details.inner_tent.max' => $this->generateMessage('max', 'インナーテントの詳細', '255'),
+            'details.inner_tent.string' => $this->generateMessage('string', 'インナーテントの詳細'),
+            'details.grand_sheet.max' => $this->generateMessage('max', 'グランドシートの詳細', '255'),
+            'details.grand_sheet.string' => $this->generateMessage('string', 'グランドシートの詳細'),
+            'details.fabrics.max' => $this->generateMessage('max', '素材の詳細', '255'),
+            'details.fabrics.string' => $this->generateMessage('string', '素材の詳細')
         ];
     }
-    private function stringMessage(string $field): string
+
+    private function generateMessage(string $field, string $rule, string $size = null): string
     {
-        return "{$field}は文字列である必要があります。";
-    }
-    private function numericMessage(string $field): string
-    {
-        return "{$field}は数値である必要があります。";
-    }
-    private function requiredMessage(string $field): string
-    {
-        return "{$field}は必須です。";
+        switch ($rule) {
+            case 'required':
+                return "{$field}は必須です。";
+            case 'string':
+                return "{$field}は文字列である必要があります。";
+            case 'numeric':
+                return "{$field}は数値である必要があります。";
+            case 'max':
+                return "{$field}は最大{$size}文字までです。";
+                // 他のルールも追加できます
+        }
     }
 }

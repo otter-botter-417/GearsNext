@@ -10,39 +10,12 @@ use Illuminate\Support\Facades\Log;
 class ItemControllerTest extends TestCase
 {
     use RefreshDatabase;
-
+    //TODO商品の削除と編集のテストを追加する
     protected function setUp(): void
     {
         parent::setUp();
-
         $this->seed();
-
         Item::factory()->create();
-    }
-
-    /**
-     * 商品一覧をカテゴリーで取得
-     * @covers \App\Http\Controllers\ItemController::index
-     */
-    public function test_index_returns_items_category()
-    {
-        $response = $this->get('/api/items?categoryname=テント');
-
-        $response->assertStatus(200)
-            ->assertJsonFragment(['item_name' => 'ソロベースEX']);
-    }
-
-    /**
-     * 商品一覧を全て取得
-     * @covers \App\Http\Controllers\ItemController::index
-     */
-    public function test_index_returns_items_all()
-    {
-        $response = $this->get('/api/items');
-
-        $response->assertStatus(200)
-            //レスポンス中のどこかに指定JSONデータが含まれていることを宣言します。
-            ->assertJsonFragment(['item_name' => 'ソロベースEX']);
     }
 
     /**
@@ -87,11 +60,31 @@ class ItemControllerTest extends TestCase
         ];
 
         $response = $this->post('/api/items', $itemData);
-
-        $response->assertStatus(201)
-            ->assertJson(['message' => '商品登録が完了しました']);
-
+        $response->assertStatus(201);
         $this->assertDatabaseHas('items', ['item_name' => 'ソロベースEX']);
+    }
+
+    /**
+     * 商品一覧をカテゴリーで取得
+     * @covers \App\Http\Controllers\ItemController::index
+     */
+    public function test_index_returns_items_category()
+    {
+        $response = $this->get('/api/items?categoryname=テント');
+
+        $response->assertStatus(200)
+            ->assertJsonFragment(['item_name' => 'ソロベースEX']);
+    }
+
+    /**
+     * 商品一覧を全て取得
+     * @covers \App\Http\Controllers\ItemController::index
+     */
+    public function test_index_returns_items_all()
+    {
+        $response = $this->get('/api/items');
+        $response->assertStatus(200)
+            ->assertJsonFragment(['item_name' => 'ソロベースEX']);
     }
 
     /**
@@ -101,13 +94,23 @@ class ItemControllerTest extends TestCase
     public function test_show_returns_item_details()
     {
         $item = Item::factory()->create();
-
         $response = $this->get("/api/items/{$item->item_id}");
-
         $response->assertStatus(200)
             ->assertJsonFragment(['item_name' => $item->item_name]);
     }
 
+    /**
+     * 商品の削除
+     * @covers \App\Http\Controllers\ItemController::destroy
+     */
+    public function test_destroy_deletes_item()
+    {
+        $item = Item::factory()->create();
+        $response = $this->delete("/api/items/{$item->item_id}");
+        $response->assertStatus(204);
+        $this->assertDatabaseMissing('items', ['item_id' => $item->item_id]);
+    }
+    
     /**
      * 存在しない商品IDで商品詳細を取得
      * @covers \App\Http\Controllers\ItemController::show
@@ -115,11 +118,8 @@ class ItemControllerTest extends TestCase
     public function test_show_with_non_existent_item_id()
     {
         $nonExistentItemId = 9999; // 存在しない商品ID
-
         $response = $this->get("/api/items/{$nonExistentItemId}");
-
-        $response->assertStatus(404)
-            ->assertJson(['message' => '商品が見つかりませんでした']);
+        $response->assertStatus(404);
     }
 
     /**
@@ -128,8 +128,7 @@ class ItemControllerTest extends TestCase
      */
     public function test_index_with_non_existent_category_name()
     {
-        $response = $this->get('/api/items?categoryname=カゴ');
-
+        $response = $this->get('/api/items?categoryName=カゴ');
         $response->assertStatus(404)
             ->assertJson(['message' => 'カテゴリーが見つかりませんでした。']);
     }

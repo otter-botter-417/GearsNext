@@ -22,6 +22,7 @@ class ItemRegisterRequest extends FormRequest
         $numericRule = 'required|numeric';
 
         return [
+            'baseData.*' => 'required',
             'baseData.item_name' => 'required|string|max:255',
             'baseData.asin' => 'required|string|size:10',
             'baseData.image_name' => 'required|string|max:255',
@@ -52,8 +53,6 @@ class ItemRegisterRequest extends FormRequest
     public function messages()
     {
         return [
-            'baseData.item_name.required' => $this->generateMessage('required', '商品名'),
-
             'baseData.item_name.required' => $this->generateMessage('required', '商品名'),
             'baseData.item_name.string' => $this->generateMessage('string', '商品名'),
             'baseData.item_name.max' => $this->generateMessage('max', '商品名', '255'),
@@ -88,11 +87,14 @@ class ItemRegisterRequest extends FormRequest
             'baseData.sub_category_name.required' => $this->generateMessage('required', 'サブカテゴリー名'),
             'baseData.sub_category_name.string' => $this->generateMessage('string', 'サブカテゴリー名'),
             'baseData.sub_category_name.max' => $this->generateMessage('max', 'サブカテゴリー名', '50'),
+
             'itemTags.*.max' => $this->generateMessage('max', 'アイテムタグ', '50'),
             'itemTags.*.string' => $this->generateMessage('string', 'アイテムタグ'),
+
             'colorTags.required' => $this->generateMessage('required', 'カラータグ'),
             'colorTags.*.max' => $this->generateMessage('max', 'カラータグ', '20'),
             'colorTags.*.string' => $this->generateMessage('string', 'カラータグ'),
+
             'details.capacity.numeric' => $this->generateMessage('numeric', '容量'),
             'details.inner_tent.max' => $this->generateMessage('max', 'インナーテントの詳細', '255'),
             'details.inner_tent.string' => $this->generateMessage('string', 'インナーテントの詳細'),
@@ -114,7 +116,6 @@ class ItemRegisterRequest extends FormRequest
                 return "{$field}は数値である必要があります。";
             case 'max':
                 return "{$field}は最大{$size}文字までです。";
-                // 他のルールも追加できます
         }
     }
 }

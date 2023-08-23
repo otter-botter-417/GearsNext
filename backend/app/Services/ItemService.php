@@ -148,13 +148,12 @@ class ItemService
     }
 
     /**
-     * TODO　param名の変更　idをitem_idに
      * 商品の閲覧数をインクリメント
-     * @param  int $id
+     * @param  Item $item
      * @throws ItemNotFoundException 商品が見つからない場合
      * @return void
      */
-    public function viewCountIncrement(int $itemId): void
+    public function viewCountIncrement(Item $item): void
     {
         $this->itemRepository->incrementViewCount($item);
     }

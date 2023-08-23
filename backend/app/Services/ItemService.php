@@ -10,6 +10,7 @@ use App\Contracts\BrandRepositoryInterface;
 use App\Contracts\CategoryRepositoryInterface;
 use App\Contracts\SubCategoryRepositoryInterface;
 use App\Contracts\ViewItemHistoryRepositoryInterface;
+use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -88,14 +89,13 @@ class ItemService
 
     /**
      * 商品の詳細な情報を取得
-     * @param  int $itemId
+     * @param  Item $item
      * @param  int $userId
      * @throws ItemNotFoundException 商品が見つからない場合
      * @return \Illuminate\Database\Eloquent\Collection 商品の詳細を返します。
      */
-    public function getItemDetails(int $itemId,  ?int $userId = null): \Illuminate\Database\Eloquent\Collection
+    public function getItemDetails(Item $item,  ?int $userId = null): \Illuminate\Database\Eloquent\Collection
     {
-        $item = $this->itemRepository->ensureItemExists($itemId);
         $itemData = $this->itemRepository->getItemDataWithRelations($item);
         if ($userId) {
             $this->viewItemHistoryRepository->saveViewItemHistory($userId, $itemId);

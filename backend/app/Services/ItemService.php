@@ -98,7 +98,7 @@ class ItemService
     {
         $itemData = $this->itemRepository->getItemDataWithRelations($item);
         if ($userId) {
-            $this->viewItemHistoryRepository->saveViewItemHistory($userId, $itemId);
+            $this->viewItemHistoryRepository->saveViewItemHistory($userId, $item->item_id);
         }
 
         return $itemData;

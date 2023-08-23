@@ -156,7 +156,6 @@ class ItemService
      */
     public function viewCountIncrement(int $itemId): void
     {
-        $item = $this->itemRepository->ensureItemExists($itemId);
         $this->itemRepository->incrementViewCount($item);
     }
 

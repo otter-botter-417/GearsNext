@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ItemIndexRequest;
 use App\Http\Requests\ItemRegisterRequest;
+use App\Models\Item;
 use App\Services\ItemService;
 
 //商品に関するコントローラー
@@ -17,28 +18,29 @@ class ItemController extends Controller
     }
 
     // TODO 編集と削除の実装
+    // itemDatas をitemDataに変更
 
 
     /**
      * 商品検索
-     * @param  \Illuminate\Http\Request  $request categorynameがあればカテゴリーで検索
+     * @param  \Illuminate\Http\Request  $request categoryNameがあればカテゴリーで検索
      * @return \Illuminate\Http\JsonResponse
      */
     public function index(ItemIndexRequest $request): \Illuminate\Http\JsonResponse
     {
-        $items = $this->itemService->getItems($request->categoryname);
+        $items = $this->itemService->getItems($request->categoryName);
         return response()->json($items, 200);
     }
 
     /**
      * 商品登録
      * @param  \Illuminate\Http\Request  $request 
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
-    public function store(ItemRegisterRequest $request): \Illuminate\Http\JsonResponse
+    public function store(ItemRegisterRequest $request): \Illuminate\Http\Response
     {
         $this->itemService->register($request->itemDatas);
-        return response()->json(['message' => '商品登録が完了しました'], 201);
+        return response(null, 201);
     }
 
     /**
@@ -53,5 +55,17 @@ class ItemController extends Controller
         $itemData = $this->itemService->getItemDetails($itemId, $userId);
         $this->itemService->viewCountIncrement($itemId);
         return response()->json($itemData, 200);
+    }
+
+    /**
+     * 商品詳細を更新
+     * @param  \Illuminate\Http\Request  $request
+     * @param  Item  $item
+     * @return \Illuminate\Http\Response
+     */
+    public function update(ItemUpdateRequest $request, Item $item): \Illuminate\Http\Response
+    {
+        $this->itemService->updateItem($request->itemData, $item);
+        return response(null, 200);
     }
 }

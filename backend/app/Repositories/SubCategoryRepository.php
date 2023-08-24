@@ -2,43 +2,44 @@
 
 namespace App\Repositories;
 
+use App\Models\SubCategory;
 use App\Contracts\SubCategoryRepositoryInterface;
 use App\Exceptions\SubCategoryNotFoundException;
-use App\Models\SubCategory;
 use Illuminate\Support\Facades\Log;
 
 //静的メソッドはリポジトリのメソッドでは通常使わない
 //静的メソッドはモデルに書く
 class SubCategoryRepository implements SubCategoryRepositoryInterface
 {
-    public function getAll()
+    /**
+     * サブカテゴリーを取得
+     * @param  int  $subCategoryId
+     * @return SubCategory
+     */
+    public function find(int $subCategoryId): ?SubCategory
     {
-        return SubCategory::all();
-    }
-
-    public function find($id)
-    {
-        return SubCategory::find($id);
+        return SubCategory::find($subCategoryId);
     }
 
     /**
-     * @param  int $subCategoryId
-     * @throws SubCategoryNotFoundException サブカテゴリーが見つからない場合にスローされます。
-     * @return \App\Models\SubCategory サブカテゴリーのインスタンスを返します。
+     * サブカテゴリー名からサブカテゴリーを取得
+     * @param  string $subCategoryName
+     * @return SubCategory 
+     * @throws SubCategoryNotFoundException サブカテゴリーが見つからない場合
      */
-    public function getSubCategoryByNameOrThrow($subCategoryId)
+    public function getSubCategoryByName(string $subCategoryName): SubCategory
     {
-        $subCategory = SubCategory::where('sub_category_name', $subCategoryId)->first();
+        $subCategory = SubCategory::where('sub_category_name', $subCategoryName)->first();
 
         if (!$subCategory) {
             Log::error(
                 'サブカテゴリーの存在を確認操作中にエラーが発生',
                 [
-                    'action' => 'getSubCategoryByNameOrThrow',
-                    'subCategoryId' => $subCategoryId
+                    'action' => 'getSubCategoryByName',
+                    'subCategoryId' => $subCategoryName
                 ]
             );
-            throw new SubCategoryNotFoundException($subCategoryId);
+            throw new SubCategoryNotFoundException($subCategoryName);
         }
         return $subCategory;
     }

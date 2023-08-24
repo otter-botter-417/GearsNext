@@ -49,7 +49,7 @@ class LayoutRepository implements LayoutRepositoryInterface
      */
     public function getLayoutsByIds(array $layoutIds): Collection
     {
-        return $this->model->whereIn('layout_id', $layoutIds)->with(['user', 'tagPositions'])->get();
+        return $this->model->whereIn('layout_id', $layoutIds)->with(['users', 'tagPositions'])->get();
     }
 
     /**

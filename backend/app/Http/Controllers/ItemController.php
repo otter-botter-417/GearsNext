@@ -27,10 +27,10 @@ class ItemController extends Controller
 
     /**
      * 商品検索
-     * @param  \Illuminate\Http\Request  $request categoryNameがあればカテゴリーで検索
-     * @return \Illuminate\Http\JsonResponse
+     * @param  Request  $request categoryNameがあればカテゴリーで検索
+     * @return JsonResponse
      */
-    public function index(ItemIndexRequest $request): \Illuminate\Http\JsonResponse
+    public function index(ItemIndexRequest $request): JsonResponse
     {
         $items = $this->itemService->getItems($request->categoryName);
         return response()->json($items, 200);
@@ -38,10 +38,10 @@ class ItemController extends Controller
 
     /**
      * 商品登録
-     * @param  \Illuminate\Http\Request  $request 
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request 
+     * @return Response
      */
-    public function store(ItemRegisterRequest $request): \Illuminate\Http\Response
+    public function store(ItemRegisterRequest $request): Response
     {
         $this->itemService->register($request->itemData);
         return response(null, 201);
@@ -49,11 +49,11 @@ class ItemController extends Controller
 
     /**
      * 商品詳細を取得
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @param  int  $itemId
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function show(\Illuminate\Http\Request $request, Item $item): \Illuminate\Http\JsonResponse
+    public function show(Request $request, Item $item): JsonResponse
     {
         $userId = $request->attributes->get('user_id');;
         $itemData = $this->itemService->getItemDetails($item, $userId);
@@ -63,11 +63,11 @@ class ItemController extends Controller
 
     /**
      * 商品詳細を更新
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @param  Item  $item
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function update(ItemRegisterRequest $request, Item $item): \Illuminate\Http\Response
+    public function update(ItemRegisterRequest $request, Item $item): Response
     {
         $this->itemService->updateItemData($request->itemData, $item);
         return response(null, 204);
@@ -76,9 +76,9 @@ class ItemController extends Controller
     /**
      * 商品を削除
      * @param  Item  $item
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function destroy(Item $item): \Illuminate\Http\Response
+    public function destroy(Item $item): Response
     {
         $this->itemService->deleteItem($item);
         return response(null, 204);

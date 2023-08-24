@@ -79,7 +79,7 @@ class LayoutService
 
     /**
      * レイアウトの閲覧数をインクリメント
-     * @param  \App\Models\Layout  $layout
+     * @param  Layout  $layout
      * @return void
      */
     public function incrementLayoutViewCount(Layout $layout): void
@@ -89,7 +89,7 @@ class LayoutService
 
     /**
      * レイアウトの閲覧履歴を保存
-     * @param  \App\Models\Layout  $layout
+     * @param  Layout  $layout
      * @param int $userId
      * @return void
      */
@@ -100,7 +100,7 @@ class LayoutService
 
     /**
      * レイアウトを更新
-     * @param  \App\Models\Layout  $layout
+     * @param  Layout  $layout
      * @param  array $data レイアウトデータ
      * @return void
      * @throws ItemNotFoundException 商品が見つからない
@@ -114,7 +114,7 @@ class LayoutService
 
     /**
      * レイアウトを削除
-     * @param  \App\Models\Layout  $layout
+     * @param  Layout  $layout
      * @return void
      */
     public function removeLayout(Layout $layout): void

@@ -8,8 +8,9 @@ use App\Http\Requests\StoreLayoutRequest;
 use App\Http\Requests\UpdateLayoutRequest;
 use App\Http\Resources\LayoutResource;
 use Illuminate\Support\Facades\Auth;
-use \Illuminate\Http\Response;
-use \Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * レイアウトに関する操作を管理するコントローラークラスです。
@@ -28,7 +29,7 @@ class PrivateLayoutController extends Controller
     /**
      * @return Response
      */
-    public function index()
+    public function index(): ResourceCollection
     {
         $layouts = $this->layoutService->getLayouts(Auth::id());
         return LayoutResource::collection($layouts);
@@ -52,7 +53,7 @@ class PrivateLayoutController extends Controller
      * @throws LayoutNotFoundException レイアウトが見つからない
      * 
      */
-    public function show(int $id)
+    public function show(int $id): JsonResource
     {
         $layout = $this->layoutService->getLayout($id);
         return  new LayoutResource($layout);

@@ -8,12 +8,10 @@ interface UserRepositoryInterface
 {
     /**
      * ユーザーを登録する
-     * @param string $userName
-     * @param string $email
-     * @param string $password
+     * @param  array  $registerRequest [user_name, email, password]
      * @return User
      */
-    public function createUserData(string $userName, string $email, string $password): User;
+    public function createUserData(array $registerData): User;
 
     /**
      * ユーザー情報を更新する

@@ -68,14 +68,13 @@ class LayoutService
 
     /**
      * レイアウトの詳細を取得する
-     * @param  int $layoutId
+     * @param  Layout $layout
      * @param  int $userId
      * @return Layout
-     * @throws LayoutNotFoundException
      */
-    public function getLayoutWithHistory(int $layoutId, ?int $userId): Layout
+    public function getLayoutWithHistory(Layout $layout, ?int $userId): Layout
     {
-        $layout = $this->layoutRepository->getLayout($layoutId);
+        $layout = $this->layoutRepository->getLayout($layout);
 
         if ($userId) {
             $this->saveViewLayoutHistory($layout, $userId);
@@ -98,7 +97,7 @@ class LayoutService
     /**
      * レイアウトの閲覧履歴を保存
      * @param  Layout  $layout
-     * @param int $userId
+     * @param  int $userId
      * @return void
      */
     public function saveViewLayoutHistory(Layout $layout, int $userId): void

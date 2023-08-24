@@ -8,6 +8,7 @@ use App\Http\Requests\StoreLayoutRequest;
 use App\Http\Requests\UpdateLayoutRequest;
 use App\Http\Resources\LayoutResource;
 use Illuminate\Support\Facades\Auth;
+use \Illuminate\Http\Response;
 
 /**
  * レイアウトに関する操作を管理するコントローラークラスです。
@@ -24,7 +25,7 @@ class PrivateLayoutController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -33,8 +34,8 @@ class PrivateLayoutController extends Controller
     }
 
     /**
-     * @param  \App\Http\Requests\StoreLayoutRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param  StoreLayoutRequest  $request
+     * @return Response
      * @throws ItemNotFoundException 商品が見つからない
      */
     public function store(StoreLayoutRequest $request)
@@ -45,8 +46,8 @@ class PrivateLayoutController extends Controller
     }
 
     /**
-     * @param  int  $id layoutId
-     * @return \Illuminate\Http\Response
+     * @param  int $id layoutId
+     * @return Response
      * @throws LayoutNotFoundException レイアウトが見つからない
      * 
      */
@@ -57,9 +58,9 @@ class PrivateLayoutController extends Controller
     }
 
     /**
-     * @param  \App\Http\Requests\UpdateLayoutRequest  $request
+     * @param  UpdateLayoutRequest  $request
      * @param  \App\Models\Layout  $layout
-     * @return \Illuminate\Http\Response
+     * @return Response
      * @throws ItemNotFoundException 商品が見つからない
      */
     public function update(UpdateLayoutRequest $request, Layout $layout)
@@ -72,9 +73,9 @@ class PrivateLayoutController extends Controller
 
     /**
      * @param  \App\Models\Layout  $layout
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function destroy(Layout $layout): \Illuminate\Http\Response
+    public function destroy(Layout $layout): Response
     {
         $this->authorize('delete', $layout);
         $this->layoutService->removeLayout($layout);

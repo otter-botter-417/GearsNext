@@ -23,6 +23,7 @@ class PublicLayoutController extends Controller
     }
 
     /**
+     * 全てのレイアウトを取得
      * @return ResourceCollection
      */
     public function index(): ResourceCollection
@@ -34,18 +35,14 @@ class PublicLayoutController extends Controller
     /**
      * レイアウトの詳細を取得し、閲覧回数をインクリメント
      * 認証ユーザーからのアクセスの場合は閲覧履歴を保存
+     * @param  Request  $request user_idのみ取得できる
      * @param  int  $layoutId
      * @return JsonResource
      */
     public function show(Request $request, int $layoutId): JsonResource
     {
-        $layout = $this->layoutService->getLayout($layoutId);
         $userId = $request->attributes->get('user_id');
-        if ($userId) {
-            $this->layoutService->saveViewLayoutHistory($layout, $userId);
-        }
-        $this->layoutService->incrementLayoutViewCount($layout);
-
+        $layout = $this->layoutService->getLayoutWithHistory($layoutId, $userId);
         return  new LayoutResource($layout);
     }
 }

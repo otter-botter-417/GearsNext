@@ -43,9 +43,9 @@ interface ItemRepositoryInterface
 
     /**
      * 商品データを登録
-     * @param  array $baseData
-     * @param  array $tagIds ['colorTagIds' => [], 'itemTagIds' => []]
-     * @param  array $attributesData
+     * @param array $baseData 商品の基本情報
+     * @param array $tagIds ['colorTagIds' => [], 'itemTagIds' => []]
+     * @param array $attributesData 商品の属性情報
      * @return void
      */
     public function createItemData(array $baseData, $tagIds, $attributesData): void;
@@ -67,12 +67,12 @@ interface ItemRepositoryInterface
     /**
      * 商品を更新
      * @param Item $item
-     * @param array $itemData
+     * @param array $baseData 商品の基本情報
      * @param array $tagIds ['colorTagIds' => [], 'itemTagIds' => []]
-     * @param array $attributesData 
+     * @param array $attributesData 商品の属性情報
      * @return void
      */
-    public function updateItemData(Item $item, array $itemData, array $tagIds, array $attributesData): void;
+    public function updateItemData(Item $item, array $baseData, array $tagIds, array $attributesData): void;
 
     /**
      * 商品を削除

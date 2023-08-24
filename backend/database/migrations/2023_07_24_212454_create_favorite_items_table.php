@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('favorite_item');
+        Schema::dropIfExists('favorite_items');
     }
 };

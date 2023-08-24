@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('color_tag_relations', function (Blueprint $table) {
+        Schema::create('item_item_tag', function (Blueprint $table) {
 
-            $table->id('color_tag_relations_id');
+            $table->id('item_item_tag');
             $table->foreignId('item_id')->constrained('items', 'item_id')->onDelete('cascade');
-            $table->foreignId('color_tag_id')->constrained('color_tags', 'color_tag_id')->onDelete('cascade');
-            $table->unique(['item_id', 'color_tag_id']); // user_idとitem_idの組み合わせにユニーク制約を追加
+            $table->foreignId('item_tag_id')->constrained('item_tags', 'item_tag_id')->onDelete('cascade');
+            $table->unique(['item_id', 'item_tag_id']); // user_idとitem_idの組み合わせにユニーク制約を追加
+
         });
     }
 
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('color_tag_relations');
+        Schema::dropIfExists('item_item_tag');
     }
 };

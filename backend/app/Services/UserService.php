@@ -93,13 +93,7 @@ class UserService
      */
     public function updateUserData(int $userId, array $data): void
     {
-        $password = $this->hashPassword($data['password']);
-
-        $data = [
-            'user_name' => $data['user_name'],
-            'email' => $data['email'],
-            'password' => $password,
-        ];
+        $data['password'] = $this->hashPassword($data['password']);
         $this->userRepository->updateUserData($userId, $data);
     }
 

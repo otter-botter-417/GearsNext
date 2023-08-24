@@ -10,7 +10,6 @@ use \Illuminate\Http\Request;
 use \Illuminate\Http\Response;
 use \Illuminate\Http\JsonResponse;
 
-
 /**
  * 商品に関する操作を管理するコントローラークラスです。
  * このクラスでは商品の検索、登録、取得、更新、削除などの操作を提供します。

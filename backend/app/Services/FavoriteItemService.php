@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Contracts\UserRepositoryInterface;
 use App\Contracts\ItemRepositoryInterface;
 use App\Contracts\FavoriteItemRepositoryInterface;
-
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * お気に入り商品に関するサービスクラス
@@ -41,9 +41,9 @@ class FavoriteItemService
     /**
      * ユーザーのお気に入り商品を取得
      * @param  int  $userId
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
-    public function getFavoriteItems(int $userId): \Illuminate\Database\Eloquent\Collection
+    public function getFavoriteItems(int $userId): Collection
     {
         $favoriteItemIds = $this->favoriteItemRepository->getFavoriteItems($userId);
         $userInventories = $this->itemRepository->getItemsByIds($favoriteItemIds);

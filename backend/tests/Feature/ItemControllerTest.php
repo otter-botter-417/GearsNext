@@ -2,15 +2,14 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use App\Models\Item;
-use Illuminate\Support\Facades\Log;
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ItemControllerTest extends TestCase
 {
     use RefreshDatabase;
-    //TODO商品の削除と編集のテストを追加する
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -173,191 +172,158 @@ class ItemControllerTest extends TestCase
         $this->assertDatabaseMissing('items', ['item_id' => $item->item_id]);
     }
 
-    // /**
-    //  * 存在しない商品IDで商品詳細を取得
-    //  * @covers \App\Http\Controllers\ItemController::show
-    //  */
-    // public function test_show_with_non_existent_item_id()
-    // {
-    //     $nonExistentItemId = 9999; // 存在しない商品ID
-    //     $response = $this->get("/api/items/{$nonExistentItemId}");
-    //     $response->assertStatus(404);
-    // }
+    /**
+     * 存在しない商品IDで商品詳細を取得
+     * @covers \App\Http\Controllers\ItemController::show
+     */
+    public function test_show_with_non_existent_item_id()
+    {
+        $nonExistentItemId = 9999;  //存在しない商品ID
+        $response = $this->get("/api/items/{$nonExistentItemId}");
+        $response->assertStatus(404);
+    }
 
-    // /**
-    //  * 存在しないカテゴリー名で商品一覧をカテゴリーで取得
-    //  * @covers \App\Http\Controllers\ItemController::index
-    //  */
-    // public function test_index_with_non_existent_category_name()
-    // {
-    //     $response = $this->get('/api/items?categoryName=カゴ');
-    //     $response->assertStatus(404)
-    //         ->assertJson(['message' => 'カテゴリーが見つかりませんでした。']);
-    // }
+    /**
+     * 存在しないカテゴリー名で商品一覧をカテゴリーで取得
+     * @covers \App\Http\Controllers\ItemController::index
+     */
+    public function test_index_with_non_existent_category_name()
+    {
+        $response = $this->get('/api/items?categoryName=カゴ');
+        $response->assertStatus(404)
+            ->assertJson(['message' => 'カテゴリーが見つかりませんでした。']);
+    }
 
-    // /**
-    //  * 商品登録時に既に存在する商品を登録しようとした場合
-    //  * @covers \App\Http\Controllers\ItemController::store
-    //  */
-    // public function test_store_fails_when_trying_to_register_already_existing_item()
-    // {
-    //     $invalidItemData = [
-    //         'itemDatas' => [
-    //             'itemName' => 'ソロベースEX',
-    //             'price' => 25960,
-    //             'imageName' => "solobase_ex",
-    //             'asin' => "B0B3W5TG2Y",
-    //             'openWidth' => 360,
-    //             'openDepth' => 190,
-    //             'openHeight' => 110,
-    //             'storageWidth' => 47,
-    //             'storageDepth' => 24,
-    //             'storageHeight' => 24,
-    //             'weight' => '3.34',
-    //             'brandName' => 'BUNDOK',
-    //             'itemCategoryName' => 'テント',
-    //             'subCategoryName' => 'パップテント',
-    //             'itemTags' =>
-    //             [
-    //                 0 => '無骨',
-    //                 1 => '難燃素材',
-    //             ],
-    //             'colorTags' =>
-    //             [
-    //                 0 => 'オリーブ',
-    //             ],
-    //             'details' =>
-    //             [
-    //                 'capacity' => '1',
-    //                 'innerTent' => '付属',
-    //                 'grandSheet' => '無し',
-    //                 'fabrics' => 'TC',
-    //             ],
-    //         ],
-    //     ];
+    /**
+     * 商品登録時に既に存在する商品を登録しようとした場合
+     * @covers \App\Http\Controllers\ItemController::store
+     */
+    public function test_store_fails_when_trying_to_register_already_existing_item()
+    {
+        $invalidItemData = [
+            'itemData' => [
+                'baseData' => [
+                    'item_name' => 'ソロベースEX',
+                    'price' => 25960,
+                    'image_name' => "solobase_ex",
+                    'asin' => "B0B3W5TG2Y",
+                    'open_width' => 360,
+                    'open_depth' => 190,
+                    'open_height' => 110,
+                    'storage_width' => 47,
+                    'storage_depth' => 24,
+                    'storage_height' => 24,
+                    'weight' => '3.34',
+                    'brand_name' => 'BUNDOK',
+                    'item_category_name' => 'テント',
+                    'sub_category_name' => 'パップテント'
+                ],
+                'itemTags' =>
+                [
+                    0 => '無骨',
+                    1 => '難燃素材',
+                ],
+                'colorTags' =>
+                [
+                    0 => 'オリーブ',
+                ],
+                'details' =>
+                [
+                    'capacity' => '1',
+                    'inner_tent' => '付属',
+                    'grand_sheet' => '無し',
+                    'fabrics' => 'TC',
+                ],
+            ],
+        ];
 
-    //     $response = $this->post('/api/items', $invalidItemData);
+        $response = $this->post('/api/items', $invalidItemData);
 
-    //     $response->assertStatus(409)
-    //         ->assertJson(['message' => '商品は既に登録されています。']);
-    // }
+        $response->assertStatus(409)
+            ->assertJson(['message' => '商品は既に登録されています。']);
+    }
 
-    // /**
-    //  * 商品登録時にバリデーションエラーが発生　必須項目が空
-    //  * @covers \App\Http\Controllers\ItemController::store
-    //  */
-    // public function test_store_fails_with_validation_error()
-    // {
-    //     $data = [
-    //         'itemDatas' => [],
-    //     ];
+    /**
+     * 商品登録時にバリデーションエラーが発生　必須項目が空
+     * @covers \App\Http\Controllers\ItemController::store
+     */
+    public function test_store_fails_with_validation_error()
+    {
+        $data = [
+            'itemData' => [],
+        ];
 
-    //     $response = $this->postJson('/api/items', $data);
+        $response = $this->postJson('/api/items', $data);
 
-    //     $response->assertStatus(422)
-    //         ->assertJsonValidationErrors([
-    //             'itemDatas.itemName',
-    //             'itemDatas.price',
-    //             'itemDatas.asin',
-    //             'itemDatas.imageName',
-    //             'itemDatas.openWidth',
-    //             'itemDatas.openDepth',
-    //             'itemDatas.openHeight',
-    //             'itemDatas.storageWidth',
-    //             'itemDatas.storageDepth',
-    //             'itemDatas.storageHeight',
-    //             'itemDatas.weight',
-    //             'itemDatas.brandName',
-    //             'itemDatas.itemCategoryName',
-    //             'itemDatas.subCategoryName',
-    //             'itemDatas.colorTags',
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'itemData.baseData.item_name',
+                'itemData.baseData.price',
+                'itemData.baseData.asin',
+                'itemData.baseData.image_name',
+                'itemData.baseData.open_width',
+                'itemData.baseData.open_depth',
+                'itemData.baseData.open_height',
+                'itemData.baseData.storage_width',
+                'itemData.baseData.storage_depth',
+                'itemData.baseData.storage_height',
+                'itemData.baseData.weight',
+                'itemData.baseData.brand_name',
+                'itemData.baseData.item_category_name',
+                'itemData.baseData.sub_category_name',
+                'itemData.colorTags',
 
-    //         ])
-    //         ->assertJsonFragment([
-    //             "itemDatas.itemName" => ["商品名は必須です。"],
-    //             "itemDatas.price" => ["価格は必須です。"],
-    //             "itemDatas.asin" => ["ASINは必須です。"],
-    //             "itemDatas.imageName" => ["画像名は必須です。"],
-    //             "itemDatas.openWidth" => ["展開時の幅は必須です。"],
-    //             "itemDatas.openDepth" => ["展開時の奥行きは必須です。"],
-    //             "itemDatas.openHeight" => ["展開時の高さは必須です。"],
-    //             "itemDatas.storageWidth" => ["収納時の幅は必須です。"],
-    //             "itemDatas.storageDepth" => ["収納時の奥行きは必須です。"],
-    //             "itemDatas.storageHeight" => ["収納時の高さは必須です。"],
-    //             "itemDatas.weight" => ["重量は必須です。"],
-    //             "itemDatas.brandName" => ["ブランド名は必須です。"],
-    //             "itemDatas.itemCategoryName" => ["商品カテゴリー名は必須です。"],
-    //             "itemDatas.subCategoryName" => ["サブカテゴリー名は必須です。"],
-    //             "itemDatas.colorTags" => ["カラータグは必須です。"],
-    //         ]);
-    // }
+            ]);
+    }
 
-    // /**
-    //  * 商品登録時にバリデーションエラーが発生　項目の型が不正
-    //  * @covers \App\Http\Controllers\ItemController::store
-    //  */
-    // public function test_store_fails_with_validation_error_invalid_type()
-    // {
-    //     $data = [
-    //         'itemDatas' => [
-    //             'itemName' => 123, // 無効な商品名（数値）
-    //             'price' => 'abc', // 無効な価格（文字列）
-    //             'asin' => 123, // 無効なASIN（数値）
-    //             'imageName' => 123, // 無効な画像名（数値）
-    //             'openWidth' => 'abc', // 無効な展開時の幅（文字列）
-    //             'openDepth' => 'abc', // 無効な展開時の奥行き（文字列）
-    //             'openHeight' => 'abc', // 無効な展開時の高さ（文字列）
-    //             'storageWidth' => 'abc', // 無効な収納時の幅（文字列）
-    //             'storageDepth' => 'abc', // 無効な収納時の奥行き（文字列）
-    //             'storageHeight' => 'abc', // 無効な収納時の高さ（文字列）
-    //             'weight' => 'abc', // 無効な重量（文字列）
-    //             'brandName' => 123, // 無効なブランド名（数値）
-    //             'itemCategoryName' => 123, // 無効な商品カテゴリー名（数値）
-    //             'subCategoryName' => 123, // 無効なサブカテゴリー名（数値）
-    //             'colorTags' =>
-    //             [
-    //                 0 => 123, // 無効なカラータグ（数値）
-    //             ],
-    //         ],
-    //     ];
+    /**
+     * 商品登録時にバリデーションエラーが発生　項目の型が不正
+     * @covers \App\Http\Controllers\ItemController::store
+     */
+    public function test_store_fails_with_validation_error_invalid_type()
+    {
+        $data = [
+            'itemData' => [
+                'item_name' => 123,  //無効な商品名（数値）
+                'price' => 'abc',  //無効な価格（文字列）
+                'asin' => 123,  //無効なASIN（数値）
+                'image_name' => 123,  //無効な画像名（数値）
+                'open_width' => 'abc',  //無効な展開時の幅（文字列）
+                'open_depth' => 'abc',  //無効な展開時の奥行き（文字列）
+                'open_height' => 'abc',  //無効な展開時の高さ（文字列）
+                'storage_width' => 'abc',  //無効な収納時の幅（文字列）
+                'storage_depth' => 'abc',  //無効な収納時の奥行き（文字列）
+                'storage_height' => 'abc',  //無効な収納時の高さ（文字列）
+                'weight' => 'abc',  //無効な重量（文字列）
+                'brand_name' => 123,  //無効なブランド名（数値）
+                'item_category_name' => 123,  //無効な商品カテゴリー名（数値）
+                'sub_category_name' => 123,  //無効なサブカテゴリー名（数値）
+                'colorTags' =>
+                [
+                    0 => 123,  //無効なカラータグ（数値）
+                ],
+            ],
+        ];
 
-    //     $response = $this->postJson('/api/items', $data);
+        $response = $this->postJson('/api/items', $data);
 
-    //     $response->assertStatus(422)
-    //         ->assertJsonValidationErrors([
-    //             'itemDatas.itemName',
-    //             'itemDatas.price',
-    //             'itemDatas.asin',
-    //             'itemDatas.imageName',
-    //             'itemDatas.openWidth',
-    //             'itemDatas.openDepth',
-    //             'itemDatas.openHeight',
-    //             'itemDatas.storageWidth',
-    //             'itemDatas.storageDepth',
-    //             'itemDatas.storageHeight',
-    //             'itemDatas.weight',
-    //             'itemDatas.brandName',
-    //             'itemDatas.itemCategoryName',
-    //             'itemDatas.subCategoryName',
-    //             'itemDatas.colorTags.0',
-    //         ])
-    //         ->assertJsonFragment([
-    //             "itemDatas.itemName" => ["商品名は文字列である必要があります。"],
-    //             "itemDatas.price" => ["価格は数値である必要があります。"],
-    //             "itemDatas.asin" => ["ASINは10文字である必要があります。", "ASINは文字列である必要があります。"],
-    //             "itemDatas.imageName" => ["画像名は文字列である必要があります。"],
-    //             "itemDatas.openWidth" => ["展開時の幅は数値である必要があります。"],
-    //             "itemDatas.openDepth" => ["展開時の奥行きは数値である必要があります。"],
-    //             "itemDatas.openHeight" => ["展開時の高さは数値である必要があります。"],
-    //             "itemDatas.storageWidth" => ["収納時の幅は数値である必要があります。"],
-    //             "itemDatas.storageDepth" => ["収納時の奥行きは数値である必要があります。"],
-    //             "itemDatas.storageHeight" => ["収納時の高さは数値である必要があります。"],
-    //             "itemDatas.weight" => ["重量は数値である必要があります。"],
-    //             "itemDatas.brandName" => ["ブランド名は文字列である必要があります。"],
-    //             "itemDatas.itemCategoryName" => ["商品カテゴリー名は文字列である必要があります。"],
-    //             "itemDatas.subCategoryName" => ["サブカテゴリー名は文字列である必要があります。"],
-    //             "itemDatas.colorTags.0" => ["カラータグは文字列である必要があります。"],
-
-    //         ]);
-    // }
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'itemData.baseData.item_name',
+                'itemData.baseData.price',
+                'itemData.baseData.asin',
+                'itemData.baseData.image_name',
+                'itemData.baseData.open_width',
+                'itemData.baseData.open_depth',
+                'itemData.baseData.open_height',
+                'itemData.baseData.storage_width',
+                'itemData.baseData.storage_depth',
+                'itemData.baseData.storage_height',
+                'itemData.baseData.weight',
+                'itemData.baseData.brand_name',
+                'itemData.baseData.item_category_name',
+                'itemData.baseData.sub_category_name',
+                'itemData.colorTags.0',
+            ]);
+    }
 }

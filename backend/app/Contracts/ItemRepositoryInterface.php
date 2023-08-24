@@ -43,12 +43,12 @@ interface ItemRepositoryInterface
 
     /**
      * 商品データを登録
-     * @param  array $itemData
+     * @param  array $baseData
      * @param  array $tagIds ['colorTagIds' => [], 'itemTagIds' => []]
      * @param  array $attributesData
      * @return void
      */
-    public function createItemData(array $itemData, $tagIds, $attributesData): void;
+    public function createItemData(array $baseData, $tagIds, $attributesData): void;
 
     /**
      * 商品に関連する情報を取得

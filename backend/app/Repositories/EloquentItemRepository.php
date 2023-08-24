@@ -84,13 +84,13 @@ class EloquentItemRepository implements ItemRepositoryInterface
 
     /**
      * 商品データを登録
-     * @param  array $itemData
+     * @param  array $baseData
      * @param  array $tagIds ['colorTagIds' => [], 'itemTagIds' => []]
      * @return void
      */
-    public function createItemData(array $itemData, $tagIds, $attributesData): void
+    public function createItemData(array $baseData, $tagIds, $attributesData): void
     {
-        $item = Item::create($itemData['baseData']);
+        $item = Item::create($baseData);
         $item->colorTags()->sync($tagIds['colorTagIds']);
         $item->itemTags()->sync($tagIds['itemTagIds']);
         $item->itemAttributes()->createMany($attributesData);

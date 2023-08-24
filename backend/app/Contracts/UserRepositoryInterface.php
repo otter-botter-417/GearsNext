@@ -21,12 +21,12 @@ interface UserRepositoryInterface
      * @param array $data
      * @return void
      */
-    public function updateUserData($userId, $data);
+    public function updateUserData(int $userId, array $data): void;
 
     /**
      * ユーザーを削除する
      * @param int $userId
      * @return void
      */
-    public function deleteUserData($userId);
+    public function deleteUserData(int $userId): void;
 }

@@ -41,7 +41,7 @@ class UserRepository implements UserRepositoryInterface
      * @param array $data
      * @return void
      */
-    public function updateUserData($userId, $data)
+    public function updateUserData(int $userId, array $data): void
     {
         $user = $this->model->find($userId);
         $user->fill($data);
@@ -53,7 +53,7 @@ class UserRepository implements UserRepositoryInterface
      * @param int $userId
      * @return void
      */
-    public function deleteUserData($userId)
+    public function deleteUserData(int $userId): void
     {
         $user = $this->model->find($userId);
         $user->delete();

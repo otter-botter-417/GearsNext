@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Models\User;
 use App\Contracts\UserRepositoryInterface;
 use App\Exceptions\LoginFailedException;
-use App\Exceptions\UserAlreadyRegisteredException;
 use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -20,100 +19,76 @@ class UserService
      */
     protected $userRepository;
 
-    private $favoriteItemService;
-
     public function __construct(
         UserRepositoryInterface $userRepository,
-        FavoriteItemService $favoriteItemService
-
     ) {
         $this->userRepository = $userRepository;
-        $this->favoriteItemService = $favoriteItemService;
     }
 
     /**
      * ユーザーを登録する
-     * @param string $userName
-     * @param string $email
-     * @param string $password
-     * @return User
-     * @throws UserAlreadyRegisteredException 商品が既に登録されている
-     * @throws EmailAlreadyUsedException メールアドレスが既に登録されている
+     * @param  array  $registerRequest [user_name, email, password]
+     * @return string JWTトークン 
      */
-    public function register(string $userName, string $email, string $password): User
+    public function register(array $registerData): string
     {
-        $this->userRepository->ensureEmailNotExists($email);
-
-        $password = $this->hashPassword($password);
-
-        $user = $this->userRepository->createUserData($userName, $email, $password);
-
-        return $user;
+        $registerData['password'] = $this->hashPassword($registerData['password']);
+        $user = $this->userRepository->createUserData($registerData);
+        return $this->createToken($user);
     }
 
     /**
      * パスワードをハッシュ化する
-     * @param string $password
+     * @param  string $password
      * @return string
      */
-    public function hashPassword(string $password): string
+    private function hashPassword(string $password): string
     {
         return bcrypt($password);
     }
 
     /**
      * JWTトークンを発行する
-     * @param User $user
+     * @param  User $user
      * @return string
      */
-    public function createToken(User $user): string
+    private function createToken(User $user): string
     {
         return JWTAuth::fromUser($user);
     }
 
     /**
      * ユーザーをログインさせる
-     * @param string $email
-     * @param string $password
-     * @return User
+     * @param  array  $loginRequest
+     * @return string JWTトークン
      * @throws LoginFailedException 認証情報が無効
      */
-    public function login(string $email, string $password): User
+    public function login(array $loginRequest): string
     {
-        $credentials = [
-            'email' => $email,
-            'password' => $password,
-        ];
         // 認証に失敗
-        if (!Auth::attempt($credentials)) {
+        if (!Auth::attempt($loginRequest)) {
             throw new LoginFailedException();
         }
-        $user = Auth::user();
-
-        return $user;
+        return $this->createToken(Auth::user());
     }
 
     /**
      * ユーザー情報を変更する
-     * @param int $userId
-     * @param array $data  [userName, email, password]
+     * @param  int   $userId
+     * @param  array $data  [user_name, email, password]
      * @return void
      */
     public function updateUserData(int $userId, array $data): void
     {
-        $password = $this->hashPassword($data['password']);
-
-        $data = [
-            'user_name' => $data['userName'],
-            'email' => $data['email'],
-            'password' => $password,
-        ];
+        if (isset($data['password'])) {
+            $data['password'] = $this->hashPassword($data['password']);
+        }
         $this->userRepository->updateUserData($userId, $data);
     }
 
     /**
      * ユーザーを削除する
-     * @param int $userId
+     * @param  int $userId
      * @return void
      */
     public function deleteUserData(int $userId): void

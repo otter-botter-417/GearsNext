@@ -8,6 +8,8 @@ use App\Http\Requests\StoreLayoutRequest;
 use App\Http\Requests\UpdateLayoutRequest;
 use App\Http\Resources\LayoutResource;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
 /**
  * レイアウトに関する操作を管理するコントローラークラスです。
@@ -24,57 +26,49 @@ class PrivateLayoutController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\Response
+     * ユーザーの登録したレイアウトを取得
+     * @return Response
      */
-    public function index()
+    public function index(): ResourceCollection
     {
         $layouts = $this->layoutService->getLayouts(Auth::id());
         return LayoutResource::collection($layouts);
     }
 
     /**
-     * @param  \App\Http\Requests\StoreLayoutRequest  $request
-     * @return \Illuminate\Http\Response
+     * レイアウトを登録する
+     * @param  StoreLayoutRequest  $request
+     * @return Response
      * @throws ItemNotFoundException 商品が見つからない
      */
-    public function store(StoreLayoutRequest $request)
+    public function store(StoreLayoutRequest $request): Response
     {
         $data = $request->only(['text', 'items']);
         $this->layoutService->createLayout($data, Auth::id());
-        return response()->json(['message' => 'レイアウト登録が完了しました。'], 201);
+        return response(null, 201);
     }
 
     /**
-     * @param  int  $id layoutId
-     * @return \Illuminate\Http\Response
-     * @throws LayoutNotFoundException レイアウトが見つからない
-     * 
-     */
-    public function show(int $id)
-    {
-        $layout = $this->layoutService->getLayout($id);
-        return  new LayoutResource($layout);
-    }
-
-    /**
-     * @param  \App\Http\Requests\UpdateLayoutRequest  $request
-     * @param  \App\Models\Layout  $layout
-     * @return \Illuminate\Http\Response
+     * レイアウトを更新する
+     * @param  UpdateLayoutRequest  $request
+     * @param  Layout  $layout
+     * @return Response
      * @throws ItemNotFoundException 商品が見つからない
      */
-    public function update(UpdateLayoutRequest $request, Layout $layout)
+    public function update(UpdateLayoutRequest $request, Layout $layout): Response
     {
         $this->authorize('update', $layout);
         $data = $request->only(['text', 'items']);
         $this->layoutService->updateLayout($layout, $data);
-        return response()->json(['message' => 'レイアウト更新が完了しました。'], 200);
+        return response(null, 204);
     }
 
     /**
-     * @param  \App\Models\Layout  $layout
-     * @return \Illuminate\Http\Response
+     * レイアウトを削除する
+     * @param  Layout  $layout
+     * @return Response
      */
-    public function destroy(Layout $layout): \Illuminate\Http\Response
+    public function destroy(Layout $layout): Response
     {
         $this->authorize('delete', $layout);
         $this->layoutService->removeLayout($layout);

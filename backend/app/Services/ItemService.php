@@ -115,14 +115,14 @@ class ItemService
         if ($this->itemRepository->checkItemsExistsByAsin($itemData['baseData']['asin'])) {
             throw new ItemAlreadyRegisteredException();
         }
-        $itemDatas = $this->appendBrandAndCategoryIds($itemData);
+        $baseData = $this->appendBrandAndCategoryIds($itemData);
         $tagIds = $this->prepareTags($itemData);
-        $attributesData = $this->prepareAttributesData($itemDatas);
-        $this->itemRepository->createItemData($itemDatas, $tagIds, $attributesData);
+        $attributesData = $this->prepareAttributesData($itemData['details'], $baseData['category_id']);
+        $this->itemRepository->createItemData($baseData, $tagIds, $attributesData);
     }
 
     /**
-     * brand category subcategoryのidをitemDataにマージして返す
+     * brand category subcategoryのidをitemDataにマージしbaseDataを返す
      * @param  array $itemData
      * @return array brand category subcategoryのidをitemDataにマージして返す
      * @throws BrandNotFoundException ブランドが見つからない場合
@@ -131,14 +131,14 @@ class ItemService
      */
     private function appendBrandAndCategoryIds(array $itemData): array
     {
-        $brand = $this->brandRepository->getBrandByNameOrThrow($itemData['baseData']['brand_name']);
-        $category = $this->categoryRepository->getCategoryByNameOrThrow($itemData['baseData']['item_category_name']);
-        $subCategory = $this->subCategoryRepository->getSubCategoryByNameOrThrow($itemData['baseData']['sub_category_name']);
+        $brand = $this->brandRepository->getBrandByName($itemData['baseData']['brand_name']);
+        $category = $this->categoryRepository->getCategoryByName($itemData['baseData']['item_category_name']);
+        $subCategory = $this->subCategoryRepository->getSubCategoryByName($itemData['baseData']['sub_category_name']);
         $itemData['baseData']['brand_id'] = $brand->brand_id;
         $itemData['baseData']['category_id'] = $category->category_id;
         $itemData['baseData']['sub_category_id'] = $subCategory->sub_category_id;
 
-        return $itemData;
+        return $itemData['baseData'];
     }
 
     /**
@@ -158,13 +158,13 @@ class ItemService
     /**
      * 商品の属性を整形して返す
      * @param  array $itemData
+     * @param  int   $category_id
      * @return array 商品の属性を整形して返す
      */
-    private function prepareAttributesData(array $itemData): array
+    private function prepareAttributesData(array $details, int $category_id): array
     {
-        $category_id = $itemData['baseData']['category_id'];
         $attributesData = [];
-        foreach ($itemData['details'] as $key => $value) {
+        foreach ($details as $key => $value) {
             $attributesData[] = [
                 'category_id' => $category_id,
                 'attribute_name' => $key,
@@ -209,10 +209,10 @@ class ItemService
      */
     public function updateItemData(array $itemData, Item $item): void
     {
-        $itemDatas = $this->appendBrandAndCategoryIds($itemData);
+        $baseData = $this->appendBrandAndCategoryIds($itemData);
         $tagIds = $this->prepareTags($itemData);
-        $attributesData = $this->prepareAttributesData($itemDatas);
-        $this->itemRepository->updateItemData($item, $itemDatas, $tagIds, $attributesData);
+        $attributesData = $this->prepareAttributesData($itemData['details'], $baseData['category_id']);
+        $this->itemRepository->updateItemData($item, $baseData, $tagIds, $attributesData);
     }
 
     /**

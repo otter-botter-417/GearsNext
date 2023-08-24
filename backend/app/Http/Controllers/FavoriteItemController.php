@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Services\FavoriteItemService;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -22,9 +24,9 @@ class FavoriteItemController extends Controller
 
     /**
      * ユーザーのお気に入り商品を取得
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function index(): \Illuminate\Http\JsonResponse
+    public function index(): JsonResponse
     {
         $favoriteItems = $this->favoriteItemService->getFavoriteItems(Auth::id());
         return response()->json($favoriteItems, 200);
@@ -33,22 +35,20 @@ class FavoriteItemController extends Controller
     /**
      * ユーザーのお気に入り商品に保存
      * @param  Item  $item
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function store(Item $item): \Illuminate\Http\Response
+    public function store(Item $item): Response
     {
         $this->favoriteItemService->addFavoriteItem(Auth::id(), $item->item_id);
         return response(null, 201);
     }
 
     /**
-     * ユーザーの持っている商品から削除する
-     *
+     * ユーザーのお気に入り商品から削除する
      * @param  Item $item
-     * @return \Illuminate\Http\Response
-     * 
+     * @return Response
      */
-    public function destroy(Item $item): \Illuminate\Http\Response
+    public function destroy(Item $item): Response
     {
         $this->favoriteItemService->removeFavoriteItem(Auth::id(), $item->item_id);
         return response(null, 204);

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Contracts\UserRepositoryInterface;
 use App\Contracts\LayoutRepositoryInterface;
 use App\Contracts\FavoriteLayoutRepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * お気に入りレイアウトに関するサービスクラス
@@ -40,7 +41,7 @@ class FavoriteLayoutService
     /**
      * ユーザーのお気に入りレイアウトを取得
      * @param  int  $userId
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
     public function getFavoriteLayouts($userId)
     {

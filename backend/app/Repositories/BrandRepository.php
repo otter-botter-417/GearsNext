@@ -2,38 +2,37 @@
 
 namespace App\Repositories;
 
+use App\Models\Brand;
 use App\Contracts\BrandRepositoryInterface;
 use App\Exceptions\BrandNotFoundException;
-use App\Models\Brand;
 use Illuminate\Support\Facades\Log;
 
-//静的メソッドはリポジトリのメソッドでは通常使わない
-//静的メソッドはモデルに書く
 class BrandRepository implements BrandRepositoryInterface
 {
-    public function getAll()
+    /**
+     * ブランドを取得
+     * @param  int  $brandId
+     * @return Brand|null
+     */
+    public function find(int $brandId): ?Brand
     {
-        return Brand::all();
-    }
-
-    public function find($id)
-    {
-        return Brand::find($id);
+        return Brand::find($brandId);
     }
 
     /**
+     * ブランド名からブランドを取得
      * @param  string $brandName
-     * @throws BrandNotFoundException ブランドが見つからない場合にスローされます。
-     * @return \App\Models\Brand ブランドのインスタンスを返します。
+     * @throws BrandNotFoundException ブランドが見つからない場合
+     * @return Brand 
      */
-    public function getBrandByNameOrThrow($brandName)
+    public function getBrandByName(string $brandName): Brand
     {
         $brand = Brand::where('brand_name', $brandName)->first();
         if (!$brand) {
             Log::error(
                 'ブランドの存在を確認操作中にエラーが発生',
                 [
-                    'action' => 'getBrandByNameOrThrow',
+                    'action' => 'getBrandByName',
                     'brandName' => $brandName
                 ]
             );

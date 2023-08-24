@@ -2,12 +2,29 @@
 
 namespace App\Contracts;
 
+use App\Models\Category;
+
 interface CategoryRepositoryInterface
 {
-    public function getAll();
-    public function find($id);
-    public function findByCategoryName($categoryName);
-    public function getCategoryByNameOrThrow($categoryId);
+    /**
+     * カテゴリーを取得
+     * @param  int  $categoryId
+     * @return Category
+     */
+    public function find(int $categoryId): ?Category;
 
-    // その他のメソッド...
+    /**
+     * カテゴリー名からカテゴリーを取得
+     * @param  string $categoryName
+     * @return Category
+     */
+    public function findByCategoryName(string $categoryName): ?Category;
+
+    /**
+     * カテゴリー名からカテゴリーを取得
+     * @param  string $categoryName
+     * @throws CategoryNotFoundException カテゴリーが見つからない場合
+     * @return Category 
+     */
+    public function getCategoryByName(string $categoryName): Category;
 }

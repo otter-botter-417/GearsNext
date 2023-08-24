@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Services\UserInventoryService;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -22,9 +24,9 @@ class UserInventoryController extends Controller
 
     /**
      * ユーザーの持っている商品を取得
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function index(): \Illuminate\Http\JsonResponse
+    public function index(): JsonResponse
     {
         $userInventories = $this->userInventoryService->getUserInventories(Auth::id());
         return response()->json($userInventories, 200);
@@ -33,9 +35,9 @@ class UserInventoryController extends Controller
     /**
      * ユーザーの持っている商品に保存
      * @param  Item  $item
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function store(Item $item): \Illuminate\Http\Response
+    public function store(Item $item): Response
     {
         $this->userInventoryService->addUserInventory(Auth::id(), $item->item_id);
         return response(null, 201);
@@ -44,10 +46,10 @@ class UserInventoryController extends Controller
     /**
      * ユーザーの持っている商品から削除する
      * @param Item  $item
-     * @return \Illuminate\Http\Response
+     * @return Response
      * @throws ItemNotInInventoryException 持っている商品に存在しない
      */
-    public function destroy(Item $item): \Illuminate\Http\Response
+    public function destroy(Item $item): Response
     {
         $this->userInventoryService->removeUserInventory(Auth::id(), $item->item_id);
         return response(null, 204);

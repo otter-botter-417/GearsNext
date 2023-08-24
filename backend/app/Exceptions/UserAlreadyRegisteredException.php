@@ -4,7 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 
-class UserAlreadyRegisteredException extends Exception
+class UserNameAlreadyRegisteredException extends Exception
 {
-    protected $message = 'ユーザーは既に登録されています。';
+    protected $message = 'ユーザー名は既に使われています。';
 }

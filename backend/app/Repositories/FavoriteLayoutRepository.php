@@ -32,8 +32,8 @@ class FavoriteLayoutRepository implements FavoriteLayoutRepositoryInterface
 
     /**
      * お気に入りにレイアウトを追加
-     * @param  int    $userId
-     * @param  int    $layoutId
+     * @param  int   $userId
+     * @param  int   $layoutId
      * @return void
      */
     public function addFavoriteLayoutData(int $userId, int $layoutId): void
@@ -46,7 +46,7 @@ class FavoriteLayoutRepository implements FavoriteLayoutRepositoryInterface
 
     /**
      * お気に入りからレイアウトを削除
-     * @param  int $userId
+     * @param  int  $userId
      * @param  int  $layoutId
      * @return void
      */

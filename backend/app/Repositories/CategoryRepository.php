@@ -2,49 +2,57 @@
 
 namespace App\Repositories;
 
+use App\Models\Item;
+use App\Models\Category;
 use App\Contracts\CategoryRepositoryInterface;
 use App\Exceptions\CategoryNotFoundException;
-use App\Models\Category;
-use App\Models\Item;
 use Illuminate\Support\Facades\Log;
 
 //静的メソッドはリポジトリのメソッドでは通常使わない
 //静的メソッドはモデルに書く
 class CategoryRepository implements CategoryRepositoryInterface
 {
-    public function getAll()
+    /**
+     * カテゴリーを取得
+     * @param  int  $categoryId
+     * @return Category
+     */
+    public function find(int $categoryId): ?Category
     {
-        return Category::all();
+        return Category::find($categoryId);
     }
 
-    public function find($id)
-    {
-        return Category::find($id);
-    }
 
+    // TODO itemRepositoryに移動？
     public function getItemsByCategory($category)
     {
         return Item::where('category_id', $category)->get();
     }
 
-    public function findByCategoryName($categoryName)
+    /**
+     * カテゴリー名からカテゴリーを取得
+     * @param  string $categoryName
+     * @return Category
+     */
+    public function findByCategoryName(string $categoryName): ?Category
     {
         return Category::where('category_name', $categoryName)->first();
     }
 
     /**
+     * カテゴリー名からカテゴリーを取得
      * @param  string $categoryName
-     * @throws CategoryNotFoundException カテゴリーが見つからない場合にスローされます。
-     * @return \App\Models\Category カテゴリーのインスタンスを返します。
+     * @throws CategoryNotFoundException カテゴリーが見つからない場合
+     * @return Category 
      */
-    public function getCategoryByNameOrThrow($categoryName)
+    public function getCategoryByName(string $categoryName): Category
     {
         $category = Category::where('category_name', $categoryName)->first();
         if (!$category) {
             Log::error(
                 'カテゴリーの存在を確認操作中にエラーが発生',
                 [
-                    'action' => 'getCategoryByNameOrThrow',
+                    'action' => 'getCategoryByName',
                     'categoryName' => $categoryName
                 ]
             );

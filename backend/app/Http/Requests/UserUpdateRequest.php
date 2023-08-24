@@ -21,9 +21,9 @@ class UserUpdateRequest extends FormRequest
     {
         $user = $this->user();
         return [
-            'userName' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $user->user_id,
-            'password' => 'sometimes|required|string|min:8|confirmed',
+            'user_name' => 'string|between:1,30|unique:users,user_name,' . $user->user_id,
+            'email' => 'email|max:255|unique:users,email,' . $user->user_id,
+            'password' => 'string|between:6,30|confirmed',
         ];
     }
 
@@ -33,15 +33,15 @@ class UserUpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'userName.required' => '名前は必須です。',
-            'userName.string' => '名前は文字列である必要があります。',
-            'userName.max' => '名前は20文字以内である必要があります。',
-            'email.required' => 'メールアドレスは必須です。',
+            'user_name.string' => '名前は文字列である必要があります。',
+            'user_name.between' => '名前は1文字以上、30文字以内である必要があります。',
+            'user_name.unique' => 'このユーザー名は既に登録されています。',
             'email.email' => 'メールアドレスの形式が正しくありません。',
             'email.max' => 'メールアドレスは255文字以内である必要があります。',
-            'password.required' => 'パスワードは必須です。',
+            'email.unique' => 'このメールアドレスは既に登録されています。',
             'password.string' => 'パスワードは文字列である必要があります。',
-            'password.between' => 'パスワードは6文字以上100文字以内である必要があります。',
+            'password.between' => 'パスワードは6文字以上30文字以内である必要があります。',
+            'password.confirmed' => 'パスワードの確認が一致しません。',
         ];
     }
 }

@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\LayoutResource;
+use App\Models\Layout;
 use App\Services\LayoutService;
+use App\Http\Resources\LayoutResource;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
 /**
  * パブリックなレイアウトに関する操作を管理するコントローラークラスです。
@@ -20,9 +24,10 @@ class PublicLayoutController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\Response
+     * 全てのレイアウトを取得
+     * @return ResourceCollection
      */
-    public function index()
+    public function index(): ResourceCollection
     {
         $layouts = $this->layoutService->getLayoutsAll();
         return LayoutResource::collection($layouts);
@@ -31,18 +36,14 @@ class PublicLayoutController extends Controller
     /**
      * レイアウトの詳細を取得し、閲覧回数をインクリメント
      * 認証ユーザーからのアクセスの場合は閲覧履歴を保存
-     * @param  int  $layoutId
-     * @return \Illuminate\Http\Response
+     * @param  Request $request user_idのみ取得できる
+     * @param  Layout  $layout
+     * @return JsonResource
      */
-    public function show(\Illuminate\Http\Request $request, int $layoutId)
+    public function show(Request $request, Layout $layout): JsonResource
     {
-        $layout = $this->layoutService->getLayout($layoutId);
         $userId = $request->attributes->get('user_id');
-        if ($userId) {
-            $this->layoutService->saveViewLayoutHistory($layout, $userId);
-        }
-        $this->layoutService->incrementLayoutViewCount($layout);
-
-        return  new LayoutResource($layout);
+        $layoutDetails  = $this->layoutService->getLayoutWithHistory($layout, $userId);
+        return  new LayoutResource($layoutDetails);
     }
 }

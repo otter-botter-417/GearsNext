@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
-use App\Models\Item;
-use App\Exceptions\ItemAlreadyInInventoryException;
-use App\Exceptions\ItemNotInInventoryException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Log;
 
-
-
+/**
+ * ユーザーの所持アイテムに関するモデルクラスです。
+ * @package App\Models
+ * @property int $user_inventories_id
+ * @property int $user_id
+ * @property int $item_id
+ * @property Item $items
+ */
 class UserInventory extends Model
 {
     use HasFactory;
@@ -21,7 +23,6 @@ class UserInventory extends Model
         'item_id',
     ];
 
-    // リレーション
     public function items()
     {
         return $this->belongsTo(Item::class, 'item_id');

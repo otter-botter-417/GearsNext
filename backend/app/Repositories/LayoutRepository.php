@@ -7,6 +7,8 @@ use App\Models\TagPosition;
 use App\Models\ViewLayoutHistory;
 use App\Contracts\LayoutRepositoryInterface;
 use App\Exceptions\LayoutNotFoundException;
+use Illuminate\Database\Eloquent\Collection;
+
 
 /**
  * レイアウトに関するリポジトリクラス
@@ -23,54 +25,51 @@ class LayoutRepository implements LayoutRepositoryInterface
 
     /**
      * ユーザーが登録したレイアウトを取得する
-     * @param int $userId
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @param  int $userId
+     * @return Collection
      */
-    public function getLayouts(int $userId): \Illuminate\Database\Eloquent\Collection
+    public function getLayouts(int $userId): Collection
     {
-        $layouts = $this->model->where('user_id', $userId)->with(['items', 'tagPositions'])->get();
-        return $layouts;
+        return $this->model->where('user_id', $userId)->with(['items', 'users', 'tagPositions'])->get();
     }
 
     /**
      * 全てのレイアウトを取得する
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
-    public function getLayoutsAll(): \Illuminate\Database\Eloquent\Collection
+    public function getLayoutsAll(): Collection
     {
-        $layouts = $this->model->with(['items', 'user'])->get();
-        return $layouts;
+        return $this->model->with(['items', 'users'])->get();
     }
 
     /**
      * 指定されたIDの配列を元に関連するレイアウトデータを取得
      * @param  array $layoutIds
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
-    public function getLayoutsByIds(array $layoutIds): \Illuminate\Database\Eloquent\Collection
+    public function getLayoutsByIds(array $layoutIds): Collection
     {
-        return $this->model->whereIn('layout_id', $layoutIds)->with(['user', 'tagPositions'])->get();
+        return $this->model->whereIn('layout_id', $layoutIds)->with(['users', 'tagPositions'])->get();
     }
 
     /**
      * レイアウトを登録する
-     * @param string $text
-     * @param int $userId
+     * @param  string $text
+     * @param  int $userId
      * @return Layout
      */
     public function createLayout(string $text, int $userId): Layout
     {
-        $layout = Layout::create([
+        return Layout::create([
             'text' => $text,
             'user_id' => $userId,
         ]);
-        return $layout;
     }
 
     /**
      * レイアウトに使われている商品を登録する
-     * @param Layout $layout
-     * @param array $items レイアウトに使われている商品のデータ
+     * @param  Layout $layout
+     * @param  array $items レイアウトに使われている商品のデータ
      * @return void
      */
     public function createLayoutItems(Layout $layout, array $items): void
@@ -87,22 +86,18 @@ class LayoutRepository implements LayoutRepositoryInterface
 
     /**
      * レイアウトの詳細を取得する
-     * @param int $layoutId
-     * @return Layout
+     * @param  Layout $layout
+     * @return Layout リレーション先のデータも含めて返す
      * @throws LayoutNotFoundException
      */
-    public function getLayout(int $layoutId): Layout
+    public function getLayout(Layout $layout): Layout
     {
-        $layout = $this->model->with(['items', 'user'])->find($layoutId);
-        if (!$layout) {
-            throw new LayoutNotFoundException();
-        }
-        return $layout;
+        return $layout->with(['items', 'users'])->first();
     }
 
     /**
      * レイアウトの閲覧数をインクリメント
-     * @param  \App\Models\Layout  $layout
+     * @param  Layout  $layout
      * @return void
      */
     public function incrementLayoutViewCount(Layout $layout): void
@@ -112,8 +107,9 @@ class LayoutRepository implements LayoutRepositoryInterface
 
     /**
      * レイアウトの閲覧履歴を保存する
-     * @param  \App\Models\Layout  $layout
-     * @param int $userId
+     * すでに保存されていれば更新時間だけを更新
+     * @param  Layout  $layout
+     * @param  int $userId
      * @return void
      */
     public function saveViewLayoutHistory(Layout $layout, int $userId): void
@@ -125,8 +121,8 @@ class LayoutRepository implements LayoutRepositoryInterface
     }
     /**
      * レイアウトを更新
-     * @param  \App\Models\Layout  $layout
-     * @param array $data レイアウトデータ
+     * @param  Layout  $layout
+     * @param  array $data レイアウトデータ
      * @return void
      */
     public function updateLayout(Layout $layout, array $data): void
@@ -139,7 +135,7 @@ class LayoutRepository implements LayoutRepositoryInterface
 
     /**
      * レイアウトを削除する
-     * @param  \App\Models\Layout  $layout
+     * @param  Layout  $layout
      * @return void
      */
     public function removeLayout(Layout  $layout): void

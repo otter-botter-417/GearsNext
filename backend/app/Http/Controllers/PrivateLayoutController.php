@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateLayoutRequest;
 use App\Http\Resources\LayoutResource;
 use Illuminate\Support\Facades\Auth;
 use \Illuminate\Http\Response;
+use \Illuminate\Http\JsonResponse;
 
 /**
  * レイアウトに関する操作を管理するコントローラークラスです。
@@ -38,11 +39,11 @@ class PrivateLayoutController extends Controller
      * @return Response
      * @throws ItemNotFoundException 商品が見つからない
      */
-    public function store(StoreLayoutRequest $request)
+    public function store(StoreLayoutRequest $request): Response
     {
         $data = $request->only(['text', 'items']);
         $this->layoutService->createLayout($data, Auth::id());
-        return response()->json(['message' => 'レイアウト登録が完了しました。'], 201);
+        return response(null, 201);
     }
 
     /**
@@ -63,12 +64,12 @@ class PrivateLayoutController extends Controller
      * @return Response
      * @throws ItemNotFoundException 商品が見つからない
      */
-    public function update(UpdateLayoutRequest $request, Layout $layout)
+    public function update(UpdateLayoutRequest $request, Layout $layout): Response
     {
         $this->authorize('update', $layout);
         $data = $request->only(['text', 'items']);
         $this->layoutService->updateLayout($layout, $data);
-        return response()->json(['message' => 'レイアウト更新が完了しました。'], 200);
+        return response(null, 204);
     }
 
     /**

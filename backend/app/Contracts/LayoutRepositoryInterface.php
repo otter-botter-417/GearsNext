@@ -45,11 +45,11 @@ interface LayoutRepositoryInterface
 
     /**
      * レイアウトの詳細を取得する
-     * @param  int $layoutId
-     * @return Layout
+     * @param  Layout $layout
+     * @return Layout リレーション先のデータも含めて返す
      * @throws LayoutNotFoundException
      */
-    public function getLayout(int $layoutId): Layout;
+    public function getLayout(Layout $layout): Layout;
 
     /**
      * レイアウトの閲覧数をインクリメント

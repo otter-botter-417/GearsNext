@@ -11,7 +11,7 @@ class LayoutResource extends JsonResource
         return [
             'layout_id' => $this->layout_id,
             'text' => $this->text,
-            'user_name' => $this->user->user_name,
+            'user_name' => $this->users->user_name,
             'favorite_count' => $this->favorite_count,
             'view_count' => $this->view_count,
             'created_at' => $this->created_at,

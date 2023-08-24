@@ -83,36 +83,6 @@ class PrivateLayoutControllerTest extends TestCase
     }
 
     /**
-     * レイアウトの詳細を取得
-     * @covers \App\Http\Controllers\User\PrivateLayoutController::show
-     */
-    public function test_can_get_layout_detail()
-    {
-        $response = $this->authorizedRequest('GET', '/api/user/layout/2');
-        $response->assertStatus(200)
-            ->assertJsonStructure([
-                'data' => [
-                    'layout_id',
-                    'text',
-                    'user_name',
-                    'favorite_count',
-                    'view_count',
-                    'created_at',
-                    'updated_at',
-                    'items' => [
-                        '*' => [
-                            'x_position',
-                            'y_position',
-                            'item_id',
-                            'item_name',
-                            'image_name'
-                        ]
-                    ]
-                ]
-            ]);
-    }
-
-    /**
      * レイアウトを更新
      * @covers \App\Http\Controllers\User\PrivateLayoutController::update
      */

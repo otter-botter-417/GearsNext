@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Item;
 use App\Exceptions\CategoryNotFoundException;
 use App\Exceptions\ItemAlreadyRegisteredException;
 use App\Exceptions\ItemNotFoundException;
@@ -10,11 +11,8 @@ use App\Contracts\BrandRepositoryInterface;
 use App\Contracts\CategoryRepositoryInterface;
 use App\Contracts\SubCategoryRepositoryInterface;
 use App\Contracts\ViewItemHistoryRepositoryInterface;
-use App\Models\Item;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-
-//TODO 他コードも含め引数名の見直し、統一、明確な命名　id ではなくitem_id等
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * 商品に関するサービスクラス
@@ -47,12 +45,6 @@ class ItemService
      */
     protected $viewItemHistoryRepository;
 
-
-
-    // コンストラクタとは？
-    // コンストラクタは、オブジェクト指向プログラミングにおいて、
-    // クラスからオブジェクトを生成する際に自動的に呼び出される特殊なメソッドです。
-    // クラスのインスタンスが作成されるときに、初期設定や値の設定などを行うために使用されます。
     public function __construct(
         ItemRepositoryInterface $itemRepository,
         BrandRepositoryInterface $brandRepository,
@@ -68,7 +60,47 @@ class ItemService
     }
 
     /**
-     * 商品を登録する
+     * 商品を全件取得　カテゴリー名があればカテゴリー名で検索
+     * @param  string $categoryName
+     * @return Collection 商品の詳細を返します。
+     * @throws ItemNotFoundException 商品が見つからない場合
+     * @throws CategoryNotFoundException カテゴリーが見つからない場合
+     */
+    public function getItems(?string $categoryName): Collection
+    {
+        if ($categoryName) {
+            return $this->getItemsByCategoryName($categoryName);
+        }
+
+        return $this->itemRepository->getAllItemsWithRelations();
+    }
+
+    /**
+     * カテゴリー名で商品を検索して返す
+     * @param  string $categoryName
+     * @return Collection 商品の詳細を返します。
+     * @throws CategoryNotFoundException カテゴリーが見つからない場合
+     * @throws ItemNotFoundException 商品が見つからない場合
+     */
+    private function getItemsByCategoryName(string $categoryName): Collection
+    {
+        $category = $this->categoryRepository->findByCategoryName($categoryName);
+        if (!$category) {
+            Log::error(
+                'カテゴリー名でカテゴリーIDを検索中にエラーが発生',
+                [
+                    'action' => 'getItemsByCategoryName',
+                    'categoryName' => $categoryName,
+                ]
+            );
+            throw new CategoryNotFoundException();
+        }
+
+        return $this->itemRepository->getItemsByCategory($category->category_id);
+    }
+
+    /**
+     * 商品を登録
      * @param  array $itemData
      * @return void
      * @throws ItemAlreadyRegisteredException 商品が既に登録されている場合
@@ -80,21 +112,76 @@ class ItemService
      */
     public function register(array $itemData): void
     {
-        $this->itemRepository->ensureItemNotExists($itemData['asin']);
-
-        $entities = $this->ensureBrandAndCategoriesExist($itemData);
-
-        $this->itemRepository->createItemData($itemData, $entities);
+        if ($this->itemRepository->checkItemsExistsByAsin($itemData['baseData']['asin'])) {
+            throw new ItemAlreadyRegisteredException();
+        }
+        $itemDatas = $this->appendBrandAndCategoryIds($itemData);
+        $tagIds = $this->prepareTags($itemData);
+        $attributesData = $this->prepareAttributesData($itemDatas);
+        $this->itemRepository->createItemData($itemDatas, $tagIds, $attributesData);
     }
 
     /**
-     * 商品の詳細な情報を取得
+     * brand category subcategoryのidをitemDataにマージして返す
+     * @param  array $itemData
+     * @return array brand category subcategoryのidをitemDataにマージして返す
+     * @throws BrandNotFoundException ブランドが見つからない場合
+     * @throws CategoryNotFoundException カテゴリーが見つからない場合
+     * @throws SubCategoryNotFoundException サブカテゴリーが見つからない場合
+     */
+    private function appendBrandAndCategoryIds(array $itemData): array
+    {
+        $brand = $this->brandRepository->getBrandByNameOrThrow($itemData['baseData']['brand_name']);
+        $category = $this->categoryRepository->getCategoryByNameOrThrow($itemData['baseData']['item_category_name']);
+        $subCategory = $this->subCategoryRepository->getSubCategoryByNameOrThrow($itemData['baseData']['sub_category_name']);
+        $itemData['baseData']['brand_id'] = $brand->brand_id;
+        $itemData['baseData']['category_id'] = $category->category_id;
+        $itemData['baseData']['sub_category_id'] = $subCategory->sub_category_id;
+
+        return $itemData;
+    }
+
+    /**
+     * 商品のタグをtagNameからtagIdに変換して返す
+     * @param  array $itemData
+     * @return array 商品のタグをtagNameからtagIdに変換して返す
+     * @throws ItemTagNotFoundException アイテムタグが見つからない場合
+     * @throws ColorTagNotFoundException カラータグが見つからない場合
+     */
+    private function prepareTags(array $itemData): array
+    {
+        $colorTagIds = $this->itemRepository->getColorTagIds($itemData['colorTags']);
+        $itemTagIds = $this->itemRepository->getItemTagIds($itemData['itemTags']);
+        return ['colorTagIds' => $colorTagIds, 'itemTagIds' => $itemTagIds];
+    }
+
+    /**
+     * 商品の属性を整形して返す
+     * @param  array $itemData
+     * @return array 商品の属性を整形して返す
+     */
+    private function prepareAttributesData(array $itemData): array
+    {
+        $category_id = $itemData['baseData']['category_id'];
+        $attributesData = [];
+        foreach ($itemData['details'] as $key => $value) {
+            $attributesData[] = [
+                'category_id' => $category_id,
+                'attribute_name' => $key,
+                'attribute_value' => $value
+            ];
+        }
+        return $attributesData;
+    }
+
+    /**
+     * 商品の詳細な情報を取得し、認証されたユーザーの場合は閲覧履歴を保存する
      * @param  Item $item
      * @param  int $userId
+     * @return Collection 商品の詳細を返します。
      * @throws ItemNotFoundException 商品が見つからない場合
-     * @return \Illuminate\Database\Eloquent\Collection 商品の詳細を返します。
      */
-    public function getItemDetails(Item $item,  ?int $userId = null): \Illuminate\Database\Eloquent\Collection
+    public function getItemDetails(Item $item,  ?int $userId = null): Collection
     {
         $itemData = $this->itemRepository->getItemDataWithRelations($item);
         if ($userId) {
@@ -105,52 +192,8 @@ class ItemService
     }
 
     /**
-     * 商品を検索して返す
-     * @param  string $categoryName
-     * @return \Illuminate\Database\Eloquent\Collection 商品の詳細を返します。
-     * @throws ItemNotFoundException 商品が見つからない場合
-     * @throws CategoryNotFoundException カテゴリーが見つからない場合
-     */
-    public function getItems(?string $categoryName): \Illuminate\Database\Eloquent\Collection
-    {
-        // requestにcategorynameが入っていればカテゴリーで検索
-        if ($categoryName) {
-            return $this->getItemsByCategoryName($categoryName);
-        }
-
-        //カテゴリーが入ってなければ全件渡す
-        return $this->itemRepository->getAllItemsWithRelations();
-    }
-
-    /**
-     * カテゴリー名で商品を検索して返す
-     * @param  string $categoryName
-     * @return \Illuminate\Database\Eloquent\Collection 商品の詳細を返します。
-     * @throws CategoryNotFoundException カテゴリーが見つからない場合
-     * @throws ItemNotFoundException 商品が見つからない場合
-     */
-    private function getItemsByCategoryName($categoryName)
-    {
-        $category = $this->categoryRepository->findByCategoryName($categoryName);
-
-        if (!$category) {
-            Log::error(
-                'カテゴリー名でカテゴリーIDを検索中にエラーが発生',
-                [
-                    'action' => 'findByCategoryName',
-                    'categoryname' => $categoryName,
-                ]
-            );
-            throw new CategoryNotFoundException();
-        }
-
-        return $this->itemRepository->getItemsByCategory($category->category_id);
-    }
-
-    /**
      * 商品の閲覧数をインクリメント
      * @param  Item $item
-     * @throws ItemNotFoundException 商品が見つからない場合
      * @return void
      */
     public function viewCountIncrement(Item $item): void
@@ -159,23 +202,26 @@ class ItemService
     }
 
     /**
-     * brand category subcategoryをそれぞれ名前で検索してインスタンスを返す
+     * 商品を更新
      * @param  array $itemData
-     * @return array brand category subcategoryのインスタンスを返します。
-     * @throws BrandNotFoundException ブランドが見つからない場合
-     * @throws CategoryNotFoundException カテゴリーが見つからない場合
-     * @throws SubCategoryNotFoundException サブカテゴリーが見つからない場合
+     * @param  Item $item
+     * @return void
      */
-    private function ensureBrandAndCategoriesExist(array $itemData): array
+    public function updateItemData(array $itemData, Item $item): void
     {
-        $brand = $this->brandRepository->getBrandByNameOrThrow($itemData['brandName']);
-        $category = $this->categoryRepository->getCategoryByNameOrThrow($itemData['itemCategoryName']);
-        $subCategory = $this->subCategoryRepository->getSubCategoryByNameOrThrow($itemData['subCategoryName']);
-
-        return ['brand' => $brand, 'category' => $category, 'subCategory' => $subCategory];
+        $itemDatas = $this->appendBrandAndCategoryIds($itemData);
+        $tagIds = $this->prepareTags($itemData);
+        $attributesData = $this->prepareAttributesData($itemDatas);
+        $this->itemRepository->updateItemData($item, $itemDatas, $tagIds, $attributesData);
     }
 
-    //商品のいいね数をインクリメント
-    //TODO 累計いいね数の取得
-
+    /**
+     * 商品を削除
+     * @param  Item $item
+     * @return void
+     */
+    public function deleteItem(Item $item): void
+    {
+        $this->itemRepository->deleteItem($item);
+    }
 }

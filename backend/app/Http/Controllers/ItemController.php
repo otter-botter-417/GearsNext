@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ItemIndexRequest;
-use App\Http\Requests\ItemRegisterRequest;
 use App\Models\Item;
 use App\Services\ItemService;
+use App\Http\Requests\ItemIndexRequest;
+use App\Http\Requests\ItemRegisterRequest;
 
-//商品に関するコントローラー
+/**
+ * 商品に関する操作を管理するコントローラークラスです。
+ * このクラスでは商品の検索、登録、取得、更新、削除などの操作を提供します。
+ * 認証は不要です。
+ */
 class ItemController extends Controller
 {
     protected $itemService;
@@ -16,10 +20,6 @@ class ItemController extends Controller
     {
         $this->itemService = $itemService;
     }
-
-    // TODO 編集と削除の実装
-    // itemDatas をitemDataに変更
-
 
     /**
      * 商品検索
@@ -39,7 +39,7 @@ class ItemController extends Controller
      */
     public function store(ItemRegisterRequest $request): \Illuminate\Http\Response
     {
-        $this->itemService->register($request->itemDatas);
+        $this->itemService->register($request->itemData);
         return response(null, 201);
     }
 
@@ -63,9 +63,20 @@ class ItemController extends Controller
      * @param  Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function update(ItemUpdateRequest $request, Item $item): \Illuminate\Http\Response
+    public function update(ItemRegisterRequest $request, Item $item): \Illuminate\Http\Response
     {
-        $this->itemService->updateItem($request->itemData, $item);
-        return response(null, 200);
+        $this->itemService->updateItemData($request->itemData, $item);
+        return response(null, 204);
+    }
+
+    /**
+     * 商品を削除
+     * @param  Item  $item
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Item $item): \Illuminate\Http\Response
+    {
+        $this->itemService->deleteItem($item);
+        return response(null, 204);
     }
 }

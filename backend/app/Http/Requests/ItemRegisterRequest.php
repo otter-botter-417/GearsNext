@@ -19,13 +19,13 @@ class ItemRegisterRequest extends FormRequest
      */
     public function rules()
     {
-        $numericRule = 'required|numeric';
+        $baseDataRules = 'required|string';
+        $numericRule = 'required|numeric|min:0';
 
         return [
-            'itemData.baseData.*' => 'required',
-            'itemData.baseData.item_name' => 'required|string|max:255',
-            'itemData.baseData.asin' => 'required|string|size:10',
-            'itemData.baseData.image_name' => 'required|string|max:255',
+            'itemData.baseData.item_name' => $baseDataRules . '|max:255',
+            'itemData.baseData.asin' => $baseDataRules . '|size:10',
+            'itemData.baseData.image_name' => $baseDataRules . '|max:255',
             'itemData.baseData.price' => $numericRule,
             'itemData.baseData.open_width' => $numericRule,
             'itemData.baseData.open_depth' => $numericRule,
@@ -34,9 +34,9 @@ class ItemRegisterRequest extends FormRequest
             'itemData.baseData.storage_depth' => $numericRule,
             'itemData.baseData.storage_height' => $numericRule,
             'itemData.baseData.weight' => $numericRule,
-            'itemData.baseData.brand_name' => 'required|string|max:50',
-            'itemData.baseData.item_category_name' => 'required|string|max:50',
-            'itemData.baseData.sub_category_name' => 'required|string|max:50',
+            'itemData.baseData.brand_name' => $baseDataRules . '|max:50',
+            'itemData.baseData.item_category_name' => $baseDataRules . '|max:50',
+            'itemData.baseData.sub_category_name' => $baseDataRules . '|max:50',
             'itemData.itemTags.*' => 'string|max:50',
             'itemData.colorTags' => 'required',
             'itemData.colorTags.*' => 'string|max:20',
@@ -105,7 +105,14 @@ class ItemRegisterRequest extends FormRequest
         ];
     }
 
-    private function generateMessage(string $field, string $rule, string $size = null): string
+    /**
+     * ルールに対するメッセージを生成する
+     * @param string $rule ルール名
+     * @param string $field フィールド名
+     * @param string|null $size フィールドのサイズ
+     * @return string
+     */
+    private function generateMessage(string $rule, string $field, string $size = null): string
     {
         switch ($rule) {
             case 'required':
@@ -116,6 +123,8 @@ class ItemRegisterRequest extends FormRequest
                 return "{$field}は数値である必要があります。";
             case 'max':
                 return "{$field}は最大{$size}文字までです。";
+            default:
+                return "{$field}には未定義のルールが適用されています。";
         }
     }
 }

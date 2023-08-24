@@ -34,7 +34,7 @@ class LayoutService
 
     /**
      * ユーザーの登録したレイアウトを取得
-     * @param int $userId
+     * @param  int $userId
      * @return Collection
      */
     public function getLayouts(int $userId): Collection
@@ -53,8 +53,8 @@ class LayoutService
 
     /**
      * レイアウトを登録
-     * @param array $data レイアウトデータ
-     * @param int $userId
+     * @param  array $data レイアウトデータ
+     * @param  int $userId
      * @return void
      * @throws ItemNotFoundException 商品が見つからない
      */
@@ -68,7 +68,7 @@ class LayoutService
 
     /**
      * レイアウトの詳細を取得する
-     * @param int $layoutId
+     * @param  int $layoutId
      * @return Layout
      * @throws LayoutNotFoundException
      */
@@ -101,7 +101,7 @@ class LayoutService
     /**
      * レイアウトを更新
      * @param  \App\Models\Layout  $layout
-     * @param array $data レイアウトデータ
+     * @param  array $data レイアウトデータ
      * @return void
      * @throws ItemNotFoundException 商品が見つからない
      */

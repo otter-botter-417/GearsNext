@@ -53,14 +53,14 @@ interface LayoutRepositoryInterface
 
     /**
      * レイアウトの閲覧数をインクリメント
-     * @param  \App\Models\Layout  $layout
+     * @param  Layout  $layout
      * @return void
      */
     public function incrementLayoutViewCount(Layout $layout): void;
 
     /**
      * レイアウトの閲覧履歴を保存する
-     * @param  \App\Models\Layout  $layout
+     * @param  Layout  $layout
      * @param int $userId
      * @return void
      */
@@ -68,7 +68,7 @@ interface LayoutRepositoryInterface
 
     /**
      * レイアウトを更新する
-     * @param  \App\Models\Layout  $layout
+     * @param  Layout  $layout
      * @param array $data レイアウトデータ
      * @return void
      */
@@ -76,7 +76,7 @@ interface LayoutRepositoryInterface
 
     /**
      * レイアウトを削除する
-     * @param  \App\Models\Layout  $layout
+     * @param  Layout  $layout
      * @return void
      */
     public function removeLayout(Layout  $layout): void;

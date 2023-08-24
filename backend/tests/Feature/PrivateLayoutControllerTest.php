@@ -14,7 +14,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
  * それには、レイアウトの登録、取得、更新、削除などの操作が含まれます。
  * AuthorizesRequestsトレイトを使用して、認証済みのリクエストをシミュレートします。
  */
-class LayoutTest extends TestCase
+class PrivateLayoutControllerTest extends TestCase
 {
     use RefreshDatabase, AuthorizesRequests;
 
@@ -134,7 +134,7 @@ class LayoutTest extends TestCase
             ]
         ];
         $response = $this->authorizedRequest('PUT', '/api/user/layout/2', $updateLayoutData);
-        $response->assertStatus(200);
+        $response->assertStatus(204);
         $this->assertDatabaseHas('layouts', ['text' => 'これは更新テストです。']);
         $this->assertDatabaseHas('tag_positions', [
             'item_id' => 3,

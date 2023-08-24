@@ -30,7 +30,7 @@ Route::get('layout/{id}', [PublicLayoutController::class, 'show'])
 
 
 // アイテム関連のルート
-Route::apiResource('items', ItemController::class)->only(['index', 'store']);
+Route::apiResource('items', ItemController::class)->only(['index', 'store', 'update', 'destroy']);
 Route::get('items/{id}', [ItemController::class, 'show'])
     ->middleware('AttachUserIdToRequest');
 

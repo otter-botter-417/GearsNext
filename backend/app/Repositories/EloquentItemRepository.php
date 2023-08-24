@@ -2,12 +2,12 @@
 
 namespace App\Repositories;
 
-use App\Exceptions\ItemAlreadyRegisteredException;
-use App\Exceptions\ItemNotFoundException;
-use App\Contracts\ItemRepositoryInterface;
 use App\Models\Item;
+use App\Models\ColorTag;
+use App\Models\ItemTag;
+use App\Contracts\ItemRepositoryInterface;
+use App\Exceptions\ItemNotFoundException;
 use Illuminate\Support\Facades\Log;
-
 
 /**
  * 商品リポジトリ
@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Log;
  */
 class EloquentItemRepository implements ItemRepositoryInterface
 {
-
     protected $model;
 
     public function __construct(Item $item)
@@ -23,11 +22,152 @@ class EloquentItemRepository implements ItemRepositoryInterface
         $this->model = $item;
     }
 
+    /**
+     * 関連情報を持つすべての商品を取得
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getAllItemsWithRelations(): \Illuminate\Database\Eloquent\Collection
+    {
+        return $this->model->with([
+            'brand', 'category', 'subCategory',
+            'itemTags', 'colorTags', 'itemAttributes'
+        ])->get();
+    }
+
+    /**
+     * カテゴリに基づいて商品を取得
+     * @param int $categoryId カテゴリID
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getItemsByCategory(int $categoryId): \Illuminate\Database\Eloquent\Collection
+    {
+        return $this->model->where('category_id', $categoryId)->get();
+    }
+
+    /**
+     * 商品が既に登録されているかASINで確認
+     * @param  string $asin
+     * @return bool
+     */
+    public function checkItemsExistsByAsin(string $asin): bool
+    {
+        return $this->model->where('asin', $asin)->exists();
+    }
+
+    /**
+     * 商品データからカラータグIDを取得
+     * @param  array $colorTags
+     * @return array $colorTagIds
+     */
+    public function getColorTagIds(array $colorTags): array
+    {
+        $colorTagIds = ColorTag::whereIn('color_tag_name', $colorTags)
+            ->get('color_tag_id')
+            ->pluck('color_tag_id')
+            ->toArray();
+        return $colorTagIds;
+    }
+
+    /**
+     * 商品データから商品タグIDを取得
+     * @param  array $itemTags
+     * @return array $itemTagIds
+     */
+    public function getItemTagIds(array $itemTags): array
+    {
+        $itemTagIds = ItemTag::whereIn('item_tag_name', $itemTags)
+            ->get('item_tag_id')
+            ->pluck('item_tag_id')
+            ->toArray();
+        return $itemTagIds;
+    }
+
+    /**
+     * 商品データを登録
+     * @param  array $itemData
+     * @param  array $tagIds ['colorTagIds' => [], 'itemTagIds' => []]
+     * @return void
+     */
+    public function createItemData(array $itemData, $tagIds, $attributesData): void
+    {
+        $item = Item::create($itemData['baseData']);
+        $item->colorTags()->sync($tagIds['colorTagIds']);
+        $item->itemTags()->sync($tagIds['itemTagIds']);
+        $item->itemAttributes()->createMany($attributesData);
+    }
+
+    /**
+     * 商品に関連する情報を取得
+     * @param  Item $item
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getItemDataWithRelations(Item $item): \Illuminate\Database\Eloquent\Collection
+    {
+        return $item->with([
+            'brand', 'category', 'subCategory',
+            'itemTags', 'colorTags', 'itemAttributes'
+        ])->get();
+    }
+
+    /**
+     * 商品の閲覧数をインクリメント
+     * @param Item $item
+     * @return void
+     */
+    public function incrementViewCount(Item $item): void
+    {
+        $item->increment('view_count');
+    }
+
+    /**
+     * 商品を更新
+     * @param array $itemData
+     * @param array $tagIds ['colorTagIds' => [], 'itemTagIds' => []]
+     * @param array $attributesData 
+     * @return void
+     */
+    public function updateItemData(Item $item, array $itemData, array $tagIds, array $attributesData): void
+    {
+        $item->fill($itemData['baseData']);
+        $item->save();
+
+        $item->colorTags()->delete();
+        $item->itemTags()->delete();
+        $item->itemAttributes()->delete();
+
+        $item->colorTags()->sync($tagIds['colorTagIds']);
+        $item->itemTags()->sync($tagIds['itemTagIds']);
+        $item->itemAttributes()->createMany($attributesData);
+    }
+
+    /**
+     * 商品を削除
+     * @param  Item $item
+     * @return void
+     */
+    public function deleteItem(Item $item): void
+    {
+        $item->delete();
+    }
+
+    /**
+     * 以下itemService以外で使用するメソッド
+     */
+
+    /**
+     * 商品を全件取得
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function getAll(): \Illuminate\Database\Eloquent\Collection
     {
         return $this->model->all();
     }
 
+    /**
+     * 商品をIDで取得
+     * @param  int $id
+     * @return \App\Models\Item | null
+     */
     public function find(int $id): ?\App\Models\Item
     {
         return $this->model->find($id);
@@ -41,16 +181,6 @@ class EloquentItemRepository implements ItemRepositoryInterface
     public function getItemsByIds(array $itemIds): \Illuminate\Database\Eloquent\Collection
     {
         return $this->model->whereIn('item_id', $itemIds)->get();
-    }
-
-    /**
-     * カテゴリに基づいて商品を取得
-     * @param int $categoryId カテゴリID
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function getItemsByCategory(int $categoryId): \Illuminate\Database\Eloquent\Collection
-    {
-        return $this->model->where('category_id', $categoryId)->get();
     }
 
     /**
@@ -87,109 +217,5 @@ class EloquentItemRepository implements ItemRepositoryInterface
         if ($items->count() !== count($itemIds)) {
             throw new ItemNotFoundException();
         }
-    }
-
-    /**
-     * 商品が既に登録されているか確認
-     * @param  string $asin
-     * @throws ItemAlreadyRegisteredException 商品が既に登録されている場合
-     */
-    public function ensureItemNotExists(string $asin): void
-    {
-        if ($this->model->where('asin', $asin)->exists()) {
-            throw new ItemAlreadyRegisteredException();
-        }
-    }
-
-    /**
-     * 関連情報を持つすべての商品を取得
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function getAllItemsWithRelations(): \Illuminate\Database\Eloquent\Collection
-    {
-        return $this->model->with(['brand', 'category', 'subCategory', 'itemTags', 'colorTags', 'itemAttributes'])->get();
-    }
-
-    /**
-     * 商品に関連する情報を取得
-     * @param  \Illuminate\Database\Eloquent\Builder $item
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function getItemDataWithRelations(\App\Models\Item $item): \Illuminate\Database\Eloquent\Collection
-    {
-        return $item->with(['brand', 'category', 'subCategory', 'itemTags', 'colorTags', 'itemAttributes'])->get();
-    }
-
-    /**
-     * 商品データを登録
-     * @param  array $itemData
-     * @param  array $entities
-     * @return \App\Models\Item
-     * @throws ItemTagNotFoundException アイテムタグが見つからない場合
-     * @throws ColorTagNotFoundException カラータグが見つからない場合
-     */
-    public function createItemData(array $itemData, array $entities): \App\Models\Item
-    {
-        $item = new Item();
-        $item->item_name = $itemData['itemName'];
-        $item->brand_id = $entities['brand']->brand_id;
-        $item->price = $itemData['price'];
-        $item->image_name = $itemData['imageName'];
-        $item->asin = $itemData['asin'];
-        $item->open_width = $itemData['openWidth'];
-        $item->open_depth = $itemData['openDepth'];
-        $item->open_height = $itemData['openHeight'];
-        $item->storage_width = $itemData['storageWidth'];
-        $item->storage_depth = $itemData['storageDepth'];
-        $item->storage_height = $itemData['storageHeight'];
-        $item->weight = $itemData['weight'];
-        $item->category_id = $entities['category']->category_id;
-        $item->sub_category_id = $entities['subCategory']->sub_category_id;
-        //TODO　失敗したら例外を投げる
-        $item->save();
-
-        //まだここの処理でエラーが出ているので、一旦コメントアウト
-        // TODO 以下のコードを修正
-
-        // $colorTag = new ColorTag();
-        // Log::info($item);
-        // $colorTag->addColorTags($itemData['colorTags'], $item->item_id);
-        // $colorTag->save();
-
-        // $itemTag = new ItemTag();
-        // $itemTag->addItemTags($itemData['itemTags']);
-        // $itemTag->save();
-
-        // $itemAttributes = new ItemAttribute();
-        // $itemAttributes->addItemAttributes($itemAttributes, $item->category_id);
-        // $itemAttributes->save();
-        // if ($item->item_id === null) {
-        //     Log::error(
-        //         'aaa'
-        //     );
-        // }
-        // if (isset($itemData['itemTags'])) {
-        //     $item->addItemTags()->sync($itemData['itemTags']);
-        // }
-
-        // if (isset($itemData['colorTags'])) {
-        //     $item->colorTags()->sync($itemData['colorTags']);
-        // }
-
-        // if (isset($itemData['itemAttributes'])) {
-        //     $item->itemAttributes()->sync($itemData['itemAttributes']);
-        // }
-
-        return $item;
-    }
-
-    /**
-     * 商品の閲覧数を増加
-     * @param \App\Models\Item $item
-     * @return void
-     */
-    public function incrementViewCount(\App\Models\Item $item): void
-    {
-        $item->increment('view_count');
     }
 }

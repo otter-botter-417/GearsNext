@@ -19,21 +19,4 @@ class ItemAttribute extends Model
         'attribute_name',
         'attribute_value',
     ];
-
-    /**
-     * 商品の詳細を登録
-     * @param  array $details
-     * @param  int $categoryId
-     * @return void
-     */
-    public function addItemAttributes($details, $categoryId)
-    {
-        foreach ($details as $attributeName => $attributeValue) {
-            $this->itemAttributes()->create([
-                'category_id' => $categoryId,
-                'attribute_name' => $attributeName,
-                'attribute_value' => $attributeValue
-            ]);
-        }
-    }
 }

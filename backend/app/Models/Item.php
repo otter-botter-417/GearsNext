@@ -23,6 +23,9 @@ class Item extends Model
         'storage_depth',
         'storage_height',
         'weight',
+        'brand_id',
+        'category_id',
+        'sub_category_id',
     ];
 
     protected $hidden = ['brand_id', 'category_id', 'sub_category_id'];
@@ -44,12 +47,12 @@ class Item extends Model
 
     public function itemTags()
     {
-        return $this->belongsToMany(ItemTag::class, 'item_tag_relations', 'item_id', 'item_tag_id');
+        return $this->belongsToMany(ItemTag::class, 'item_item_tag', 'item_id', 'item_tag_id');
     }
 
     public function colorTags()
     {
-        return $this->belongsToMany(ColorTag::class, 'color_tag_relations', 'item_id', 'color_tag_id');
+        return $this->belongsToMany(ColorTag::class, 'item_color_tag', 'item_id', 'color_tag_id');
     }
 
     public function itemAttributes()

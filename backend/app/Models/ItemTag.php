@@ -18,40 +18,8 @@ class ItemTag extends Model
         'item_tag_name'
     ];
 
-    // 
-    /**
-     * アイテムタグ名に紐づくアイテムタグIDが存在するか確認
-     * @param  string $itemTagName
-     * @throws ItemTagNotFoundException アイテムタグが見つからない場合にスローされます。
-     * @return \App\Models\ItemTag アイテムタグのインスタンスを返します。
-     */
-    public static function ensureExists($itemTagName)
+    public function items()
     {
-        $itemTag = self::where('item_tag_name', $itemTagName)->first();
-        if (!$itemTag) {
-            Log::error(
-                'アイテムタグの存在を確認操作中にエラーが発生',
-                [
-                    'action' => 'itemTagEnsureExists',
-                    'itemTagName' => $itemTagName
-                ]
-            );
-            throw new ItemTagNotFoundException($itemTagName);
-        }
-        return $itemTag;
-    }
-
-    /**
-     * 商品のアイテムタグを登録
-     * @param  array $tagNames
-     * @return void
-     * @throws ItemTagNotFoundException アイテムタグが見つからない場合にスローされます。
-     */
-    public function addItemTags($itemTagNames)
-    {
-        foreach ($itemTagNames as $itemTagName) {
-            $itemTag = ItemTag::ensureExists($itemTagName);
-            $this->itemTags()->attach($itemTag->item_tag_id);
-        }
+        return $this->belongsToMany(Item::class, 'item_item_tag', 'item_tag_id', 'item_id');
     }
 }

@@ -10,15 +10,12 @@ use App\Http\Resources\LayoutResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Response;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * レイアウトに関する操作を管理するコントローラークラスです。
  * このクラスではレイアウトの作成、更新、削除などの操作を提供します。
  * すべてのメソッドは認証が必要です。
  */
-
-// TODO このクラスのshowメソッドは不要？　publicLayoutControllerのもので代用できる？
 class PrivateLayoutController extends Controller
 {
     protected $layoutService;

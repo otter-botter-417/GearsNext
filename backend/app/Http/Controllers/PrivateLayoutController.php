@@ -52,19 +52,6 @@ class PrivateLayoutController extends Controller
     }
 
     /**
-     * レイアウトを取得する
-     * @param  int $id layoutId
-     * @return Response
-     * @throws LayoutNotFoundException レイアウトが見つからない
-     * 
-     */
-    public function show(int $id): JsonResource
-    {
-        $layout = $this->layoutService->getLayout($id);
-        return  new LayoutResource($layout);
-    }
-
-    /**
      * レイアウトを更新する
      * @param  UpdateLayoutRequest  $request
      * @param  Layout  $layout

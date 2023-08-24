@@ -32,7 +32,7 @@ class Layout extends Model
         return $this->belongsToMany(Item::class, 'item_layout', 'layout_id', 'item_id');
     }
 
-    public function user()
+    public function users()
     {
         return $this->belongsTo(User::class, 'user_id');
     }

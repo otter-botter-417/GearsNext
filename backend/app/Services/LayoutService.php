@@ -73,8 +73,7 @@ class LayoutService
      */
     public function getLayout(int $layoutId): Layout
     {
-        $layout = $this->layoutRepository->getLayout($layoutId);
-        return $layout;
+        return $this->layoutRepository->getLayout($layoutId);
     }
 
     /**

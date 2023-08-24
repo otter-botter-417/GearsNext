@@ -69,12 +69,20 @@ class LayoutService
     /**
      * レイアウトの詳細を取得する
      * @param  int $layoutId
+     * @param  int $userId
      * @return Layout
      * @throws LayoutNotFoundException
      */
-    public function getLayout(int $layoutId): Layout
+    public function getLayoutWithHistory(int $layoutId, ?int $userId): Layout
     {
-        return $this->layoutRepository->getLayout($layoutId);
+        $layout = $this->layoutRepository->getLayout($layoutId);
+
+        if ($userId) {
+            $this->saveViewLayoutHistory($layout, $userId);
+        }
+        $this->incrementLayoutViewCount($layout);
+
+        return $layout;
     }
 
     /**

@@ -6,7 +6,6 @@ use App\Models\Item;
 use App\Models\ColorTag;
 use App\Models\ItemTag;
 use App\Contracts\ItemRepositoryInterface;
-use App\Exceptions\ItemAlreadyRegisteredException;
 use App\Exceptions\ItemNotFoundException;
 use Illuminate\Support\Facades\Log;
 

@@ -131,9 +131,9 @@ class ItemService
      */
     private function appendBrandAndCategoryIds(array $itemData): array
     {
-        $brand = $this->brandRepository->getBrandByNameOrThrow($itemData['baseData']['brand_name']);
-        $category = $this->categoryRepository->getCategoryByNameOrThrow($itemData['baseData']['item_category_name']);
-        $subCategory = $this->subCategoryRepository->getSubCategoryByNameOrThrow($itemData['baseData']['sub_category_name']);
+        $brand = $this->brandRepository->getBrandByName($itemData['baseData']['brand_name']);
+        $category = $this->categoryRepository->getCategoryByName($itemData['baseData']['item_category_name']);
+        $subCategory = $this->subCategoryRepository->getSubCategoryByName($itemData['baseData']['sub_category_name']);
         $itemData['baseData']['brand_id'] = $brand->brand_id;
         $itemData['baseData']['category_id'] = $category->category_id;
         $itemData['baseData']['sub_category_id'] = $subCategory->sub_category_id;

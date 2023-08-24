@@ -17,6 +17,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * このクラスではレイアウトの作成、更新、削除などの操作を提供します。
  * すべてのメソッドは認証が必要です。
  */
+
+// TODO このクラスのshowメソッドは不要？　publicLayoutControllerのもので代用できる？
 class PrivateLayoutController extends Controller
 {
     protected $layoutService;

@@ -30,8 +30,7 @@ class LayoutRepository implements LayoutRepositoryInterface
      */
     public function getLayouts(int $userId): Collection
     {
-        $layouts = $this->model->where('user_id', $userId)->with(['items', 'tagPositions'])->get();
-        return $layouts;
+        return $this->model->where('user_id', $userId)->with(['items', 'tagPositions'])->get();
     }
 
     /**
@@ -40,8 +39,7 @@ class LayoutRepository implements LayoutRepositoryInterface
      */
     public function getLayoutsAll(): Collection
     {
-        $layouts = $this->model->with(['items', 'user'])->get();
-        return $layouts;
+        return $this->model->with(['items', 'user'])->get();
     }
 
     /**
@@ -62,11 +60,10 @@ class LayoutRepository implements LayoutRepositoryInterface
      */
     public function createLayout(string $text, int $userId): Layout
     {
-        $layout = Layout::create([
+        return Layout::create([
             'text' => $text,
             'user_id' => $userId,
         ]);
-        return $layout;
     }
 
     /**

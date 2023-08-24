@@ -25,7 +25,7 @@ class LayoutRepository implements LayoutRepositoryInterface
 
     /**
      * ユーザーが登録したレイアウトを取得する
-     * @param int $userId
+     * @param  int $userId
      * @return Collection
      */
     public function getLayouts(int $userId): Collection
@@ -56,8 +56,8 @@ class LayoutRepository implements LayoutRepositoryInterface
 
     /**
      * レイアウトを登録する
-     * @param string $text
-     * @param int $userId
+     * @param  string $text
+     * @param  int $userId
      * @return Layout
      */
     public function createLayout(string $text, int $userId): Layout
@@ -71,8 +71,8 @@ class LayoutRepository implements LayoutRepositoryInterface
 
     /**
      * レイアウトに使われている商品を登録する
-     * @param Layout $layout
-     * @param array $items レイアウトに使われている商品のデータ
+     * @param  Layout $layout
+     * @param  array $items レイアウトに使われている商品のデータ
      * @return void
      */
     public function createLayoutItems(Layout $layout, array $items): void
@@ -89,7 +89,7 @@ class LayoutRepository implements LayoutRepositoryInterface
 
     /**
      * レイアウトの詳細を取得する
-     * @param int $layoutId
+     * @param  int $layoutId
      * @return Layout
      * @throws LayoutNotFoundException
      */
@@ -115,7 +115,7 @@ class LayoutRepository implements LayoutRepositoryInterface
     /**
      * レイアウトの閲覧履歴を保存する
      * @param  Layout  $layout
-     * @param int $userId
+     * @param  int $userId
      * @return void
      */
     public function saveViewLayoutHistory(Layout $layout, int $userId): void
@@ -128,7 +128,7 @@ class LayoutRepository implements LayoutRepositoryInterface
     /**
      * レイアウトを更新
      * @param  Layout  $layout
-     * @param array $data レイアウトデータ
+     * @param  array $data レイアウトデータ
      * @return void
      */
     public function updateLayout(Layout $layout, array $data): void

@@ -7,6 +7,8 @@ use App\Models\TagPosition;
 use App\Models\ViewLayoutHistory;
 use App\Contracts\LayoutRepositoryInterface;
 use App\Exceptions\LayoutNotFoundException;
+use Illuminate\Database\Eloquent\Collection;
+
 
 /**
  * レイアウトに関するリポジトリクラス
@@ -24,9 +26,9 @@ class LayoutRepository implements LayoutRepositoryInterface
     /**
      * ユーザーが登録したレイアウトを取得する
      * @param int $userId
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
-    public function getLayouts(int $userId): \Illuminate\Database\Eloquent\Collection
+    public function getLayouts(int $userId): Collection
     {
         $layouts = $this->model->where('user_id', $userId)->with(['items', 'tagPositions'])->get();
         return $layouts;
@@ -34,9 +36,9 @@ class LayoutRepository implements LayoutRepositoryInterface
 
     /**
      * 全てのレイアウトを取得する
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
-    public function getLayoutsAll(): \Illuminate\Database\Eloquent\Collection
+    public function getLayoutsAll(): Collection
     {
         $layouts = $this->model->with(['items', 'user'])->get();
         return $layouts;
@@ -45,9 +47,9 @@ class LayoutRepository implements LayoutRepositoryInterface
     /**
      * 指定されたIDの配列を元に関連するレイアウトデータを取得
      * @param  array $layoutIds
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
-    public function getLayoutsByIds(array $layoutIds): \Illuminate\Database\Eloquent\Collection
+    public function getLayoutsByIds(array $layoutIds): Collection
     {
         return $this->model->whereIn('layout_id', $layoutIds)->with(['user', 'tagPositions'])->get();
     }

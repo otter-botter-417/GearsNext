@@ -3,28 +3,29 @@
 namespace App\Contracts;
 
 use App\Models\Layout;
+use Illuminate\Database\Eloquent\Collection;
 
 interface LayoutRepositoryInterface
 {
     /**
      * ユーザーが登録したレイアウトを取得する
      * @param int $userId
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
-    public function getLayouts(int $userId): \Illuminate\Database\Eloquent\Collection;
+    public function getLayouts(int $userId): Collection;
 
     /**
      * 全てのレイアウトを取得する
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
-    public function getLayoutsAll(): \Illuminate\Database\Eloquent\Collection;
+    public function getLayoutsAll(): Collection;
 
     /**
      * 指定されたIDの配列を元に関連するレイアウトデータを取得
      * @param  array $layoutIds
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
-    public function getLayoutsByIds(array $layoutIds): \Illuminate\Database\Eloquent\Collection;
+    public function getLayoutsByIds(array $layoutIds): Collection;
 
     /**
      * レイアウトを登録する

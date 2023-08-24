@@ -11,9 +11,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $layout_id
  * @property string $text
  * @property int $user_id
+ * @property Item[] $items
+ * @property User $users
+ * @property TagPosition[] $tagPositions
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
- * 
  */
 
 class Layout extends Model

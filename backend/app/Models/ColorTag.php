@@ -2,11 +2,16 @@
 
 namespace App\Models;
 
-use App\Exceptions\ColorTagNotFoundException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Log;
 
+/**
+ * カラータグに関するモデルクラスです。
+ * @package App\Models
+ * @property int $color_tag_id
+ * @property string $color_tag_name
+ * @property Item[] $items
+ */
 class ColorTag extends Model
 {
     use HasFactory;

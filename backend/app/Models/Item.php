@@ -5,6 +5,32 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * 商品に関するモデルクラスです。
+ * @package App\Models
+ * @property int $item_id
+ * @property string $item_name 
+ * @property int $price
+ * @property string $image_name
+ * @property string $asin 
+ * @property float $open_width 
+ * @property float $open_depth 
+ * @property float $open_height 
+ * @property float $storage_width 
+ * @property float $storage_depth 
+ * @property float $storage_height 
+ * @property float $weight 
+ * @property int $brand_id
+ * @property int $category_id
+ * @property int $sub_category_id
+ * @property int $favorite_count
+ * @property int $view_count
+ * @property Brand $brand
+ * @property Category $category
+ * @property SubCategory $subCategory
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ */
 class Item extends Model
 {
     use HasFactory;

@@ -2,11 +2,16 @@
 
 namespace App\Models;
 
-use App\Exceptions\ItemTagNotFoundException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Log;
 
+/**
+ * 商品タグに関するモデルクラスです。
+ * @package App\Models
+ * @property int $item_tag_id
+ * @property string $item_tag_name
+ * @property Item[] $items
+ */
 class ItemTag extends Model
 {
     use HasFactory;

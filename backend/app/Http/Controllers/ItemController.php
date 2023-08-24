@@ -6,6 +6,10 @@ use App\Models\Item;
 use App\Services\ItemService;
 use App\Http\Requests\ItemIndexRequest;
 use App\Http\Requests\ItemRegisterRequest;
+use \Illuminate\Http\Request;
+use \Illuminate\Http\Response;
+use \Illuminate\Http\JsonResponse;
+
 
 /**
  * 商品に関する操作を管理するコントローラークラスです。

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Contracts\UserRepositoryInterface;
 use App\Contracts\ItemRepositoryInterface;
 use App\Contracts\UserInventoryRepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * ユーザーの持っている商品に関するサービスクラス
@@ -40,12 +41,14 @@ class UserInventoryService
     /**
      * ユーザーの持っている商品一覧を取得
      * @param  int  $userId
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
-    public function getUserInventories(int $userId): \Illuminate\Database\Eloquent\Collection
+    public function getUserInventories(int $userId): Collection
     {
-        $userInventoryItemIds = $this->userInventoryRepository->getUserInventoryItemIds($userId);
-        $userInventories = $this->itemRepository->getItemsByIds($userInventoryItemIds);
+        $userInventoryItemIds = $this->userInventoryRepository
+            ->getUserInventoryItemIds($userId);
+        $userInventories = $this->itemRepository
+            ->getItemsByIds($userInventoryItemIds);
         return $userInventories;
     }
 

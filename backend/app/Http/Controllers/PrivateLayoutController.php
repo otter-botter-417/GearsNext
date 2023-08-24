@@ -27,6 +27,7 @@ class PrivateLayoutController extends Controller
     }
 
     /**
+     * ユーザーの登録したレイアウトを取得
      * @return Response
      */
     public function index(): ResourceCollection
@@ -36,6 +37,7 @@ class PrivateLayoutController extends Controller
     }
 
     /**
+     * レイアウトを登録する
      * @param  StoreLayoutRequest  $request
      * @return Response
      * @throws ItemNotFoundException 商品が見つからない
@@ -48,6 +50,7 @@ class PrivateLayoutController extends Controller
     }
 
     /**
+     * レイアウトを取得する
      * @param  int $id layoutId
      * @return Response
      * @throws LayoutNotFoundException レイアウトが見つからない
@@ -60,8 +63,9 @@ class PrivateLayoutController extends Controller
     }
 
     /**
+     * レイアウトを更新する
      * @param  UpdateLayoutRequest  $request
-     * @param  \App\Models\Layout  $layout
+     * @param  Layout  $layout
      * @return Response
      * @throws ItemNotFoundException 商品が見つからない
      */
@@ -74,7 +78,8 @@ class PrivateLayoutController extends Controller
     }
 
     /**
-     * @param  \App\Models\Layout  $layout
+     * レイアウトを削除する
+     * @param  Layout  $layout
      * @return Response
      */
     public function destroy(Layout $layout): Response

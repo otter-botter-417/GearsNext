@@ -48,8 +48,7 @@ class LayoutService
      */
     public function getLayoutsAll(): \Illuminate\Database\Eloquent\Collection
     {
-        $layouts = $this->layoutRepository->getLayoutsAll();
-        return $layouts;
+        return $this->layoutRepository->getLayoutsAll();
     }
 
     /**

@@ -38,8 +38,7 @@ class LayoutService
      */
     public function getLayouts(int $userId): \Illuminate\Database\Eloquent\Collection
     {
-        $layouts = $this->layoutRepository->getLayouts($userId);
-        return $layouts;
+        return $this->layoutRepository->getLayouts($userId);
     }
 
     /**

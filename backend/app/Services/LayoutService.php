@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Layout;
 use App\Contracts\ItemRepositoryInterface;
 use App\Contracts\LayoutRepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * レイアウトに関するサービスクラス
@@ -34,18 +35,18 @@ class LayoutService
     /**
      * ユーザーの登録したレイアウトを取得
      * @param int $userId
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
-    public function getLayouts(int $userId): \Illuminate\Database\Eloquent\Collection
+    public function getLayouts(int $userId): Collection
     {
         return $this->layoutRepository->getLayouts($userId);
     }
 
     /**
      * 全てのレイアウトを取得
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
-    public function getLayoutsAll(): \Illuminate\Database\Eloquent\Collection
+    public function getLayoutsAll(): Collection
     {
         return $this->layoutRepository->getLayoutsAll();
     }

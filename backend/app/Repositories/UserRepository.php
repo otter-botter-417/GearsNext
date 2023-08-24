@@ -37,7 +37,7 @@ class UserRepository implements UserRepositoryInterface
 
     /**
      * ユーザー情報を更新する
-     * @param int $userId
+     * @param int   $userId
      * @param array $data
      * @return void
      */

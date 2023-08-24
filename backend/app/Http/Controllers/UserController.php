@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Services\UserService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\UserUpdateRequest;
 use App\Http\Requests\UserRegisterRequest;
-
+use App\Http\Requests\UserLoginRequest;
+use App\Http\Requests\UserUpdateRequest;
+use Illuminate\Support\Facades\Auth;
+use \Illuminate\Http\Request;
+use \Illuminate\Http\Response;
+use \Illuminate\Http\JsonResponse;
 
 /**
  * ユーザー情報に関する操作を管理するコントローラークラスです。
@@ -24,35 +26,34 @@ class UserController extends Controller
     }
     /**
      * ユーザー登録
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param  Request  $request
+     * @return JsonResponse
      */
-    public function register(UserRegisterRequest $request): \Illuminate\Http\JsonResponse
+    public function register(UserRegisterRequest $request): JsonResponse
     {
-        $user = $this->userService->register($request->userName, $request->email, $request->password);
-        $token = $this->userService->createToken($user);
+        $registerData = $request->only(['user_name', 'email', 'password']);
+        $token = $this->userService->register($registerData);
         return response()->json(['token' => $token], 201);
     }
 
     /**
      * ログイン
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
-     * @throws UserNotFoundException ユーザーが見つからない
-     * @throws InvalidPasswordException パスワードが間違っている
+     * @param  Request  $request
+     * @return JsonResponse
+     * @throws LoginFailedException ログインに失敗した場合
      */
-    public function login(Request $request): \Illuminate\Http\JsonResponse
+    public function login(UserLoginRequest $request): JsonResponse
     {
-        $user = $this->userService->login($request->email, $request->password);
-        $token = $this->userService->createToken($user);
+        $loginRequest = $request->only(['email', 'password']);
+        $token = $this->userService->login($loginRequest);
         return response()->json(['token' => $token], 200);
     }
 
     /**
      * ログアウト
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function logout(): \Illuminate\Http\JsonResponse
+    public function logout(): JsonResponse
     //TODO frontend側でJWTを削除する　localStorage.removeItem('token');
     {
         auth('api')->logout(); // トークンを無効化
@@ -61,23 +62,22 @@ class UserController extends Controller
 
     /**
      * ユーザー情報の更新
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param  Request  $request
+     * @return Response
      */
-    public function update(UserUpdateRequest $request): \Illuminate\Http\JsonResponse
+    public function update(UserUpdateRequest $request): Response
     {
-        $data = $request->only(['userName', 'email', 'password']);
+        $data = $request->only(['user_name', 'email', 'password']);
         $this->userService->updateUserData(Auth::id(), $data);
-        return response()->json(['message' => 'Profile updated successfully'], 200);
+        return response(null, 204);
     }
 
     /**
      * ユーザーの削除
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function delete(): \Illuminate\Http\Response
+    public function delete(): Response
     {
-
         $this->userService->deleteUserData(Auth::id());
         auth('api')->logout(); // トークンを無効化
         return response(null, 204);

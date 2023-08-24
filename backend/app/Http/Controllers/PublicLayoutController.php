@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\LayoutResource;
+use App\Models\Layout;
 use App\Services\LayoutService;
+use App\Http\Resources\LayoutResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -35,14 +36,14 @@ class PublicLayoutController extends Controller
     /**
      * レイアウトの詳細を取得し、閲覧回数をインクリメント
      * 認証ユーザーからのアクセスの場合は閲覧履歴を保存
-     * @param  Request  $request user_idのみ取得できる
-     * @param  int  $layoutId
+     * @param  Request $request user_idのみ取得できる
+     * @param  Layout  $layout
      * @return JsonResource
      */
-    public function show(Request $request, int $layoutId): JsonResource
+    public function show(Request $request, Layout $layout): JsonResource
     {
         $userId = $request->attributes->get('user_id');
-        $layout = $this->layoutService->getLayoutWithHistory($layoutId, $userId);
-        return  new LayoutResource($layout);
+        $layoutDetails  = $this->layoutService->getLayoutWithHistory($layout, $userId);
+        return  new LayoutResource($layoutDetails);
     }
 }

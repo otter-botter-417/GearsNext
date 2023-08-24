@@ -111,6 +111,7 @@ class LayoutRepository implements LayoutRepositoryInterface
 
     /**
      * レイアウトの閲覧履歴を保存する
+     * すでに保存されていれば更新時間だけを更新
      * @param  Layout  $layout
      * @param  int $userId
      * @return void

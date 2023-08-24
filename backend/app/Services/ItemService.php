@@ -115,14 +115,14 @@ class ItemService
         if ($this->itemRepository->checkItemsExistsByAsin($itemData['baseData']['asin'])) {
             throw new ItemAlreadyRegisteredException();
         }
-        $itemDatas = $this->appendBrandAndCategoryIds($itemData);
+        $baseData = $this->appendBrandAndCategoryIds($itemData);
         $tagIds = $this->prepareTags($itemData);
-        $attributesData = $this->prepareAttributesData($itemDatas);
-        $this->itemRepository->createItemData($itemDatas, $tagIds, $attributesData);
+        $attributesData = $this->prepareAttributesData($baseData);
+        $this->itemRepository->createItemData($baseData, $tagIds, $attributesData);
     }
 
     /**
-     * brand category subcategoryのidをitemDataにマージして返す
+     * brand category subcategoryのidをitemDataにマージしbaseDataを返す
      * @param  array $itemData
      * @return array brand category subcategoryのidをitemDataにマージして返す
      * @throws BrandNotFoundException ブランドが見つからない場合
@@ -138,7 +138,7 @@ class ItemService
         $itemData['baseData']['category_id'] = $category->category_id;
         $itemData['baseData']['sub_category_id'] = $subCategory->sub_category_id;
 
-        return $itemData;
+        return $itemData['baseData'];
     }
 
     /**

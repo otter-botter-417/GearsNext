@@ -7,7 +7,6 @@ use App\Services\FavoriteItemService;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 /**
  * ユーザーのお気に入り商品に関する操作を管理するコントローラークラスです。

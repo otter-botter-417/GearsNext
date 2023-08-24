@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Layout;
 use App\Services\FavoriteLayoutService;
 use App\Http\Resources\LayoutResource;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -23,7 +25,7 @@ class FavoriteLayoutController extends Controller
 
     /**
      * ユーザーのお気に入りレイアウトを取得
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function index()
     {
@@ -34,9 +36,9 @@ class FavoriteLayoutController extends Controller
     /**
      * ユーザーのお気に入りレイアウトに保存
      * @param  Layout  $layout
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function store(Layout $layout): \Illuminate\Http\Response
+    public function store(Layout $layout): Response
     {
         $this->favoriteLayoutService->addFavoriteLayout(Auth::id(), $layout->layout_id);
         return response(null, 201);
@@ -46,9 +48,9 @@ class FavoriteLayoutController extends Controller
      * ユーザーのお気に入りレイアウトから削除する
      *
      * @param  Layout  $layout
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function destroy(Layout $layout): \Illuminate\Http\Response
+    public function destroy(Layout $layout): Response
     {
         $this->favoriteLayoutService->removeFavoriteLayout(Auth::id(), $layout->layout_id);
         return response(null, 204);

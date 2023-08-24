@@ -4,9 +4,11 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Contracts\UserRepositoryInterface;
+use App\Exceptions\EmailAlreadyUsedException;
 use App\Exceptions\LoginFailedException;
-use App\Exceptions\UserAlreadyRegisteredException;
+use App\Exceptions\UserNameAlreadyRegisteredException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 /**
@@ -20,33 +22,23 @@ class UserService
      */
     protected $userRepository;
 
-    private $favoriteItemService;
-
     public function __construct(
         UserRepositoryInterface $userRepository,
-        FavoriteItemService $favoriteItemService
-
     ) {
         $this->userRepository = $userRepository;
-        $this->favoriteItemService = $favoriteItemService;
     }
 
     /**
      * ユーザーを登録する
-     * @param string $userName
+     * @param string $user_name
      * @param string $email
      * @param string $password
      * @return User
-     * @throws UserAlreadyRegisteredException 商品が既に登録されている
-     * @throws EmailAlreadyUsedException メールアドレスが既に登録されている
      */
-    public function register(string $userName, string $email, string $password): User
+    public function register(string $user_name, string $email, string $password): User
     {
-        $this->userRepository->ensureEmailNotExists($email);
-
-        $password = $this->hashPassword($password);
-
-        $user = $this->userRepository->createUserData($userName, $email, $password);
+        $hashedPassword = $this->hashPassword($password);
+        $user = $this->userRepository->createUserData($user_name, $email, $hashedPassword);
 
         return $user;
     }
@@ -56,7 +48,7 @@ class UserService
      * @param string $password
      * @return string
      */
-    public function hashPassword(string $password): string
+    private function hashPassword(string $password): string
     {
         return bcrypt($password);
     }
@@ -96,7 +88,7 @@ class UserService
     /**
      * ユーザー情報を変更する
      * @param int $userId
-     * @param array $data  [userName, email, password]
+     * @param array $data  [user_name, email, password]
      * @return void
      */
     public function updateUserData(int $userId, array $data): void
@@ -104,7 +96,7 @@ class UserService
         $password = $this->hashPassword($data['password']);
 
         $data = [
-            'user_name' => $data['userName'],
+            'user_name' => $data['user_name'],
             'email' => $data['email'],
             'password' => $password,
         ];

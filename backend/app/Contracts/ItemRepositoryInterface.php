@@ -3,21 +3,22 @@
 namespace App\Contracts;
 
 use App\Models\Item;
+use Illuminate\Database\Eloquent\Collection;
 
 interface ItemRepositoryInterface
 {
     /**
      * 関連情報を持つすべての商品を取得
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
-    public function getAllItemsWithRelations(): \Illuminate\Database\Eloquent\Collection;
+    public function getAllItemsWithRelations(): Collection;
 
     /**
      * カテゴリに基づいて商品を取得
      * @param int $categoryId
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
-    public function getItemsByCategory(int $categoryId): \Illuminate\Database\Eloquent\Collection;
+    public function getItemsByCategory(int $categoryId): Collection;
 
     /**
      * 商品が既に登録されているかASINで確認
@@ -53,9 +54,9 @@ interface ItemRepositoryInterface
     /**
      * 商品に関連する情報を取得
      * @param  Item $item
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
-    public function getItemDataWithRelations(Item $item): \Illuminate\Database\Eloquent\Collection;
+    public function getItemDataWithRelations(Item $item): Collection;
 
     /**
      * 商品の閲覧数をインクリメント
@@ -87,9 +88,9 @@ interface ItemRepositoryInterface
 
     /**
      * 商品を全件取得
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
-    public function getAll(): \Illuminate\Database\Eloquent\Collection;
+    public function getAll(): Collection;
 
     /**
      * 商品をIDで取得
@@ -101,9 +102,9 @@ interface ItemRepositoryInterface
     /**
      * 指定されたIDの配列を元に関連する商品データを取得
      * @param  array $itemIds
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
-    public function getItemsByIds(array $itemIds): \Illuminate\Database\Eloquent\Collection;
+    public function getItemsByIds(array $itemIds): Collection;
 
     /**
      * 商品が存在することを確認
@@ -120,4 +121,25 @@ interface ItemRepositoryInterface
      * @throws ItemNotFoundException 商品が見つからない場合
      */
     public function checkItemsExists(array $itemIds): void;
+
+    /**
+     * 閲覧数が多い順に商品を取得
+     * @param  int $number 取得する商品数
+     * @return Collection
+     */
+    public function getTopViewedItems(int $number): Collection;
+
+    /**
+     * お気に入り数が多い順に商品を取得
+     * @param  int $number 取得する商品数
+     * @return Collection
+     */
+    public function getTopFavoriteItems(int $number): Collection;
+
+    /**
+     * 登録日が近い順に商品を取得
+     * @param  int $number 取得する商品数
+     * @return Collection
+     */
+    public function getNewlyArrivedItems(int $number): Collection;
 }

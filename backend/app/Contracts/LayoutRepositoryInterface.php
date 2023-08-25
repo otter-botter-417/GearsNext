@@ -80,4 +80,25 @@ interface LayoutRepositoryInterface
      * @return void
      */
     public function removeLayout(Layout  $layout): void;
+
+    /**
+     * 閲覧数が多い順にレイアウトを取得
+     * @param  int $number 取得するレイアウト数
+     * @return Collection
+     */
+    public function getTopViewedLayouts(int $number): Collection;
+
+    /**
+     * お気に入り数が多い順にレイアウトを取得
+     * @param  int $number 取得するレイアウト数
+     * @return Collection
+     */
+    public function getTopFavoriteLayouts(int $number): Collection;
+
+    /**
+     * 登録日が近い順にレイアウトを取得
+     * @param  int $number 取得するレイアウト数
+     * @return Collection
+     */
+    public function getNewlyArrivedLayouts(int $number): Collection;
 }

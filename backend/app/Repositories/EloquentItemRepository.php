@@ -131,16 +131,19 @@ class EloquentItemRepository implements ItemRepositoryInterface
      */
     public function updateItemData(Item $item, array $baseData, array $tagIds, array $attributesData): void
     {
-        $item->fill($baseData);
-        $item->save();
+        DB::transaction(function () use ($item, $baseData, $tagIds, $attributesData) {
 
-        $item->colorTags()->delete();
-        $item->itemTags()->delete();
-        $item->itemAttributes()->delete();
+            $item->fill($baseData);
+            $item->save();
 
-        $item->colorTags()->sync($tagIds['colorTagIds']);
-        $item->itemTags()->sync($tagIds['itemTagIds']);
-        $item->itemAttributes()->createMany($attributesData);
+            $item->colorTags()->delete();
+            $item->itemTags()->delete();
+            $item->itemAttributes()->delete();
+
+            $item->colorTags()->sync($tagIds['colorTagIds']);
+            $item->itemTags()->sync($tagIds['itemTagIds']);
+            $item->itemAttributes()->createMany($attributesData);
+        });
     }
 
     /**

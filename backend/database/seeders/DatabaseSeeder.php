@@ -24,7 +24,6 @@ class DatabaseSeeder extends Seeder
             ItemTagTableSeeder::class,
             ColorTagTableSeeder::class,
             ItemsTableSeeder::class,
-
             LayoutSeeder::class,
         ]);
     }

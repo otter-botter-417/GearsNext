@@ -7,9 +7,11 @@ use App\Http\Controllers\PrivateLayoutController;
 use App\Http\Controllers\PublicLayoutController;
 use App\Http\Controllers\FavoriteItemController;
 use App\Http\Controllers\FavoriteLayoutController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserInventoryController;
 
 // 認証が不要なルート
+Route::get('home', [HomeController::class, 'index']);
 Route::post('user/register', [UserController::class, 'register']);
 Route::post('user/login', [UserController::class, 'login']);
 Route::apiResource('items', ItemController::class)->only(['index', 'store', 'update', 'destroy']);

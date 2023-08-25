@@ -142,4 +142,34 @@ class LayoutRepository implements LayoutRepositoryInterface
     {
         $layout->delete();
     }
+
+    /**
+     * 閲覧数が多い順にレイアウトを取得
+     * @param  int $number 取得するレイアウト数
+     * @return Collection
+     */
+    public function getTopViewedLayouts(int $number): Collection
+    {
+        return $this->model->orderBy('view_count', 'desc')->take($number)->get();
+    }
+
+    /**
+     * お気に入り数が多い順にレイアウトを取得
+     * @param  int $number 取得するレイアウト数
+     * @return Collection
+     */
+    public function getTopFavoriteLayouts(int $number): Collection
+    {
+        return $this->model->orderBy('favorite_layout', 'desc')->take($number)->get();
+    }
+
+    /**
+     * 登録日が近い順にレイアウトを取得
+     * @param  int $number 取得するレイアウト数
+     * @return Collection
+     */
+    public function getNewlyArrivedLayouts(int $number): Collection
+    {
+        return $this->model->orderBy('created_at', 'desc')->take($number)->get();
+    }
 }

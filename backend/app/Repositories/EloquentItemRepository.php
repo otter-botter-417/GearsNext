@@ -9,6 +9,7 @@ use App\Contracts\ItemRepositoryInterface;
 use App\Exceptions\ItemNotFoundException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * 商品リポジトリ
@@ -223,5 +224,35 @@ class EloquentItemRepository implements ItemRepositoryInterface
         if ($items->count() !== count($itemIds)) {
             throw new ItemNotFoundException();
         }
+    }
+
+    /**
+     * 閲覧数が多い順に商品を取得
+     * @param  int $number 取得する商品数
+     * @return Collection
+     */
+    public function getTopViewedItems(int $number): Collection
+    {
+        return $this->model->orderBy('view_count', 'desc')->take($number)->get();
+    }
+
+    /**
+     * お気に入り数が多い順に商品を取得
+     * @param  int $number 取得する商品数
+     * @return Collection
+     */
+    public function getTopFavoriteItems(int $number): Collection
+    {
+        return $this->model->orderBy('favorite_item', 'desc')->take($number)->get();
+    }
+
+    /**
+     * 登録日が近い順に商品を取得
+     * @param  int $number 取得する商品数
+     * @return Collection
+     */
+    public function getNewlyArrivedItems(int $number): Collection
+    {
+        return $this->model->orderBy('created_at', 'desc')->take($number)->get();
     }
 }

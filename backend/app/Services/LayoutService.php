@@ -6,6 +6,7 @@ use App\Models\Layout;
 use App\Contracts\ItemRepositoryInterface;
 use App\Contracts\LayoutRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 /**
  * レイアウトに関するサービスクラス
@@ -60,10 +61,13 @@ class LayoutService
      */
     public function createLayout(array $data, int $userId,): void
     {
-        $itemIds = array_column($data['items'], 'item_id');
-        $this->itemRepository->checkItemsExists($itemIds);
-        $layout = $this->layoutRepository->createLayout($data['text'], $userId);
-        $this->layoutRepository->createLayoutItems($layout, $data['items']);
+        DB::transaction(function () use ($data, $userId) {
+
+            $itemIds = array_column($data['items'], 'item_id');
+            $this->itemRepository->checkItemsExists($itemIds);
+            $layout = $this->layoutRepository->createLayout($data['text'], $userId);
+            $this->layoutRepository->createLayoutItems($layout, $data['items']);
+        });
     }
 
     /**
@@ -114,9 +118,11 @@ class LayoutService
      */
     public function updateLayout(Layout $layout, array $data): void
     {
-        $itemIds = array_column($data['items'], 'item_id');
-        $this->itemRepository->checkItemsExists($itemIds);
-        $this->layoutRepository->updateLayout($layout, $data);
+        DB::transaction(function () use ($layout, $data) {
+            $itemIds = array_column($data['items'], 'item_id');
+            $this->itemRepository->checkItemsExists($itemIds);
+            $this->layoutRepository->updateLayout($layout, $data);
+        });
     }
 
     /**

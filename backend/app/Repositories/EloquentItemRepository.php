@@ -7,6 +7,7 @@ use App\Models\ColorTag;
 use App\Models\ItemTag;
 use App\Contracts\ItemRepositoryInterface;
 use App\Exceptions\ItemNotFoundException;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -90,10 +91,12 @@ class EloquentItemRepository implements ItemRepositoryInterface
      */
     public function createItemData(array $baseData, $tagIds, $attributesData): void
     {
-        $item = Item::create($baseData);
-        $item->colorTags()->sync($tagIds['colorTagIds']);
-        $item->itemTags()->sync($tagIds['itemTagIds']);
-        $item->itemAttributes()->createMany($attributesData);
+        DB::transaction(function () use ($baseData, $tagIds, $attributesData) {
+            $item = Item::create($baseData);
+            $item->colorTags()->sync($tagIds['colorTagIds']);
+            $item->itemTags()->sync($tagIds['itemTagIds']);
+            $item->itemAttributes()->createMany($attributesData);
+        });
     }
 
     /**
@@ -128,16 +131,19 @@ class EloquentItemRepository implements ItemRepositoryInterface
      */
     public function updateItemData(Item $item, array $baseData, array $tagIds, array $attributesData): void
     {
-        $item->fill($baseData);
-        $item->save();
+        DB::transaction(function () use ($item, $baseData, $tagIds, $attributesData) {
 
-        $item->colorTags()->delete();
-        $item->itemTags()->delete();
-        $item->itemAttributes()->delete();
+            $item->fill($baseData);
+            $item->save();
 
-        $item->colorTags()->sync($tagIds['colorTagIds']);
-        $item->itemTags()->sync($tagIds['itemTagIds']);
-        $item->itemAttributes()->createMany($attributesData);
+            $item->colorTags()->delete();
+            $item->itemTags()->delete();
+            $item->itemAttributes()->delete();
+
+            $item->colorTags()->sync($tagIds['colorTagIds']);
+            $item->itemTags()->sync($tagIds['itemTagIds']);
+            $item->itemAttributes()->createMany($attributesData);
+        });
     }
 
     /**

@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon $updated_at
  */
 class ViewItemHistory extends Model
+
+//TODO 閲覧数ランキングの実装 layoutも同様に実装
 {
     use HasFactory;
 

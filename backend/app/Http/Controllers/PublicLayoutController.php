@@ -14,7 +14,6 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
  * このクラスではパブリックなレイアウトの取得、詳細の取得などの操作を提供します。
  * 認証は不要です。
  */
-//TODO コメントの実装
 class PublicLayoutController extends Controller
 {
 

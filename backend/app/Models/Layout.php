@@ -43,4 +43,9 @@ class Layout extends Model
     {
         return $this->hasMany(TagPosition::class, 'layout_id');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'layout_id');
+    }
 }

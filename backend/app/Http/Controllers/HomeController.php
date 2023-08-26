@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
-    // TODO　閲覧数のランキング　いいねのランキング　新着　商品とレイアウト　
     protected homeService $homeService;
 
     public function __construct(HomeService $homeService)

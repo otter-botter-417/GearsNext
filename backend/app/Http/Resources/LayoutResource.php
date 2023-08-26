@@ -16,6 +16,7 @@ class LayoutResource extends JsonResource
             'view_count' => $this->view_count,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'comments' => $this->comments,
             'items' => $this->items,
         ];
     }

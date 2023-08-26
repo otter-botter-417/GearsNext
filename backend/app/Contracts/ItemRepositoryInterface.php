@@ -14,7 +14,7 @@ interface ItemRepositoryInterface
     public function getAllItemsWithRelations(): Collection;
 
     /**
-     * カテゴリに基づいて商品を取得
+     * カテゴリIDに基づいて商品を取得
      * @param int $categoryId
      * @return Collection
      */
@@ -142,4 +142,11 @@ interface ItemRepositoryInterface
      * @return Collection
      */
     public function getNewlyArrivedItems(int $number): Collection;
+
+    /**
+     * カテゴリー名から商品を取得
+     * @param  string $category
+     * @return Collection
+     */
+    public function getItemsByCategoryName(string $category): Collection;
 }

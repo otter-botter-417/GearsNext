@@ -22,13 +22,6 @@ class CategoryRepository implements CategoryRepositoryInterface
         return Category::find($categoryId);
     }
 
-
-    // TODO itemRepositoryに移動？
-    public function getItemsByCategory($category)
-    {
-        return Item::where('category_id', $category)->get();
-    }
-
     /**
      * カテゴリー名からカテゴリーを取得
      * @param  string $categoryName

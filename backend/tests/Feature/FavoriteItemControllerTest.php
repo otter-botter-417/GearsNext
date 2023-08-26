@@ -71,6 +71,6 @@ class FavoriteItemControllerTest extends TestCase
     public function test_cannot_add_non_existent_item_to_favorite_item()
     {
         $response = $this->authorizedRequest('POST', '/api/user/favorite/items/999');
-        $response->assertStatus(404);
+        $response->assertStatus(422);
     }
 }

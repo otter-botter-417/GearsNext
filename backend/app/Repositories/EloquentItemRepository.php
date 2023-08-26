@@ -37,7 +37,7 @@ class EloquentItemRepository implements ItemRepositoryInterface
     }
 
     /**
-     * カテゴリに基づいて商品を取得
+     * カテゴリIdに基づいて商品を取得
      * @param int $categoryId カテゴリID
      * @return \Illuminate\Database\Eloquent\Collection
      */
@@ -254,5 +254,15 @@ class EloquentItemRepository implements ItemRepositoryInterface
     public function getNewlyArrivedItems(int $number): Collection
     {
         return $this->model->orderBy('created_at', 'desc')->take($number)->get();
+    }
+
+    /**
+     * カテゴリー名から商品を取得
+     * @param  string $category
+     * @return Collection
+     */
+    public function getItemsByCategoryName(string $category): Collection
+    {
+        return Item::where('category_id', $category)->get();
     }
 }

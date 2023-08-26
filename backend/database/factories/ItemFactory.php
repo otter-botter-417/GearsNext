@@ -52,7 +52,6 @@ class ItemFactory extends Factory
             $colorTagIds = ColorTag::inRandomOrder()->take(rand(1, 3))->pluck('color_tag_id');
             $itemTagIds = ItemTag::inRandomOrder()->take(rand(1, 3))->pluck('item_tag_id');
 
-
             // 新しく作成されたItemに対して、取得したColorTagのIDを紐付ける
             $item->colorTags()->sync($colorTagIds);
             $item->itemTags()->sync($itemTagIds);

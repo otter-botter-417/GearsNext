@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ViewItemHistory extends Model
 
-//TODO 閲覧数ランキングの実装 layoutも同様に実装
 {
     use HasFactory;
 

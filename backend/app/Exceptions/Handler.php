@@ -4,6 +4,9 @@ namespace App\Exceptions;
 
 use Dotenv\Exception\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 use Illuminate\Http\Response;
 use Throwable;
 
@@ -140,9 +143,22 @@ class Handler extends ExceptionHandler
             return response()->json(['message' => $exception->getMessage()], 409);
         }
 
+        //ルートモデルバインディングで不正なIDが指定された場合の例外をキャッチ
+        if ($exception instanceof ModelNotFoundException) {
+            return response()->json([
+                'message' => 'Resource not found'
+            ], 422);  // ここでステータスコードを422に設定
+        }
+
 
 
         // 上記の例外以外は、デフォルトの処理を行う
         return parent::render($request, $exception);
+    }
+
+    // ユーザー認証に失敗した場合の例外をキャッチ
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        return response(null, 401);
     }
 }

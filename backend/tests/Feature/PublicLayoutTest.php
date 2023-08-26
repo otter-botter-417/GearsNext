@@ -58,6 +58,7 @@ class PublicLayoutTest extends TestCase
                     'view_count',
                     'created_at',
                     'updated_at',
+                    'comments',
                     'items' => [
                         '*' => [
                             'x_position',
@@ -65,7 +66,7 @@ class PublicLayoutTest extends TestCase
                             'item_id',
                             'item_name',
                             'image_name'
-                        ]
+                        ],
                     ]
                 ]
             ],
@@ -89,6 +90,7 @@ class PublicLayoutTest extends TestCase
                     'view_count',
                     'created_at',
                     'updated_at',
+                    'comments',
                     'items' => [
                         '*' => [
                             'x_position',

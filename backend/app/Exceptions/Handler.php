@@ -147,6 +147,7 @@ class Handler extends ExceptionHandler
         return parent::render($request, $exception);
     }
 
+    // ユーザー認証に失敗した場合の例外をキャッチ
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         return response(null, 401);

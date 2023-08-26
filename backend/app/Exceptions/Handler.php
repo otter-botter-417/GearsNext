@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Dotenv\Exception\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Response;
 use Throwable;
 
@@ -144,5 +145,10 @@ class Handler extends ExceptionHandler
 
         // 上記の例外以外は、デフォルトの処理を行う
         return parent::render($request, $exception);
+    }
+
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        return response(null, 401);
     }
 }

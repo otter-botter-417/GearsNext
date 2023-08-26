@@ -180,7 +180,7 @@ class ItemControllerTest extends TestCase
     {
         $nonExistentItemId = 9999;  //存在しない商品ID
         $response = $this->get("/api/items/{$nonExistentItemId}");
-        $response->assertStatus(404);
+        $response->assertStatus(422);
     }
 
     /**

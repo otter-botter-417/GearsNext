@@ -71,6 +71,6 @@ class UserInventoryControllerTest extends TestCase
     public function test_cannot_add_non_existent_item_to_user_inventory()
     {
         $response = $this->authorizedRequest('POST', '/api/user/inventory/999');
-        $response->assertStatus(404);
+        $response->assertStatus(422);
     }
 }

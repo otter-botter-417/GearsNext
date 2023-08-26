@@ -68,6 +68,7 @@ class PrivateLayoutControllerTest extends TestCase
                     'view_count',
                     'created_at',
                     'updated_at',
+                    'comments',
                     'items' => [
                         '*' => [
                             'x_position',

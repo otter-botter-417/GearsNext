@@ -62,6 +62,7 @@ class FavoriteLayoutControllerTest extends TestCase
                         'view_count',
                         'created_at',
                         'updated_at',
+                        'comments',
                         'items' => [
                             '*' => [
                                 'x_position',
@@ -84,6 +85,6 @@ class FavoriteLayoutControllerTest extends TestCase
     public function test_cannot_add_non_existent_layout_to_favorite_layout()
     {
         $response = $this->authorizedRequest('POST', '/api/user/favorite/layouts/1000');
-        $response->assertStatus(404);
+        $response->assertStatus(422);
     }
 }

@@ -51,6 +51,10 @@ class AppServiceProvider extends ServiceProvider
             'App\Contracts\ViewItemHistoryRepositoryInterface',
             'App\Repositories\ViewItemHistoryRepository'
         );
+        $this->app->bind(
+            'App\Contracts\CommentRepositoryInterface',
+            'App\Repositories\CommentRepository'
+        );
 
         //Brandとかのモックを作ってないからItemだけモックを採用するとエラーが発生する為一時的にコメントアウト
         // if (config('app.env') === 'testing') {

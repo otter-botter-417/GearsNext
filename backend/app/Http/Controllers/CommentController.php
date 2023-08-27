@@ -9,7 +9,6 @@ use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class CommentController extends Controller
 {
@@ -52,7 +51,6 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment): Response
     {
-        Log::debug($comment);
         $this->authorize('delete', $comment);
         $this->commentService->removeLayoutComment($comment);
         return response(null, 204);

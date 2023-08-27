@@ -6,7 +6,7 @@ use App\Models\Layout;
 use App\Services\LayoutService;
 use App\Http\Requests\StoreLayoutRequest;
 use App\Http\Requests\UpdateLayoutRequest;
-use App\Http\Resources\LayoutResource;
+use App\Http\Resources\LayoutIndexResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Response;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -27,12 +27,12 @@ class PrivateLayoutController extends Controller
 
     /**
      * ユーザーの登録したレイアウトを取得
-     * @return Response
+     * @return LayoutIndexResource
      */
     public function index(): ResourceCollection
     {
         $layouts = $this->layoutService->getLayouts(Auth::id());
-        return LayoutResource::collection($layouts);
+        return LayoutIndexResource::collection($layouts);
     }
 
     /**

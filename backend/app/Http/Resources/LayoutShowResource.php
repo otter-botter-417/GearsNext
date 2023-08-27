@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LayoutResource extends JsonResource
+class LayoutShowResource extends JsonResource
 {
     public function toArray($request)
     {
@@ -17,7 +17,14 @@ class LayoutResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'comments' => $this->comments,
-            'items' => $this->items,
+            'items' => $this->items->map(function ($item) {
+                return [
+                    'item_id' => $item->item_id,
+                    'item_name' => $item->item_name,
+                    'image_name' => $item->image_name,
+                ];
+            }),
+            'tag_positions' => $this->tagPositions,
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Http\Resources\ItemShowResource;
 use App\Models\Item;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -103,7 +104,37 @@ class ItemControllerTest extends TestCase
         $item = Item::factory()->create();
         $response = $this->get("/api/items/{$item->item_id}");
         $response->assertStatus(200)
-            ->assertJsonFragment(['item_name' => $item->item_name]);
+            ->assertJsonStructure([
+                'data' => [
+                    'item_id',
+                    'item_name',
+                    'price',
+                    'image_name',
+                    'asin',
+                    'open_size' => [
+                        'open_width',
+                        'open_depth',
+                        'open_height'
+                    ],
+                    'storage_size' => [
+                        'storage_width',
+                        'storage_depth',
+                        'storage_height'
+                    ],
+                    'weight',
+                    'favorite_count',
+                    'view_count',
+                    'created_at',
+                    'updated_at',
+                    'brand_name',
+                    'category_name',
+                    'sub_category_name',
+                    'item_tags',
+                    'color_tags',
+                    'item_attributes',
+                    'layouts',
+                ]
+            ]);
     }
 
     /**

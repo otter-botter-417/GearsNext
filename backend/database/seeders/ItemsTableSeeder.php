@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\ColorTag;
+use App\Models\Item;
+use App\Models\ItemTag;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +19,7 @@ class ItemsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('items')->insert([
+        $item = Item::create([
             'Item_name' => "ソロベースEX",
             'brand_id' => 1,
             'price' => 25581,
@@ -34,5 +37,17 @@ class ItemsTableSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
+
+        $colorTagIds = ColorTag::create(['color_tag_name' => "オリーブ"])->color_tag_id;
+        $itemTagIds = ItemTag::create(['item_tag_name' => "無骨"])->item_tag_id;
+        $attributesData = [
+            ['category_id' => $item->category_id, 'attribute_name' => "inner_tent", 'attribute_value' => "付属"],
+            ['category_id' => $item->category_id, 'attribute_name' => "grand_sheet", 'attribute_value' => "無し"],
+            ['category_id' => $item->category_id, 'attribute_name' => "fabrics", 'attribute_value' => "TC"],
+        ];
+        // 新しく作成されたItemに対して、取得したColorTagのIDを紐付ける
+        $item->colorTags()->sync($colorTagIds);
+        $item->itemTags()->sync($itemTagIds);
+        $item->itemAttributes()->createMany($attributesData);
     }
 }

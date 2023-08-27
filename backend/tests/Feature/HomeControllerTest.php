@@ -3,8 +3,9 @@
 namespace Tests\Feature;
 
 use App\Models\Item;
+use App\Models\Layout;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class HomeControllerTest extends TestCase
@@ -15,7 +16,9 @@ class HomeControllerTest extends TestCase
     {
         parent::setUp();
         $this->seed();
-        Item::factory(10)->create();
+        Item::factory(5)->create();
+        User::factory(5)->create();
+        Layout::factory(5)->create();
     }
 
 
@@ -26,6 +29,77 @@ class HomeControllerTest extends TestCase
     public function test_can_display_home_screen()
     {
         $response = $this->get('/api/home');
-        $response->assertStatus(200);
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'data' => [
+                    'topViewedItems' => [
+                        '*' => [
+                            'item_id',
+                            'item_name',
+                            'image_name',
+                            'favorite_count',
+                            'view_count'
+                        ]
+                    ],
+                    'topFavoriteItems' => [
+                        '*' => [
+                            'item_id',
+                            'item_name',
+                            'image_name',
+                            'favorite_count',
+                            'view_count'
+                        ]
+                    ],
+                    'newlyArrivedItems' => [
+                        '*' => [
+                            'item_id',
+                            'item_name',
+                            'image_name',
+                            'favorite_count',
+                            'view_count'
+                        ]
+                    ],
+                    'topViewedLayouts' => [
+                        '*' => [
+                            'layout_id',
+                            'favorite_count',
+                            'view_count',
+                            'user_name',
+                        ]
+                    ],
+                    'topFavoriteLayouts' => [
+                        '*' => [
+                            'layout_id',
+                            'favorite_count',
+                            'view_count',
+                            'user_name',
+                        ]
+                    ],
+                    'newlyArrivedLayouts' => [
+                        '*' => [
+                            'layout_id',
+                            'favorite_count',
+                            'view_count',
+                            'user_name',
+                        ]
+                    ]
+                ]
+            ]);
+    }
+
+    /**
+     * データがない場合のテスト
+     * @covers \App\Http\Controllers\HomeController::index
+     */
+    public function test_no_data_case()
+    {
+        // 全てのデータを削除
+        Item::query()->delete();
+        User::query()->delete();
+        Layout::query()->delete();
+
+        $response = $this->get('/api/home');
+        $response->assertStatus(200)
+            ->assertJson([]);
     }
 }

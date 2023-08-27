@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use App\Services\homeService;
-use Illuminate\Support\Facades\Log;
+use App\Http\Resources\HomeResource;
+use App\Services\HomeService;
 
 class HomeController extends Controller
 {
-    protected homeService $homeService;
+    protected HomeService $homeService;
 
     public function __construct(HomeService $homeService)
     {
@@ -19,11 +17,9 @@ class HomeController extends Controller
     /**
      * ホーム画面の情報を取得
      */
-    public function index(): JsonResponse
+    public function index(): HomeResource
     {
         $homeData = $this->homeService->getHomeData(5);
-        Log::debug($homeData);
-
-        return response()->json($homeData, 200);
+        return  new HomeResource($homeData);
     }
 }

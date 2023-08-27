@@ -103,14 +103,14 @@ class EloquentItemRepository implements ItemRepositoryInterface
     /**
      * 商品に関連する情報を取得
      * @param  Item $item
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Item
      */
-    public function getItemDataWithRelations(Item $item): \Illuminate\Database\Eloquent\Collection
+    public function getItemDataWithRelations(Item $item): Item
     {
-        return $item->with([
+        return $item->load([
             'brand', 'category', 'subCategory',
-            'itemTags', 'colorTags', 'itemAttributes'
-        ])->get();
+            'itemTags', 'colorTags', 'itemAttributes', 'layouts'
+        ]);
     }
 
     /**
@@ -263,6 +263,10 @@ class EloquentItemRepository implements ItemRepositoryInterface
      */
     public function getItemsByCategoryName(string $category): Collection
     {
-        return Item::where('category_id', $category)->get();
+        return $this->model->where('category_id', $category)
+            ->with([
+                'brand', 'category', 'subCategory',
+                'itemTags', 'colorTags', 'itemAttributes'
+            ])->get();
     }
 }

@@ -56,23 +56,11 @@ class FavoriteLayoutControllerTest extends TestCase
                 'data' => [
                     '*' => [
                         'layout_id',
-                        'text',
                         'user_name',
                         'favorite_count',
                         'view_count',
                         'created_at',
                         'updated_at',
-                        'comments',
-                        'items' => [
-                            '*' => [
-                                'x_position',
-                                'y_position',
-                                'item_id',
-                                'item_name',
-                                'image_name'
-                            ]
-                        ]
-
                     ]
                 ]
             ]);

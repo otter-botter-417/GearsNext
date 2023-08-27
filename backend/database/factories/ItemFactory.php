@@ -32,9 +32,9 @@ class ItemFactory extends Factory
             'storage_depth' => $this->faker->randomFloat(1, 10, 100),
             'storage_height' => $this->faker->randomFloat(1, 10, 100),
             'weight' => $this->faker->randomFloat(1, 0.5, 50),
-            'brand_id' => $this->faker->randomElement([1, 2, 3, 4, 5, 6, 7]),
-            'category_id' => $this->faker->randomElement([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]),
-            'sub_category_id' => $this->faker->randomElement([1, 2, 3, 4, 5, 6]),
+            'brand_id' => \App\Models\Brand::inRandomOrder()->first()->brand_id,
+            'category_id' => \App\Models\Category::inRandomOrder()->first()->category_id,
+            'sub_category_id' => \App\Models\SubCategory::inRandomOrder()->first()->sub_category_id,
             'favorite_count' => $this->faker->numberBetween(0, 1000),
             'view_count' => $this->faker->numberBetween(0, 5000),
         ];

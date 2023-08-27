@@ -24,7 +24,6 @@ class ViewItemHistory extends TestCase
     public function test_view_item_history_is_saved_when_user_views_item_details()
     {
         $item = Item::factory()->create();
-
         $response = $this->authorizedRequest('GET', '/api/items/' . $item->item_id);
         $response->assertStatus(200)
             ->assertJsonFragment(['item_name' => $item->item_name]);

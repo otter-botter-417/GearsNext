@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Services\UserInventoryService;
+use App\Http\Resources\ItemIndexResource;
 use Illuminate\Http\Response;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -24,12 +25,12 @@ class UserInventoryController extends Controller
 
     /**
      * ユーザーの持っている商品を取得
-     * @return JsonResponse
+     * @return ResourceCollection
      */
-    public function index(): JsonResponse
+    public function index(): ResourceCollection
     {
         $userInventories = $this->userInventoryService->getUserInventories(Auth::id());
-        return response()->json($userInventories, 200);
+        return ItemIndexResource::collection($userInventories);
     }
 
     /**

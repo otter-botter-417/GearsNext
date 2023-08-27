@@ -46,7 +46,6 @@ class PublicLayoutController extends Controller
     {
         $userId = $request->attributes->get('user_id');
         $layoutDetails  = $this->layoutService->getLayoutWithHistory($layout, $userId);
-        Log::debug($layoutDetails);
         return  new LayoutShowResource($layoutDetails);
     }
 }

@@ -109,7 +109,7 @@ class EloquentItemRepository implements ItemRepositoryInterface
     {
         return $item->with([
             'brand', 'category', 'subCategory',
-            'itemTags', 'colorTags', 'itemAttributes'
+            'itemTags', 'colorTags', 'itemAttributes', 'layouts'
         ])->get();
     }
 

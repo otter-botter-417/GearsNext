@@ -9,7 +9,6 @@ use App\Contracts\LayoutRepositoryInterface;
 use App\Exceptions\LayoutNotFoundException;
 use Illuminate\Database\Eloquent\Collection;
 
-
 /**
  * レイアウトに関するリポジトリクラス
  * @mixin LayoutRepositoryInterface
@@ -30,7 +29,7 @@ class LayoutRepository implements LayoutRepositoryInterface
      */
     public function getLayouts(int $userId): Collection
     {
-        return $this->model->where('user_id', $userId)->with(['items', 'users', 'tagPositions', 'comments'])->get();
+        return $this->model->where('user_id', $userId)->with(['items', 'users'])->get();
     }
 
     /**
@@ -81,6 +80,7 @@ class LayoutRepository implements LayoutRepositoryInterface
                 'x_position' => $itemData['x_position'],
                 'y_position' => $itemData['y_position']
             ]);
+            $layout->items()->attach($itemData['item_id']);
         }
     }
 
@@ -92,7 +92,9 @@ class LayoutRepository implements LayoutRepositoryInterface
      */
     public function getLayout(Layout $layout): Layout
     {
-        return $layout->with(['items', 'users', 'comments'])->first();
+        return Layout::where('layout_id', $layout->layout_id)
+            ->with(['items', 'users', 'comments', 'tagPositions'])
+            ->first();
     }
 
     /**
@@ -129,6 +131,7 @@ class LayoutRepository implements LayoutRepositoryInterface
     {
         $layout->fill($data);
         $layout->save();
+        $layout->items()->detach();
         TagPosition::where('layout_id', $layout->layout_id)->delete();
         $this->createLayoutItems($layout, $data['items']);
     }

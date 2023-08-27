@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Services\FavoriteItemService;
+use App\Http\Resources\ItemIndexResource;
 use Illuminate\Http\Response;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -24,12 +25,12 @@ class FavoriteItemController extends Controller
 
     /**
      * ユーザーのお気に入り商品を取得
-     * @return JsonResponse
+     * @return ResourceCollection
      */
-    public function index(): JsonResponse
+    public function index(): ResourceCollection
     {
         $favoriteItems = $this->favoriteItemService->getFavoriteItems(Auth::id());
-        return response()->json($favoriteItems, 200);
+        return ItemIndexResource::collection($favoriteItems);
     }
 
     /**

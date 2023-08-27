@@ -175,7 +175,7 @@ class ItemService
     }
 
     /**
-     * 商品の詳細な情報を取得し、認証されたユーザーの場合は閲覧履歴を保存する
+     * 商品の詳細な情報と関連するレイアウトを取得認証されたユーザーの場合は閲覧履歴を保存する
      * @param  Item $item
      * @param  int $userId
      * @return Collection 商品の詳細を返します。

@@ -6,6 +6,12 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
+/**
+ * ユーザーの登録に関するリクエストクラスです。
+ * このクラスではユーザーの登録に関するバリデーションを提供します。
+ * 
+ * UserControllerのregisterメソッドで使用します。
+ */
 class UserRegisterRequest extends FormRequest
 {
     /**

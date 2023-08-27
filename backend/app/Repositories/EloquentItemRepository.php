@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
- * 商品リポジトリ
+ * 商品に関するリポジトリクラス
  * @mixin ItemRepositoryInterface
  */
 class EloquentItemRepository implements ItemRepositoryInterface

@@ -7,6 +7,10 @@ use App\Contracts\BrandRepositoryInterface;
 use App\Exceptions\BrandNotFoundException;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * ブランドに関するリポジトリクラス
+ * @mixin BrandRepositoryInterface
+ */
 class BrandRepository implements BrandRepositoryInterface
 {
     /**

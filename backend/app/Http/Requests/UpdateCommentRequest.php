@@ -4,11 +4,16 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * レイアウトへのコメントの更新に関するリクエストクラスです。
+ * このクラスではレイアウトへのコメントの更新に関するバリデーションを提供します。
+ * レイアウトへのコメントの更新は認証が必要です。
+ * 
+ * CommentControllerのupdateメソッドで使用します。
+ */
 class UpdateCommentRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
-     *
      * @return bool
      */
     public function authorize()
@@ -17,8 +22,6 @@ class UpdateCommentRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
      * @return array<string, mixed>
      */
     public function rules()

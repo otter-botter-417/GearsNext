@@ -5,6 +5,13 @@ namespace App\Http\Requests;
 use App\Models\Comment;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * レイアウトへのコメントの投稿に関するリクエストクラスです。
+ * このクラスではレイアウトへのコメントの投稿に関するバリデーションを提供します。
+ * レイアウトへのコメントの投稿は認証が必要です。
+ * 
+ * CommentControllerのstoreメソッドで使用します。
+ */
 class StoreCommentRequest extends FormRequest
 {
     /**

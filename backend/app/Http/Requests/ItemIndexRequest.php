@@ -4,6 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * 商品一覧の取得に関するリクエストクラスです。
+ * このクラスでは商品一覧の取得に関するバリデーションを提供します。
+ * カテゴリー名のバリデーションはカテゴリー名が指定されている場合のみ行います。
+ * カテゴリー名が指定されていない場合はバリデーションを行いません。
+ * 
+ * ItemControllerのindexメソッドで使用します。
+ */
 class ItemIndexRequest extends FormRequest
 {
     /**

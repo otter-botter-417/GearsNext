@@ -15,6 +15,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
  * レイアウトに関する操作を管理するコントローラークラスです。
  * このクラスではレイアウトの作成、更新、削除などの操作を提供します。
  * すべてのメソッドは認証が必要です。
+ * 更新、削除はポリシーで本人でのみ操作できます。
  */
 class PrivateLayoutController extends Controller
 {

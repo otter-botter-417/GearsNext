@@ -4,6 +4,13 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * ユーザー情報の更新に関するリクエストクラスです。
+ * このクラスではユーザー情報の更新に関するバリデーションを提供します。
+ * ユーザー情報の更新は認証が必要です。
+ * 
+ * UserControllerのupdateメソッドで使用します。
+ */
 class UserUpdateRequest extends FormRequest
 {
     /**

@@ -4,11 +4,16 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * レイアウトの投稿に関するリクエストクラスです。
+ * このクラスではレイアウトの投稿に関するバリデーションを提供します。
+ * レイアウトの投稿は認証が必要です。
+ * 
+ * LayoutControllerのstoreメソッドで使用します。
+ */
 class StoreLayoutRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
-     *
      * @return bool
      */
     public function authorize()
@@ -17,8 +22,6 @@ class StoreLayoutRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
      * @return array<string, mixed>
      */
     public function rules()

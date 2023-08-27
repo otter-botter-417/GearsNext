@@ -4,6 +4,12 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * 商品の詳細を提供するリソースクラスです。
+ * このクラスでは商品の詳細をJSON形式で返却します。
+ * 
+ * ItemControllerのindexとshowメソッドで使用します。
+ */
 class ItemShowResource extends JsonResource
 {
     public function toArray($request)

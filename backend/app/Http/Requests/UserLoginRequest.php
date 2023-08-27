@@ -4,6 +4,12 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * ユーザーのログインに関するリクエストクラスです。
+ * このクラスではユーザーのログインに関するバリデーションを提供します。
+ * 
+ * UserControllerのloginメソッドで使用します。
+ */
 class UserLoginRequest extends FormRequest
 {
     /**

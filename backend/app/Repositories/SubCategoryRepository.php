@@ -7,8 +7,10 @@ use App\Contracts\SubCategoryRepositoryInterface;
 use App\Exceptions\SubCategoryNotFoundException;
 use Illuminate\Support\Facades\Log;
 
-//静的メソッドはリポジトリのメソッドでは通常使わない
-//静的メソッドはモデルに書く
+/**
+ * サブカテゴリーに関するリポジトリクラス
+ * @mixin SubCategoryRepositoryInterface
+ */
 class SubCategoryRepository implements SubCategoryRepositoryInterface
 {
     /**

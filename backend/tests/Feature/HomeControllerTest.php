@@ -29,15 +29,62 @@ class HomeControllerTest extends TestCase
     public function test_can_display_home_screen()
     {
         $response = $this->get('/api/home');
-        $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'topViewedItems',
-            'topFavoriteItems',
-            'newlyArrivedItems',
-            'topViewedLayouts',
-            'topFavoriteLayouts',
-            'newlyArrivedLayouts'
-        ]);
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'data' => [
+                    'topViewedItems' => [
+                        '*' => [
+                            'item_id',
+                            'item_name',
+                            'image_name',
+                            'favorite_count',
+                            'view_count'
+                        ]
+                    ],
+                    'topFavoriteItems' => [
+                        '*' => [
+                            'item_id',
+                            'item_name',
+                            'image_name',
+                            'favorite_count',
+                            'view_count'
+                        ]
+                    ],
+                    'newlyArrivedItems' => [
+                        '*' => [
+                            'item_id',
+                            'item_name',
+                            'image_name',
+                            'favorite_count',
+                            'view_count'
+                        ]
+                    ],
+                    'topViewedLayouts' => [
+                        '*' => [
+                            'layout_id',
+                            'favorite_count',
+                            'view_count',
+                            'user_name',
+                        ]
+                    ],
+                    'topFavoriteLayouts' => [
+                        '*' => [
+                            'layout_id',
+                            'favorite_count',
+                            'view_count',
+                            'user_name',
+                        ]
+                    ],
+                    'newlyArrivedLayouts' => [
+                        '*' => [
+                            'layout_id',
+                            'favorite_count',
+                            'view_count',
+                            'user_name',
+                        ]
+                    ]
+                ]
+            ]);
     }
 
     /**
@@ -52,9 +99,7 @@ class HomeControllerTest extends TestCase
         Layout::query()->delete();
 
         $response = $this->get('/api/home');
-        $response->assertStatus(200);
-
-        // JSONレスポンスが空であることを確認（例）
-        $response->assertJson([]);
+        $response->assertStatus(200)
+            ->assertJson([]);
     }
 }

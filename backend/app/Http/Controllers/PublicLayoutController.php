@@ -9,7 +9,6 @@ use App\Http\Resources\LayoutIndexResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Support\Facades\Log;
 
 /**
  * パブリックなレイアウトに関する操作を管理するコントローラークラスです。

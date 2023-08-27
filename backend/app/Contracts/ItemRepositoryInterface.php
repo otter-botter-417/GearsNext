@@ -54,9 +54,9 @@ interface ItemRepositoryInterface
     /**
      * 商品に関連する情報を取得
      * @param  Item $item
-     * @return Collection
+     * @return Item
      */
-    public function getItemDataWithRelations(Item $item): Collection;
+    public function getItemDataWithRelations(Item $item): Item;
 
     /**
      * 商品の閲覧数をインクリメント

@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Layout;
 use App\Services\LayoutService;
-use App\Http\Resources\LayoutResource;
+use App\Http\Resources\LayoutShowResource;
+use App\Http\Resources\LayoutIndexResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\Log;
 
 /**
  * パブリックなレイアウトに関する操作を管理するコントローラークラスです。
@@ -16,8 +18,6 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
  */
 class PublicLayoutController extends Controller
 {
-
-    //TODO 特定の商品に関するレイアウトを取得するAPIを作成する
     protected $layoutService;
 
     public function __construct(LayoutService $layoutService)
@@ -32,7 +32,7 @@ class PublicLayoutController extends Controller
     public function index(): ResourceCollection
     {
         $layouts = $this->layoutService->getLayoutsAll();
-        return LayoutResource::collection($layouts);
+        return LayoutIndexResource::collection($layouts);
     }
 
     /**
@@ -46,6 +46,7 @@ class PublicLayoutController extends Controller
     {
         $userId = $request->attributes->get('user_id');
         $layoutDetails  = $this->layoutService->getLayoutWithHistory($layout, $userId);
-        return  new LayoutResource($layoutDetails);
+        Log::debug($layoutDetails);
+        return  new LayoutShowResource($layoutDetails);
     }
 }

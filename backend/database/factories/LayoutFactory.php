@@ -24,7 +24,6 @@ class LayoutFactory extends Factory
             'user_id' => User::inRandomOrder()->first()->user_id,
             'favorite_count' => $this->faker->numberBetween(0, 1000),
             'view_count' => $this->faker->numberBetween(0, 5000),
-
         ];
     }
 
@@ -45,11 +44,10 @@ class LayoutFactory extends Factory
                         'x_position' => $this->faker->randomFloat(1, 10, 100),
                         'y_position' => $this->faker->randomFloat(1, 10, 100),
                     ]
-                    // 他のアイテムもこの形式で追加できます
                 ];
-
                 // 新しく作成されたLayoutに対して、取得したItemのIDを紐付ける
                 $layout->tagPositions()->createMany($items);
+                $layout->items()->attach($randomItem->item_id);
             }
         })->create();
     }

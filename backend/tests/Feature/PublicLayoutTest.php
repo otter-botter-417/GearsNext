@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Item;
+use App\Models\Layout;
 use Tests\TestCase;
 use Tests\Traits\AuthorizesRequests;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -33,12 +34,15 @@ class PublicLayoutTest extends TestCase
         ]
     ];
 
+    private $createdLayoutId;
+
     protected function setUp(): void
     {
         parent::setUp();
         $this->initializeAuthorization();
         Item::factory(5)->create();
         $this->authorizedRequest('POST', '/api/user/layout', $this->layoutData);
+        $this->createdLayoutId = Layout::latest('layout_id')->first()->layout_id;
     }
 
     /**
@@ -48,26 +52,16 @@ class PublicLayoutTest extends TestCase
     public function test_can_get_layouts()
     {
         $response = $this->authorizedRequest('GET', '/api/layout');
+        // dd($response->json());
         $response->assertJsonStructure([
             'data' => [
                 '*' => [
                     'layout_id',
-                    'text',
                     'user_name',
                     'favorite_count',
                     'view_count',
                     'created_at',
                     'updated_at',
-                    'comments',
-                    'items' => [
-                        '*' => [
-                            'x_position',
-                            'y_position',
-                            'item_id',
-                            'item_name',
-                            'image_name'
-                        ],
-                    ]
                 ]
             ],
         ]);
@@ -79,7 +73,11 @@ class PublicLayoutTest extends TestCase
      */
     public function test_can_get_layout_detail()
     {
-        $response = $this->authorizedRequest('GET', '/api/layout/1');
+        $response = $this->authorizedRequest('GET', '/api/layout/' . $this->createdLayoutId);
+        $this->assertDatabaseHas('item_layout', [
+            'item_id' => 1,
+            'layout_id' => $this->createdLayoutId
+        ]);
         $response->assertStatus(200)
             ->assertJsonStructure([
                 'data' => [
@@ -93,11 +91,16 @@ class PublicLayoutTest extends TestCase
                     'comments',
                     'items' => [
                         '*' => [
+                            'item_id',
+                            'item_name',
+                            'image_name',
+                        ]
+                    ],
+                    'tag_positions' => [
+                        '*' => [
                             'x_position',
                             'y_position',
                             'item_id',
-                            'item_name',
-                            'image_name'
                         ]
                     ]
                 ]

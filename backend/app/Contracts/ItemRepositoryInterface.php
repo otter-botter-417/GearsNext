@@ -142,11 +142,4 @@ interface ItemRepositoryInterface
      * @return Collection
      */
     public function getNewlyArrivedItems(int $number): Collection;
-
-    /**
-     * カテゴリー名から商品を取得
-     * @param  string $category
-     * @return Collection
-     */
-    public function getItemsByCategoryName(string $category): Collection;
 }

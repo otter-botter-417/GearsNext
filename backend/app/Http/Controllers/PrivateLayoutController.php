@@ -27,7 +27,7 @@ class PrivateLayoutController extends Controller
 
     /**
      * ユーザーの登録したレイアウトを取得
-     * @return Response
+     * @return LayoutIndexResource
      */
     public function index(): ResourceCollection
     {

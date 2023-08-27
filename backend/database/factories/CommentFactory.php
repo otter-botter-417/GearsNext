@@ -22,7 +22,6 @@ class CommentFactory extends Factory
         return [
             'layout_id' => Layout::inRandomOrder()->first()->layout_id,
             'user_id' => User::inRandomOrder()->first()->user_id,
-            'parent_id' => rand(0, 1) ? null : Comment::inRandomOrder()->first()?->comment_id,
             'content' => $this->faker->realText(50),
         ];
     }

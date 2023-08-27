@@ -7,8 +7,6 @@ use Tests\Traits\AuthorizesRequests;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /**
- * FavoriteItemControllerTest
- *
  * このクラスは、ユーザーのお気に入り管理に関連するエンドポイントのテストを担当します。
  * それには、お気に入りへのアイテムの追加、削除、取得などの操作が含まれます。
  * AuthorizesRequestsトレイトを使用して、認証済みのリクエストをシミュレートします。

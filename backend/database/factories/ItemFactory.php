@@ -8,6 +8,10 @@ use App\Models\ItemAttribute;
 use App\Models\ItemTag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * 商品に関するファクトリクラスです。
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Item>
+ */
 class ItemFactory extends Factory
 {
     /**
@@ -41,8 +45,6 @@ class ItemFactory extends Factory
     }
 
     /**
-     * リレーションを考慮したデータを作成
-     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function createWithRelations()

@@ -9,7 +9,7 @@ use App\Contracts\FavoriteItemRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
- * お気に入り商品に関するサービスクラス
+ * ホームに関するサービスクラス
  * @package App\Services
  */
 class HomeService
@@ -47,7 +47,7 @@ class HomeService
     }
 
     /**
-     * ユーザーのお気に入り商品を取得
+     * ホーム画面の情報を取得
      * @param  int  $userId
      * @return Collection
      */

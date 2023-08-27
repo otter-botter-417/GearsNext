@@ -4,6 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * ユーザーを管理するusersテーブルの作成
+ */
 return new class extends Migration
 {
     /**

@@ -7,8 +7,6 @@ use Tests\Traits\AuthorizesRequests;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /**
- * UserInventoryControllerTest
- *
  * このクラスは、ユーザーのインベントリ管理に関連するエンドポイントのテストを担当します。
  * それには、インベントリへのアイテムの追加、削除、取得などの操作が含まれます。
  * AuthorizesRequestsトレイトを使用して、認証済みのリクエストをシミュレートします。

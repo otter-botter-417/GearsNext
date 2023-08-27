@@ -7,6 +7,9 @@ use App\Models\Layout;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
+/**
+ * commentsテーブルの初期データを登録するシーダークラス
+ */
 class CommentTableSeeder extends Seeder
 {
     public function run()

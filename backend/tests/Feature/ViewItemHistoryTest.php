@@ -7,6 +7,11 @@ use App\Models\Item;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\Traits\AuthorizesRequests;
 
+/**
+ * このクラスは、商品詳細閲覧履歴に関連するエンドポイントのテストを担当します。
+ * それには、商品詳細閲覧履歴の保存などの操作が含まれます。
+ * AuthorizesRequestsトレイトを使用して、認証済みのリクエストをシミュレートします。
+ */
 class ViewItemHistory extends TestCase
 {
     use RefreshDatabase, AuthorizesRequests;

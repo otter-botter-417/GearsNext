@@ -2,11 +2,14 @@
 
 namespace Tests\Feature;
 
-use App\Http\Resources\ItemShowResource;
 use App\Models\Item;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
+/**
+ * このクラスは、商品に関連するエンドポイントのテストを担当します。
+ * それには、商品の登録、取得、更新、削除などの操作が含まれます。
+ */
 class ItemControllerTest extends TestCase
 {
     use RefreshDatabase;

@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
+ * レイアウトに関するファクトリクラスです。
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Layout>
  */
 class LayoutFactory extends Factory

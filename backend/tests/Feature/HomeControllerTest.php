@@ -8,6 +8,10 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
+/**
+ * このクラスは、ホーム画面に関連するエンドポイントのテストを担当します。
+ * それには、トップページに表示する商品やレイアウトの取得などの操作が含まれます。
+ */
 class HomeControllerTest extends TestCase
 {
     use RefreshDatabase;

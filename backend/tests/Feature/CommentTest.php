@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 use Tests\Traits\AuthorizesRequests;
 
+/**
+ * このクラスは、コメントに関連するエンドポイントのテストを担当します。
+ * それには、コメントの作成、編集、削除などの操作が含まれます。
+ * AuthorizesRequestsトレイトを使用して、認証済みのリクエストをシミュレートします。
+ */
 class CommentTest extends TestCase
 {
 

@@ -72,6 +72,7 @@ class LayoutService
 
     /**
      * レイアウトの詳細を取得する
+     * 認証されたユーザーの場合は閲覧履歴を保存する
      * @param  Layout $layout
      * @param  int $userId
      * @return Layout

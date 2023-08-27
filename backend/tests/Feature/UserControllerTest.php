@@ -6,6 +6,10 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
+/**
+ * このクラスは、ユーザーに関連するエンドポイントのテストを担当します。
+ * それには、ユーザーの登録、ログイン、ログアウト、ユーザー情報の更新、ユーザーの削除などの操作が含まれます。
+ */
 class UserControllerTest extends TestCase
 {
     use RefreshDatabase;

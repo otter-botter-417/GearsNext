@@ -9,8 +9,6 @@ use Tests\Traits\AuthorizesRequests;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /**
- * PublicLayoutTest
- * 
  * このクラスは、パブリックなレイアウト管理に関連するエンドポイントのテストを担当します。
  * それには、レイアウトの取得、レイアウトの詳細の取得などの操作が含まれます。
  */

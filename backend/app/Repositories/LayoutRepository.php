@@ -153,7 +153,7 @@ class LayoutRepository implements LayoutRepositoryInterface
      */
     public function getTopViewedLayouts(int $number): Collection
     {
-        return $this->model->orderBy('view_count', 'desc')->take($number)->get();
+        return $this->model->with(['users'])->orderBy('view_count', 'desc')->take($number)->get();
     }
 
     /**
@@ -163,7 +163,7 @@ class LayoutRepository implements LayoutRepositoryInterface
      */
     public function getTopFavoriteLayouts(int $number): Collection
     {
-        return $this->model->orderBy('favorite_layout', 'desc')->take($number)->get();
+        return $this->model->with(['users'])->orderBy('favorite_layout', 'desc')->take($number)->get();
     }
 
     /**
@@ -173,6 +173,6 @@ class LayoutRepository implements LayoutRepositoryInterface
      */
     public function getNewlyArrivedLayouts(int $number): Collection
     {
-        return $this->model->orderBy('created_at', 'desc')->take($number)->get();
+        return $this->model->with(['users'])->orderBy('created_at', 'desc')->take($number)->get();
     }
 }

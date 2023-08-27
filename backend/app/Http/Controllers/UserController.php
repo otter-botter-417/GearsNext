@@ -26,7 +26,7 @@ class UserController extends Controller
     }
     /**
      * ユーザー登録
-     * @param  Request  $request
+     * @param  Request  $request ['user_name', 'email', 'password']
      * @return JsonResponse
      */
     public function register(UserRegisterRequest $request): JsonResponse
@@ -38,7 +38,7 @@ class UserController extends Controller
 
     /**
      * ログイン
-     * @param  Request  $request
+     * @param  Request  $request ['email', 'password']
      * @return JsonResponse
      * @throws LoginFailedException ログインに失敗した場合
      */
@@ -53,16 +53,16 @@ class UserController extends Controller
      * ログアウト
      * @return JsonResponse
      */
-    public function logout(): JsonResponse
+    public function logout(): Response
     //TODO frontend側でJWTを削除する　localStorage.removeItem('token');
     {
         auth('api')->logout(); // トークンを無効化
-        return response()->json(['message' => 'ログアウトしました。'], 200);
+        return response(null, 200);
     }
 
     /**
      * ユーザー情報の更新
-     * @param  Request  $request
+     * @param  Request  $request ['user_name', 'email', 'password']
      * @return Response
      */
     public function update(UserUpdateRequest $request): Response

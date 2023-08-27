@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Collection;
  * お気に入り商品に関するサービスクラス
  * @package App\Services
  */
-class homeService
+class HomeService
 {
     /**
      * @var UserRepositoryInterface
@@ -56,12 +56,16 @@ class homeService
         $topViewedItems = $this->itemRepository->getTopViewedItems($number);
         $topFavoriteItems = $this->itemRepository->getTopFavoriteItems($number);
         $newlyArrivedItems  = $this->itemRepository->getNewlyArrivedItems($number);
-        $topViewedILayouts = $this->layoutRepository->getTopViewedLayouts($number);
-        $topFavoriteLayout = $this->layoutRepository->getTopFavoriteLayouts($number);
-        $newlyArrivedLayout  = $this->layoutRepository->getNewlyArrivedLayouts($number);
+        $topViewedLayouts = $this->layoutRepository->getTopViewedLayouts($number);
+        $topFavoriteLayouts = $this->layoutRepository->getTopFavoriteLayouts($number);
+        $newlyArrivedLayouts  = $this->layoutRepository->getNewlyArrivedLayouts($number);
         return [
-            $topViewedItems, $topFavoriteItems, $newlyArrivedItems,
-            $topViewedILayouts, $topFavoriteLayout, $newlyArrivedLayout
+            'topViewedItems' => $topViewedItems,
+            'topFavoriteItems' => $topFavoriteItems,
+            'newlyArrivedItems' => $newlyArrivedItems,
+            'topViewedLayouts' => $topViewedLayouts,
+            'topFavoriteLayouts' => $topFavoriteLayouts,
+            'newlyArrivedLayouts' => $newlyArrivedLayouts,
         ];
     }
 }

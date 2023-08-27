@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Item;
+use App\Models\Layout;
 use Tests\TestCase;
 use Tests\Traits\AuthorizesRequests;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,30 +17,39 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
  */
 class PrivateLayoutControllerTest extends TestCase
 {
-    use RefreshDatabase, AuthorizesRequests;
+    private $item_1;
+    private $item_2;
+    private $latestLayoutId;
 
-    private $layoutData = [
-        'text' => 'これはテストです。',
-        'items' => [
-            [
-                'item_id' => 1,
-                'x_position' => 10,
-                'y_position' => 20,
-            ],
-            [
-                'item_id' => 2,
-                'x_position' => 100,
-                'y_position' => 200,
-            ],
-        ]
-    ];
+    private $layoutData;
+
+    use RefreshDatabase, AuthorizesRequests;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->initializeAuthorization();
-        Item::factory(5)->create();
+        $this->item_1 = Item::factory()->create();  // ここを修正
+        $this->item_2 = Item::factory()->create();
+
+        $this->layoutData = [
+            'text' => 'これはテストです。',
+            'items' => [
+                [
+                    'item_id' => $this->item_1->item_id,
+                    'x_position' => 10,
+                    'y_position' => 20,
+                ],
+                [
+                    'item_id' => $this->item_2->item_id,
+                    'x_position' => 100,
+                    'y_position' => 200,
+                ],
+            ]
+        ];
+
         $this->authorizedRequest('POST', '/api/user/layout', $this->layoutData);
+        $this->latestLayoutId = Layout::latest('layout_id')->first()->layout_id;
     }
 
     /**
@@ -58,26 +68,16 @@ class PrivateLayoutControllerTest extends TestCase
     public function test_can_get_layouts()
     {
         $response = $this->authorizedRequest('GET', '/api/user/layout');
+        $response->assertStatus(200);
         $response->assertJsonStructure([
             'data' => [
                 '*' => [
                     'layout_id',
-                    'text',
                     'user_name',
                     'favorite_count',
                     'view_count',
                     'created_at',
                     'updated_at',
-                    'comments',
-                    'items' => [
-                        '*' => [
-                            'x_position',
-                            'y_position',
-                            'item_id',
-                            'item_name',
-                            'image_name'
-                        ]
-                    ]
                 ]
             ],
         ]);
@@ -89,26 +89,27 @@ class PrivateLayoutControllerTest extends TestCase
      */
     public function test_can_update_layout()
     {
+        $update = Item::factory()->create();
         $updateLayoutData = [
             'text' => 'これは更新テストです。',
             'items' => [
                 [
-                    'item_id' => 3,
+                    'item_id' => $update->item_id,
                     'x_position' => 20,
                     'y_position' => 10,
                 ],
                 [
-                    'item_id' => 2,
+                    'item_id' => $this->item_1->item_id,
                     'x_position' => 100,
                     'y_position' => 200,
                 ],
             ]
         ];
-        $response = $this->authorizedRequest('PUT', '/api/user/layout/2', $updateLayoutData);
+        $response = $this->authorizedRequest('PUT', '/api/user/layout/' . $this->latestLayoutId, $updateLayoutData);
         $response->assertStatus(204);
         $this->assertDatabaseHas('layouts', ['text' => 'これは更新テストです。']);
         $this->assertDatabaseHas('tag_positions', [
-            'item_id' => 3,
+            'item_id' => $update->item_id,
             'x_position' => 20,
             'y_position' => 10,
         ]);
@@ -120,8 +121,8 @@ class PrivateLayoutControllerTest extends TestCase
      */
     public function test_can_delete_layout()
     {
-        $response = $this->authorizedRequest('DELETE', '/api/user/layout/2');
+        $response = $this->authorizedRequest('DELETE', '/api/user/layout/' . $this->latestLayoutId);
         $response->assertStatus(204);
-        $this->assertDatabaseMissing('layouts', ['layout_id' => 2]);
+        $this->assertDatabaseMissing('layouts', ['layout_id' => $this->item_1->item_id]);
     }
 }

@@ -6,9 +6,11 @@ use App\Models\Item;
 use App\Services\ItemService;
 use App\Http\Requests\ItemIndexRequest;
 use App\Http\Requests\ItemRegisterRequest;
+use App\Http\Resources\ItemShowResource;
 use \Illuminate\Http\Request;
 use \Illuminate\Http\Response;
 use \Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
 /**
  * 商品に関する操作を管理するコントローラークラスです。
@@ -29,10 +31,10 @@ class ItemController extends Controller
      * @param  Request  $request categoryNameがあればカテゴリーで検索
      * @return JsonResponse
      */
-    public function index(ItemIndexRequest $request): JsonResponse
+    public function index(ItemIndexRequest $request): ResourceCollection
     {
         $items = $this->itemService->getItems($request->categoryName);
-        return response()->json($items, 200);
+        return ItemShowResource::collection($items);
     }
 
     /**
@@ -49,15 +51,15 @@ class ItemController extends Controller
     /**
      * 商品詳細を取得
      * @param  Request  $request
-     * @param  int  $itemId
-     * @return JsonResponse
+     * @param  Item  $item
+     * @return ItemShowResource
      */
-    public function show(Request $request, Item $item): JsonResponse
+    public function show(Request $request, Item $item): ItemShowResource
     {
         $userId = $request->attributes->get('user_id');;
         $itemData = $this->itemService->getItemDetails($item, $userId);
         $this->itemService->viewCountIncrement($item);
-        return response()->json($itemData, 200);
+        return  new ItemShowResource($itemData);
     }
 
     /**

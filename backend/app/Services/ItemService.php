@@ -178,10 +178,10 @@ class ItemService
      * 商品の詳細な情報と関連するレイアウトを取得認証されたユーザーの場合は閲覧履歴を保存する
      * @param  Item $item
      * @param  int $userId
-     * @return Collection 商品の詳細を返します。
+     * @return Item 商品の詳細を返します。
      * @throws ItemNotFoundException 商品が見つからない場合
      */
-    public function getItemDetails(Item $item,  ?int $userId = null): Collection
+    public function getItemDetails(Item $item,  ?int $userId = null): Item
     {
         $itemData = $this->itemRepository->getItemDataWithRelations($item);
         if ($userId) {

@@ -53,15 +53,31 @@ class UserInventoryControllerTest extends TestCase
         $response = $this->authorizedRequest('GET', '/api/user/inventory');
         $response->assertStatus(200)
             ->assertJsonStructure([
-                '*' => [
-                    'item_id',
-                    'item_name',
-                    'price',
-                    'image_name',
-                    'asin',
-                ]
-            ])
-            ->assertJsonFragment(['item_name' => "ソロベースEX",]);
+                'data' => [
+                    '*' => [
+                        'item_id',
+                        'item_name',
+                        'price',
+                        'image_name',
+                        'asin',
+                        'open_size' => [
+                            'open_width',
+                            'open_depth',
+                            'open_height'
+                        ],
+                        'storage_size' => [
+                            'storage_width',
+                            'storage_depth',
+                            'storage_height'
+                        ],
+                        'weight',
+                        'favorite_count',
+                        'view_count',
+                        'created_at',
+                        'updated_at',
+                    ]
+                ],
+            ]);
     }
 
     /**

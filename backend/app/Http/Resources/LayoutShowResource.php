@@ -4,6 +4,12 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * レイアウトの詳細を提供するリソースクラスです。
+ * このクラスではレイアウトの詳細をJSON形式で返却します。
+ * 
+ * PublicLayoutControllerのshowメソッドで使用します。
+ */
 class LayoutShowResource extends JsonResource
 {
     public function toArray($request)

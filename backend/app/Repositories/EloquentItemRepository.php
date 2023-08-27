@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
- * 商品リポジトリ
+ * 商品に関するリポジトリクラス
  * @mixin ItemRepositoryInterface
  */
 class EloquentItemRepository implements ItemRepositoryInterface
@@ -256,17 +256,17 @@ class EloquentItemRepository implements ItemRepositoryInterface
         return $this->model->orderBy('created_at', 'desc')->take($number)->get();
     }
 
-    /**
-     * カテゴリー名から商品を取得
-     * @param  string $category
-     * @return Collection
-     */
-    public function getItemsByCategoryName(string $category): Collection
-    {
-        return $this->model->where('category_id', $category)
-            ->with([
-                'brand', 'category', 'subCategory',
-                'itemTags', 'colorTags', 'itemAttributes'
-            ])->get();
-    }
+    // /**
+    //  * カテゴリー名から商品を取得
+    //  * @param  string $category
+    //  * @return Collection
+    //  */
+    // public function getItemsByCategoryName(string $category): Collection
+    // {
+    //     return $this->model->where('category_id', $category)
+    //         ->with([
+    //             'brand', 'category', 'subCategory',
+    //             'itemTags', 'colorTags', 'itemAttributes'
+    //         ])->get();
+    // }
 }

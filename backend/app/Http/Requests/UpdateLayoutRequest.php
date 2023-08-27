@@ -4,11 +4,16 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * レイアウトの更新に関するリクエストクラスです。
+ * このクラスではレイアウトの更新に関するバリデーションを提供します。
+ * レイアウトの更新は認証が必要です。
+ * 
+ * LayoutControllerのupdateメソッドで使用します。
+ */
 class UpdateLayoutRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
-     *
      * @return bool
      */
     public function authorize()
@@ -17,8 +22,6 @@ class UpdateLayoutRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
      * @return array<string, mixed>
      */
     public function rules()

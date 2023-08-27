@@ -4,6 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * 商品とレイアウトの関係を管理するitem_layoutテーブルの作成
+ */
 return new class extends Migration
 {
     /**

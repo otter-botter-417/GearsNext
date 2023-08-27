@@ -10,6 +10,12 @@ use App\Http\Requests\UpdateCommentRequest;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * レイアウトへのコメントに関する操作を管理するコントローラークラスです。
+ * このクラスではレイアウトへのコメントの投稿、更新、削除の操作を提供します。
+ * すべてのメソッドは認証が必要です。
+ * 更新、削除はポリシーで本人でのみ操作できます。
+ */
 class CommentController extends Controller
 {
     protected CommentService $commentService;

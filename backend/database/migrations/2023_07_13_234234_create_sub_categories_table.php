@@ -4,6 +4,10 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * サブカテゴリーを管理するsub_categoriesテーブルの作成
+ * @extends Migration
+ */
 return new class extends Migration
 {
     /**

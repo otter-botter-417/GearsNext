@@ -4,6 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * 商品を管理するitemsテーブルの作成
+ */
 return new class extends Migration
 {
     /**
@@ -12,7 +15,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('items', function (Blueprint $table) {
-            $table->id('item_id'); // 主キーをuserIdに設定
+            $table->id('item_id'); 
             $table->string('item_name', 50);
             $table->foreignId('brand_id')->constrained('brands', 'brand_id')->onDelete('cascade');
             $table->integer('price');

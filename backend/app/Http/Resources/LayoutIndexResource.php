@@ -4,6 +4,14 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * レイアウトの一覧を提供するリソースクラスです。
+ * このクラスではレイアウトの一覧をJSON形式で返却します。
+ * 
+ * PrivateLayoutControllerのindexメソッドで使用します。
+ * PublicLayoutControllerのindexメソッドで使用します。
+ * FavoriteLayoutControllerのindexメソッドで使用します。
+ */
 class LayoutIndexResource extends JsonResource
 {
     public function toArray($request)

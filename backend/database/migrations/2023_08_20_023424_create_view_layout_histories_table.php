@@ -4,11 +4,12 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * レイアウトの閲覧履歴を管理するview_layout_historiesテーブルの作成
+ */
 return new class extends Migration
 {
     /**
-     * Run the migrations.
-     *
      * @return void
      */
     public function up()

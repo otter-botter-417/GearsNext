@@ -6,11 +6,12 @@ use Illuminate\Database\Seeder;
 use App\Models\Layout;
 use App\Models\TagPosition;
 
+/**
+ * レイアウトデータを登録するシーダー
+ */
 class LayoutSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
-     *
      * @return void
      */
     public function run()

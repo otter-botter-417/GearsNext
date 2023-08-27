@@ -32,7 +32,6 @@ class CommentService
         $this->commentRepository = $commentRepository;
         $this->layoutRepository = $layoutRepository;
     }
-    //CommentRepositoryInterface と　CommentRepositoryを実装
 
     /**
      * レイアウトにコメントを追加

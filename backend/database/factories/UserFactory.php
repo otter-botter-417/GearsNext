@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
+ * ユーザーに関するファクトリクラスです。
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
 class UserFactory extends Factory
@@ -21,14 +22,4 @@ class UserFactory extends Factory
             'password' => $this->faker->lexify('??????????'),
         ];
     }
-
-    // /**
-    //  * @return static
-    //  */
-    // public function unverified()
-    // {
-    //     return $this->state(fn (array $attributes) => [
-    //         'email_verified_at' => null,
-    //     ]);
-    // }
 }

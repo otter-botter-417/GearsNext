@@ -2,15 +2,15 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use Illuminate\Database\Seeder;
 
+/**
+ * データベースの初期データを登録するシーダークラス
+ */
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
-     *
      * @return void
      */
     public function run()

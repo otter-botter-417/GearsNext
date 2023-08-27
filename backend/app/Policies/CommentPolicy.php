@@ -6,6 +6,10 @@ use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
+/**
+ * コメントに関するポリシークラスです。
+ * このクラスではコメントの更新、削除に関するポリシーを提供します。
+ */
 class CommentPolicy
 {
     use HandlesAuthorization;

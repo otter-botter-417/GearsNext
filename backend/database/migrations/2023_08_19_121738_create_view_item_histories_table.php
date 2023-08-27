@@ -4,6 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * 商品閲覧履歴を管理するview_item_historiesテーブルの作成
+ */
 return new class extends Migration
 {
     /**

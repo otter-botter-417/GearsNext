@@ -8,8 +8,10 @@ use App\Contracts\CategoryRepositoryInterface;
 use App\Exceptions\CategoryNotFoundException;
 use Illuminate\Support\Facades\Log;
 
-//静的メソッドはリポジトリのメソッドでは通常使わない
-//静的メソッドはモデルに書く
+/**
+ * カテゴリーに関するリポジトリクラス
+ * @mixin CategoryRepositoryInterface
+ */
 class CategoryRepository implements CategoryRepositoryInterface
 {
     /**

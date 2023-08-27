@@ -4,6 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * お気に入りレイアウトを管理するfavorite_layoutsテーブルの作成
+ */
 return new class extends Migration
 {
     /**
@@ -21,8 +24,6 @@ return new class extends Migration
     }
 
     /**
-     * Reverse the migrations.
-     *
      * @return void
      */
     public function down()

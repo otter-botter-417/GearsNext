@@ -4,6 +4,12 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * 商品登録に関するリクエストクラスです。
+ * このクラスでは商品登録に関するバリデーションを提供します。
+ * 
+ * ItemControllerのstoreメソッドとupdateメソッドで使用します。
+ */
 class ItemRegisterRequest extends FormRequest
 {
     /**

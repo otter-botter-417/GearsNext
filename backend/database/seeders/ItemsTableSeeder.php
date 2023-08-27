@@ -5,11 +5,12 @@ namespace Database\Seeders;
 use App\Models\ColorTag;
 use App\Models\Item;
 use App\Models\ItemTag;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 
+/**
+ * itemsテーブルの初期データを登録するシーダークラス
+ */
 class ItemsTableSeeder extends Seeder
 {
     /**

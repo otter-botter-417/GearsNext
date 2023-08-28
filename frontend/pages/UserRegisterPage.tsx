@@ -25,7 +25,7 @@ const UserRegisterPage = () => {
             text={'新規登録'}
           />
         </form>
-        <Link href="/LoginPage">既にアカウントを持っている</Link>
+        <Link href="/UserLoginPage">既にアカウントを持っている</Link>
       </FormMethodsProvider>
     </RegisterPageTemplate>
   );

@@ -1,13 +1,13 @@
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import React from "react";
-import Link from "next/link";
-import { useRecoilState } from "recoil";
-import { userState } from "@/components/atoms/state/userAuth.State";
-import { auth } from "./firebase";
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import React from 'react';
+import Link from 'next/link';
+import { useRecoilState } from 'recoil';
+import { userState } from '@/components/atoms/state/userAuth.State';
+import { auth } from './firebase';
 
 const Header = () => {
   const user = useRecoilState(userState);
@@ -27,9 +27,9 @@ const Header = () => {
                 onClick={async () => {
                   try {
                     await auth.signOut();
-                    console.log("Signed out successfully");
+                    console.log('Signed out successfully');
                   } catch (error) {
-                    console.error("Error signing out:", error);
+                    console.error('Error signing out:', error);
                   }
                 }}
               >
@@ -37,7 +37,7 @@ const Header = () => {
               </button>
             </>
           ) : (
-            <Link href={`/LoginPage`}>ログイン</Link>
+            <Link href={`/UserLoginPage`}>ログイン</Link>
           )}
         </div>
       </Toolbar>

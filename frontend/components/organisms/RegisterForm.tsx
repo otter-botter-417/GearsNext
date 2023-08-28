@@ -1,22 +1,19 @@
-import React from "react";
-import { ItemInformationInputFields } from "../atoms/form/ItemInformationInputFields";
-import { UseFormReturn } from "react-hook-form";
-import { RegisterInputFormFieldsList } from "../atoms/valueNameList/RegisterInputFormFieldsList";
+import React from 'react';
 
-interface ItemInformationFieldsProps {
-  formMethods: UseFormReturn<any>;
-}
+import { ValidationInputFields } from '../atoms/form/ValidationInputFields';
+import { RegisterInputFormFieldsList } from '../atoms/valueNameList/RegisterInputFormFieldsList';
 
-const RegisterForm: React.FC<ItemInformationFieldsProps> = ({
-  formMethods,
-}) => {
+/**
+ * ユーザー登録用のフォームコンポーネント
+ *
+ * @example
+ * <RegisterForm/>
+ */
+const RegisterForm = () => {
   return (
-    <>
-      <ItemInformationInputFields
-        formMethods={formMethods}
-        inputFormFieldsList={RegisterInputFormFieldsList()}
-      />
-    </>
+    <ValidationInputFields
+      inputFormFieldsList={RegisterInputFormFieldsList()}
+    />
   );
 };
 

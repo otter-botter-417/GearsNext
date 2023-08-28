@@ -1,7 +1,7 @@
-import React from "react";
-import { ItemInformationInputFields } from "../atoms/form/ItemInformationInputFields";
-import { UseFormReturn } from "react-hook-form";
-import { LoginInputFormFieldsList } from "../atoms/valueNameList/LoginInputFormFieldsList";
+import React from 'react';
+import { ItemInformationInputFields } from '../atoms/form/ValidationInputFields';
+import { UseFormReturn } from 'react-hook-form';
+import { LoginInputFormFieldsList } from '../atoms/valueNameList/LoginInputFormFieldsList';
 
 interface ItemInformationFieldsProps {
   formMethods: UseFormReturn<any>;

@@ -12,7 +12,7 @@ export const useUserInventoryApi = () => {
       itemId: id,
     };
     try {
-      
+
       const response = await axios.post(
         "http://localhost:8000/api/user/inventory/register",
         {
@@ -27,13 +27,13 @@ export const useUserInventoryApi = () => {
     }
   };
 
-  const unregister  = async (id: number) => {
+  const unregister = async (id: number) => {
     const data = {
       userId: user[0],
       itemId: id,
     };
     try {
-      
+
       const response = await axios.post(
         "http://localhost:8000/api/user/inventory/unregister ",
         {
@@ -47,5 +47,6 @@ export const useUserInventoryApi = () => {
       return { success: false, data: [] };
     }
   };
-  return { register, unregister };}
-;
+  return { register, unregister };
+}
+  ;

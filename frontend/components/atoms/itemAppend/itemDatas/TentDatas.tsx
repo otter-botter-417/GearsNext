@@ -1,10 +1,10 @@
-import { MenuItem, TextField } from "@mui/material";
-import { TextFieldStyles } from "../../../../styles/ItemAppendPage/TextFieldStyles";
-import { Box } from "@mui/system";
-import Typography from "@mui/material/Typography";
-import { UseFormReturn } from "react-hook-form";
-import { ItemInformationInputFields } from "../../form/ItemInformationInputFields";
-import { detailListsForTent } from "../../valueNameList/detailListsForTent";
+import { MenuItem, TextField } from '@mui/material';
+import { TextFieldStyles } from '../../../../styles/ItemAppendPage/TextFieldStyles';
+import { Box } from '@mui/system';
+import Typography from '@mui/material/Typography';
+import { UseFormReturn } from 'react-hook-form';
+import { ItemInformationInputFields } from '../../form/ValidationInputFields';
+import { detailListsForTent } from '../../valueNameList/detailListsForTent';
 
 interface formMethodsProps {
   formMethods: UseFormReturn<any>;

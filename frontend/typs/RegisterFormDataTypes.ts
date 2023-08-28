@@ -1,6 +1,7 @@
 export type RegisterFormDataTypes = {
-  name: string;
+  userName: string;
   email: string;
   password: string;
+  passwordConfirmation: string;
   loading: boolean | undefined;
 };

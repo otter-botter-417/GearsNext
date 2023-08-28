@@ -1,12 +1,12 @@
-import React from "react";
-import { ItemInformationInputFields } from "@/components/atoms/form/ItemInformationInputFields";
-import { UseFormReturn } from "react-hook-form";
-import { DropdownSelectors } from "../molecules/DropdownSelectors";
-import { TagSelectors } from "../molecules/TagSelectors";
-import { NewItemInputFormFieldsList } from "@/components/atoms/valueNameList/NewItemInputFormFieldsList";
-import { NewItemInputFormSizeFieldsList } from "@/components/atoms/valueNameList/NewItemInputFormSizeFieldsList";
-import { ItemSizeInputFields } from "../atoms/form/ItemSizeInputFields";
-import { Grid } from "@mui/material";
+import React from 'react';
+import { ItemInformationInputFields } from '@/components/atoms/form/ValidationInputFields';
+import { UseFormReturn } from 'react-hook-form';
+import { DropdownSelectors } from '../molecules/DropdownSelectors';
+import { TagSelectors } from '../molecules/TagSelectors';
+import { NewItemInputFormFieldsList } from '@/components/atoms/valueNameList/NewItemInputFormFieldsList';
+import { NewItemInputFormSizeFieldsList } from '@/components/atoms/valueNameList/NewItemInputFormSizeFieldsList';
+import { ItemSizeInputFields } from '../atoms/form/ItemSizeInputFields';
+import { Grid } from '@mui/material';
 
 interface ItemInformationFieldsProps {
   formMethods: UseFormReturn<any>;

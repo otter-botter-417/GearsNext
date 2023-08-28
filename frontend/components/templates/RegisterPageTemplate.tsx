@@ -5,7 +5,9 @@ interface RegisterPageTemplateProps {
   children: React.ReactNode;
 }
 
-const RegisterPageTemplate = ({ children }: RegisterPageTemplateProps) => {
+const RegisterPageTemplate: React.FC<RegisterPageTemplateProps> = ({
+  children,
+}) => {
   return (
     <Box display="flex" justifyContent="center" sx={{ pt: '5%' }}>
       <Grid container justifyContent="center" item xs={12} sm={4}>

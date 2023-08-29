@@ -2,8 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import { Typography } from '@mui/material';
 
-import { SubmitButton } from '@/components/atoms/form/SubmitButton';
-import RegisterForm from '@/components/organisms/RegisterForm';
+import { SubmitButton } from '@/components/shares/atoms/SubmitButton';
+import RegisterForm from '@/components/pages/userRegisterPage/RegisterForm';
 import RegisterPageTemplate from '@/components/templates/RegisterPageTemplate';
 import { useUserRegister } from '@/hooks/useUserRegister';
 import { FormMethodsProvider } from '@/hooks/useFormMethods ';

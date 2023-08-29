@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 import { LoginValidatedSchema } from '@/components/atoms/schema/LoginValidatedSchema';
-import { SubmitButton } from '@/components/atoms/form/SubmitButton';
+import { SubmitButton } from '@/components/shares/atoms/SubmitButton';
 import RegisterPageTemplate from '@/components/templates/RegisterPageTemplate';
 import LoginForm from '@/components/organisms/LoginForm';
 import { auth } from './firebase';

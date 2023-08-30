@@ -4,12 +4,7 @@ import Link from 'next/link';
 import { NextPage } from 'next';
 import { Box } from '@mui/system';
 
-import { useRecoilState } from 'recoil';
-import { userState } from '@/components/atoms/state/userAuth.State';
-
 const Home: NextPage = () => {
-  const user = useRecoilState(userState);
-  console.log(user);
   return (
     <React.StrictMode>
       <Box
@@ -22,7 +17,7 @@ const Home: NextPage = () => {
         {/* 各ページヘのリンク */}
         <Link href="/AddNewItemPage">AddNewItemPage</Link>
         <Link href="/ItemPage">ItemPage</Link>
-        <Link href="/SearchPage">SearchPage</Link>
+        <Link href="/ItemSearchPage">ItemSearchPage</Link>
         <Link href="/UserRegisterPage">UserRegisterPage</Link>
       </Box>
     </React.StrictMode>

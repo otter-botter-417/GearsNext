@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-const SearchPageTemplate = () => {
-  return <div>SearchPageTemplate</div>;
+const ItemSearchPageTemplate = () => {
+  return <div>ItemSearchPageTemplate</div>;
 };
 
-export default SearchPageTemplate;
+export default ItemSearchPageTemplate;

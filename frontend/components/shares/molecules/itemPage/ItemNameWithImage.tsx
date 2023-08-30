@@ -4,7 +4,7 @@ import { ItemName } from '../../../atoms/itemPage/ItemName';
 import { Box } from '@mui/material';
 import Image from 'next/legacy/image';
 import { useWindowSize } from '../../../../hooks/useWindowSize';
-import ItemImageUrl from '@/components/atoms/getItemImageUrl';
+import ItemImageUrl from '@/components/shares/atoms/getItemImageUrl';
 type itemNameAndBrandType = {
   itemName: string;
   brandName: string;

@@ -2,11 +2,12 @@ import React from 'react';
 import Link from 'next/link';
 import { Typography } from '@mui/material';
 
+import { useUserRegister } from '@/hooks/UserAuth/useUserRegister';
+import { FormMethodsProvider } from '@/hooks/useFormMethods ';
+
 import { SubmitButton } from '@/components/shares/atoms/SubmitButton';
 import RegisterForm from '@/components/pages/userRegisterPage/RegisterForm';
 import RegisterPageTemplate from '@/components/templates/RegisterPageTemplate';
-import { useUserRegister } from '@/hooks/useUserRegister';
-import { FormMethodsProvider } from '@/hooks/useFormMethods ';
 
 /**
  * ユーザーの新規登録ページ

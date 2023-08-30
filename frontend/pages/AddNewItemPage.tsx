@@ -5,7 +5,7 @@ import { useItemForm } from '../hooks/useItemFormToLaravel'; // mongoDBに商品
 import { AddNewItemValidatedSchema } from '@/components/atoms/schema/AddNewItemValidatedSchema';
 import { SubmitButton } from '@/components/shares/atoms/SubmitButton';
 import AddNewItemPageTemplate from '@/components/templates/AddNewItemPageTemplate';
-import BaseItemDataForm from '@/components/organisms/BaseItemDataForm';
+import BaseItemDataForm from '@/components/shares/organisms/BaseItemDataForm';
 import CategoryDetailList from '@/components/molecules/itemAppend/CategoryDetailList';
 import { useDetailFormMethods } from '@/hooks/useDetailFormMethods';
 

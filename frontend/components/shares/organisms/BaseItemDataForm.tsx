@@ -1,7 +1,7 @@
 import React from 'react';
 import { ItemInformationInputFields } from '@/components/atoms/form/ValidationInputFields';
 import { UseFormReturn } from 'react-hook-form';
-import { DropdownSelectors } from '../molecules/DropdownSelectors';
+import { DropdownSelectors } from '@compornents/shares/molecules/DropdownSelectors';
 import { TagSelectors } from '../molecules/TagSelectors';
 import { NewItemInputFormFieldsList } from '@/components/atoms/valueNameList/NewItemInputFormFieldsList';
 import { NewItemInputFormSizeFieldsList } from '@/components/atoms/valueNameList/NewItemInputFormSizeFieldsList';

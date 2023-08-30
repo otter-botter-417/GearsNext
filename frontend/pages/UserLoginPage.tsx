@@ -1,63 +1,35 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-
-import { LoginValidatedSchema } from '@/components/atoms/schema/LoginValidatedSchema';
-import { SubmitButton } from '@/components/shares/atoms/SubmitButton';
-import RegisterPageTemplate from '@/components/templates/RegisterPageTemplate';
-import LoginForm from '@/components/organisms/LoginForm';
-import { auth } from './firebase';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { Typography } from '@mui/material';
-import { LoginFormDataTypes } from '../typs/LoginFormDataTypes'; //formMethods 内の配列の型
 
+import { useUserLogin } from '@/hooks/UserAuth/useUserLogin';
+import { FormMethodsProvider } from '@/hooks/useFormMethods ';
+
+import { SubmitButton } from '@/components/shares/atoms/SubmitButton';
+import RegisterPageTemplate from '@/components/templates/RegisterPageTemplate';
+import LoginForm from '@/components/pages/userLoginPage/LoginForm';
+
+/**
+ * ユーザーのログインページ
+ */
 const UserLoginPage = () => {
-  // バリデーションスキーマを取得するコンポーネント
-  const schema = LoginValidatedSchema();
-
-  // textfieldにバリデーションを渡すため
-  const formMethods = useForm<LoginFormDataTypes>({
-    defaultValues: {
-      loading: false,
-    },
-    resolver: yupResolver(schema),
-  });
-
-  const router = useRouter();
-
-  const onSubmit = async (data: LoginFormDataTypes) => {
-    signInWithEmailAndPassword(auth, data.email, data.password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        user.getIdToken().then((idToken: string) => {
-          localStorage.setItem('idToken', idToken);
-        });
-        console.log(user);
-        router.push('/'); // リダイレクト
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
-      });
-  };
+  const { formMethods, onSubmit } = useUserLogin();
+  const isAuthenticated = localStorage.getItem('jwt_token') ? true : false;
 
   return (
     <RegisterPageTemplate>
-      <Typography variant="h4">ログイン</Typography>
-
-      <form onSubmit={formMethods.handleSubmit(onSubmit)}>
-        <LoginForm formMethods={formMethods} />
-        <SubmitButton
-          loading={formMethods.watch('loading') || false}
-          text={'ログイン'}
-        />
-      </form>
-      <Link href="/UserRegisterPage">アカウントを持っていない</Link>
+      <FormMethodsProvider formMethods={formMethods}>
+        <Typography variant="h4">ログイン</Typography>
+        {isAuthenticated ? <p>ログアウト</p> : <p>ログインしてください</p>}
+        <form onSubmit={formMethods.handleSubmit(onSubmit)}>
+          <LoginForm formMethods={formMethods} />
+          <SubmitButton
+            loading={formMethods.watch('loading') || false}
+            text={'ログイン'}
+          />
+        </form>
+        <Link href="/UserRegisterPage">アカウントを持っていない</Link>
+      </FormMethodsProvider>
     </RegisterPageTemplate>
   );
 };

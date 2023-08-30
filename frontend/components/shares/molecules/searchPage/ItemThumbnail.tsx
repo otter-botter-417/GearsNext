@@ -1,11 +1,11 @@
-import { useRouter } from "next/router";
-import Link from "next/link";
-import { Box } from "@mui/material";
-import { ItemDataTypes } from "../../types/ItemDataTypes";
-import Image from "next/legacy/image";
-import { useWindowSize } from "../../../hooks/useWindowSize";
-import Typography from "@mui/material/Typography";
-import ItemImageUrl from "@/components/atoms/getItemImageUrl";
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import { Box } from '@mui/material';
+import { ItemDataTypes } from '../../types/ItemDataTypes';
+import Image from 'next/legacy/image';
+import { useWindowSize } from '../../../hooks/useWindowSize';
+import Typography from '@mui/material/Typography';
+import ItemImageUrl from '@/components/shares/atoms/getItemImageUrl';
 
 type ItemThumbnailProps = {
   ItemData: ItemDataTypes;
@@ -21,7 +21,7 @@ export const ItemThumbnail = (props: ItemThumbnailProps) => {
   const { itemId } = router.query;
   const ItemImagesUrl: string = ItemImageUrl(
     ItemData.brand.brand_name,
-    ItemData.image_name
+    ItemData.image_name,
   );
 
   widthSize = width * 0.22;
@@ -50,11 +50,11 @@ export const ItemThumbnail = (props: ItemThumbnailProps) => {
         }}
       >
         {/* レスポンシブ画像 */}
-        <Typography variant={"body2"}>{ItemData.brand.brand_name}</Typography>
+        <Typography variant={'body2'}>{ItemData.brand.brand_name}</Typography>
 
-        <Typography variant={"h6"}>{ItemData.item_name}</Typography>
-        <Typography variant={"body2"}>メーカー希望小売価格</Typography>
-        <Typography variant={"h6"}> ¥{ItemData.price}</Typography>
+        <Typography variant={'h6'}>{ItemData.item_name}</Typography>
+        <Typography variant={'body2'}>メーカー希望小売価格</Typography>
+        <Typography variant={'h6'}> ¥{ItemData.price}</Typography>
       </Box>
     </>
   );

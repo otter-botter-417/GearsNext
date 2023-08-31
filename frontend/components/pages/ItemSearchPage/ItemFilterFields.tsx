@@ -11,7 +11,7 @@ import { categoryValueState } from '@/components/shares/atoms/state/categoryValu
 import { subCategoryValueState } from '@/components/shares/atoms/state/subCategoryValueState';
 import { itemTagsState } from '@/components/shares/atoms/state/itemTagsState';
 import { colorTagsState } from '@/components/shares/atoms/state/colorTagsState';
-import { itemNumState } from '@/components/shares/atoms/state/itemNumState';
+import { filteredItemCountState } from '@/components/shares/atoms/state/filteredItemCountState';
 import { sortPatternValueState } from '@/components/shares/atoms/state/sortPatternValueState';
 
 import { PullDownSelector } from '@/components/shares/molecules/PullDownSelector';
@@ -27,8 +27,8 @@ import { SortPattern } from '@/components/pages/ItemSearchPage/SortPattern';
  * @returns
  */
 export const ItemFilterFields = () => {
-  // TODO itemNumStateの変数名がわかりにくい
-  const itemNum = useRecoilValue(itemNumState);
+  // TODO filteredItemCountStateの変数名がわかりにくい
+  const filteredItemCount = useRecoilValue(filteredItemCountState);
 
   return (
     <>
@@ -80,7 +80,7 @@ export const ItemFilterFields = () => {
         <Box display={'flex'} justifyContent="flex-end" width={'100%'}>
           {/* 対象商品数 */}
           <Box padding={2}>
-            <Typography>{`${itemNum}件`}</Typography>
+            <Typography>{`${filteredItemCount}件`}</Typography>
           </Box>
 
           {/* 並び替え */}

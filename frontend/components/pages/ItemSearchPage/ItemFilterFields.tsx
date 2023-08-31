@@ -27,7 +27,6 @@ import { SortPattern } from '@/components/pages/ItemSearchPage/SortPattern';
  * @returns
  */
 export const ItemFilterFields = () => {
-  // TODO filteredItemCountStateの変数名がわかりにくい
   const filteredItemCount = useRecoilValue(filteredItemCountState);
 
   return (

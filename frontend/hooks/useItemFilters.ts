@@ -6,17 +6,21 @@ import { sliderValueState } from '@/components/shares/atoms/state/sliderValueSta
 import { itemTagsState } from '@/components/shares/atoms/state/itemTagsState';
 import { colorTagsState } from '@/components/shares/atoms/state/colorTagsState';
 import { sortPatternValueState } from '@/components/shares/atoms/state/sortPatternValueState';
-import { itemNumState } from '@/components/shares/atoms/state/itemNumState';
+import { filteredItemCountState } from '@/components/shares/atoms/state/filteredItemCountState';
 import { filterSwitchState } from '@/components/shares/atoms/state/filterSwitchState';
 import { apiFetchedItemsState } from '@/components/shares/atoms/state/apiFetchedItemsState';
+import { useEffect } from 'react';
+import { useAllRecoilValuesForSearch } from './ItemSearchPage/useAllRecoilValuesForSearch';
 
 /**
- * 商品一覧を絞り込みするカスタムフック
- * @returns {applyFilters} フォームのメソッドとonSubmit関数
+ * 絞り込み条件変更時、商品一覧を絞り込みするカスタムフック
+ * 
+ * @example
+ * useItemFilters();
  */
 export const useItemFilters = () => {
     const setFilteredItems = useSetRecoilState(filteredItemsState);
-    const setItemNum = useSetRecoilState(itemNumState);
+    const setFilteredItemCount = useSetRecoilState(filteredItemCountState);
     const subCategoryValue = useRecoilValue(subCategoryValueState);
     const sliderValue = useRecoilValue(sliderValueState);
     const itemTags = useRecoilValue(itemTagsState);
@@ -24,7 +28,8 @@ export const useItemFilters = () => {
     const sortPatternValue = useRecoilValue(sortPatternValueState);
     const filterSwitch = useRecoilValue(filterSwitchState);
     const apiFetchedItems = useRecoilValue(apiFetchedItemsState);
-
+    // すべてのRecoilの値を一つのオブジェクトで管理
+    const allRecoilValues = useAllRecoilValuesForSearch();
     interface TagObject {
         [key: string]: any;
     }
@@ -77,8 +82,11 @@ export const useItemFilters = () => {
         }
 
         setFilteredItems(filtered);
-        setItemNum(filtered.length);
+        setFilteredItemCount(filtered.length);
     };
+    useEffect(() => {
+        applyFilters();
+    }, [allRecoilValues]);
 
     return { applyFilters };
 };

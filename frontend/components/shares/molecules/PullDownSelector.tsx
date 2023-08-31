@@ -42,7 +42,6 @@ export const PullDownSelector: React.FC<PullDownSelectorProps> = ({
       label={label}
       value={value}
       onChange={handleChange}
-      sx={{ minWidth: 120 }}
     >
       {options.map((option) => (
         <MenuItem key={option} value={option}>

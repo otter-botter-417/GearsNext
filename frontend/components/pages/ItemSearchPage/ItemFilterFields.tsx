@@ -21,6 +21,7 @@ import PriceSlider from '@/components/pages/ItemSearchPage/PriceSlider';
 import { FilterResetButton } from '@/components/pages/ItemSearchPage/FilterResetButton';
 import { FilterToggleButton } from '@/components/pages/ItemSearchPage/FilterToggleButton';
 import { SortPattern } from '@/components/pages/ItemSearchPage/SortPattern';
+import SearchBar from './SearchBar';
 
 /**
  * 商品検索ページの条件選択フィールド
@@ -32,8 +33,8 @@ export const ItemFilterFields = () => {
   return (
     <>
       <Box display={'flex'} alignItems="center" width={'80%'} margin={2}>
-        {/* //TODO キーワード検索 */}
-        <TextField id="keyword" label="キーワードから探す" defaultValue="" />
+        {/* キーワード検索 */}
+        <SearchBar />
 
         {/* カテゴリー */}
         <PullDownSelector

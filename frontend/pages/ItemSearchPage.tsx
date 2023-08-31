@@ -1,15 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRecoilValue } from 'recoil';
 import { Box } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 
 import themeOptions from '@/styles/themes/themeOptions';
 
-import { useGetItems } from '@/hooks/ItemSearchPage/useGetItems';
+import { useFetchItems } from '@/hooks/ItemSearchPage/useFetchItems';
 import { useItemFilters } from '@/hooks/useItemFilters';
-import { useAllRecoilValuesForSearch } from '@/hooks/ItemSearchPage/useAllRecoilValuesForSearch';
 
-import { categoryValueState } from '@/components/shares/atoms/state/categoryValueState';
 import { errorMessageState } from '@/components/shares/atoms/state/errorMessageState';
 
 import { ItemFilterFields } from '@/components/pages/ItemSearchPage/ItemFilterFields';
@@ -18,29 +16,18 @@ import { ItemFilterFields } from '@/components/pages/ItemSearchPage/ItemFilterFi
  * 商品検索ページ
  */
 export const ItemSearchPage = () => {
-  const { getItems } = useGetItems();
-  const { applyFilters } = useItemFilters();
   const errorMessage = useRecoilValue(errorMessageState);
 
-  // すべてのRecoilの値を一つのオブジェクトで管理
-  const allRecoilValues = useAllRecoilValuesForSearch();
+  //  カテゴリーが変更されたとき、商品一覧を取得
+  useFetchItems();
 
-  const categoryValue = useRecoilValue(categoryValueState);
-
-  //  商品一覧を取得
-  useEffect(() => {
-    getItems();
-  }, [categoryValue]);
+  // 絞り込み条件が変更されたとき、商品一覧を絞り込み
+  useItemFilters();
 
   // エラーメッセージがあれば表示
   if (errorMessage) {
     return <div>{errorMessage}</div>;
   }
-
-  // 商品一覧を絞り込み;
-  useEffect(() => {
-    applyFilters();
-  }, [allRecoilValues]);
 
   return (
     <Box

@@ -6,7 +6,7 @@ import React from 'react';
  * @param imageName 画像名
  * @returns 商品画像のURL
  * @example
- * const ItemImagesUrl = getItemImageUrl(ItemData.brand_name, ItemData.imageName);
+ * const ItemImagesUrl = getItemImageUrl(ItemData.brandName, ItemData.imageName);
  */
 export const getItemImageUrl = (
   brandName: string,

@@ -12,13 +12,5 @@ export const getItemImageUrl = (
   brandName: string,
   imageName: string,
 ): string => {
-  return (
-    'https://gears-item-images.s3.ap-northeast-1.amazonaws.com/items/' +
-    brandName +
-    '/' +
-    imageName +
-    '.jpg'
-  );
+  return `https://gears-item-images.s3.ap-northeast-1.amazonaws.com/items/${brandName}/${imageName}.jpg`;
 };
-
-export default getItemImageUrl;

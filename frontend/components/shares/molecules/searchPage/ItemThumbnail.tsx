@@ -31,6 +31,7 @@ export const ItemThumbnail: React.FC<ItemThumbnailProps> = ({ ItemData }) => {
       alignItems="center"
       justifyContent="center"
     >
+      {/* 商品画像 */}
       <Grid item xs={12} sm={12} md={12}>
         <Link href={`/items/${ItemData.item_id}`}>
           <Image
@@ -44,8 +45,9 @@ export const ItemThumbnail: React.FC<ItemThumbnailProps> = ({ ItemData }) => {
           />
         </Link>
       </Grid>
+      
+      {/* 基本情報 */}
       <Box display="flex" flexDirection="column" alignItems="center">
-        {/* レスポンシブ画像 */}
         <Typography variant={'body2'}>{ItemData.brand_name}</Typography>
         <Typography variant={'h6'}>{ItemData.item_name}</Typography>
         <Typography variant={'h6'}>

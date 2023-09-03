@@ -107,26 +107,28 @@ export const ItemFilterFields = () => {
           </Accordion>
         </Grid>
 
-        {/* 条件クリアボタン */}
+
+        {/* 条件クリア */}
         <Grid item xs={3}>
           <FilterResetButton />
         </Grid>
-      </Grid>
 
-      <Box display={'flex'} justifyContent="flex-end" width={'100%'}>
-        {/* 対象商品数 */}
-        <Box padding={2}>
-          <Typography>{`${filteredItemCount}件`}</Typography>
-        </Box>
-        {/* 並び替え */}
-        <Box width={'20%'}>
-          <PullDownSelector
-            options={SortPattern}
-            label="並び替え"
-            stateAtom={sortPatternValueState}
-          />
-        </Box>
-      </Box>
+        <Grid item xs={7}>
+          <Box display={'flex'} justifyContent="flex-end" width={'100%'}>
+            {/* 対象商品数と並び替え */}
+            <Box padding={2}>
+              <Typography>{`${filteredItemCount}件`}</Typography>
+            </Box>
+            <Box width={'20%'}>
+              <PullDownSelector
+                options={SortPattern}
+                label="並び替え"
+                stateAtom={sortPatternValueState}
+              />
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
     </>
   );
 };

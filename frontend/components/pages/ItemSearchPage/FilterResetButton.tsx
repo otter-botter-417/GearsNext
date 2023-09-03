@@ -1,29 +1,30 @@
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { Button } from '@mui/material';
+
+import { itemTagsState } from '@/components/shares/atoms/state/itemTagsState';
 import { colorTagsState } from '@/components/shares/atoms/state/colorTagsState';
 import { filteredItemsState } from '@/components/shares/atoms/state/filteredItemsState';
-import { itemTagsState } from '@/components/shares/atoms/state/itemTagsState';
+import { priceAfterLimitValueState } from '@/components/shares/atoms/state/priceAfterLimitValueState';
 import { itemPriceRangeForSliderState } from '@/components/shares/atoms/state/itemPriceRangeForSliderState';
-import { sliderValueState } from '@/components/shares/atoms/state/sliderValueState';
-import { Button } from '@mui/material';
-import { useSetRecoilState } from 'recoil';
 
 /**
  * 商品検索ページの絞り込み条件を初期化するボタン
+ *
+ * @example
+ * <FilterResetButton />
  */
 export const FilterResetButton = () => {
-  const setItemPriceRangeForSliderState = useSetRecoilState(
-    itemPriceRangeForSliderState,
-  );
-  const setSliderValue = useSetRecoilState(sliderValueState);
   const setItemTags = useSetRecoilState(itemTagsState);
   const setColorTags = useSetRecoilState(colorTagsState);
   const setFilteredItems = useSetRecoilState(filteredItemsState);
+  const setPriceAfterLimitValue = useSetRecoilState(priceAfterLimitValueState);
+  const itemPriceRangeForSlider = useRecoilValue(itemPriceRangeForSliderState);
 
   const onClick = () => {
-    setItemPriceRangeForSliderState({ min: 0, max: 100000 });
-    setSliderValue([0, 1000000]);
     setItemTags([]);
     setColorTags([]);
     setFilteredItems([]);
+    setPriceAfterLimitValue(itemPriceRangeForSlider);
   };
 
   return (

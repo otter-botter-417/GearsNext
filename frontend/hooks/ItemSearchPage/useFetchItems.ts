@@ -9,6 +9,7 @@ import { ItemDataTypes } from '@/components/types/ItemDataTypes';
 import { itemPriceListForSliderState } from '@/components/shares/atoms/state/itemPriceListForSliderState';
 import { itemPriceRangeForSliderState } from '@/components/shares/atoms/state/itemPriceRangeForSliderState';
 import { useEffect } from 'react';
+import { priceAfterLimitValueState } from '@/components/shares/atoms/state/priceAfterLimitValueState';
 
 /**
  * 商品一覧と価格情報を管理するカスタムフック。
@@ -25,6 +26,7 @@ export const useFetchItems = () => {
     const setApiFetchedItems = useSetRecoilState(apiFetchedItemsState);
     const setItemPriceListForSlider = useSetRecoilState(itemPriceListForSliderState);
     const setItemPriceRangeForSliderState = useSetRecoilState(itemPriceRangeForSliderState);
+    const setPriceAfterLimitValue = useSetRecoilState(priceAfterLimitValueState);
 
     /**
      * 価格情報を設定するヘルパー関数
@@ -38,6 +40,11 @@ export const useFetchItems = () => {
             min: Math.min(...prices),
             max: Math.max(...prices),
         });
+        setPriceAfterLimitValue({
+            min: Math.min(...prices),
+            max: Math.max(...prices),
+        });
+
     };
 
     /**
@@ -59,6 +66,7 @@ export const useFetchItems = () => {
             }
 
             const fetchedItems = response.data.data;
+            console.log(response.data.data);
             setApiFetchedItems(fetchedItems);
             setPriceInfoForSlider(fetchedItems);
 

@@ -2,7 +2,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { filteredItemsState } from '@/components/shares/atoms/state/filteredItemsState';
 import { subCategoryValueState } from '@/components/shares/atoms/state/subCategoryValueState';
-import { sliderValueState } from '@/components/shares/atoms/state/sliderValueState';
+import { priceAfterLimitValueState } from '@/components/shares/atoms/state/priceAfterLimitValueState';
 import { itemTagsState } from '@/components/shares/atoms/state/itemTagsState';
 import { colorTagsState } from '@/components/shares/atoms/state/colorTagsState';
 import { sortPatternValueState } from '@/components/shares/atoms/state/sortPatternValueState';
@@ -10,7 +10,8 @@ import { filteredItemCountState } from '@/components/shares/atoms/state/filtered
 import { filterSwitchState } from '@/components/shares/atoms/state/filterSwitchState';
 import { apiFetchedItemsState } from '@/components/shares/atoms/state/apiFetchedItemsState';
 import { useEffect } from 'react';
-import { useAllRecoilValuesForSearch } from './ItemSearchPage/useAllRecoilValuesForSearch';
+import { useAllRecoilValuesForSearch } from './useAllRecoilValuesForSearch';
+import { itemSearchQueryState } from '@/components/shares/atoms/state/itemSearchQueryState';
 
 /**
  * 絞り込み条件変更時、商品一覧を絞り込みするカスタムフック
@@ -22,19 +23,20 @@ export const useItemFilters = () => {
     const setFilteredItems = useSetRecoilState(filteredItemsState);
     const setFilteredItemCount = useSetRecoilState(filteredItemCountState);
     const subCategoryValue = useRecoilValue(subCategoryValueState);
-    const sliderValue = useRecoilValue(sliderValueState);
+    const sliderValue = useRecoilValue(priceAfterLimitValueState);
     const itemTags = useRecoilValue(itemTagsState);
     const colorTags = useRecoilValue(colorTagsState);
     const sortPatternValue = useRecoilValue(sortPatternValueState);
     const filterSwitch = useRecoilValue(filterSwitchState);
     const apiFetchedItems = useRecoilValue(apiFetchedItemsState);
+    const itemSearchQuery = useRecoilValue(itemSearchQueryState);
     // すべてのRecoilの値を一つのオブジェクトで管理
     const allRecoilValues = useAllRecoilValuesForSearch();
     interface TagObject {
         [key: string]: any;
     }
     /**
-    * 共通のフィルタリングロジック
+    * 共通のタグフィルタリングロジック
     * @param items フィルタリング対象のアイテム
     * @param tags フィルタリングに使用するタグ
     * @param tagKey タグのプロパティ名
@@ -57,11 +59,15 @@ export const useItemFilters = () => {
             filtered = filtered.filter((item) => item.sub_category_name === subCategoryValue);
         }
 
-        // スライダーの値が設定されている場合は、価格で絞り込む
-        if (sliderValue) {
-            const [min, max] = sliderValue;
-            filtered = filtered.filter((item) => item.price >= min && item.price <= max);
+        //商品名で絞り込む
+        if (itemSearchQuery) {
+            filtered = filtered.filter((item) => item.item_name.includes(itemSearchQuery));
         }
+
+        // スライダーの値が設定されている場合は、価格で絞り込む
+
+        filtered = filtered.filter((item) => item.price >= sliderValue.min && item.price <= sliderValue.max);
+
 
         // 商品タグが設定されている場合は、商品タグで絞り込む
         if (itemTags.length > 0) {

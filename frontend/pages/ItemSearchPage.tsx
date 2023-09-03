@@ -1,12 +1,9 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
 import { Box } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
-
-import themeOptions from '@/styles/themes/themeOptions';
 
 import { useFetchItems } from '@/hooks/ItemSearchPage/useFetchItems';
-import { useItemFilters } from '@/hooks/useItemFilters';
+import { useItemFilters } from '@/hooks/ItemSearchPage/useItemFilters';
 
 import { errorMessageState } from '@/components/shares/atoms/state/errorMessageState';
 
@@ -35,15 +32,13 @@ export const ItemSearchPage = () => {
       flexDirection="column"
       alignItems="center"
       minHeight="100vh"
-      width={'80%'}
+      width={'100%'}
     >
-      <ThemeProvider theme={themeOptions}>
-        {/* 絞り込み */}
-        <ItemFilterFields />
-        {/* 絞り込み後の商品表示 */}
-        {/* TODO ItemThumbnailGrid　を修正 */}
-        {/* <ItemThumbnailGrid /> */}
-      </ThemeProvider>
+      {/* 絞り込み */}
+      <ItemFilterFields />
+      {/* 絞り込み後の商品表示 */}
+      {/* TODO ItemThumbnailGrid　を修正 */}
+      {/* </ThemeProvider> */}
     </Box>
   );
 };

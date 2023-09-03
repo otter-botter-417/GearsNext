@@ -12,6 +12,7 @@ import { ItemFilterFields } from '@/components/pages/ItemSearchPage/ItemFilterFi
 /**
  * 商品検索ページ
  */
+// サブカテゴリーが変更されたとき、商品一覧を取得
 export const ItemSearchPage = () => {
   const errorMessage = useRecoilValue(errorMessageState);
 

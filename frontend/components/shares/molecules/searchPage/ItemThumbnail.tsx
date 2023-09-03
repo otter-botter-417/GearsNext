@@ -1,61 +1,57 @@
-import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { Box } from '@mui/material';
-import { ItemDataTypes } from '../../types/ItemDataTypes';
 import Image from 'next/legacy/image';
-import { useWindowSize } from '../../../hooks/useWindowSize';
+import { Box, Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import ItemImageUrl from '@/components/shares/atoms/getItemImageUrl';
+
+import { ItemDataTypes } from '@/components/types/ItemDataTypes';
+import { getItemImageUrl } from '@/components/shares/atoms/getItemImageUrl';
 
 type ItemThumbnailProps = {
   ItemData: ItemDataTypes;
 };
-//商品名　メーカー　画像を表示するコンポーネント
-export const ItemThumbnail = (props: ItemThumbnailProps) => {
-  //ウィンドウサイズによってwidthの数値を変えてレスポンシブ処理
-  const { ItemData } = props;
-  const [width] = useWindowSize();
-  let widthSize: number;
-  //横画面時はウィンドウの50% 縦表示時は90%
-  const router = useRouter();
-  const { itemId } = router.query;
-  const ItemImagesUrl: string = ItemImageUrl(
-    ItemData.brand.brand_name,
+
+// TODO アマゾンの価格を更新させる
+/**
+ * 商品のサムネイル画像と基本情報を表示する
+ *
+ * @param itemData 商品データ
+ * @returns 商品のサムネイル
+ */
+export const ItemThumbnail: React.FC<ItemThumbnailProps> = ({ ItemData }) => {
+  const ItemImagesUrl: string = getItemImageUrl(
+    ItemData.brand_name,
     ItemData.image_name,
   );
 
-  widthSize = width * 0.22;
-
   return (
-    <>
-      {/* 商品名　メーカー　を表示 */}
-      <Link href={`/items/${ItemData.item_id}`}>
-        <Image
-          src={ItemImagesUrl}
-          alt="example image"
-          layout="responsive"
-          width={widthSize}
-          height={widthSize}
-          objectFit="contain"
-          priority
-        />
-      </Link>
-      <Box
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-        sx={{
-          maxWidth: widthSize,
-        }}
-      >
+    <Grid
+      container
+      spacing={3}
+      minWidth={130}
+      alignItems="center"
+      justifyContent="center"
+    >
+      <Grid item xs={12} sm={12} md={12}>
+        <Link href={`/items/${ItemData.item_id}`}>
+          <Image
+            src={ItemImagesUrl}
+            alt="item image"
+            layout="responsive"
+            width={500}
+            height={500}
+            objectFit="contain"
+            priority
+          />
+        </Link>
+      </Grid>
+      <Box display="flex" flexDirection="column" alignItems="center">
         {/* レスポンシブ画像 */}
-        <Typography variant={'body2'}>{ItemData.brand.brand_name}</Typography>
-
+        <Typography variant={'body2'}>{ItemData.brand_name}</Typography>
         <Typography variant={'h6'}>{ItemData.item_name}</Typography>
-        <Typography variant={'body2'}>メーカー希望小売価格</Typography>
-        <Typography variant={'h6'}> ¥{ItemData.price}</Typography>
+        <Typography variant={'h6'}>
+          ¥{ItemData.price.toLocaleString()}
+        </Typography>
       </Box>
-    </>
+    </Grid>
   );
 };

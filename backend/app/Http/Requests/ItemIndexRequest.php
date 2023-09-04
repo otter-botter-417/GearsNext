@@ -28,7 +28,7 @@ class ItemIndexRequest extends FormRequest
     public function rules()
     {
         return [
-            'categoryName' => 'string|max:50',
+            'category_name' => 'string|max:50',
         ];
     }
 
@@ -38,8 +38,8 @@ class ItemIndexRequest extends FormRequest
     public function messages()
     {
         return [
-            'categoryName.string' => 'カテゴリー名は文字列で入力してください',
-            'categoryName.max' => 'カテゴリー名は50文字以内で入力してください',
+            'category_name.string' => 'カテゴリー名は文字列で入力してください',
+            'category_name.max' => 'カテゴリー名は50文字以内で入力してください',
         ];
     }
 }

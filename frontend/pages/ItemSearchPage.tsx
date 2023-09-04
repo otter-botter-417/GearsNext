@@ -8,6 +8,7 @@ import { useItemFilters } from '@/hooks/ItemSearchPage/useItemFilters';
 import { errorMessageState } from '@/components/shares/atoms/state/errorMessageState';
 
 import { ItemFilterFields } from '@/components/pages/ItemSearchPage/ItemFilterFields';
+import { ItemThumbnailGrid } from '@/components/shares/organisms/ItemThumbnailGrid';
 
 /**
  * 商品検索ページ
@@ -28,18 +29,11 @@ export const ItemSearchPage = () => {
   }
 
   return (
-    <Box
-      display={'flex'}
-      flexDirection="column"
-      alignItems="center"
-      minHeight="100vh"
-      width={'100%'}
-    >
+    <Box flexDirection="column">
       {/* 絞り込み */}
       <ItemFilterFields />
       {/* 絞り込み後の商品表示 */}
-      {/* TODO ItemThumbnailGrid　を修正 */}
-      {/* </ThemeProvider> */}
+      <ItemThumbnailGrid />
     </Box>
   );
 };

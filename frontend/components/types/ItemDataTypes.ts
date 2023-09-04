@@ -2,6 +2,7 @@ export type ItemDataTypes = {
   item_id: number;
   item_name: string;
   price: number;
+  image_name: string;
   asin: string;
   open_size: {
     open_depth: number,

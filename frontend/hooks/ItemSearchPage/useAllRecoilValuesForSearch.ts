@@ -5,7 +5,7 @@ import { subCategoryValueState } from '@/components/shares/atoms/state/subCatego
 import { itemTagsState } from '@/components/shares/atoms/state/itemTagsState';
 import { colorTagsState } from '@/components/shares/atoms/state/colorTagsState';
 import { filterSwitchState } from '@/components/shares/atoms/state/filterSwitchState';
-import { sliderValueState } from '@/components/shares/atoms/state/sliderValueState';
+import { priceAfterLimitValueState } from '@/components/shares/atoms/state/priceAfterLimitValueState';
 import { sortPatternValueState } from '@/components/shares/atoms/state/sortPatternValueState';
 import { apiFetchedItemsState } from '@/components/shares/atoms/state/apiFetchedItemsState';
 
@@ -23,7 +23,7 @@ export const useAllRecoilValuesForSearch = () => {
     const itemTags = useRecoilValue(itemTagsState);
     const colorTags = useRecoilValue(colorTagsState);
     const filterSwitch = useRecoilValue(filterSwitchState);
-    const sliderValue = useRecoilValue(sliderValueState);
+    const sliderValue = useRecoilValue(priceAfterLimitValueState);
     const sortPatternValue = useRecoilValue(sortPatternValueState);
     const itemList = useRecoilValue(apiFetchedItemsState);
 

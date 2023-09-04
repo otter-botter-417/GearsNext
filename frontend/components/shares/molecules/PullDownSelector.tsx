@@ -42,7 +42,8 @@ export const PullDownSelector: React.FC<PullDownSelectorProps> = ({
       label={label}
       value={value}
       onChange={handleChange}
-      sx={{ minWidth: 120 }}
+      fullWidth={true}
+      style={{ minWidth: '100px' }} // ここで最小幅を設定
     >
       {options.map((option) => (
         <MenuItem key={option} value={option}>

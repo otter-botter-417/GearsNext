@@ -6,7 +6,7 @@ import { AddNewItemValidatedSchema } from '@/components/atoms/schema/AddNewItemV
 import { SubmitButton } from '@/components/shares/atoms/SubmitButton';
 import AddNewItemPageTemplate from '@/components/templates/AddNewItemPageTemplate';
 import BaseItemDataForm from '@/components/shares/organisms/BaseItemDataForm';
-import CategoryDetailList from '@/components/molecules/itemAppend/CategoryDetailList';
+import CategoryDetailList from '@/components/shares/molecules/itemAppend/CategoryDetailList';
 import { useDetailFormMethods } from '@/hooks/useDetailFormMethods';
 
 // 新規に商品情報をmongoDBに送信、登録するページ

@@ -1,12 +1,7 @@
 import React from 'react';
 import { useRecoilState, RecoilState } from 'recoil';
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  SelectChangeEvent,
-} from '@mui/material';
+import { Autocomplete } from '@mui/material';
+import TextField from '@mui/material/TextField';
 
 interface PullDownMultiSelectorProps {
   options: string[];
@@ -15,10 +10,10 @@ interface PullDownMultiSelectorProps {
 }
 
 /**
- * プルダウンで複数選択ができるセレクター
- * @param options プルダウンの選択肢のリストを渡す
- * @param label プルダウンのラベルを渡す id としても使用される
- * @param stateAtom プルダウンの状態を管理するatomを渡す
+ * Autocompleteを使用して、複数選択ができるセレクター
+ * @param options 選択肢のリストを渡す
+ * @param label ラベルを渡す
+ * @param stateAtom 状態を管理するRecoilのatomを渡す
  * @returns
  *
  * @example
@@ -35,26 +30,19 @@ export const PullDownMultiSelector: React.FC<PullDownMultiSelectorProps> = ({
 }) => {
   const [value, setValue] = useRecoilState(stateAtom);
 
-  const handleChange = (event: SelectChangeEvent<string[]>) => {
-    setValue(event.target.value as string[]);
-  };
-
   return (
-    <FormControl sx={{ minWidth: 120 }}>
-      <InputLabel id={`${label}-label`}>{label}</InputLabel>
-      <Select
-        labelId={`${label}-label`}
-        id={label}
-        multiple
-        value={value}
-        onChange={handleChange}
-      >
-        {options.map((option) => (
-          <MenuItem key={option} value={option}>
-            {option}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+    <Autocomplete
+      multiple
+      id={label}
+      options={options}
+      size="small"
+      value={value}
+      onChange={(_, newValue) => {
+        setValue(newValue);
+      }}
+      renderInput={(params) => (
+        <TextField {...params} variant="outlined" label={label} />
+      )}
+    />
   );
 };

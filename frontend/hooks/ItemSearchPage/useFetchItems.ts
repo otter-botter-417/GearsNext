@@ -8,15 +8,17 @@ import { apiFetchedItemsState } from '@/components/shares/atoms/state/apiFetched
 import { ItemDataTypes } from '@/components/types/ItemDataTypes';
 import { itemPriceListForSliderState } from '@/components/shares/atoms/state/itemPriceListForSliderState';
 import { itemPriceRangeForSliderState } from '@/components/shares/atoms/state/itemPriceRangeForSliderState';
+import { useEffect } from 'react';
+import { priceAfterLimitValueState } from '@/components/shares/atoms/state/priceAfterLimitValueState';
 
 /**
  * 商品一覧と価格情報を管理するカスタムフック。
- * ItemControllerのindexメソッドを呼び出す
- * @returns {getItems} 商品一覧を取得する関数
+ * カテゴリーが変更された場合、APIから商品一覧を取得する。
+ * 
  * @example
- * const { getItems } = useGetItems();
+ * useGetItems();
  */
-export const useGetItems = () => {
+export const useFetchItems = () => {
     const { sendRequest } = useApiRequest();
     const { handleError, clearError } = useErrorHandler();
 
@@ -24,6 +26,7 @@ export const useGetItems = () => {
     const setApiFetchedItems = useSetRecoilState(apiFetchedItemsState);
     const setItemPriceListForSlider = useSetRecoilState(itemPriceListForSliderState);
     const setItemPriceRangeForSliderState = useSetRecoilState(itemPriceRangeForSliderState);
+    const setPriceAfterLimitValue = useSetRecoilState(priceAfterLimitValueState);
 
     /**
      * 価格情報を設定するヘルパー関数
@@ -37,13 +40,18 @@ export const useGetItems = () => {
             min: Math.min(...prices),
             max: Math.max(...prices),
         });
+        setPriceAfterLimitValue({
+            min: Math.min(...prices),
+            max: Math.max(...prices),
+        });
+
     };
 
     /**
      * 商品一覧を非同期に取得する。
      * カテゴリーに応じてURLを変更し、APIリクエストを行う。
      */
-    const getItems = async () => {
+    const fetchItems = async () => {
         try {
             if (typeof window === 'undefined') return;
 
@@ -58,6 +66,7 @@ export const useGetItems = () => {
             }
 
             const fetchedItems = response.data.data;
+            console.log(response.data.data);
             setApiFetchedItems(fetchedItems);
             setPriceInfoForSlider(fetchedItems);
 
@@ -68,5 +77,8 @@ export const useGetItems = () => {
             handleError(error);
         }
     };
-    return { getItems };
+
+    useEffect(() => {
+        fetchItems();
+    }, [categoryValue]);
 };

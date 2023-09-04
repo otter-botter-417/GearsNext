@@ -31,7 +31,7 @@ class ViewItemHistory extends TestCase
         $item = Item::factory()->create();
         $response = $this->authorizedRequest('GET', '/api/items/' . $item->item_id);
         $response->assertStatus(200)
-            ->assertJsonFragment(['item_name' => $item->item_name]);
+            ->assertJsonFragment(['itemName' => $item->item_name]);
         $this->assertDatabaseHas('view_item_histories', [
             'item_id' => $item->item_id,
             'user_id' => $this->user->user_id

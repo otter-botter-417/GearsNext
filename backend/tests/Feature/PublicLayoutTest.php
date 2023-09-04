@@ -54,12 +54,12 @@ class PublicLayoutTest extends TestCase
         $response->assertJsonStructure([
             'data' => [
                 '*' => [
-                    'layout_id',
-                    'user_name',
-                    'favorite_count',
-                    'view_count',
-                    'created_at',
-                    'updated_at',
+                    'layoutId',
+                    'userName',
+                    'favoriteCount',
+                    'viewCount',
+                    'createdAt',
+                    'updatedAt',
                 ]
             ],
         ]);
@@ -79,26 +79,26 @@ class PublicLayoutTest extends TestCase
         $response->assertStatus(200)
             ->assertJsonStructure([
                 'data' => [
-                    'layout_id',
+                    'layoutId',
                     'text',
-                    'user_name',
-                    'favorite_count',
-                    'view_count',
-                    'created_at',
-                    'updated_at',
+                    'userName',
+                    'favoriteCount',
+                    'viewCount',
+                    'createdAt',
+                    'updatedAt',
                     'comments',
                     'items' => [
                         '*' => [
-                            'item_id',
-                            'item_name',
-                            'image_name',
+                            'itemId',
+                            'itemName',
+                            'imageName',
                         ]
                     ],
-                    'tag_positions' => [
+                    'tagPositions' => [
                         '*' => [
-                            'x_position',
-                            'y_position',
-                            'item_id',
+                            'xPosition',
+                            'yPosition',
+                            'itemId',
                         ]
                     ]
                 ]

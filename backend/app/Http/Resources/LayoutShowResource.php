@@ -30,7 +30,14 @@ class LayoutShowResource extends JsonResource
                     'imageName' => $item->image_name,
                 ];
             }),
-            'tagPositions' => $this->tagPositions,
+            // 'tagPositions' => $this->tagPositions,
+            'tagPositions' => $this->tagPositions->map(function ($tagPosition) {
+                return [
+                    'xPosition' => $tagPosition->x_position,
+                    'yPosition' => $tagPosition->y_position,
+                    'itemId' => $tagPosition->item_id,
+                ];
+            }),
         ];
     }
 }

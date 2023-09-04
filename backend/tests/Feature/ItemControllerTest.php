@@ -84,7 +84,7 @@ class ItemControllerTest extends TestCase
         $response = $this->get('/api/items?categoryName=テント');
 
         $response->assertStatus(200)
-            ->assertJsonFragment(['item_name' => 'ソロベースEX']);
+            ->assertJsonFragment(['itemName' => 'ソロベースEX']);
     }
 
     /**
@@ -95,7 +95,7 @@ class ItemControllerTest extends TestCase
     {
         $response = $this->get('/api/items');
         $response->assertStatus(200)
-            ->assertJsonFragment(['item_name' => 'ソロベースEX']);
+            ->assertJsonFragment(['itemName' => 'ソロベースEX']);
     }
 
     /**
@@ -109,32 +109,32 @@ class ItemControllerTest extends TestCase
         $response->assertStatus(200)
             ->assertJsonStructure([
                 'data' => [
-                    'item_id',
-                    'item_name',
+                    'itemId',
+                    'itemName',
                     'price',
-                    'image_name',
+                    'imageName',
                     'asin',
-                    'open_size' => [
-                        'open_width',
-                        'open_depth',
-                        'open_height'
+                    'openSize' => [
+                        'openWidth',
+                        'openDepth',
+                        'openHeight'
                     ],
-                    'storage_size' => [
-                        'storage_width',
-                        'storage_depth',
-                        'storage_height'
+                    'storageSize' => [
+                        'storageWidth',
+                        'storageDepth',
+                        'storageHeight'
                     ],
                     'weight',
-                    'favorite_count',
-                    'view_count',
-                    'created_at',
-                    'updated_at',
-                    'brand_name',
-                    'category_name',
-                    'sub_category_name',
-                    'item_tags',
-                    'color_tags',
-                    'item_attributes',
+                    'favoriteCount',
+                    'viewCount',
+                    'createdAt',
+                    'updatedAt',
+                    'brandName',
+                    'categoryName',
+                    'subCategoryName',
+                    'itemTags',
+                    'colorTags',
+                    'itemAttributes',
                     'layouts',
                 ]
             ]);
@@ -223,7 +223,7 @@ class ItemControllerTest extends TestCase
      */
     public function test_index_with_non_existent_category_name()
     {
-        $response = $this->get('/api/items?categoryName=カゴ');
+        $response = $this->get('/api/items?category_name=カゴ');
         $response->assertStatus(404)
             ->assertJson(['message' => 'カテゴリーが見つかりませんでした。']);
     }

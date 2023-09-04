@@ -38,53 +38,53 @@ class HomeControllerTest extends TestCase
                 'data' => [
                     'topViewedItems' => [
                         '*' => [
-                            'item_id',
-                            'item_name',
-                            'image_name',
-                            'favorite_count',
-                            'view_count'
+                            'itemId',
+                            'itemName',
+                            'imageName',
+                            'favoriteCount',
+                            'viewCount'
                         ]
                     ],
                     'topFavoriteItems' => [
                         '*' => [
-                            'item_id',
-                            'item_name',
-                            'image_name',
-                            'favorite_count',
-                            'view_count'
+                            'itemId',
+                            'itemName',
+                            'imageName',
+                            'favoriteCount',
+                            'viewCount'
                         ]
                     ],
                     'newlyArrivedItems' => [
                         '*' => [
-                            'item_id',
-                            'item_name',
-                            'image_name',
-                            'favorite_count',
-                            'view_count'
+                            'itemId',
+                            'itemName',
+                            'imageName',
+                            'favoriteCount',
+                            'viewCount'
                         ]
                     ],
                     'topViewedLayouts' => [
                         '*' => [
-                            'layout_id',
-                            'favorite_count',
-                            'view_count',
-                            'user_name',
+                            'layoutId',
+                            'favoriteCount',
+                            'viewCount',
+                            'userName',
                         ]
                     ],
                     'topFavoriteLayouts' => [
                         '*' => [
-                            'layout_id',
-                            'favorite_count',
-                            'view_count',
-                            'user_name',
+                            'layoutId',
+                            'favoriteCount',
+                            'viewCount',
+                            'userName',
                         ]
                     ],
                     'newlyArrivedLayouts' => [
                         '*' => [
-                            'layout_id',
-                            'favorite_count',
-                            'view_count',
-                            'user_name',
+                            'layoutId',
+                            'favoriteCount',
+                            'viewCount',
+                            'userName',
                         ]
                     ]
                 ]

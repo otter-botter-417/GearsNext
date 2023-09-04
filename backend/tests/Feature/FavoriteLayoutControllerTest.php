@@ -53,12 +53,12 @@ class FavoriteLayoutControllerTest extends TestCase
             ->assertJsonStructure([
                 'data' => [
                     '*' => [
-                        'layout_id',
-                        'user_name',
-                        'favorite_count',
-                        'view_count',
-                        'created_at',
-                        'updated_at',
+                        'layoutId',
+                        'userName',
+                        'favoriteCount',
+                        'viewCount',
+                        'createdAt',
+                        'updatedAt',
                     ]
                 ]
             ]);

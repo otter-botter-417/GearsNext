@@ -53,26 +53,26 @@ class FavoriteItemControllerTest extends TestCase
             ->assertJsonStructure([
                 'data' => [
                     '*' => [
-                        'item_id',
-                        'item_name',
+                        'itemId',
+                        'itemName',
                         'price',
-                        'image_name',
+                        'imageName',
                         'asin',
-                        'open_size' => [
-                            'open_width',
-                            'open_depth',
-                            'open_height'
+                        'openSize' => [
+                            'openWidth',
+                            'openDepth',
+                            'openHeight'
                         ],
-                        'storage_size' => [
-                            'storage_width',
-                            'storage_depth',
-                            'storage_height'
+                        'storageSize' => [
+                            'storageWidth',
+                            'storageDepth',
+                            'storageHeight'
                         ],
                         'weight',
-                        'favorite_count',
-                        'view_count',
-                        'created_at',
-                        'updated_at',
+                        'favoriteCount',
+                        'viewCount',
+                        'createdAt',
+                        'updatedAt',
                     ]
                 ],
             ]);

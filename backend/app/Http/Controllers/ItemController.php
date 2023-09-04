@@ -28,12 +28,12 @@ class ItemController extends Controller
 
     /**
      * 商品検索
-     * @param  Request  $request categoryNameがあればカテゴリーで検索
+     * @param  Request  $request category_nameがあればカテゴリーで検索
      * @return JsonResponse
      */
     public function index(ItemIndexRequest $request): ResourceCollection
     {
-        $items = $this->itemService->getItems($request->categoryName);
+        $items = $this->itemService->getItems($request->category_name);
         return ItemShowResource::collection($items);
     }
 

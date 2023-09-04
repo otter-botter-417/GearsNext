@@ -22,7 +22,7 @@ class ItemsTableSeeder extends Seeder
     {
         $item = Item::create([
             'Item_name' => "ソロベースEX",
-            'brand_id' => 1,
+            'brand_id' => 5,
             'price' => 25581,
             'image_name' => "solobase_ex",
             'asin' => "B0B3W5TG2Y",

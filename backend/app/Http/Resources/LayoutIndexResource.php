@@ -17,12 +17,12 @@ class LayoutIndexResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'layout_id' => $this->layout_id,
-            'user_name' => $this->users->user_name,
-            'favorite_count' => $this->favorite_count,
-            'view_count' => $this->view_count,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'layoutId' => $this->layout_id,
+            'userName' => $this->users->user_name,
+            'favoriteCount' => $this->favorite_count,
+            'viewCount' => $this->view_count,
+            'createdAt' => $this->created_at,
+            'updatedAt' => $this->updated_at,
         ];
     }
 }

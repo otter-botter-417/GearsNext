@@ -24,58 +24,58 @@ class HomeResource extends JsonResource
         return [
             'topViewedItems' => collect($this->resource['topViewedItems'])->map(function ($item) {
                 return [
-                    'item_id' => $item->item_id,
-                    'item_name' => $item->item_name,
-                    'image_name' => $item->image_name,
-                    'favorite_count' => $item->favorite_count,
-                    'view_count' => $item->view_count,
+                    'itemId' => $item->itemId,
+                    'itemName' => $item->itemName,
+                    'imageName' => $item->imageName,
+                    'favoriteCount' => $item->favoriteCount,
+                    'viewCount' => $item->viewCount,
                 ];
             }),
 
             'topFavoriteItems' => collect($this->resource['topFavoriteItems'])->map(function ($item) {
                 return [
-                    'item_id' => $item->item_id,
-                    'item_name' => $item->item_name,
-                    'image_name' => $item->image_name,
-                    'favorite_count' => $item->favorite_count,
-                    'view_count' => $item->view_count,
+                    'itemId' => $item->itemId,
+                    'itemName' => $item->itemName,
+                    'imageName' => $item->imageName,
+                    'favoriteCount' => $item->favoriteCount,
+                    'viewCount' => $item->viewCount,
                 ];
             }),
 
             'newlyArrivedItems' => collect($this->resource['newlyArrivedItems'])->map(function ($item) {
                 return [
-                    'item_id' => $item->item_id,
-                    'item_name' => $item->item_name,
-                    'image_name' => $item->image_name,
-                    'favorite_count' => $item->favorite_count,
-                    'view_count' => $item->view_count,
+                    'itemId' => $item->itemId,
+                    'itemName' => $item->itemName,
+                    'imageName' => $item->imageName,
+                    'favoriteCount' => $item->favoriteCount,
+                    'viewCount' => $item->viewCount,
                 ];
             }),
 
             'topViewedLayouts' => collect($this->resource['topViewedLayouts'])->map(function ($item) {
                 return [
-                    'layout_id' => $item->layout_id,
-                    'favorite_count' => $item->favorite_count,
-                    'view_count' => $item->view_count,
-                    'user_name' => $item->users->user_name,
+                    'layoutId' => $item->layoutId,
+                    'favoriteCount' => $item->favoriteCount,
+                    'viewCount' => $item->viewCount,
+                    'userName' => $item->users->userName,
                 ];
             }),
 
             'topFavoriteLayouts' => collect($this->resource['topFavoriteLayouts'])->map(function ($item) {
                 return [
-                    'layout_id' => $item->layout_id,
-                    'favorite_count' => $item->favorite_count,
-                    'view_count' => $item->view_count,
-                    'user_name' => $item->users->user_name,
+                    'layoutId' => $item->layoutId,
+                    'favoriteCount' => $item->favoriteCount,
+                    'viewCount' => $item->viewCount,
+                    'userName' => $item->users->userName,
                 ];
             }),
 
             'newlyArrivedLayouts' => collect($this->resource['newlyArrivedLayouts'])->map(function ($item) {
                 return [
-                    'layout_id' => $item->layout_id,
-                    'favorite_count' => $item->favorite_count,
-                    'view_count' => $item->view_count,
-                    'user_name' => $item->users->user_name,
+                    'layoutId' => $item->layoutId,
+                    'favoriteCount' => $item->favoriteCount,
+                    'viewCount' => $item->viewCount,
+                    'userName' => $item->users->userName,
                 ];
             }),
         ];

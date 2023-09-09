@@ -10,17 +10,18 @@ import { useCallback } from "react";
  * const response = await sendRequest('GET', 'items', null);
  */
 export const useApiRequest = () => {
+
   /**
    * APIリクエストを送信する関数
-   * @param {string} method リクエストメソッド (GET, POST, PUT, DELETE)
-   * @param {string} url リクエストURL api/以下のパス
-   * @param {any} requestData リクエストデータ
-   * @returns {Promise} APIレスポンス
+   * @param method リクエストメソッド (GET, POST, PUT, DELETE)
+   * @param url リクエストURL api/以下のパス
+   * @param requestData リクエストデータ
+   * @returns APIレスポンス
    * @example
    * const { sendRequest } = useApiRequest();
    * const response = await sendRequest('GET', 'items', null);
    */
-  const sendRequest = useCallback(async (method: string, url: string, requestData: any) => {
+  const sendRequest = useCallback(async (method: string, url: string, requestData: any = null) => {
     const token = localStorage.getItem('jwt_token');
     const headers: { [key: string]: string } = {};
 

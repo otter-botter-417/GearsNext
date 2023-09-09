@@ -28,19 +28,19 @@ export const ItemShareButton: FC<ShareIconButtonProps> = ({
   itemName,
 }) => {
   // Popoverの開閉状態を管理する
-  const [isOpenPopver, setIsOpenPopver] = useState<HTMLButtonElement | null>(
+  const [isOpenPopover, setIsOpenPopover] = useState<HTMLButtonElement | null>(
     null,
   );
 
   const openSharePopover = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setIsOpenPopver(event.currentTarget);
+    setIsOpenPopover(event.currentTarget);
   };
 
   const closeSharePopover = () => {
-    setIsOpenPopver(null);
+    setIsOpenPopover(null);
   };
 
-  const open = Boolean(isOpenPopver);
+  const open = Boolean(isOpenPopover);
   const id = open ? 'share-popover' : undefined;
   const url = `${BASE_URL}/items/${itemId}`;
 
@@ -54,7 +54,7 @@ export const ItemShareButton: FC<ShareIconButtonProps> = ({
       <Popover
         id={id}
         open={open}
-        anchorEl={isOpenPopver}
+        anchorEl={isOpenPopover}
         onClose={closeSharePopover}
         anchorOrigin={{
           vertical: 'bottom',

@@ -27,4 +27,12 @@ interface UserInventoryRepositoryInterface
      * @throws ItemNotInInventoryException 持っている商品に存在しない
      */
     public function removeUserInventoryData(int $userId, int $itemId): void;
+
+    /**
+     * ユーザーの持っているものに登録しているか確認
+     * @param  int  $userId
+     * @param  int  $itemId
+     * @return bool
+     */
+    public function getUserInventoryExists(int $userId,int $itemId): bool;
 }

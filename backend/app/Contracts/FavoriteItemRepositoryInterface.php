@@ -27,4 +27,12 @@ interface FavoriteItemRepositoryInterface
      * @throws ItemNotFavoritedException お気に入りに商品が存在しない場合
      */
     public function removeFavoriteItemData(int $userId, int $itemId): void;
+
+    /**
+     * ユーザーがお気に入り登録しているか確認
+     * @param  int  $userId
+     * @param  int  $itemId
+     * @return bool
+     */
+    public function getUserFavoriteExists(int $userId,int $itemId): bool;
 }

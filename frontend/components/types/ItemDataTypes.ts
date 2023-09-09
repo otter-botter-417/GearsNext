@@ -1,27 +1,43 @@
 export type ItemDataTypes = {
-  item_id: number;
-  item_name: string;
+  itemId: number;
+  itemName: string;
   price: number;
-  image_name: string;
+  imageName: string;
   asin: string;
-  open_size: {
-    open_depth: number,
-    open_height: number,
-    open_width: number,
+  openSize: {
+    openDepth: number,
+    openHeight: number,
+    openWidth: number,
   }
-  storage_size: {
-    storage_depth: number,
-    storage_height: number,
-    storage_width: number,
+  storageSize: {
+    storageDepth: number,
+    storageHeight: number,
+    storageWidth: number,
   }
   weight: number;
-  favorite_count: number;
-  view_count: number;
-  created_at: string;
-  updated_at: string;
-  brand_name: string;
-  category_name: string;
-  sub_category_name: string;
-  item_tags: Array<{ item_tag_name: string }>;
-  color_tags: Array<{ color_tag_name: string }>;
+  favoriteCount: number;
+  viewCount: number;
+  createdAt: string;
+  updatedAt: string;
+  brandName: string;
+  categoryName: string;
+  subCategoryName: string;
+  itemTags: Array<{ itemTagName: string }>;
+  colorTags: Array<{ colorTagName: string }>;
+  itemAttributes: {
+    capacity: number,
+    inner_tent: string,
+    grand_sheet: string,
+    fabrics: string,
+  }
+  layouts: Array<{
+    layoutId: number,
+    favoriteCount: number,
+    viewCount: number,
+  }>
+  user: {
+    isLoggedIn: boolean,
+    isFavorited: boolean,
+    isInInventory: boolean,
+  }
 };

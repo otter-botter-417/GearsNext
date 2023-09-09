@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 
 import { ItemDataTypes } from '@/components/types/ItemDataTypes';
 import { getItemImageUrl } from '@/components/shares/atoms/getItemImageUrl';
+import { useRouter } from 'next/router';
 
 type ItemThumbnailProps = {
   ItemData: ItemDataTypes;
@@ -19,9 +20,12 @@ type ItemThumbnailProps = {
  */
 export const ItemThumbnail: React.FC<ItemThumbnailProps> = ({ ItemData }) => {
   const ItemImagesUrl: string = getItemImageUrl(
-    ItemData.brand_name,
-    ItemData.image_name,
+    ItemData.brandName,
+    ItemData.imageName,
   );
+
+  const router = useRouter();
+  const { itemId } = router.query;
 
   return (
     <Grid
@@ -33,7 +37,7 @@ export const ItemThumbnail: React.FC<ItemThumbnailProps> = ({ ItemData }) => {
     >
       {/* 商品画像 */}
       <Grid item xs={12} sm={12} md={12}>
-        <Link href={`/items/${ItemData.item_id}`}>
+        <Link href={`/items/${ItemData.itemId}`}>
           <Image
             src={ItemImagesUrl}
             alt="item image"
@@ -45,11 +49,11 @@ export const ItemThumbnail: React.FC<ItemThumbnailProps> = ({ ItemData }) => {
           />
         </Link>
       </Grid>
-      
+
       {/* 基本情報 */}
       <Box display="flex" flexDirection="column" alignItems="center">
-        <Typography variant={'body2'}>{ItemData.brand_name}</Typography>
-        <Typography variant={'h6'}>{ItemData.item_name}</Typography>
+        <Typography variant={'body2'}>{ItemData.brandName}</Typography>
+        <Typography variant={'h6'}>{ItemData.imageName}</Typography>
         <Typography variant={'h6'}>
           ¥{ItemData.price.toLocaleString()}
         </Typography>

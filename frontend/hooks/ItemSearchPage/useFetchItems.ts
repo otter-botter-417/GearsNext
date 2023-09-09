@@ -1,7 +1,7 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { useApiRequest } from '@/hooks/api/useApiRequest';
-import { useErrorHandler } from '@/hooks/useErrorHandler ';
+import { useErrorHandler } from '@/hooks/api/useErrorHandler ';
 
 import { categoryValueState } from '@/components/shares/atoms/state/categoryValueState';
 import { apiFetchedItemsState } from '@/components/shares/atoms/state/apiFetchedItemsState';

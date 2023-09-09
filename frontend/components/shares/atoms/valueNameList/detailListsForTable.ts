@@ -1,3 +1,6 @@
+/**
+ * テーブルの詳細項目名リスト
+ */
 export const detailListsForTable = () => {
   const FormNamesList = [
     { name: "heightAdjustment", label: "高さ調節" },

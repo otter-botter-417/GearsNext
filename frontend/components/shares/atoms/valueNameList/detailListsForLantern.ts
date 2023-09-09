@@ -1,3 +1,6 @@
+/**
+ * ランタンの詳細項目名リスト
+ */
 export const detailListsForLantern = () => {
   const FormNamesList = [
     { name: "fuelType", label: "燃料" },

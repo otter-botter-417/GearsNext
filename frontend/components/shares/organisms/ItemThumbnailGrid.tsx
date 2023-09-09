@@ -13,7 +13,7 @@ import { filteredItemsState } from '@/components/shares/atoms/state/filteredItem
  * @example
  * <ItemThumbnailGrid />
  */
-const ItemThumbnailGrid = () => {
+export const ItemThumbnailGrid = () => {
   const filteredItemList = useRecoilValue(filteredItemsState);
   return (
     <Grid
@@ -34,5 +34,3 @@ const ItemThumbnailGrid = () => {
     </Grid>
   );
 };
-
-export default ItemThumbnailGrid;

@@ -1,0 +1,13 @@
+/* styles/global.css */
+.flashBackground {
+  animation: flashBackground 0.5s ease-out;
+}
+
+@keyframes flashBackground {
+  from {
+    background-color: yellow;
+  }
+  to {
+    background-color: white;
+  }
+}

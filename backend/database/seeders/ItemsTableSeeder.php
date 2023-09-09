@@ -42,6 +42,7 @@ class ItemsTableSeeder extends Seeder
         $colorTagIds = ColorTag::create(['color_tag_name' => "オリーブ"])->color_tag_id;
         $itemTagIds = ItemTag::create(['item_tag_name' => "無骨"])->item_tag_id;
         $attributesData = [
+            ['category_id' => $item->category_id, 'attribute_name' => "capacity", 'attribute_value' => 2],
             ['category_id' => $item->category_id, 'attribute_name' => "inner_tent", 'attribute_value' => "付属"],
             ['category_id' => $item->category_id, 'attribute_name' => "grand_sheet", 'attribute_value' => "無し"],
             ['category_id' => $item->category_id, 'attribute_name' => "fabrics", 'attribute_value' => "TC"],

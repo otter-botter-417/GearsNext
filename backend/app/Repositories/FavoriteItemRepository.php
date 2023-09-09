@@ -69,4 +69,15 @@ class FavoriteItemRepository implements FavoriteItemRepositoryInterface
         }
         $favoriteItem->delete();
     }
+
+    /**
+     * ユーザーがお気に入り登録しているか確認
+     * @param  int  $userId
+     * @param  int  $itemId
+     * @return bool
+     */
+    public function getUserFavoriteExists(int $userId,int $itemId): bool
+    {
+        return $this->model->where('user_id', $userId)->where('item_id', $itemId)->exists();
+    }
 }

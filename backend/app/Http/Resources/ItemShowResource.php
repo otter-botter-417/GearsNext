@@ -51,12 +51,8 @@ class ItemShowResource extends JsonResource
                 ];
             }),
 
-            'itemAttributes' => $this->itemAttributes->map(function ($item_attributes) {
-                return [
-                    'attributeName' => $item_attributes->attribute_name,
-                    'attributeValue' => $item_attributes->attribute_value,
-                ];
-            }),
+            'itemAttributes' => $this->itemAttributes
+            ->pluck('attribute_value', 'attribute_name')->toArray(),
 
             'layouts' => $this->layouts->map(function ($layouts) {
                 return [
@@ -65,6 +61,12 @@ class ItemShowResource extends JsonResource
                     'viewCount' => $layouts->view_count,
                 ];
             }),
+
+            'user' => [
+                'isLoggedIn' => $this->isLoggedIn,
+                'isFavorited' => $this->userFavoriteExists,
+                'isInInventory' => $this->userInventoryExists,
+            ],
         ];
     }
 }

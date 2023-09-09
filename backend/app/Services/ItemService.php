@@ -10,6 +10,8 @@ use App\Contracts\ItemRepositoryInterface;
 use App\Contracts\BrandRepositoryInterface;
 use App\Contracts\CategoryRepositoryInterface;
 use App\Contracts\SubCategoryRepositoryInterface;
+use App\Contracts\FavoriteItemRepositoryInterface;
+use App\Contracts\UserInventoryRepositoryInterface;
 use App\Contracts\ViewItemHistoryRepositoryInterface;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Collection;
@@ -41,6 +43,16 @@ class ItemService
     protected $subCategoryRepository;
 
     /**
+     * @var FavoriteItemRepositoryInterface
+     */
+    protected $favoriteItemRepository; 
+    
+    /**
+     * @var UserInventoryRepositoryInterface
+     */
+    protected $userInventoryRepository;
+
+    /**
      * @var ViewItemHistoryRepositoryInterface
      */
     protected $viewItemHistoryRepository;
@@ -50,12 +62,16 @@ class ItemService
         BrandRepositoryInterface $brandRepository,
         CategoryRepositoryInterface $categoryRepository,
         SubCategoryRepositoryInterface $subCategoryRepository,
-        ViewItemHistoryRepositoryInterface $viewItemHistoryRepository
+        FavoriteItemRepositoryInterface $favoriteItemRepository,
+        UserInventoryRepositoryInterface $userInventoryRepository,
+        ViewItemHistoryRepositoryInterface $viewItemHistoryRepository,
     ) {
         $this->itemRepository = $itemRepository;
         $this->brandRepository = $brandRepository;
         $this->categoryRepository = $categoryRepository;
         $this->subCategoryRepository = $subCategoryRepository;
+        $this->favoriteItemRepository = $favoriteItemRepository;
+        $this->userInventoryRepository = $userInventoryRepository;
         $this->viewItemHistoryRepository = $viewItemHistoryRepository;
     }
 
@@ -185,11 +201,35 @@ class ItemService
     public function getItemDetails(Item $item,  ?int $userId = null): Item
     {
         $itemData = $this->itemRepository->getItemDataWithRelations($item);
-        if ($userId) {
-            $this->viewItemHistoryRepository->saveViewItemHistory($userId, $item->item_id);
-        }
 
+        if (!$userId) {
+            $itemData->isLoggedIn = false;
+            return $itemData;
+        }
+        
+        $itemData->isLoggedIn = true;
+        $userItemStatus = $this->getItemFavoriteAndInventoryStatus($userId, $item->item_id);
+        $this->viewItemHistoryRepository->saveViewItemHistory($userId, $item->item_id);
+        $itemData->userFavoriteExists = $userItemStatus['userFavoriteExists'];
+        $itemData->userInventoryExists = $userItemStatus['userInventoryExists'];
+        
         return $itemData;
+    }
+
+    /**
+     * ユーザーが商品のお気に入りと持っている物に登録しているかを取得
+     * @param  int $userId
+     * @param  int $itemId
+     * @return array
+     */
+    private function getItemFavoriteAndInventoryStatus(int $userId,int $itemId): array
+    {
+        $userFavoriteExists = $this->favoriteItemRepository->getUserFavoriteExists($userId, $itemId);
+        $userInventoryExists = $this->userInventoryRepository->getUserInventoryExists($userId, $itemId);
+        return [
+            'userFavoriteExists' => $userFavoriteExists,
+            'userInventoryExists' => $userInventoryExists
+        ];;
     }
 
     /**

@@ -1,4 +1,4 @@
-import { ValidatedTextField } from "@/components/atoms/form/ValidatedTextFieldForSizes";
+import { ValidatedTextField } from "@/components/shares/atoms/form/ValidatedTextFieldForSizes";
 import { Grid } from "@mui/material";
 import { UseFormReturn } from "react-hook-form";
 

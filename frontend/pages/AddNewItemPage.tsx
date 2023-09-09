@@ -2,12 +2,12 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useItemForm } from '../hooks/useItemFormToLaravel'; // mongoDBに商品データを送信するためのカスタムフック
-import { AddNewItemValidatedSchema } from '@/components/atoms/schema/AddNewItemValidatedSchema';
 import { SubmitButton } from '@/components/shares/atoms/SubmitButton';
 import AddNewItemPageTemplate from '@/components/templates/AddNewItemPageTemplate';
 import BaseItemDataForm from '@/components/shares/organisms/BaseItemDataForm';
-import CategoryDetailList from '@/components/shares/molecules/itemAppend/CategoryDetailList';
+import CategoryDetailList from '@/components/shares/molecules/CategoryDetailList';
 import { useDetailFormMethods } from '@/hooks/useDetailFormMethods';
+import { AddNewItemValidatedSchema } from '@/components/shares/atoms/schema/AddNewItemValidatedSchema';
 
 // 新規に商品情報をmongoDBに送信、登録するページ
 const AddNewItemPage = () => {

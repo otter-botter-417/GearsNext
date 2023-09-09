@@ -15,9 +15,12 @@ export const CategoryDetailSwitcher: FC<CategoryDetailSwitcherProps> = ({
 }) => {
   if (categoryName === 'テント') {
     return <TentDetails />;
-  } else if (categoryName === 'タープ') {
-    return <TarpDetails />;
-  } else if (categoryName === 'シュラフ') {
-    return <SleepingBagDetails />;
   }
+
+  //　TODO　テント以外も実装する
+  // else if (categoryName === 'タープ') {
+  //   return <TarpDetails />;
+  // } else if (categoryName === 'シュラフ') {
+  //   return <SleepingBagDetails />;
+  // }
 };

@@ -1,3 +1,6 @@
+/**
+ * チェアの詳細項目名リスト
+ */
 export const detailListsForChair = () => {
   const FormNamesList = [
     { name: "seatHeight", label: "座面高さ" },

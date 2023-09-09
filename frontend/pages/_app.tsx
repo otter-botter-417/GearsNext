@@ -5,6 +5,7 @@ import { Box, CssBaseline } from '@mui/material';
 import Header from './Header';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import React from 'react';
+import '../styles/global.css';
 
 import themeOptions from '@/styles/themes/themeOptions';
 

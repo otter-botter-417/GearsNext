@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Typography } from '@mui/material';
-import { ItemDetailText } from '../../../atoms/itemPage/text/ItemDetailText';
+import { ItemDetailText } from '@/components/shares/atoms/text/ItemDetailText';
 
 type priceType = {
   price: number;

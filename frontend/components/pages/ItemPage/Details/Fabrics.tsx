@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { ItemDataText } from '../../../atoms/itemPage/text/ItemDataText';
-import { ItemDetailListText } from '../../../atoms/itemPage/text/ItemDetailListText';
+import { ItemDataText } from '@/components/shares/atoms/text/ItemDataText';
+import { ItemDetailListText } from '@/components/shares/atoms/text/ItemDetailListText';
 
 type fabricsType = {
   fabrics: string;

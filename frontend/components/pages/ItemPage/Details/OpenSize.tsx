@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { ItemDataText } from '../../../atoms/itemPage/text/ItemDataText';
-import { ItemDetailText } from '../../../atoms/itemPage/text/ItemDetailText';
+import { ItemDataText } from '@/components/shares/atoms/text/ItemDataText';
+import { ItemDetailText } from '@/components/shares/atoms/text/ItemDetailText';
 interface openSizesProps {
   openSizes: {
     openWidth: number;

@@ -9,7 +9,7 @@ import { useFlashBackgroundOnRender } from '@/hooks/useFlashBackgroundOnRender';
 
 import { ItemBaseData } from '@/components/shares/organisms/ItemBaseData';
 import { LayoutImageList } from '@/components/shares/organisms/LayoutImageList';
-import { ItemDetailHeader } from '@/components/shares/molecules/ItemDetailHeader';
+import { ItemDetailHeader } from '@/components/pages/ItemPage/ItemDetailHeader';
 import { itemDetailState } from '@/components/shares/atoms/state/itemDetailState';
 import { ItemDetailPageButtons } from '@/components/pages/ItemPage/ItemDetailPageButtons';
 import { CategoryDetailSwitcher } from '@/components/shares/organisms/CategoryDetailSwitcher';

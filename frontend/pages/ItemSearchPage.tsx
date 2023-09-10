@@ -14,8 +14,12 @@ import { ItemThumbnailGrid } from '@/components/shares/organisms/ItemThumbnailGr
  * 商品検索ページ
  */
 // サブカテゴリーが変更されたとき、商品一覧を取得
+
 export const ItemSearchPage = () => {
   const errorMessage = useRecoilValue(errorMessageState);
+  // TODO カテゴリーが変更されたとき、サブカテゴリーを変更する
+  // サブカテゴリーにすべてを追加する
+  // 絞り込み見直し　多分おかしい
 
   //  カテゴリーが変更されたとき、商品一覧を取得
   useFetchItems();

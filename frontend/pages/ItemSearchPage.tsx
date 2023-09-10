@@ -9,6 +9,7 @@ import { errorMessageState } from '@/components/shares/atoms/state/errorMessageS
 
 import { ItemFilterFields } from '@/components/pages/ItemSearchPage/ItemFilterFields';
 import { ItemThumbnailGrid } from '@/components/shares/organisms/ItemThumbnailGrid';
+import { useFlashBackgroundOnRender } from '@/hooks/useFlashBackgroundOnRender';
 
 /**
  * 商品検索ページ
@@ -32,13 +33,18 @@ export const ItemSearchPage = () => {
     return <div>{errorMessage}</div>;
   }
 
+  // レンダリング時に背景をフラッシュさせる
+  const backgroundColor = useFlashBackgroundOnRender();
+
   return (
-    <Box flexDirection="column">
-      {/* 絞り込み */}
-      <ItemFilterFields />
-      {/* 絞り込み後の商品表示 */}
-      <ItemThumbnailGrid />
-    </Box>
+    <div className="flashBackground" style={{ backgroundColor }}>
+      <Box flexDirection="column">
+        {/* 絞り込み */}
+        <ItemFilterFields />
+        {/* 絞り込み後の商品表示 */}
+        <ItemThumbnailGrid />
+      </Box>
+    </div>
   );
 };
 

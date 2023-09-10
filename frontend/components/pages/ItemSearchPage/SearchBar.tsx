@@ -20,7 +20,7 @@ export const SearchBar = () => {
   return (
     <Autocomplete
       options={items}
-      getOptionLabel={(option) => option.item_name}
+      getOptionLabel={(option) => option.itemName}
       onInputChange={(_, newInputValue) => {
         setItemSearchQuery(newInputValue);
       }}

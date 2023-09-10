@@ -56,12 +56,12 @@ export const useItemFilters = () => {
 
         // サブカテゴリーが選択されている場合は、サブカテゴリーで絞り込む
         if (subCategoryValue) {
-            filtered = filtered.filter((item) => item.sub_category_name === subCategoryValue);
+            filtered = filtered.filter((item) => item.subCategoryName === subCategoryValue);
         }
 
         //商品名で絞り込む
         if (itemSearchQuery) {
-            filtered = filtered.filter((item) => item.item_name.includes(itemSearchQuery));
+            filtered = filtered.filter((item) => item.itemName.includes(itemSearchQuery));
         }
 
         // スライダーの値が設定されている場合は、価格で絞り込む
@@ -71,12 +71,12 @@ export const useItemFilters = () => {
 
         // 商品タグが設定されている場合は、商品タグで絞り込む
         if (itemTags.length > 0) {
-            filtered = filterItemsByTags(filtered, itemTags, 'item_tags', 'item_tag_name');
+            filtered = filterItemsByTags(filtered, itemTags, 'itemTags', 'itemTagName');
         }
 
         // カラータグが設定されている場合は、カラータグで絞り込む
         if (colorTags.length > 0) {
-            filtered = filterItemsByTags(filtered, colorTags, 'color_tags', 'color_tag_name');
+            filtered = filterItemsByTags(filtered, colorTags, 'colorTags', 'colorTagName');
         }
 
         // 並び替えパターンが設定されている場合は、並び替える

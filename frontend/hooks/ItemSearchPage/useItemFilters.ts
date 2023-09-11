@@ -12,6 +12,7 @@ import { apiFetchedItemsState } from '@/components/shares/atoms/state/apiFetched
 import { useEffect } from 'react';
 import { useAllRecoilValuesForSearch } from './useAllRecoilValuesForSearch';
 import { itemSearchQueryState } from '@/components/shares/atoms/state/itemSearchQueryState';
+import { initializeFiltersState } from '@/components/shares/atoms/state/initializeFiltersState';
 
 /**
  * 絞り込み条件変更時、商品一覧を絞り込みするカスタムフック
@@ -30,6 +31,8 @@ export const useItemFilters = () => {
     const filterSwitch = useRecoilValue(filterSwitchState);
     const apiFetchedItems = useRecoilValue(apiFetchedItemsState);
     const itemSearchQuery = useRecoilValue(itemSearchQueryState);
+    const initializeFilters = useRecoilValue(initializeFiltersState);
+
     // すべてのRecoilの値を一つのオブジェクトで管理
     const allRecoilValues = useAllRecoilValuesForSearch();
     interface TagObject {
@@ -53,6 +56,12 @@ export const useItemFilters = () => {
      */
     const applyFilters = () => {
         let filtered = [...apiFetchedItems];
+        if (!initializeFilters) {
+            setFilteredItems(filtered);
+            setFilteredItemCount(filtered.length);
+            return
+        };
+
 
         // サブカテゴリーが選択されている場合は、サブカテゴリーで絞り込む
         if (subCategoryValue) {

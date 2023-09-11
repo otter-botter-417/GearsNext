@@ -1,5 +1,5 @@
-import { BrandNameList } from "@/components/atoms/itemAppend/SelectNames/BrandNameList";
-import { CategoryNameList } from "@/components/atoms/itemAppend/SelectNames/CategoryNameList";
+import { BrandNameList } from "@/components/shares/atoms/SelectNames/BrandNameList";
+import { CategoryNameList } from "@/components/shares/atoms/SelectNames/CategoryNameList";
 
 export const DropDownListSelector = ({
   idName,

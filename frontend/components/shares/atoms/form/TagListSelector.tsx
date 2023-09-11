@@ -1,6 +1,6 @@
 import React from "react";
-import { ItemTagList } from "@/components/atoms/itemAppend/SelectNames/ItemTagList";
-import { ColorTagList } from "@/components/atoms/itemAppend/SelectNames/ColorTagList";
+import { ItemTagList } from "@/components/shares/atoms/SelectNames/ItemTagList";
+import { ColorTagList } from "@/components/shares/atoms/SelectNames/ColorTagList";
 
 export const TagListSelector = ({ idName }: { idName: string }): string[] => {
   let tagList: string[];

@@ -1,4 +1,4 @@
-import { ValidatedTextField } from "@/components/atoms/form/ValidatedTextField";
+import { ValidatedTextField } from "@/components/shares/atoms/form/ValidatedTextField";
 import { UseFormReturn } from "react-hook-form";
 
 interface ItemInformationFieldsProps {
@@ -15,14 +15,14 @@ export const ItemDetailInputFields: React.FC<ItemInformationFieldsProps> = ({
 }) => {
   return (
     <>
-      {inputFormFieldsList.map((field) => (
+      {/* {inputFormFieldsList.map((field) => (
         <ValidatedTextField
           key={field.name}
           name={field.name}
           label={field.label}
           formMethods={formMethods}
         />
-      ))}
+      ))} */}
     </>
   );
 };

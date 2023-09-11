@@ -4,7 +4,7 @@ import Slider from '@mui/material/Slider';
 import { Box, Input } from '@mui/material';
 import { BarChart, Bar, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
-import { ItemDataText } from '@/components/atoms/itemPage/text/ItemDataText';
+import { ItemDataText } from '@/components/shares/atoms/text/ItemDataText';
 import { priceAfterLimitValueState } from '@/components/shares/atoms/state/priceAfterLimitValueState';
 import { itemPriceListForSliderState } from '@/components/shares/atoms/state/itemPriceListForSliderState';
 import { itemPriceRangeForSliderState } from '@/components/shares/atoms/state/itemPriceRangeForSliderState';

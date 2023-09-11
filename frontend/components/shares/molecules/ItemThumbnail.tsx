@@ -53,7 +53,7 @@ export const ItemThumbnail: React.FC<ItemThumbnailProps> = ({ ItemData }) => {
       {/* 基本情報 */}
       <Box display="flex" flexDirection="column" alignItems="center">
         <Typography variant={'body2'}>{ItemData.brandName}</Typography>
-        <Typography variant={'h6'}>{ItemData.imageName}</Typography>
+        <Typography variant={'h6'}>{ItemData.itemName}</Typography>
         <Typography variant={'h6'}>
           ¥{ItemData.price.toLocaleString()}
         </Typography>

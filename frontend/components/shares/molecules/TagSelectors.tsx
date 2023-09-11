@@ -1,7 +1,7 @@
-import React from "react";
-import { UseFormReturn } from "react-hook-form";
-import { TagFormNamesList } from "@/components/atoms/valueNameList/TagFormNamesList";
-import { TagSelector } from "../../atoms/form/TagSelector";
+import React from 'react';
+import { UseFormReturn } from 'react-hook-form';
+import { TagFormNamesList } from '@/components/shares/atoms/valueNameList/TagFormNamesList';
+import { TagSelector } from '../atoms/form/TagSelector';
 
 interface TagSelectorsProps {
   formMethods: UseFormReturn<any>;

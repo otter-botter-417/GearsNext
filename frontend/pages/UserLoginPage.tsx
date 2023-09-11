@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Typography } from '@mui/material';
 
@@ -14,7 +14,11 @@ import LoginForm from '@/components/pages/userLoginPage/LoginForm';
  */
 const UserLoginPage = () => {
   const { formMethods, onSubmit } = useUserLogin();
-  const isAuthenticated = localStorage.getItem('jwt_token') ? true : false;
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    setIsAuthenticated(!!localStorage.getItem('jwt_token'));
+  }, []);
 
   return (
     <RegisterPageTemplate>

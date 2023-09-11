@@ -1,4 +1,4 @@
-import { ItemInformationInputFields } from '@/components/shares/atoms/form/ValidationInputFields';
+import { ItemDetailInputFields } from '@/components/shares/atoms/form/ItemDetailInputFields';
 import { detailListsForChair } from '@/components/shares/atoms/valueNameList/detailListsForChair';
 import { detailListsForLantern } from '@/components/shares/atoms/valueNameList/detailListsForLantern';
 import { detailListsForTable } from '@/components/shares/atoms/valueNameList/detailListsForTable';
@@ -42,7 +42,7 @@ const CategoryDetailList: React.FC<formMethodsProps> = ({
 
   return (
     <>
-      <ItemInformationInputFields
+      <ItemDetailInputFields
         formMethods={detailFormMethods}
         inputFormFieldsList={detailList}
       />

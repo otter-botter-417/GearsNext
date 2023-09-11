@@ -204,6 +204,8 @@ class ItemService
 
         if (!$userId) {
             $itemData->isLoggedIn = false;
+            $itemData->userFavoriteExists = false;
+            $itemData->userInventoryExists = false;
             return $itemData;
         }
         

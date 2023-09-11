@@ -2,6 +2,7 @@ import { TentDetails } from '../../pages/ItemPage/TentDetails';
 import { FC } from 'react';
 type CategoryDetailSwitcherProps = {
   categoryName: string;
+  itemAttributes: any;
 };
 
 /**
@@ -12,10 +13,12 @@ type CategoryDetailSwitcherProps = {
  */
 export const CategoryDetailSwitcher: FC<CategoryDetailSwitcherProps> = ({
   categoryName,
+  itemAttributes,
 }) => {
   if (categoryName === 'テント') {
-    return <TentDetails />;
+    return <TentDetails itemAttributes={itemAttributes} />;
   }
+  return null;
 
   //　TODO　テント以外も実装する
   // else if (categoryName === 'タープ') {

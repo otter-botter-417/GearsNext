@@ -6,6 +6,7 @@ import { filterSwitchState } from '@/components/shares/atoms/state/filterSwitchS
 
 /**
  * 商品検索ページの絞り込み条件のAND/ORを切り替えるトグルボタン
+ * 
  * @example
  * <FilterToggleButton />
  */

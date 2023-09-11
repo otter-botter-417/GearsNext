@@ -13,8 +13,7 @@ type priceType = {
  * @example
  * <Price price={price} />
  */
-export const Price: FC<priceType> = (props) => {
-  const { price } = props;
+export const Price: FC<priceType> = ({ price = 0 }) => {
   return (
     <div>
       <Typography variant={'h6'}>メーカー希望小売価格</Typography>

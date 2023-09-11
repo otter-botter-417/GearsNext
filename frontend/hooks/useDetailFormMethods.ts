@@ -1,8 +1,8 @@
-import { ChairDetailValidatedSchema } from "@/components/atoms/schema/ChairDetailValidatedSchema";
-import { LanternDetailValidatedSchema } from "@/components/atoms/schema/LanternDetailValidatedSchema";
-import { TableDetailValidatedSchema } from "@/components/atoms/schema/TableDetailValidatedSchema";
-import { TarpDetailValidatedSchema } from "@/components/atoms/schema/TarpDetailValidatedSchema";
-import { TentDetailValidatedSchema } from "@/components/atoms/schema/TentDetailValidatedSchema";
+import { ChairDetailValidatedSchema } from "@/components/shares/atoms/schema/ChairDetailValidatedSchema";
+import { LanternDetailValidatedSchema } from "@/components/shares/atoms/schema/LanternDetailValidatedSchema";
+import { TableDetailValidatedSchema } from "@/components/shares/atoms/schema/TableDetailValidatedSchema";
+import { TarpDetailValidatedSchema } from "@/components/shares/atoms/schema/TarpDetailValidatedSchema";
+import { TentDetailValidatedSchema } from "@/components/shares/atoms/schema/TentDetailValidatedSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
 import { UseFormReturn, useForm } from "react-hook-form";

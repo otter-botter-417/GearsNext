@@ -16,8 +16,9 @@ interface openSizesProps {
  * @example
  * <OpenSize openSizes={openSizes} />
  */
-export const OpenSize: FC<openSizesProps> = (props) => {
-  const { openSizes } = props;
+export const OpenSize: FC<openSizesProps> = ({
+  openSizes = { openWidth: 0, openDepth: 0, openHeight: 0 },
+}) => {
   return (
     <div>
       <ItemDataText text={'サイズ (幅×奥行き×高さ)'} />

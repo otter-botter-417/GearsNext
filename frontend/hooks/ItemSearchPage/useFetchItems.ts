@@ -10,6 +10,7 @@ import { itemPriceListForSliderState } from '@/components/shares/atoms/state/ite
 import { itemPriceRangeForSliderState } from '@/components/shares/atoms/state/itemPriceRangeForSliderState';
 import { useEffect } from 'react';
 import { priceAfterLimitValueState } from '@/components/shares/atoms/state/priceAfterLimitValueState';
+import { initializeFiltersState } from '@/components/shares/atoms/state/initializeFiltersState';
 
 /**
  * 商品一覧と価格情報を管理するカスタムフック。
@@ -27,6 +28,8 @@ export const useFetchItems = () => {
     const setItemPriceListForSlider = useSetRecoilState(itemPriceListForSliderState);
     const setItemPriceRangeForSliderState = useSetRecoilState(itemPriceRangeForSliderState);
     const setPriceAfterLimitValue = useSetRecoilState(priceAfterLimitValueState);
+    const initializeFilters = useRecoilValue(initializeFiltersState);
+
 
     /**
      * 価格情報を設定するヘルパー関数
@@ -53,8 +56,8 @@ export const useFetchItems = () => {
      */
     const fetchItems = async () => {
         try {
+            console.log('fetchItems');
             if (typeof window === 'undefined') return;
-
             const url = categoryValue !== 'すべてのカテゴリー'
                 ? `items?category_name=${categoryValue}`
                 : 'items';
@@ -79,6 +82,9 @@ export const useFetchItems = () => {
     };
 
     useEffect(() => {
+        if (!initializeFilters) return;
         fetchItems();
     }, [categoryValue]);
+
+    return { setPriceInfoForSlider };
 };

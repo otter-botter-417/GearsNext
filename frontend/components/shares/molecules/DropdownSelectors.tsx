@@ -1,8 +1,7 @@
-import React from "react";
-import { ValidatedTextField } from "@/components/atoms/form/ValidatedTextField";
-import { UseFormReturn } from "react-hook-form";
-import { DropDownFormNamesList } from "@/components/atoms/valueNameList/DropDownFormNamesList";
-import { DropdownSelector } from "../../atoms/form/DropdownSelector";
+import React from 'react';
+import { UseFormReturn } from 'react-hook-form';
+import { DropDownFormNamesList } from '@/components/shares/atoms/valueNameList/DropDownFormNamesList';
+import { DropdownSelector } from '../atoms/form/DropdownSelector';
 
 interface ItemInformationFieldsProps {
   formMethods: UseFormReturn<any>;

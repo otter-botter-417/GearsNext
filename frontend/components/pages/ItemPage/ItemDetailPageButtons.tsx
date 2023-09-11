@@ -4,14 +4,11 @@ import { Box } from '@mui/material';
 import { FavoriteIconButton } from './FavoriteIconButton';
 import { ItemShareButton } from './ItemShareButton';
 import { InventoryIconButton } from './InventoryIconButton';
+import { userItemStatesState } from '@/components/shares/atoms/state/userItemStatesState';
+import { useRecoilValue } from 'recoil';
 
 interface ItemDetailPageButtonsProps {
-  itemId: number;
-  user: {
-    isLoggedIn: boolean;
-    isFavorited: boolean;
-    isInInventory: boolean;
-  };
+  itemId: string | string[] | undefined;
   itemName: string;
 }
 
@@ -22,7 +19,6 @@ interface ItemDetailPageButtonsProps {
  * ・シェアボタン
  *
  * @param itemId
- * @param user
  * @param itemName
  * @example
  * <ItemDetailPageButtons
@@ -33,25 +29,27 @@ interface ItemDetailPageButtonsProps {
  */
 export const ItemDetailPageButtons: FC<ItemDetailPageButtonsProps> = ({
   itemId,
-  user,
   itemName,
 }) => {
+  const userItemStates = useRecoilValue(userItemStatesState);
+  const numericItemId = Number(itemId);
+
   return (
     <Box>
       {/* いいねアイコン */}
       <FavoriteIconButton
-        itemId={itemId}
-        isLoggedIn={user.isLoggedIn}
-        isFavorited={user.isFavorited}
+        itemId={numericItemId}
+        isLoggedIn={userItemStates.isLoggedIn}
+        isFavorited={userItemStates.isFavorited}
       />
       {/* 持っている物アイコン */}
       <InventoryIconButton
-        itemId={itemId}
-        isLoggedIn={user.isLoggedIn}
-        isInInventory={user.isInInventory}
+        itemId={numericItemId}
+        isLoggedIn={userItemStates.isLoggedIn}
+        isInInventory={userItemStates.isInInventory}
       />
       {/* シェアボタン */}
-      <ItemShareButton itemId={itemId} itemName={itemName} />
+      <ItemShareButton itemId={numericItemId} itemName={itemName} />
     </Box>
   );
 };

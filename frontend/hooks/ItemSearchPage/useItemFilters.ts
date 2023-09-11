@@ -12,6 +12,7 @@ import { apiFetchedItemsState } from '@/components/shares/atoms/state/apiFetched
 import { useEffect } from 'react';
 import { useAllRecoilValuesForSearch } from './useAllRecoilValuesForSearch';
 import { itemSearchQueryState } from '@/components/shares/atoms/state/itemSearchQueryState';
+import { initializeFiltersState } from '@/components/shares/atoms/state/initializeFiltersState';
 
 /**
  * 絞り込み条件変更時、商品一覧を絞り込みするカスタムフック
@@ -30,6 +31,8 @@ export const useItemFilters = () => {
     const filterSwitch = useRecoilValue(filterSwitchState);
     const apiFetchedItems = useRecoilValue(apiFetchedItemsState);
     const itemSearchQuery = useRecoilValue(itemSearchQueryState);
+    const initializeFilters = useRecoilValue(initializeFiltersState);
+
     // すべてのRecoilの値を一つのオブジェクトで管理
     const allRecoilValues = useAllRecoilValuesForSearch();
     interface TagObject {
@@ -53,15 +56,21 @@ export const useItemFilters = () => {
      */
     const applyFilters = () => {
         let filtered = [...apiFetchedItems];
+        if (!initializeFilters) {
+            setFilteredItems(filtered);
+            setFilteredItemCount(filtered.length);
+            return
+        };
+
 
         // サブカテゴリーが選択されている場合は、サブカテゴリーで絞り込む
         if (subCategoryValue) {
-            filtered = filtered.filter((item) => item.sub_category_name === subCategoryValue);
+            filtered = filtered.filter((item) => item.subCategoryName === subCategoryValue);
         }
 
         //商品名で絞り込む
         if (itemSearchQuery) {
-            filtered = filtered.filter((item) => item.item_name.includes(itemSearchQuery));
+            filtered = filtered.filter((item) => item.itemName.includes(itemSearchQuery));
         }
 
         // スライダーの値が設定されている場合は、価格で絞り込む
@@ -71,12 +80,12 @@ export const useItemFilters = () => {
 
         // 商品タグが設定されている場合は、商品タグで絞り込む
         if (itemTags.length > 0) {
-            filtered = filterItemsByTags(filtered, itemTags, 'item_tags', 'item_tag_name');
+            filtered = filterItemsByTags(filtered, itemTags, 'itemTags', 'itemTagName');
         }
 
         // カラータグが設定されている場合は、カラータグで絞り込む
         if (colorTags.length > 0) {
-            filtered = filterItemsByTags(filtered, colorTags, 'color_tags', 'color_tag_name');
+            filtered = filterItemsByTags(filtered, colorTags, 'colorTags', 'colorTagName');
         }
 
         // 並び替えパターンが設定されている場合は、並び替える

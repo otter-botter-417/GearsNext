@@ -1,8 +1,8 @@
-import { TextField, MenuItem } from "@mui/material";
-import React from "react";
-import { UseFormReturn, FieldError } from "react-hook-form";
-import { TagListSelector } from "./TagListSelector";
-import { Tags } from "@/components/atoms/itemAppend/Tags";
+import { TextField, MenuItem } from '@mui/material';
+import React from 'react';
+import { UseFormReturn, FieldError } from 'react-hook-form';
+import { TagListSelector } from './TagListSelector';
+// import { Tags } from '@/components/shares/atoms/Tags';
 
 // プルダウン　選択式のフォーム
 
@@ -31,11 +31,12 @@ export const TagSelector: React.FC<TagSelectorProps> = ({
   const optionsList = name ? TagListSelector({ idName: name }) : [];
 
   return (
-    <Tags
-      name={name}
-      text={label}
-      formMethods={formMethods}
-      items={optionsList}
-    />
+    <></>
+    // <Tags
+    //   name={name}
+    //   text={label}
+    //   formMethods={formMethods}
+    //   items={optionsList}
+    // />
   );
 };

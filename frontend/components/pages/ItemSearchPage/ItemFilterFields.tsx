@@ -9,10 +9,10 @@ import {
 import { Box } from '@mui/system';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-import { CategoryNameList } from '@/components/atoms/itemAppend/SelectNames/CategoryNameList';
-import { SubCategoryNameList } from '@/components/atoms/itemAppend/SelectNames/SubCategoryNameList';
-import { ItemTagList } from '@/components/atoms/itemAppend/SelectNames/ItemTagList';
-import { ColorTagList } from '@/components/atoms/itemAppend/SelectNames/ColorTagList';
+import { CategoryNameList } from '@/components/shares/atoms/SelectNames/CategoryNameList';
+import { SubCategoryNameList } from '@/components/shares/atoms/SelectNames/SubCategoryNameList';
+import { ItemTagList } from '@/components/shares/atoms/SelectNames/ItemTagList';
+import { ColorTagList } from '@/components/shares/atoms/SelectNames/ColorTagList';
 
 import { categoryValueState } from '@/components/shares/atoms/state/categoryValueState';
 import { subCategoryValueState } from '@/components/shares/atoms/state/subCategoryValueState';

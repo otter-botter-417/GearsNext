@@ -9,12 +9,11 @@ type capacityType = {
 /**
  * 収容人数を表示する
  *
- * @param props
+ * @param capacity - 収容人数
  * @example
  * <CapacityPeople capacity={capacity} />
  */
-export const CapacityPeople: FC<capacityType> = (props) => {
-  const { capacity } = props;
+export const CapacityPeople: FC<capacityType> = ({ capacity = 0 }) => {
   if (!capacity) return null;
   return (
     <div>

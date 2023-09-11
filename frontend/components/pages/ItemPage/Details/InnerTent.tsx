@@ -13,8 +13,7 @@ type innerTentType = {
  * @example
  * <InnerTent innerTent={innerTent} />
  */
-export const InnerTent: FC<innerTentType> = (props) => {
-  const { innerTent } = props;
+export const InnerTent: FC<innerTentType> = ({ innerTent }) => {
   if (!innerTent) return null;
   return (
     <div>

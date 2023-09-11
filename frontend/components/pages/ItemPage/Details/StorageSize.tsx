@@ -17,8 +17,9 @@ interface storageSizesProps {
  * @example
  * <storageSize storageSizes={storageSizes} />
  */
-export const StorageSize: FC<storageSizesProps> = (props) => {
-  const { storageSizes } = props;
+export const StorageSize: FC<storageSizesProps> = ({
+  storageSizes = { storageWidth: 0, storageDepth: 0, storageHeight: 0 },
+}) => {
   return (
     <div>
       <ItemDataText text={'収納サイズ (幅×奥行き×高さ)'} />

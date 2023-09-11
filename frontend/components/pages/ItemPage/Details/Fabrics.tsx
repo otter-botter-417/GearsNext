@@ -13,8 +13,7 @@ type fabricsType = {
  * @example
  * <Fabrics fabrics={fabrics} />
  */
-export const Fabrics: FC<fabricsType> = (props) => {
-  const { fabrics } = props;
+export const Fabrics: FC<fabricsType> = ({ fabrics }) => {
   if (!fabrics) return null;
 
   return (

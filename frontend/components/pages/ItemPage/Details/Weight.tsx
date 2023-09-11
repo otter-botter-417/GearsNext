@@ -13,8 +13,7 @@ type WeightType = {
  * @example
  * <Weight weight={weight} />
  */
-export const Weight: FC<WeightType> = (props) => {
-  const { weight } = props;
+export const Weight: FC<WeightType> = ({ weight = 0 }) => {
   return (
     <div>
       <ItemDataText text={'重量'} />

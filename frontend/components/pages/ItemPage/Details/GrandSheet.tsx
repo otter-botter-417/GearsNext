@@ -13,8 +13,8 @@ type grandSheetType = {
  * @example
  * <GrandSheet grandSheet={grandSheet} />
  */
-export const GrandSheet: FC<grandSheetType> = (props) => {
-  const { grandSheet } = props;
+export const GrandSheet: FC<grandSheetType> = ({ grandSheet }) => {
+  if (!grandSheet) return null;
   return (
     <div>
       <ItemDataText text={'グランドシート'} />

@@ -17,10 +17,10 @@ const BaseItemDataForm: React.FC<ItemInformationFieldsProps> = ({
     <>
       {/* 手入力の各種商品情報入力コンポーネント */}
       {/* コンポーネントが行方不明 */}
-      <ItemInformationInputFields
+      {/* <ItemInformationInputFields
         formMethods={formMethods}
         inputFormFieldsList={NewItemInputFormFieldsList()}
-      />
+      /> */}
       <Grid container>
         <ItemSizeInputFields
           formMethods={formMethods}

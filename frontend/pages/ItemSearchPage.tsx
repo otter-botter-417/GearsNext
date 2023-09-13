@@ -25,7 +25,7 @@ export async function getStaticProps() {
   const response = await fetch(`http://127.0.0.1:8000/api/items`);
   const itemData = await response.json();
 
-  if (!itemData || !itemData.data || !itemData.data.data) {
+  if (!itemData || !itemData.data) {
     console.error('Invalid data structure:', itemData);
     return {
       props: {
@@ -66,7 +66,6 @@ export const ItemSearchPage = ({
   // 初回レンダリング時だけSSGで取得した商品一覧をセット
   useEffect(() => {
     if (fetchedItems) {
-      console.log('fetchedItems', fetchedItems);
       setApiFetchedItems(fetchedItems);
       setPriceInfoForSlider(fetchedItems);
       setInitializeFilters(true);

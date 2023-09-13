@@ -3,6 +3,7 @@ import { Box } from '@mui/system';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import Link from 'next/link';
+import Image from 'next/image';
 
 import { LAYOUT_IMAGE_BASE_URL } from '@/components/constants';
 
@@ -28,7 +29,7 @@ type LayoutImageListProps = {
  * />
  */
 export const LayoutImageList: FC<LayoutImageListProps> = ({
-  layouts,
+  layouts = [],
   height,
 }) => {
   return (
@@ -43,7 +44,7 @@ export const LayoutImageList: FC<LayoutImageListProps> = ({
         {layouts.map((layout) => (
           <ImageListItem key={layout.layoutId}>
             <Link href={`/layout/${layout.layoutId}`}>
-              <img
+              <Image
                 src={`${LAYOUT_IMAGE_BASE_URL}${layout.layoutId}.png`}
                 alt={`Layout ${layout.layoutId}`}
                 loading="lazy"

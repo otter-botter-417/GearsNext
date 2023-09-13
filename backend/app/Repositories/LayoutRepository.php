@@ -77,6 +77,7 @@ class LayoutRepository implements LayoutRepositoryInterface
             TagPosition::create([
                 'layout_id' => $layout->layout_id,
                 'item_id' => $itemData['item_id'],
+                'item_name' => $itemData['item_name'], 
                 'x_position' => $itemData['x_position'],
                 'y_position' => $itemData['y_position']
             ]);
@@ -93,10 +94,16 @@ class LayoutRepository implements LayoutRepositoryInterface
     public function getLayout(Layout $layout): Layout
     {
         return Layout::where('layout_id', $layout->layout_id)
-            ->with(['items', 'users', 'comments', 'tagPositions'])
+            ->with([
+                'items',
+                'users', 
+                'comments', 
+                'tagPositions' => function($query) {
+                    $query->with('item:item_id,item_name'); // tagPositionsと関連付けられたitemのデータを取得
+                }
+            ])
             ->first();
     }
-
     /**
      * レイアウトの閲覧数をインクリメント
      * @param  Layout  $layout

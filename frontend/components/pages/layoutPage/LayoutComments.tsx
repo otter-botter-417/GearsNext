@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 import Link from 'next/link';
 import { Box, Typography, Button, Link as MuiLink } from '@mui/material';
 
-import { TimeDifferenceFormatter } from './TimeDifferenceFormatter';
+import { TimeDifferenceFormatter } from '../../shares/atoms/TimeDifferenceFormatter';
 
 type CommentType = {
   content: string;

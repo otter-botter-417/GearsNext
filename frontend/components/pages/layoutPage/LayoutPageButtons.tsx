@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Box } from '@mui/material';
 
-import { TimeDifferenceFormatter } from './TimeDifferenceFormatter';
+import { TimeDifferenceFormatter } from '../../shares/atoms/TimeDifferenceFormatter';
 
 interface LayoutPageButtonsProps {
   createdAt: string;

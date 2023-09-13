@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import Image from 'next/legacy/image';
 import { LAYOUT_IMAGE_BASE_URL } from '@/components/constants';
 import Link from 'next/link';
-import { TimeDifferenceFormatter } from './TimeDifferenceFormatter';
+import { TimeDifferenceFormatter } from '../../shares/atoms/TimeDifferenceFormatter';
 
 type LayoutTextProps = {
   text: string;
@@ -18,7 +18,6 @@ export const LayoutText: FC<LayoutTextProps> = ({
   userId,
   createdAt,
 }) => {
-
   return (
     <Box
       sx={{

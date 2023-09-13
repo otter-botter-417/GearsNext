@@ -34,6 +34,10 @@ export const ItemDetailPageButtons: FC<ItemDetailPageButtonsProps> = ({
   const userItemStates = useRecoilValue(userItemStatesState);
   const numericItemId = Number(itemId);
 
+  if (!userItemStates) {
+    return null; // またはローディングスピナー等を表示
+  }
+
   return (
     <Box>
       {/* いいねアイコン */}

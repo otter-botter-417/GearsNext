@@ -17,6 +17,7 @@ class LayoutShowResource extends JsonResource
         return [
             'layoutId' => $this->layout_id,
             'text' => $this->text,
+            'userId' => $this->user_id,
             'userName' => $this->users->user_name,
             'favoriteCount' => $this->favorite_count,
             'viewCount' => $this->view_count,
@@ -30,12 +31,12 @@ class LayoutShowResource extends JsonResource
                     'imageName' => $item->image_name,
                 ];
             }),
-            // 'tagPositions' => $this->tagPositions,
             'tagPositions' => $this->tagPositions->map(function ($tagPosition) {
                 return [
                     'xPosition' => $tagPosition->x_position,
                     'yPosition' => $tagPosition->y_position,
                     'itemId' => $tagPosition->item_id,
+                    'itemName' => $tagPosition->item->item_name,
                 ];
             }),
         ];

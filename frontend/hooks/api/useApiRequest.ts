@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "@/components/constants";
 import axios, { isAxiosError } from "axios";
 
 import { useCallback } from "react";
@@ -32,7 +33,7 @@ export const useApiRequest = () => {
     try {
       const response = await axios.request({
         method,
-        url: `http://localhost:8000/api/${url}`,
+        url: API_BASE_URL + url,
         data: requestData,
         headers
       });

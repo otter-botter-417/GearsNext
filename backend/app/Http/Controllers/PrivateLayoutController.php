@@ -7,9 +7,13 @@ use App\Services\LayoutService;
 use App\Http\Requests\StoreLayoutRequest;
 use App\Http\Requests\UpdateLayoutRequest;
 use App\Http\Resources\LayoutIndexResource;
+use Aws\Exception\AwsException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Response;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * レイアウトに関する操作を管理するコントローラークラスです。
@@ -42,10 +46,11 @@ class PrivateLayoutController extends Controller
      * @return Response
      * @throws ItemNotFoundException 商品が見つからない
      */
-    public function store(StoreLayoutRequest $request): Response
+    public function store(StoreLayoutRequest $request)
     {
-        $data = $request->only(['text', 'items']);
-        $this->layoutService->createLayout($data, Auth::id());
+        $imageFile = $request->file('layout_image');
+        $data = $request->only(['text', 'items', 'image_map_positions']);
+        $this->layoutService->createLayout($imageFile, $data, Auth::id());
         return response(null, 201);
     }
 

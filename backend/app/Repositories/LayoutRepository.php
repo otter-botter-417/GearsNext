@@ -8,6 +8,7 @@ use App\Models\ViewLayoutHistory;
 use App\Contracts\LayoutRepositoryInterface;
 use App\Exceptions\LayoutNotFoundException;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Log;
 
 /**
  * レイアウトに関するリポジトリクラス
@@ -57,21 +58,25 @@ class LayoutRepository implements LayoutRepositoryInterface
      * @param  int $userId
      * @return Layout
      */
-    public function createLayout(string $text, int $userId): Layout
+    public function createLayout(string $text, array $items, int $userId): Layout
     {
-        return Layout::create([
+        $layout = Layout::create([
             'text' => $text,
             'user_id' => $userId,
         ]);
+    
+        // 中間テーブルに item_id を登録
+        $layout->items()->attach($items);    
+        return $layout;
     }
 
     /**
-     * レイアウトに使われている商品を登録する
+     * レイアウトのイメージマップ座標を登録する
      * @param  Layout $layout
      * @param  array $items レイアウトに使われている商品のデータ
      * @return void
      */
-    public function createLayoutItems(Layout $layout, array $items): void
+    public function createLayoutPositions(Layout $layout, array $items): void
     {
         foreach ($items as $itemData) {
             TagPosition::create([
@@ -81,7 +86,6 @@ class LayoutRepository implements LayoutRepositoryInterface
                 'x_position' => $itemData['x_position'],
                 'y_position' => $itemData['y_position']
             ]);
-            $layout->items()->attach($itemData['item_id']);
         }
     }
 
@@ -140,7 +144,7 @@ class LayoutRepository implements LayoutRepositoryInterface
         $layout->save();
         $layout->items()->detach();
         TagPosition::where('layout_id', $layout->layout_id)->delete();
-        $this->createLayoutItems($layout, $data['items']);
+        $this->createLayoutPositions($layout, $data['items']);
     }
 
     /**

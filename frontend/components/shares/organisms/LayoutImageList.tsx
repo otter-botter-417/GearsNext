@@ -45,7 +45,7 @@ export const LayoutImageList: FC<LayoutImageListProps> = ({
           <ImageListItem key={layout.layoutId}>
             <Link href={`/layout/${layout.layoutId}`}>
               <Image
-                src={`${LAYOUT_IMAGE_BASE_URL}${layout.layoutId}.png`}
+                src={`${LAYOUT_IMAGE_BASE_URL}${layout.layoutId}.jpg`}
                 alt={`Layout ${layout.layoutId}`}
                 loading="lazy"
                 style={{

@@ -1,44 +1,38 @@
 import React from 'react';
 import { Button } from '@mui/material';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { imageFileState } from '@/components/shares/atoms/state/imageFileState';
-
+import { FC, useRef } from 'react';
+import { useImageSelector } from '@/hooks/useImageSelector';
 /**
  * このコンポーネントは、画像を選択し直すボタンを提供します。
  * - 画像が選択されていない時は何も表示しません。
  */
-export const ReSelectImageButton = () => {
-  const [imageFile, setImageFile] = useRecoilState(imageFileState);
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImageFile(file);
-    }
-  };
+export const ReSelectImageButton: FC = () => {
+  const imageFile = useRecoilValue(imageFileState);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const imageRef = useRef<HTMLImageElement | null>(null);
+  const { handleFileChange } = useImageSelector({ imageRef });
 
   if (!imageFile) return null;
   return (
     <div>
-      {/* 隠れたinput要素 */}
       <input
         accept="image/*"
-        style={{ display: 'none' }}
-        id="icon-button-file"
         type="file"
-        onChange={handleImageChange}
+        ref={fileInputRef}
+        onChange={handleFileChange}
+        style={{ display: 'none' }}
       />
-      {/* カスタムボタン */}
-      <label htmlFor="icon-button-file">
-        <Button
-          component="span"
-          variant="contained"
-          startIcon={<PhotoCamera />}
-        >
-          画像を選び直す
-        </Button>
-      </label>
+      <Button
+        onClick={() => fileInputRef.current?.click()}
+        variant="contained"
+        style={{
+          padding: '10px 20px',
+        }}
+      >
+        画像を変更
+      </Button>
     </div>
   );
 };

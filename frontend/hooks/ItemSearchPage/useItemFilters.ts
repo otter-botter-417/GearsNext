@@ -101,7 +101,7 @@ export const useItemFilters = () => {
     };
     useEffect(() => {
         applyFilters();
-    }, [allRecoilValues]);
+    }, [allRecoilValues, itemSearchQuery]);
 
     return { applyFilters };
 };

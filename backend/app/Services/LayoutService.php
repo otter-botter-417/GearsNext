@@ -5,8 +5,15 @@ namespace App\Services;
 use App\Models\Layout;
 use App\Contracts\ItemRepositoryInterface;
 use App\Contracts\LayoutRepositoryInterface;
+use Aws\Exception\AwsException;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManagerStatic as Image;
+
 
 /**
  * レイアウトに関するサービスクラス
@@ -59,15 +66,41 @@ class LayoutService
      * @return void
      * @throws ItemNotFoundException 商品が見つからない
      */
-    public function createLayout(array $data, int $userId,): void
+    public function createLayout(UploadedFile $imageFile, array $data, int $userId,): void
     {
-        DB::transaction(function () use ($data, $userId) {
+        DB::transaction(function () use ($imageFile, $data, $userId) {
 
-            $itemIds = array_column($data['items'], 'item_id');
+            // textがnullであれば空文字列を設定
+            $text = isset($data['text']) ? $data['text'] : "";
+            // itemsが存在しない、または空であれば空の配列を設定
+            $items = isset($data['items']) && !empty($data['items']) ? $data['items'] : [];  
+            // image_map_positionsが存在しない、または空であれば空の配列を設定
+            $imageMapPositions = isset($data['image_map_positions']) && !empty($data['image_map_positions']) ? $data['image_map_positions'] : [];
+            
+            $itemIds = array_column($items, 'item_id');
             $this->itemRepository->checkItemsExists($itemIds);
-            $layout = $this->layoutRepository->createLayout($data['text'], $userId);
-            $this->layoutRepository->createLayoutItems($layout, $data['items']);
+
+            $layout = $this->layoutRepository->createLayout($text, $items, $userId);
+            $this->layoutRepository->createLayoutPositions($layout, $imageMapPositions);
+            $this->uploadImage($imageFile, $layout->layout_id);
         });
+    }
+
+    /**
+     * 画像jpgに変換しS3にアップロード
+     */
+    public function uploadImage(UploadedFile $imageFile, int $layoutId): void
+    {
+        try {
+            $inputPath = $imageFile->path();
+            $convertImage = Image::make($inputPath)->encode('jpg');
+            $newFileName = 'layout/image/' . $layoutId . '.jpg';
+            // $convertImage->storeAs('layout/image',new File($newFileName), 's3');
+            Storage::disk('s3')->put($newFileName, (string) $convertImage, 'public');
+            } catch (AwsException $e) {
+                Log::error("AWS Error: " . $e->getMessage());
+                throw $e;
+        }
     }
 
     /**

@@ -17,6 +17,7 @@ export const ImageSelector: FC = () => {
   return (
     <div>
       <input
+        accept="image/*"
         type="file"
         ref={fileInputRef}
         onChange={handleFileChange}

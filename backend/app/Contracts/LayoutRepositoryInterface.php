@@ -33,15 +33,15 @@ interface LayoutRepositoryInterface
      * @param  int $userId
      * @return Layout
      */
-    public function createLayout(string $text, int $userId): Layout;
+    public function createLayout(string $text, array $items, int $userId): Layout;
 
     /**
-     * レイアウトに使われている商品を登録する
+     * レイアウトのイメージマップ座標を登録する
      * @param  Layout $layout
      * @param  array $items レイアウトに使われている商品のデータ
      * @return void
      */
-    public function createLayoutItems(Layout $layout, array $items): void;
+    public function createLayoutPositions(Layout $layout, array $items): void;
 
     /**
      * レイアウトの詳細を取得する

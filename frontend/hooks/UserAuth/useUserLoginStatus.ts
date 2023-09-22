@@ -1,15 +1,22 @@
+import { useEffect, useState } from "react";
+
 /**
  * ユーザーがログインしているかどうかを判定するカスタムフック
  * 
  * @returns boolean ログイン状態
  */
 export const useUserLoginStatus = () => {
-  let isUserLoggedIn: boolean;
-  if (localStorage.getItem('jwt_token')) {
-    isUserLoggedIn = true;
-  } else {
-    isUserLoggedIn = false;
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
-  };
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (localStorage.getItem('jwt_token')) {
+        setIsUserLoggedIn(true);
+      } else {
+        setIsUserLoggedIn(false);
+      }
+    }
+  }, []);
+
   return isUserLoggedIn;
 };

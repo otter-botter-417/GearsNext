@@ -8,6 +8,7 @@ import { itemSearchQueryState } from '@/components/shares/atoms/state/itemSearch
 
 /**
  * 商品検索ページで商品名で検索するためのコンポーネント
+ * レイアウト登録画面での商品検索でも利用
  * オートコンプリート機能付き
  *
  * @example
@@ -20,6 +21,7 @@ export const SearchBar = () => {
   return (
     <Autocomplete
       options={items}
+      freeSolo
       getOptionLabel={(option) => option.itemName}
       onInputChange={(_, newInputValue) => {
         setItemSearchQuery(newInputValue);

@@ -28,7 +28,7 @@ class LayoutShowResource extends JsonResource
                 return [
                     'itemId' => $item->item_id,
                     'itemName' => $item->item_name,
-                    'imageName' => $item->image_name,
+                    'imageName' => config('constants.LAYOUT_IMAGE_BASE_URL') . $this->layout_id . '.jpg',
                 ];
             }),
             'tagPositions' => $this->tagPositions->map(function ($tagPosition) {

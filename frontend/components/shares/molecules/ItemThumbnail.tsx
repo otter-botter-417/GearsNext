@@ -19,11 +19,6 @@ type ItemThumbnailProps = {
  * @returns 商品のサムネイル
  */
 export const ItemThumbnail: React.FC<ItemThumbnailProps> = ({ ItemData }) => {
-  const ItemImagesUrl: string = getItemImageUrl(
-    ItemData.brandName,
-    ItemData.imageName,
-  );
-
   const router = useRouter();
   const { itemId } = router.query;
 
@@ -39,7 +34,7 @@ export const ItemThumbnail: React.FC<ItemThumbnailProps> = ({ ItemData }) => {
       <Grid item xs={12} sm={12} md={12}>
         <Link href={`/items/${ItemData.itemId}`}>
           <Image
-            src={ItemImagesUrl}
+            src={ItemData.imageName}
             alt="item image"
             layout="responsive"
             width={500}

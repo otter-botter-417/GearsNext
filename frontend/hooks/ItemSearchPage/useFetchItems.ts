@@ -56,7 +56,6 @@ export const useFetchItems = () => {
      */
     const fetchItems = async () => {
         try {
-            console.log('fetchItems');
             if (typeof window === 'undefined') return;
             const url = categoryValue !== 'すべてのカテゴリー'
                 ? `items?category_name=${categoryValue}`
@@ -69,7 +68,6 @@ export const useFetchItems = () => {
             }
 
             const fetchedItems = response.data.data;
-            console.log(response.data.data);
             setApiFetchedItems(fetchedItems);
             setPriceInfoForSlider(fetchedItems);
 
@@ -82,7 +80,7 @@ export const useFetchItems = () => {
     };
 
     useEffect(() => {
-        if (!initializeFilters) return;
+        // if (!initializeFilters) return;
         fetchItems();
     }, [categoryValue]);
 

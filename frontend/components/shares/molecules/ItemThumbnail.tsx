@@ -3,12 +3,12 @@ import Image from 'next/legacy/image';
 import { Box, Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
-import { ItemDataTypes } from '@/components/types/ItemDataTypes';
+import { ItemDataType } from '@/components/types/ItemDataType';
 import { getItemImageUrl } from '@/components/shares/atoms/getItemImageUrl';
 import { useRouter } from 'next/router';
 
 type ItemThumbnailProps = {
-  ItemData: ItemDataTypes;
+  ItemData: ItemDataType;
 };
 
 // TODO アマゾンの価格を更新させる

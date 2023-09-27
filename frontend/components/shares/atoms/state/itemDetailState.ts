@@ -1,10 +1,10 @@
 import { atom } from "recoil";
-import { ItemDataTypes } from "@/components/types/ItemDataTypes";
+import { ItemDataType } from "@/components/types/ItemDataType";
 
 /**
  * アイテム詳細のデータを管理するRecoilのatom
  */
-export const itemDetailState = atom<ItemDataTypes | null>({
+export const itemDetailState = atom<ItemDataType | null>({
   key: "itemDetailState",
   default: null,
 });

@@ -6,7 +6,7 @@ import { selectedItemsListState } from '@/components/shares/atoms/state/selected
 import { selectedCategoryNameState } from '@/components/shares/atoms/state/selectedCategoryNameState';
 import { userInventoryItemListState } from '@/components/shares/atoms/state/userInventoryItemListState';
 
-import { ItemDataTypes } from '@/components/types/ItemDataTypes';
+import { ItemDataType } from '@/components/types/ItemDataType';
 
 const SELECTED_CATEGORY = '選択中';
 const ALL_CATEGORY = 'すべて';
@@ -46,9 +46,9 @@ export const ItemsSelectCheckBox: FC = () => {
           ? [
               ...selectedItemsList,
               userInventoryItemList.find((item) => item.itemId === itemId),
-            ].filter((item): item is ItemDataTypes => item !== undefined)
+            ].filter((item): item is ItemDataType => item !== undefined)
           : selectedItemsList.filter((item) => item.itemId !== itemId)
-      ) as ItemDataTypes[];
+      ) as ItemDataType[];
 
       setSelectedItemsList(newSelectedItemsList);
     };

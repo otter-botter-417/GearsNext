@@ -5,7 +5,7 @@ import { useErrorHandler } from '@/hooks/api/useErrorHandler';
 
 import { categoryValueState } from '@/components/shares/atoms/state/categoryValueState';
 import { apiFetchedItemsState } from '@/components/shares/atoms/state/apiFetchedItemsState';
-import { ItemDataTypes } from '@/components/types/ItemDataTypes';
+import { ItemDataType } from '@/components/types/ItemDataType';
 import { itemPriceListForSliderState } from '@/components/shares/atoms/state/itemPriceListForSliderState';
 import { itemPriceRangeForSliderState } from '@/components/shares/atoms/state/itemPriceRangeForSliderState';
 import { useEffect } from 'react';
@@ -36,7 +36,7 @@ export const useFetchItems = () => {
      * 商品一覧から価格のみを抽出し、価格スライダーの設定に使用する
      * @param items 商品一覧
      */
-    const setPriceInfoForSlider = (items: ItemDataTypes[]) => {
+    const setPriceInfoForSlider = (items: ItemDataType[]) => {
         const prices = items.map(item => item.price);
         setItemPriceListForSlider(prices);
         setItemPriceRangeForSliderState({

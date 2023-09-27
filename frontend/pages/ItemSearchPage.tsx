@@ -12,7 +12,7 @@ import { ItemThumbnailGrid } from '@/components/shares/organisms/ItemThumbnailGr
 import { useFlashBackgroundOnRender } from '@/hooks/useFlashBackgroundOnRender';
 import { GetStaticPropsContext } from 'next';
 import { apiFetchedItemsState } from '@/components/shares/atoms/state/apiFetchedItemsState';
-import { ItemDataTypes } from '@/components/types/ItemDataTypes';
+import { ItemDataType } from '@/components/types/ItemDataType';
 import { filteredItemsState } from '@/components/shares/atoms/state/filteredItemsState';
 import { initializeFiltersState } from '@/components/shares/atoms/state/initializeFiltersState';
 import { API_BASE_URL } from '@/components/constants';
@@ -47,7 +47,7 @@ export async function getStaticProps() {
 export const ItemSearchPage = ({
   fetchedItems,
 }: {
-  fetchedItems: ItemDataTypes[];
+  fetchedItems: ItemDataType[];
 }) => {
   const errorMessage = useRecoilValue(errorMessageState);
   // TODO カテゴリーが変更されたとき、サブカテゴリーを変更する

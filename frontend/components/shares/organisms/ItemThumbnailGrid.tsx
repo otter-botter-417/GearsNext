@@ -2,7 +2,7 @@ import React from 'react';
 import { useRecoilValue } from 'recoil';
 import Grid from '@mui/material/Grid';
 
-import { ItemDataTypes } from '@/components/types/ItemDataTypes';
+import { ItemDataType } from '@/components/types/ItemDataType';
 import { ItemThumbnail } from '@/components/shares/molecules/ItemThumbnail';
 import { filteredItemsState } from '@/components/shares/atoms/state/filteredItemsState';
 import { paginationState } from '../atoms/state/paginationState';
@@ -26,11 +26,7 @@ export const ItemThumbnailGrid = () => {
   const endIndex = startIndex + pagination.itemsPerPage;
   const currentItems = filteredItemList?.slice(startIndex, endIndex);
   return (
-    <Box
-      display={'flex'}
-      flexDirection={'column'}
-      alignItems="center"
-    >
+    <Box display={'flex'} flexDirection={'column'} alignItems="center">
       <PaginationControls />
       <Grid
         container
@@ -39,7 +35,7 @@ export const ItemThumbnailGrid = () => {
         style={{ width: '80%', margin: '0 auto' }}
       >
         {currentItems ? (
-          currentItems.map((data: ItemDataTypes, index: number) => (
+          currentItems.map((data: ItemDataType, index: number) => (
             <Grid item xs={5} sm={4} md={3} key={index}>
               <ItemThumbnail ItemData={data} key={`item-${index}`} />
             </Grid>

@@ -5,11 +5,11 @@ namespace App\Services;
 use App\Models\Layout;
 use App\Contracts\ItemRepositoryInterface;
 use App\Contracts\LayoutRepositoryInterface;
+use App\Contracts\FavoriteLayoutRepositoryInterface;
 use Aws\Exception\AwsException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -31,13 +31,20 @@ class LayoutService
      */
     protected $itemRepository;
 
+    /**
+     * @var FavoriteLayoutRepositoryInterface
+     */
+    protected $favoriteLayoutRepository; 
+
     public function __construct(
         LayoutRepositoryInterface $layoutRepository,
-        ItemRepositoryInterface $itemRepository
+        ItemRepositoryInterface $itemRepository,
+        FavoriteLayoutRepositoryInterface $favoriteLayoutRepository,
 
     ) {
         $this->layoutRepository = $layoutRepository;
         $this->itemRepository = $itemRepository;
+        $this->favoriteLayoutRepository = $favoriteLayoutRepository;
     }
 
     /**
@@ -112,14 +119,36 @@ class LayoutService
      */
     public function getLayoutWithHistory(Layout $layout, ?int $userId): Layout
     {
-        $layout = $this->layoutRepository->getLayout($layout);
+        $layoutData = $this->layoutRepository->getLayout($layout);
 
-        if ($userId) {
-            $this->saveViewLayoutHistory($layout, $userId);
+        if (!$userId) {
+            $layoutData->userFavoriteExists = false;
+            $layoutData->userInventoryExists = false;
+            return $layoutData;
         }
+        $userLayoutStatus = $this->getItemFavoriteAndInventoryStatus($userId, $layout->layout_id);
+        $layoutData->userFavoriteExists = $userLayoutStatus['userFavoriteLayoutExists'];
+        // $layoutData->userInventoryExists = $userLayoutStatus['userInventoryLayoutExists'];
+        $this->saveViewLayoutHistory($layout, $userId);
         $this->incrementLayoutViewCount($layout);
 
-        return $layout;
+        return $layoutData;
+    }
+
+        /**
+     * ユーザーが商品のお気に入りと持っている物に登録しているかを取得
+     * @param  int $userId
+     * @param  int $layoutId
+     * @return array
+     */
+    private function getItemFavoriteAndInventoryStatus(int $userId,int $layoutId): array
+    {
+        $userFavoriteExists = $this->favoriteLayoutRepository->getUserFavoriteExists($userId, $layoutId);
+        // $userInventoryExists = $this->userInventoryRepository->getUserInventoryExists($userId, $layoutId);
+        return [
+            'userFavoriteLayoutExists' => $userFavoriteExists,
+            // 'userInventoryLayoutExists' => $userInventoryExists
+        ];;
     }
 
     /**

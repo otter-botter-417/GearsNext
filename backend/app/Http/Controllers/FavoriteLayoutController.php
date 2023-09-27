@@ -7,6 +7,7 @@ use App\Services\FavoriteLayoutService;
 use App\Http\Resources\LayoutIndexResource;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -27,7 +28,7 @@ class FavoriteLayoutController extends Controller
      * ユーザーのお気に入りレイアウトを取得
      * @return JsonResponse
      */
-    public function index()
+    public function index(): ResourceCollection
     {
         $favoriteLayouts = $this->favoriteLayoutService->getFavoriteLayouts(Auth::id());
         return LayoutIndexResource::collection($favoriteLayouts);

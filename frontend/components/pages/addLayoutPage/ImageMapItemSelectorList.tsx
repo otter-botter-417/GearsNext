@@ -48,8 +48,8 @@ export const ImageMapItemSelectorList: FC<ImageMapItemSelectorListType> = ({
           index === existingItemIndex
             ? {
                 ...item,
-                x: textFieldPosition.x,
-                y: textFieldPosition.y,
+                xPosition: textFieldPosition.x,
+                yPosition: textFieldPosition.y,
                 itemName,
               }
             : item,
@@ -59,8 +59,8 @@ export const ImageMapItemSelectorList: FC<ImageMapItemSelectorListType> = ({
         return [
           ...prevList,
           {
-            x: textFieldPosition.x,
-            y: textFieldPosition.y,
+            xPosition: textFieldPosition.x,
+            yPosition: textFieldPosition.y,
             itemId,
             itemName,
           },

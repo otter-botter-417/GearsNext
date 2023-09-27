@@ -14,12 +14,12 @@ import { ItemDetailHeader } from '@/components/pages/ItemPage/ItemDetailHeader';
 import { ItemDetailPageButtons } from '@/components/pages/ItemPage/ItemDetailPageButtons';
 import { CategoryDetailSwitcher } from '@/components/shares/organisms/CategoryDetailSwitcher';
 
-import { ItemDataTypes } from '@/components/types/ItemDataTypes';
+import { ItemDataType } from '@/components/types/ItemDataType';
 import { API_BASE_URL } from '@/components/constants';
 
 interface ItemData {
   data: {
-    data: ItemDataTypes;
+    data: ItemDataType;
   };
 }
 
@@ -55,7 +55,7 @@ export async function getStaticPaths() {
  * @example
  * <ItemPage itemDetail={itemDetail} />
  */
-export const ItemPage = ({ itemDetail }: { itemDetail: ItemDataTypes }) => {
+export const ItemPage = ({ itemDetail }: { itemDetail: ItemDataType }) => {
   const router = useRouter();
   const itemId = router.query.itemId;
   const backgroundColor = useFlashBackgroundOnRender();

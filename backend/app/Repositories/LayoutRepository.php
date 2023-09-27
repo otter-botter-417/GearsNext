@@ -8,7 +8,6 @@ use App\Models\ViewLayoutHistory;
 use App\Contracts\LayoutRepositoryInterface;
 use App\Exceptions\LayoutNotFoundException;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Log;
 
 /**
  * レイアウトに関するリポジトリクラス
@@ -101,7 +100,7 @@ class LayoutRepository implements LayoutRepositoryInterface
             ->with([
                 'items',
                 'users', 
-                'comments', 
+                'comments.user', 
                 'tagPositions' => function($query) {
                     $query->with('item:item_id,item_name'); // tagPositionsと関連付けられたitemのデータを取得
                 }

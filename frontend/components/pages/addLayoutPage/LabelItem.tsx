@@ -2,29 +2,30 @@ import React, { FC, useState } from 'react';
 import { IconButton, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { ImageMapData } from '@/components/types/ImageMapTypes';
+import { ImageMapType } from '@/components/types/ImageMapType';
 
 type LabelItemProps = {
-  item: ImageMapData;
-  onRemove?: (itemId: number) => void;
+  item: ImageMapType;
+  children?: React.ReactNode;
 };
 
 /**
- * このコンポーネントは、画像上に設定された商品ラベルを表示します。
- * ホバー時に削除ボタンが表示され、そのボタンを押すと親コンポーネントのonRemoveメソッドが呼び出されます。
+ * このコンポーネントは、画像上に設定された商品ラベルを動的に表示します。
+ * ホバー時に表示される削除ボタンなどのカスタム要素は、childrenプロパティを通じて親コンポーネントから渡されるべきです。
  *
- * @param {Object} item - 表示する商品の情報。x, y座標と商品ID、商品名が含まれます。
- * @param {Function} onRemove - 削除ボタンがクリックされた時に呼ばれる関数。オプショナル。
+ * @param {Object} props - コンポーネントのプロパティ
+ * @param {ImageMapType} props.item - 表示する商品の情報。x, y座標と商品ID、商品名が含まれます。
+ * @param {React.ReactNode} [props.children] - 追加で表示したい任意のReact要素。オプショナル。
  *
- * @returns {JSX.Element} ラベルと削除ボタンを含むReact要素
+ * @returns {JSX.Element} ラベルと、オプショナルでchildrenを含むReact要素
  *
  * @example
- * // 削除ボタン付き
- * <LabelItem item={item} onRemove={removeLabel} />
- * // 削除ボタンなし
+ * // カスタムの子要素を持つ
+ * <LabelItem item={item}>{customElement}</LabelItem>
+ * // カスタムの子要素なし
  * <LabelItem item={item} />
  */
-export const LabelItem: FC<LabelItemProps> = ({ item, onRemove }) => {
+export const LabelItem: FC<LabelItemProps> = ({ item, children }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   // 動的に座標を設定
@@ -33,8 +34,8 @@ export const LabelItem: FC<LabelItemProps> = ({ item, onRemove }) => {
     padding: '5px',
     borderRadius: '10px',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    top: `${item.y}%`,
-    left: `${item.x}%`,
+    top: `${item.yPosition}%`,
+    left: `${item.xPosition}%`,
   };
 
   return (
@@ -45,19 +46,8 @@ export const LabelItem: FC<LabelItemProps> = ({ item, onRemove }) => {
     >
       <Typography variant="caption" style={{ color: 'white' }}>
         {item.itemName}
+        {isHovered && children}
       </Typography>
-      {isHovered && onRemove && (
-        <IconButton
-          style={{
-            position: 'absolute',
-            top: 0,
-            right: 0,
-          }}
-          onClick={() => onRemove(item.itemId)}
-        >
-          <DeleteIcon sx={{ color: 'white' }}>edit_icon</DeleteIcon>
-        </IconButton>
-      )}
     </div>
   );
 };

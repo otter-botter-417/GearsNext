@@ -1,96 +1,54 @@
-import { Box } from '@mui/system';
 import React, { FC, useState } from 'react';
 import Image from 'next/legacy/image';
+import { Box } from '@mui/material';
+
 import { LAYOUT_IMAGE_BASE_URL } from '@/components/constants';
-import { Button, Typography } from '@mui/material';
-import useToggleState from '@/hooks/useToggleState';
-import Link from 'next/link';
+import { ImageMapType } from '@/components/types/ImageMapType';
+
+import { LayoutLabelItem } from './LayoutLabelItem';
 
 type LayoutImageOnTagImageMapProps = {
   layoutId: number;
-  tagPositions: Array<{
-    xPosition: number;
-    yPosition: string;
-    itemId: string;
-    itemName: string;
-  }>;
+  tagPositions: ImageMapType[];
 };
-// TODO タグをホバーで商品の簡単な情報を表示する
+
+/**
+ * このコンポーネントは、レイアウト詳細ページでレイアウト画像とその上のタグ（詳細ラベル）を表示します。
+ * - レイアウト画像: 指定された`layoutId`に基づいて画像を表示します。
+ * - タグ（商品ラベル）: `tagPositions` プロパティで受け取った座標に基づいて、商品ラベルを画像上に配置します。
+ * - タグの表示/非表示: レイアウト画像をクリックすることで、タグ（商品ラベル）の表示・非表示を切り替えます。
+ *
+ * @returns {JSX.Element}
+ */
 export const LayoutImageOnTagImageMap: FC<LayoutImageOnTagImageMapProps> = ({
   layoutId,
   tagPositions,
 }) => {
-  const [isTagPosition, setIsTagPosition] = useState(false);
-
-  const handleClick = () => {
-    setIsTagPosition(!isTagPosition);
-  };
+  const [isTagPositionVisible, setIsTagPositionVisible] = useState(true);
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'relative',
-        width: '100%',
-      }}
-    >
-      <Button
-        onClick={() => handleClick()}
-        variant="text"
-        sx={{
-          color: 'primary.main',
-          borderColor: 'primary.main',
-          border: 'none',
-          p: 0,
-        }}
-      >
-        {isTagPosition ? '返信を閉じる' : '返信を見る'}
-      </Button>
+    <>
       <Box
         sx={{
-          position: 'relative', // 必要: 'fill'レイアウトを使うときに親要素に'relative'を設定
-          width: '100%',
-          paddingTop: '100%', // アスペクト比を保持
+          position: 'relative',
+          paddingTop: '100%',
         }}
       >
+        {/* レイアウト画像 */}
         <Image
-          src={`${LAYOUT_IMAGE_BASE_URL}${layoutId}.png`}
-          alt={''}
+          src={`${LAYOUT_IMAGE_BASE_URL}${layoutId}.jpg`}
           layout="fill"
           objectFit="contain"
           priority
-          style={{ position: 'absolute', top: 0, left: 0 }} // 必要: 'fill'レイアウトを使うときに'absolute'を設定
+          onClick={() => setIsTagPositionVisible((prev) => !prev)}
         />
 
-        {isTagPosition &&
-          tagPositions.map((tag, index) => (
-            <Box
-              key={index}
-              sx={{
-                position: 'absolute',
-                top: `${tag.yPosition}%`,
-                left: `${tag.xPosition}%`,
-                backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                padding: '2px',
-                borderRadius: '10%',
-              }}
-            >
-              <Link href={`/items/${tag.itemId}`} passHref>
-                <Typography
-                  key={tag.itemId}
-                  variant="body2"
-                  component="div"
-                  color={'#c0c0c0'}
-                >
-                  {tag.itemName}
-                </Typography>
-              </Link>
-            </Box>
+        {/* タグ（商品ラベル） */}
+        {isTagPositionVisible &&
+          tagPositions.map((tag) => (
+            <LayoutLabelItem key={tag.itemId} tagPosition={tag} />
           ))}
       </Box>
-    </Box>
+    </>
   );
 };

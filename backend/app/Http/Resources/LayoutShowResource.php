@@ -24,11 +24,21 @@ class LayoutShowResource extends JsonResource
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
             'comments' => $this->comments,
+            'comments' => $this->comments->map(function ($comment) {
+                return [
+                    'commentId' => $comment->comment_id,
+                    'layoutId' => $comment->layout_id,
+                    'content' => $comment->content,
+                    'userName' => $comment->user->user_name,
+                    'parentId' => $comment->parent_id,
+                    'createdAt' => $comment->created_at,
+                ];
+            }),
             'items' => $this->items->map(function ($item) {
                 return [
                     'itemId' => $item->item_id,
                     'itemName' => $item->item_name,
-                    'imageName' => config('constants.LAYOUT_IMAGE_BASE_URL') . $this->layout_id . '.jpg',
+                    'imageName' => config('constants.ITEM_IMAGE_BASE_URL') . $item->item_id . '.jpg',
                 ];
             }),
             'tagPositions' => $this->tagPositions->map(function ($tagPosition) {
@@ -39,6 +49,10 @@ class LayoutShowResource extends JsonResource
                     'itemName' => $tagPosition->item->item_name,
                 ];
             }),
+            'user' => [
+                'isFavorite' => $this->userFavoriteExists,
+                // 'isInInventory' => $this->userInventoryLayoutExists,
+            ],
         ];
     }
 }

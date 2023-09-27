@@ -1,10 +1,10 @@
 import { atom } from "recoil";
-import { LayoutDataTypes } from "@/components/types/LayoutDataTypes";
+import { LayoutDataType } from "@/components/types/LayoutDataType";
 
 /**
  * レイアウト詳細のデータを管理するRecoilのatom
  */
-export const layoutDetailState = atom<LayoutDataTypes | null>({
+export const layoutDetailState = atom<LayoutDataType | null>({
   key: "layoutDetailState",
   default: null,
 });

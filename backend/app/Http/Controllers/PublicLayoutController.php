@@ -36,7 +36,8 @@ class PublicLayoutController extends Controller
 
     /**
      * レイアウトの詳細を取得し、閲覧回数をインクリメント
-     * 認証ユーザーからのアクセスの場合は閲覧履歴を保存
+     * 認証ユーザーからのアクセスの場合は閲覧履歴を保存し、
+     * お気に入りとインベントリの有無を返却する
      * @param  Request $request user_idのみ取得できる
      * @param  Layout  $layout
      * @return JsonResource

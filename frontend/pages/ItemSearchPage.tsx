@@ -15,6 +15,7 @@ import { apiFetchedItemsState } from '@/components/shares/atoms/state/apiFetched
 import { ItemDataTypes } from '@/components/types/ItemDataTypes';
 import { filteredItemsState } from '@/components/shares/atoms/state/filteredItemsState';
 import { initializeFiltersState } from '@/components/shares/atoms/state/initializeFiltersState';
+import { API_BASE_URL } from '@/components/constants';
 
 /**
  * 商品検索ページ
@@ -22,7 +23,7 @@ import { initializeFiltersState } from '@/components/shares/atoms/state/initiali
 // サブカテゴリーが変更されたとき、商品一覧を取得
 // SSG　静的サイト生成のための関数　ビルド時に取得したデータをpropsとして渡す
 export async function getStaticProps() {
-  const response = await fetch(`http://127.0.0.1:8000/api/items`);
+  const response = await fetch(API_BASE_URL + 'items');
   const itemData = await response.json();
 
   if (!itemData || !itemData.data) {

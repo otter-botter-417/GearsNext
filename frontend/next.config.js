@@ -1,5 +1,5 @@
 module.exports = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   images: {
     domains: [
       'gears-images.s3.ap-northeast-1.amazonaws.com',

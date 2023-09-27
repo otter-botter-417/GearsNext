@@ -1,12 +1,11 @@
 import { useRecoilValue } from 'recoil';
 
 import { useApiRequest } from '@/hooks/api/useApiRequest';
-import { useErrorHandler } from '@/hooks/api/useErrorHandler ';
+import { useErrorHandler } from '@/hooks/api/useErrorHandler';
 
 import { textState } from '@/components/shares/atoms/state/textState';
 import { imageFileState } from '@/components/shares/atoms/state/imageFileState';
 import { imageMapDataListState } from '@/components/shares/atoms/state/imageMapDataListState';
-import { imageOriginalSizeState } from '@/components/shares/atoms/state/imageOriginalSizeState';
 import { selectedItemsListState } from '@/components/shares/atoms/state/selectedItemsListState';
 /**
  * 商品一覧と価格情報を管理するカスタムフック。
@@ -41,12 +40,11 @@ export const useLayoutCreate = () => {
                 formData.append(`items[${index}][item_id]`, item.itemId.toString());
             });
 
-            // imageMapDataListを適切な形式に変換
             imageMapDataList.forEach((item, index) => {
                 formData.append(`image_map_positions[${index}][item_id]`, item.itemId.toString());
                 formData.append(`image_map_positions[${index}][item_name]`, item.itemName.toString());
-                formData.append(`image_map_positions[${index}][x_position]`, item.x.toString());
-                formData.append(`image_map_positions[${index}][y_position]`, item.y.toString());
+                formData.append(`image_map_positions[${index}][x_position]`, item.xPosition.toString());
+                formData.append(`image_map_positions[${index}][y_position]`, item.yPosition.toString());
             });
 
             const response = await sendRequest('post', 'user/layout', formData);

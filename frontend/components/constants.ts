@@ -1,6 +1,7 @@
 export const STATUS_OK = 200;
 export const STATUS_CREATED = 201;
 export const STATUS_NO_CONTENT = 204;
+export const STATUS_UNAUTHORIZED = 401;
 export const LOGIN_ALERT_TIMEOUT = 2000;
 export const ICON_SIZE = 30;
 export const BASE_URL = 'http://localhost:3000';

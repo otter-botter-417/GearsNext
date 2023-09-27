@@ -1,10 +1,10 @@
 import { atom } from "recoil";
-import { ItemDataTypes } from "@/components/types/ItemDataTypes";
+import { ItemDataType } from "@/components/types/ItemDataType";
 
 /**
  * ユーザーに選択された商品の配列を管理するRecoil State
  */
 export const selectedItemsListState = atom({
   key: "selectedItemsListState",
-  default: <ItemDataTypes[]>[],
+  default: <ItemDataType[]>[],
 });

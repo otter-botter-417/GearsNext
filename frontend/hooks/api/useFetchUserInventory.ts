@@ -1,27 +1,17 @@
-import { STATUS_OK } from "@/components/constants";
-import { useApiRequest } from "./useApiRequest";
-import { useSetRecoilState } from "recoil";
-import { userInventoryItemListState } from "@/components/shares/atoms/state/userInventoryItemListState";
 import { useEffect } from "react";
 import { useRouter } from 'next/router';
+import { useSetRecoilState } from "recoil";
+
+import { useApiRequest } from "./useApiRequest";
+
+import { STATUS_OK, STATUS_UNAUTHORIZED } from "@/components/constants";
+import { userInventoryItemListState } from "@/components/shares/atoms/state/userInventoryItemListState";
+
 
 
 /**
- * 商品のお気に入り登録・解除APIを送信する
- * 
- * @param method post or delete
- * @param itemId
- * @param successStatus 成功時のステータスコード
- * @example
- *  try {
- *   await sendFavoriteItemRequest('post', itemId, 201);
- *   // 成功時の処理
- * } catch (error) {
- *   console.error(error);
- *   // エラー時の処理
- * }
+ * ユーザーの持っている商品を取得するカスタムフック
  */
-
 export const useFetchUserInventory = () => {
     const { sendRequest } = useApiRequest();
     const setUserInventoryItemList = useSetRecoilState(userInventoryItemListState)
@@ -32,31 +22,25 @@ export const useFetchUserInventory = () => {
     };
 
     const fetchUserInventory = async () => {
-
         try {
-
             const url = 'user/inventory';
-            const response = await sendRequest('get', url, []);
+            const response = await sendRequest('get', url);
 
-
-            if (response) {
+            if (response?.status === STATUS_OK) {
                 setUserInventoryItemList(response.data.data);
             }
         } catch (err: any) {
             console.error(err.status);
-            if (err.status === 401) {
+            if (err.status === STATUS_UNAUTHORIZED) {
                 router.push('/UserLoginPage');
-                // throw new Error('ログインしてください。');
             }
             const errorMessage = err.response?.data?.message || generateErrorMessage();
-            // throw new Error(errorMessage);
+            console.error(errorMessage);  // ここで適切なエラーハンドリングを行う
         }
     };
 
-
     useEffect(() => {
         fetchUserInventory();
-
     }, []);
     return { fetchUserInventory }
 };

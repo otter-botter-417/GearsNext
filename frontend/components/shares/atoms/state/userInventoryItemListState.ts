@@ -1,4 +1,4 @@
-import { ItemDataTypes } from "@/components/types/ItemDataTypes";
+import { ItemDataType } from "@/components/types/ItemDataType";
 import { atom } from "recoil";
 
 /**
@@ -6,5 +6,5 @@ import { atom } from "recoil";
  */
 export const userInventoryItemListState = atom({
     key: "userInventoryItemListState",
-    default: <ItemDataTypes[]>[],
+    default: <ItemDataType[]>[],
 });

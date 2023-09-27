@@ -27,11 +27,12 @@ class CommentRepository implements CommentRepositoryInterface
      */
     public function createLayoutComment(int $userId, int $layoutId, array $commentData): void
     {
+        $parentId = $commentData['parent_id'] ?? null;
         $this->model->create([
             'user_id' => $userId,
             'layout_id' => $layoutId,
             'content' => $commentData['content'],
-            'parent_id' => $commentData['parent_id'],
+            'parent_id' => $parentId,
         ]);
     }
 

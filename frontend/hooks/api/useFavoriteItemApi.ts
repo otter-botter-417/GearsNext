@@ -14,18 +14,12 @@ export const useFavoriteItemApi = () => {
    * 
    * @param method post or delete
    * @param itemId
-   * @param successStatus 成功時のステータスコード
    * @example
-   *  try {
-   *   await sendFavoriteItemRequest('post', itemId, 201);
-   *   // 成功時の処理
-   * } catch (error) {
-   *   console.error(error);
-   *   // エラー時の処理
-   * }
+   * sendFavoriteItemRequest('post', itemId);
    */
   const sendFavoriteItemRequest =
-    async (method: 'post' | 'delete', itemId: number, successStatus: number) => {
+    async (method: 'post' | 'delete', itemId: number) => {
+      const successStatus = method === 'post' ? 201 : 204;
       try {
         const url = `user/favorite/items/${itemId}`;
         const response = await sendRequest(method, url, []);

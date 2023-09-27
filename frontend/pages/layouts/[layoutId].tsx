@@ -5,7 +5,7 @@ import { GetStaticPropsContext } from 'next';
 import { useLayoutShowApi } from '@/hooks/api/useLayoutShowApi';
 
 import { API_BASE_URL } from '@/components/constants';
-import { LayoutDataTypes } from '@/components/types/LayoutDataTypes';
+import { LayoutDataType } from '@/components/types/LayoutDataType';
 
 import { LayoutPageTemplate } from '@/components/templates/LayoutPageTemplate';
 import { LayoutPageRightOrganism } from '@/components/pages/layoutPage/LayoutPageRightOrganism';
@@ -14,7 +14,7 @@ import { LayoutPageSelectedItemImageList } from '@/components/pages/layoutPage/L
 
 interface LayoutData {
   data: {
-    data: LayoutDataTypes;
+    data: LayoutDataType;
   };
 }
 
@@ -59,7 +59,7 @@ export const LayoutPage = ({
   layoutDetail,
   layoutId,
 }: {
-  layoutDetail: LayoutDataTypes;
+  layoutDetail: LayoutDataType;
   layoutId: string;
 }) => {
   useLayoutShowApi(layoutId);

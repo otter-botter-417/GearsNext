@@ -19,6 +19,7 @@ Route::group([], function () {
     
     Route::post('user/register', [UserController::class, 'register']);
     Route::post('user/login', [UserController::class, 'login']);
+    Route::post('user/refresh', [UserController::class, 'refreshToken']);
     
     Route::apiResource('items', ItemController::class)
          ->except(['show', 'create', 'edit']);
@@ -37,6 +38,7 @@ Route::middleware(['auth:api'])->group(function () {
         Route::post('logout', [UserController::class, 'logout']);
         Route::post('update', [UserController::class, 'update']);
         Route::post('delete', [UserController::class, 'delete']);
+        Route::get('me', [UserController::class, 'getAuthenticatedUser']);
         
         // Layouts
         Route::apiResource('layout', PrivateLayoutController::class);

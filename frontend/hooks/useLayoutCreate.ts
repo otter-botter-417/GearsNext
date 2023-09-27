@@ -40,7 +40,6 @@ export const useLayoutCreate = () => {
                 formData.append(`items[${index}][item_id]`, item.itemId.toString());
             });
 
-            // imageMapDataListを適切な形式に変換
             imageMapDataList.forEach((item, index) => {
                 formData.append(`image_map_positions[${index}][item_id]`, item.itemId.toString());
                 formData.append(`image_map_positions[${index}][item_name]`, item.itemName.toString());

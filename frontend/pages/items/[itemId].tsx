@@ -15,6 +15,7 @@ import { ItemDetailPageButtons } from '@/components/pages/ItemPage/ItemDetailPag
 import { CategoryDetailSwitcher } from '@/components/shares/organisms/CategoryDetailSwitcher';
 
 import { ItemDataTypes } from '@/components/types/ItemDataTypes';
+import { API_BASE_URL } from '@/components/constants';
 
 interface ItemData {
   data: {
@@ -25,7 +26,7 @@ interface ItemData {
 // SSG　静的サイト生成のための関数　ビルド時に取得したデータをpropsとして渡す
 export async function getStaticProps(context: GetStaticPropsContext) {
   const itemId = context.params?.itemId;
-  const response = await fetch(`http://127.0.0.1:8000/api/items/${itemId}`);
+  const response = await fetch(API_BASE_URL + `items/${itemId}`);
   const itemData = (await response.json()) as ItemData;
   return {
     props: {
@@ -94,7 +95,7 @@ export const ItemPage = ({ itemDetail }: { itemDetail: ItemDataTypes }) => {
           </Grid>
           <Grid item xs={12}>
             {/* レイアウトの画像リスト */}
-            <LayoutImageList layouts={itemDetail.layouts} height={'700px'} />
+            {/* <LayoutImageList layouts={itemDetail.layouts} height={'700px'} /> */}
           </Grid>
         </Grid>
       </Box>

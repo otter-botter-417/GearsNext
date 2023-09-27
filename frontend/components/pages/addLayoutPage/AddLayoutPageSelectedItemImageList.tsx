@@ -2,8 +2,8 @@ import React, { FC } from 'react';
 import { useRecoilValue } from 'recoil';
 import { Box } from '@mui/material';
 
-import ImageGridList from '@/components/shares/molecules/ImageGridList';
 import { selectedItemsListState } from '@/components/shares/atoms/state/selectedItemsListState';
+import { ImageGridList } from '@/components/shares/molecules/ImageGridList';
 
 /**
  * このコンポーネントは、レイアウト投稿ページで選択された商品の画像を表示するためのUIを提供します。

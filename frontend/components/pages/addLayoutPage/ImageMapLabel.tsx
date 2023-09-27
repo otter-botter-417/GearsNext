@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRecoilState } from 'recoil';
 
-import { LabelItem } from './LabelItem';
+import { EditableLabel } from './EditableLabel';
 import { imageMapDataListState } from '@/components/shares/atoms/state/imageMapDataListState';
 
 /**
@@ -33,7 +33,7 @@ export const ImageMapLabel = () => {
   return (
     <>
       {imageMapDataList.map((item) => (
-        <LabelItem key={item.itemId} item={item} onRemove={removeLabel} />
+        <EditableLabel key={item.itemId} item={item} onRemove={removeLabel} />
       ))}
     </>
   );

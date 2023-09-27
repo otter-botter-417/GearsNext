@@ -1,17 +1,16 @@
 // pages/_app.tsx
 import type { AppProps } from 'next/app';
-import { RecoilRoot, useSetRecoilState } from 'recoil';
+import { RecoilRoot } from 'recoil';
 import { Box, CssBaseline } from '@mui/material';
 import Header from './Header';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import React, { useEffect } from 'react';
+import React from 'react';
 import '../styles/global.css';
 
 import themeOptions from '@/styles/themes/themeOptions';
-import { userState } from '@/components/shares/atoms/state/userState';
-import { apiGetUser } from '@/hooks/UserAuth/apiGetUser';
 import { useRouter } from 'next/router';
 import { NextComponentType, NextPageContext } from 'next';
+import { useGetUserApi } from '@/hooks/UserAuth/useGetUserApi';
 
 const theme = createTheme(themeOptions);
 interface InsideRecoilRootProps {
@@ -28,8 +27,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 const InsideRecoilRoot = ({ Component, pageProps }: InsideRecoilRootProps) => {
   const router = useRouter();
-    apiGetUser(); 
-
+  useGetUserApi();
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ pt: '64px' }}>

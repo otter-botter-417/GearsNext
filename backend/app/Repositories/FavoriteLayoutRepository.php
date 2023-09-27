@@ -68,4 +68,15 @@ class FavoriteLayoutRepository implements FavoriteLayoutRepositoryInterface
         }
         $favoriteLayout->delete();
     }
+
+    /**
+     * ユーザーがお気に入り登録しているか確認
+     * @param  int  $userId
+     * @param  int  $layoutId
+     * @return bool
+     */
+    public function getUserFavoriteExists(int $userId,int $layoutId): bool
+    {
+        return $this->model->where('user_id', $userId)->where('layout_id', $layoutId)->exists();
+    }
 }

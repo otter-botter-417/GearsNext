@@ -3,8 +3,10 @@ import { Box } from '@mui/material';
 
 import { TimeDifferenceFormatter } from '../../shares/atoms/TimeDifferenceFormatter';
 
+import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
+import { LayoutFavoriteButton } from './LayoutFavoriteButton';
 interface LayoutPageButtonsProps {
-  createdAt: string;
+  layoutId: number;
 }
 
 /**
@@ -22,12 +24,11 @@ interface LayoutPageButtonsProps {
  * itemName={itemName}
  * />
  */
-export const LayoutPageButtons: FC<LayoutPageButtonsProps> = ({
-  createdAt,
-}) => {
+export const LayoutPageButtons: FC<LayoutPageButtonsProps> = ({ layoutId }) => {
   return (
     <Box>
-      <TimeDifferenceFormatter time={createdAt} />
+      <LayoutFavoriteButton layoutId={layoutId} />
+      {/* <BookmarkAddIcon /> */}
     </Box>
   );
 };

@@ -6,10 +6,13 @@ use App\Services\UserService;
 use App\Http\Requests\UserRegisterRequest;
 use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserUpdateRequest;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use \Illuminate\Http\Request;
 use \Illuminate\Http\Response;
 use \Illuminate\Http\JsonResponse;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 /**
  * ユーザー情報に関する操作を管理するコントローラークラスです。
@@ -46,7 +49,7 @@ class UserController extends Controller
     {
         $loginRequest = $request->only(['email', 'password']);
         $token = $this->userService->login($loginRequest);
-        return response()->json(['token' => $token], 200);
+        return response()->json($token, 200);
     }
 
     /**
@@ -81,5 +84,39 @@ class UserController extends Controller
         $this->userService->deleteUserData(Auth::id());
         auth('api')->logout(); // トークンを無効化
         return response(null, 204);
+    }
+
+    /**
+     * トークンのリフレッシュ
+     * @param  Request $request ['token']
+     * @return JsonResponse
+     */
+    public function refreshToken(Request $request) : JsonResponse
+    {
+        $token = $request->header('Authorization');
+        $token = str_replace('Bearer ', '', $token);
+        try {
+            $newToken = JWTAuth::setToken($token)->refresh();  // トークンをリフレッシュ
+
+        } catch (JWTException $e) {
+            Log::error($e);
+            return response()->json(['error' => 'Could not refresh the token'], 401);
+        }
+    
+        // 新しいトークンを返す
+        return response()->json(['access_token' => $newToken]);
+    }
+
+    public function getAuthenticatedUser(Request $request)
+    {   
+    // 認証されたユーザーを取得
+    $user = Auth::user();
+    if (!$user) {
+        return response()->json(['error' => 'User not authenticated'], 401);
+    }
+    $userData = [
+        'userId' => $user->user_id,
+        'userName' => $user->user_name];
+    return response()->json($userData, 200);
     }
 }

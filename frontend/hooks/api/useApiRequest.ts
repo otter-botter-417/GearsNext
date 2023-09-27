@@ -35,11 +35,12 @@ export const useApiRequest = () => {
 
   /**
    * 実際にAPIリクエストを実行する内部関数。
+   * - accessTokenがある場合は、リクエストヘッダーにAuthorizationを追加する。
    */
-  const performRequest = async (method: string, url: string, requestData: any, token: string | null) => {
+  const performRequest = async (method: string, url: string, requestData: any, accessToken: string | null) => {
     const headers: { [key: string]: string } = {};
-    if (token) {
-      headers["Authorization"] = `Bearer ${token}`;
+    if (accessToken) {
+      headers["Authorization"] = `Bearer ${accessToken}`;
     }
     return await axios.request({
       method,
@@ -62,9 +63,9 @@ export const useApiRequest = () => {
   */
   const sendRequest = useCallback(
     async (method: string, url: string, requestData: any = null): Promise<AxiosResponse | null> => {
-      let token = localStorage.getItem("access_token");
+      let accessToken = localStorage.getItem("access_token");
       try {
-        const response = await performRequest(method, url, requestData, token);
+        const response = await performRequest(method, url, requestData, accessToken);
         return response;
       } catch (err) {
         if (isAxiosError(err) && err.response?.status === 401) {

@@ -28,9 +28,9 @@ class UserService
     /**
      * ユーザーを登録する
      * @param  array  $registerRequest [user_name, email, password]
-     * @return string JWTトークン 
+     * @return array JWTトークン 
      */
-    public function register(array $registerData): string
+    public function register(array $registerData): array
     {
         $registerData['password'] = $this->hashPassword($registerData['password']);
         $user = $this->userRepository->createUserData($registerData);
@@ -50,20 +50,28 @@ class UserService
     /**
      * JWTトークンを発行する
      * @param  User $user
-     * @return string
+     * @return array
      */
-    private function createToken(User $user): string
+    private function createToken(User $user): array
     {
-        return JWTAuth::fromUser($user);
+        $accessToken = JWTAuth::fromUser($user);
+        // リフレッシュトークンの生成
+        $refreshToken = JWTAuth::fromUser($user, ['aud' => 'refresh']);
+        
+        return [
+            'access_token' => $accessToken,
+            'refresh_token' => $refreshToken,
+            'user' => $user->only(['user_id', 'user_name']),
+        ];
     }
 
     /**
      * ユーザーをログインさせる
      * @param  array  $loginRequest
-     * @return string JWTトークン
+     * @return array JWTトークン
      * @throws LoginFailedException 認証情報が無効
      */
-    public function login(array $loginRequest): string
+    public function login(array $loginRequest): array
     {
         // 認証に失敗
         if (!Auth::attempt($loginRequest)) {

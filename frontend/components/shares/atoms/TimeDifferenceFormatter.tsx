@@ -1,37 +1,53 @@
-import { Typography } from '@mui/material';
 import React, { FC } from 'react';
+import { Typography } from '@mui/material';
 
 type TimeDifferenceFormatterProps = {
   time: string;
 };
 
+// 1分、1時間、1日の秒数
+const ONE_MINUTE_IN_SECONDS = 60;
+const ONE_HOUR_IN_SECONDS = 3600;
+const ONE_DAY_IN_SECONDS = 86400;
+
+/**
+ * 指定された時間と現在時間との差を「〜秒前」「〜分前」「〜時間前」「〜日前」の形式で表示するコンポーネント
+ *
+ * @param time - 指定された時間（ISO形式の文字列）
+ * @returns {JSX.Element} フォーマットされた時間差
+ */
 export const TimeDifferenceFormatter: FC<TimeDifferenceFormatterProps> = ({
   time,
 }) => {
+  // 現在のエポック時間（秒）
   const currentEpochTimeInSeconds = Math.floor(Date.now() / 1000);
-  const inputDateObject = new Date(time);
-  const inputEpochTimeInSeconds = Math.floor(inputDateObject.getTime() / 1000);
+  // 入力された日付のエポック時間（秒）
+  const inputEpochTimeInSeconds = Math.floor(new Date(time).getTime() / 1000);
+  // 時間差（秒）
   const timeDifferenceInSeconds =
     currentEpochTimeInSeconds - inputEpochTimeInSeconds;
 
-  const timeDifferenceInMinutes = Math.floor(timeDifferenceInSeconds / 60);
-  const timeDifferenceInHours = Math.floor(timeDifferenceInSeconds / 3600);
-  const timeDifferenceInDays = Math.floor(timeDifferenceInSeconds / 86400);
-
+  // 時間差を適切な単位でフォーマット
   let formattedTimeDifference;
 
-  if (timeDifferenceInSeconds < 60) {
+  if (timeDifferenceInSeconds < ONE_MINUTE_IN_SECONDS) {
     formattedTimeDifference = `${timeDifferenceInSeconds}秒前`;
-  } else if (timeDifferenceInSeconds < 3600) {
-    formattedTimeDifference = `${timeDifferenceInMinutes}分前`;
-  } else if (timeDifferenceInSeconds < 86400) {
-    formattedTimeDifference = `${timeDifferenceInHours}時間前`;
+  } else if (timeDifferenceInSeconds < ONE_HOUR_IN_SECONDS) {
+    formattedTimeDifference = `${Math.floor(
+      timeDifferenceInSeconds / ONE_MINUTE_IN_SECONDS,
+    )}分前`;
+  } else if (timeDifferenceInSeconds < ONE_DAY_IN_SECONDS) {
+    formattedTimeDifference = `${Math.floor(
+      timeDifferenceInSeconds / ONE_HOUR_IN_SECONDS,
+    )}時間前`;
   } else {
-    formattedTimeDifference = `${timeDifferenceInDays}日前`;
+    formattedTimeDifference = `${Math.floor(
+      timeDifferenceInSeconds / ONE_DAY_IN_SECONDS,
+    )}日前`;
   }
 
   return (
-    <Typography variant="caption" component="div">
+    <Typography variant="body2" component="div">
       {formattedTimeDifference}
     </Typography>
   );

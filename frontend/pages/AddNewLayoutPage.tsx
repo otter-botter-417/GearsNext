@@ -5,7 +5,7 @@ import { useFetchItems } from '@/hooks/ItemSearchPage/useFetchItems';
 import { useItemNameFilters } from '@/hooks/useItemNameFilters';
 import { useLayoutCreate } from '@/hooks/useLayoutCreate';
 
-import { AddLayoutPageTemplate } from '@/components/templates/AddLayoutPageTemplate';
+import { LayoutPageTemplate } from '@/components/templates/LayoutPageTemplate';
 import { AddLayoutPageLeftOrganism } from '@/components/pages/addLayoutPage/AddLayoutPageLeftOrganism';
 import { AddLayoutPageRightOrganism } from '@/components/pages/addLayoutPage/AddLayoutPageRightOrganism';
 import { AddLayoutPageSelectedItemImageList } from '@/components/pages/addLayoutPage/AddLayoutPageSelectedItemImageList';
@@ -34,7 +34,7 @@ const AddNewLayoutPage = () => {
 
   return (
     <form onSubmit={handleFormSubmit}>
-      <AddLayoutPageTemplate
+      <LayoutPageTemplate
         top={<AddLayoutPageTopOrganism />}
         leftSide={<AddLayoutPageLeftOrganism />}
         rightSide={<AddLayoutPageRightOrganism />}

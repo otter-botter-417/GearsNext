@@ -8,8 +8,6 @@ import { UserInteractiveIconButton } from '../../shares/molecules/UserInteractiv
 import {
   ICON_SIZE,
   LOGIN_ALERT_TIMEOUT,
-  STATUS_CREATED,
-  STATUS_NO_CONTENT,
 } from '@/components/constants';
 import { useTimedToggle } from '@/hooks/useTimedToggle';
 
@@ -38,7 +36,6 @@ export const FavoriteIconButton: FC<FavoriteIconButtonProps> = ({
   const [showLoginAlert, setShowLoginAlert] =
     useTimedToggle(LOGIN_ALERT_TIMEOUT);
   const [isLoading, setIsLoading] = useState(false);
-  
   const ICON_STYLE_ACTIVE = { color: '#FF1744', fontSize: ICON_SIZE };
   const ICON_STYLE_INACTIVE = { fontSize: ICON_SIZE };
 
@@ -61,11 +58,8 @@ export const FavoriteIconButton: FC<FavoriteIconButtonProps> = ({
     setIsLoading(true);
     setIsIconActive((isIconActive) => !isIconActive);
     try {
-      if (isIconActive) {
-        await sendFavoriteItemRequest('delete', itemId, STATUS_NO_CONTENT);
-      } else {
-        await sendFavoriteItemRequest('post', itemId, STATUS_CREATED);
-      }
+      const method = isIconActive ? 'delete' : 'post';
+      await sendFavoriteItemRequest(method, itemId);
     } catch (error) {
       // エラーが発生した場合はstateを元に戻す
       alert(error);

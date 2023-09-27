@@ -4,7 +4,6 @@ import Image from 'next/legacy/image';
 
 import { ItemName } from '@/components/pages/ItemPage/Details/ItemName';
 import { BrandName } from '@/components/pages/ItemPage/Details/BrandName';
-import { getItemImageUrl } from '@/components/shares/atoms/getItemImageUrl';
 
 type ItemDetailHeaderProps = {
   itemName: string;
@@ -31,7 +30,6 @@ export const ItemDetailHeader: FC<ItemDetailHeaderProps> = ({
   brandName,
   imageName,
 }) => {
-  const ItemImagesUrl: string = getItemImageUrl(brandName, imageName);
   return (
     <Box
       sx={{
@@ -51,12 +49,12 @@ export const ItemDetailHeader: FC<ItemDetailHeaderProps> = ({
       <Box
         sx={{
           position: 'relative', // 必要: 'fill'レイアウトを使うときに親要素に'relative'を設定
-          width: '100%', 
+          width: '100%',
           paddingTop: '100%', // アスペクト比を保持
         }}
       >
         <Image
-          src={ItemImagesUrl}
+          src={imageName}
           alt={`${itemName} by ${brandName}`}
           layout="fill"
           objectFit="contain"

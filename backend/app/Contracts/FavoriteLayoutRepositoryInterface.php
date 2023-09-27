@@ -27,4 +27,12 @@ interface FavoriteLayoutRepositoryInterface
      * @return void
      */
     public function removeFavoriteLayoutData(int $userId, int $layoutId): void;
+
+        /**
+     * ユーザーがお気に入り登録しているか確認
+     * @param  int  $userId
+     * @param  int  $layoutId
+     * @return bool
+     */
+    public function getUserFavoriteExists(int $userId,int $layoutId): bool;
 }

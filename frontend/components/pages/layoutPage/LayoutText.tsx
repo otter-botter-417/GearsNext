@@ -1,36 +1,23 @@
 import { Box } from '@mui/system';
 import React, { FC } from 'react';
-import Image from 'next/legacy/image';
-import { LAYOUT_IMAGE_BASE_URL } from '@/components/constants';
-import Link from 'next/link';
-import { TimeDifferenceFormatter } from '../../shares/atoms/TimeDifferenceFormatter';
+import Typography from '@mui/material/Typography';
 
 type LayoutTextProps = {
   text: string;
-  userName: string;
-  userId: number;
-  createdAt: string;
 };
 
-export const LayoutText: FC<LayoutTextProps> = ({
-  text,
-  userName,
-  userId,
-  createdAt,
-}) => {
+/**
+ * このコンポーネントは、レイアウトのテキスト内容を表示します。
+ *
+ * @param text - レイアウトのテキスト内容
+ * @returns {JSX.Element} レイアウトのテキスト内容を表示するReact要素
+ */
+export const LayoutText: FC<LayoutTextProps> = ({ text }) => {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'relative',
-        width: '100%',
-      }}
-    >
-      <Link href={`/users/${userId}`}>{userName}</Link>
-      <h4>{text}</h4>
+    <Box>
+      <Typography variant="subtitle1" color="initial">
+        {text}
+      </Typography>
     </Box>
   );
 };

@@ -1,13 +1,9 @@
 import React, { FC } from 'react';
-
-import { AuthValidationInputFields } from '@/components/shares/atoms/form/AuthValidationInputFields';
-import { RegisterInputFormFieldsList } from '@/components/pages/userRegisterPage/RegisterInputFormFieldsList';
-import Link from '@mui/material/Link';
-import { Typography } from '@mui/material';
-
-import { SubmitButton } from '@/components/shares/atoms/SubmitButton';
 import { Box } from '@mui/material';
+
 import { useFormMethods } from '@/hooks/useFormMethods ';
+import { SubmitButton } from '@/components/shares/atoms/SubmitButton';
+import { AuthValidationInputFields } from '@/components/shares/molecules/AuthValidationInputFields';
 
 interface Field {
   name: string;

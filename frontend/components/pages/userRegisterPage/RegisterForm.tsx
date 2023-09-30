@@ -3,7 +3,7 @@ import React from 'react';
 import { useUserRegister } from '@/hooks/UserAuth/useUserRegister';
 import { FormProvider } from '@/hooks/useFormMethods ';
 
-import { AuthForm } from '@/components/pages/userRegisterPage/AuthForm';
+import { AuthForm } from '@/components/shares/organisms/AuthForm';
 import { RegisterInputFormFieldsList } from '@/components/pages/userRegisterPage/RegisterInputFormFieldsList';
 
 /**

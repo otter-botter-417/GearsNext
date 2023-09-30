@@ -82,7 +82,9 @@ export const useFetchItems = () => {
     useEffect(() => {
         // if (!initializeFilters) return;
         fetchItems();
-    }, [categoryValue]);
+    }, [
+        // categoryValue 商品がすくないので今は必要ない
+    ]);
 
     return { setPriceInfoForSlider };
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FormProvider } from '@/hooks/useFormMethods ';
+import { FormProvider } from '@/hooks/useFormMethods';
 
 import { AddNewItemPageTemplate } from '@/components/templates/AddNewItemPageTemplate';
 import { BaseItemDataForm } from '@/components/pages/addItemPage/BaseItemDataForm';

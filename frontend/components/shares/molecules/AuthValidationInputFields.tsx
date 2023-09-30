@@ -1,16 +1,16 @@
 import { FC } from 'react';
 import { Box } from '@mui/system';
-import { useFormMethods } from '@/hooks/useFormMethods ';
+import { useFormMethods } from '@/hooks/useFormMethods';
 
 import { TextFieldWithValidation } from '@/components/shares/atoms/form/TextFieldWithValidation';
 
-interface AuthValidationInputFieldsProps {
+type AuthValidationInputFieldsProps = {
   inputFormFieldsList: {
     name: string;
     label: string;
   }[];
   formMethods: ReturnType<typeof useFormMethods>;
-}
+};
 
 /**
  * ユーザー認証用のバリデーション付きテキストフィールドコンポーネント

@@ -1,35 +1,27 @@
 import React from 'react';
-import Link from 'next/link';
+import Link from '@mui/material/Link';
 import { Typography } from '@mui/material';
 
-import { useUserRegister } from '@/hooks/UserAuth/useUserRegister';
-import { FormMethodsProvider } from '@/hooks/useFormMethods ';
-
-import { SubmitButton } from '@/components/shares/atoms/SubmitButton';
-import RegisterForm from '@/components/pages/userRegisterPage/RegisterForm';
-import RegisterPageTemplate from '@/components/templates/RegisterPageTemplate';
+import { AuthPageTemplate } from '@/components/templates/AuthPageTemplate';
+import { RegisterForm } from '@/components/pages/userRegisterPage/RegisterForm';
 
 /**
- * ユーザーの新規登録ページ
+ * ユーザー新規登録ページ
+ *
+ * @remarks
+ * このページには以下の要素が含まれます：
+ * - タイトル ("新規登録")
+ * - 新規登録フォーム
+ * - 既存のユーザーアカウントへのリンク
+ *
+ * @returns ユーザー新規登録ページの要素
  */
 const UserRegisterPage = () => {
-  const { formMethods, onSubmit } = useUserRegister();
+  const title = <Typography variant="h4">新規登録</Typography>;
+  const registerForm = <RegisterForm />;
+  const link = <Link href="/UserLoginPage">既にアカウントを持っている</Link>;
 
-  return (
-    <RegisterPageTemplate>
-      <FormMethodsProvider formMethods={formMethods}>
-        <Typography variant="h4">新規登録</Typography>
-        <form onSubmit={formMethods.handleSubmit(onSubmit)}>
-          <RegisterForm />
-          <SubmitButton
-            loading={formMethods.watch('loading') || false}
-            text={'新規登録'}
-          />
-        </form>
-        <Link href="/UserLoginPage">既にアカウントを持っている</Link>
-      </FormMethodsProvider>
-    </RegisterPageTemplate>
-  );
+  return <AuthPageTemplate title={title} form={registerForm} link={link} />;
 };
 
 export default UserRegisterPage;

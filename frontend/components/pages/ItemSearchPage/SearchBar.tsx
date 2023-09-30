@@ -22,7 +22,9 @@ export const SearchBar = () => {
     <Autocomplete
       options={items}
       freeSolo
-      getOptionLabel={(option) => option.itemName}
+      getOptionLabel={(option) =>
+        typeof option === 'string' ? option : option.itemName
+      }
       onInputChange={(_, newInputValue) => {
         setItemSearchQuery(newInputValue);
       }}

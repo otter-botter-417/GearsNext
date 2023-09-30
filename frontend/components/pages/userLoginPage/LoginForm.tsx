@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FormProvider } from '@/hooks/useFormMethods ';
+import { FormProvider } from '@/hooks/useFormMethods';
 import { AuthForm } from '@/components/shares/organisms/AuthForm';
 import { LoginInputFormFieldsList } from '@/components/pages/userLoginPage/LoginInputFormFieldsList';
 import { useUserLogin } from '@/hooks/UserAuth/useUserLogin';
@@ -18,7 +18,7 @@ import { useUserLogin } from '@/hooks/UserAuth/useUserLogin';
  * @returns ユーザーログインフォーム
  */
 export const LoginForm = () => {
-  const { formMethods, onSubmit ,loading} = useUserLogin();
+  const { formMethods, onSubmit, loading } = useUserLogin();
   return (
     <FormProvider formMethods={formMethods}>
       <AuthForm

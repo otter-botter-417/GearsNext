@@ -5,10 +5,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useFavoriteItemApi } from '@/hooks/api/useFavoriteItemApi';
 
 import { UserInteractiveIconButton } from '../../shares/molecules/UserInteractiveIconButton';
-import {
-  ICON_SIZE,
-  LOGIN_ALERT_TIMEOUT,
-} from '@/components/constants';
+import { ICON_SIZE, LOGIN_ALERT_TIMEOUT } from '@/components/constants';
 import { useTimedToggle } from '@/hooks/useTimedToggle';
 
 type FavoriteIconButtonProps = {
@@ -76,13 +73,10 @@ export const FavoriteIconButton: FC<FavoriteIconButtonProps> = ({
   return (
     <UserInteractiveIconButton
       title="お気に入り"
-      loginAlertTitle="ログインが必要です"
       isIconActive={isIconActive}
       inactiveIcon={<FavoriteBorderIcon sx={ICON_STYLE_INACTIVE} />}
       activeIcon={<FavoriteIcon sx={ICON_STYLE_ACTIVE} />}
       onClick={onClickIcon}
-      isLoggedIn={isLoggedIn}
-      showLoginAlert={showLoginAlert}
     />
   );
 };

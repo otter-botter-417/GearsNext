@@ -53,7 +53,7 @@ export const LayoutPageRightOrganism: FC<LayoutPageRightOrganismProps> = ({
         }}
       >
         <LayoutInfo layoutDetail={layoutDetail} />
-
+        <br />
         <LayoutComments
           comments={layoutDetail.comments}
           setCommentText={setCommentText}

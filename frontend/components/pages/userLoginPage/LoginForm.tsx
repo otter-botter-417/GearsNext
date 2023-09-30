@@ -18,13 +18,14 @@ import { useUserLogin } from '@/hooks/UserAuth/useUserLogin';
  * @returns ユーザーログインフォーム
  */
 export const LoginForm = () => {
-  const { formMethods, onSubmit } = useUserLogin();
+  const { formMethods, onSubmit ,loading} = useUserLogin();
   return (
     <FormProvider formMethods={formMethods}>
       <AuthForm
         inputFormFieldsList={LoginInputFormFieldsList}
         onSubmit={onSubmit}
         buttonText="ログイン"
+        loading={loading}
       />
     </FormProvider>
   );

@@ -21,13 +21,14 @@ import { RegisterInputFormFieldsList } from '@/components/pages/userRegisterPage
  * @returns ユーザー新規登録フォーム
  */
 export const RegisterForm = () => {
-  const { formMethods, onSubmit } = useUserRegister();
+  const { formMethods, onSubmit, loading } = useUserRegister();
   return (
     <FormProvider formMethods={formMethods}>
       <AuthForm
         inputFormFieldsList={RegisterInputFormFieldsList}
         onSubmit={onSubmit}
         buttonText="新規登録"
+        loading={loading}
       />
     </FormProvider>
   );

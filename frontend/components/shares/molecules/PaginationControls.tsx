@@ -2,27 +2,46 @@ import { useRecoilState } from 'recoil';
 import { paginationState } from '../atoms/state/paginationState';
 
 /**
- * 商品一覧ページのページネーションコントロール
- * @returns 
+ * PaginationControls コンポーネント
+ *
+ * 商品一覧ページのページネーションコントロール。
+ *
+ * @returns ページネーションコントロールエレメント
  */
 export const PaginationControls = () => {
   const [pagination, setPagination] = useRecoilState(paginationState);
 
+  // 次のページへ進む処理
   const handleNext = () => {
     setPagination((prev) => ({ ...prev, currentPage: prev.currentPage + 1 }));
   };
 
+  // 前のページへ戻る処理
   const handlePrev = () => {
     setPagination((prev) => ({ ...prev, currentPage: prev.currentPage - 1 }));
   };
 
+  const { currentPage, itemsPerPage, totalItems } = pagination;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  const isPrevDisabled = currentPage === 1;
+  const isNextDisabled = currentPage === totalPages;
+
   return (
     <div>
-      <button onClick={handlePrev} disabled={pagination.currentPage === 1}>
-        Previous
-      </button>
-      <span>Page {pagination.currentPage}</span>
-      <button onClick={handleNext}>Next</button>
+      {totalPages > 1 && (
+        <>
+          <button onClick={handlePrev} disabled={isPrevDisabled}>
+            Previous
+          </button>
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
+          <button onClick={handleNext} disabled={isNextDisabled}>
+            Next
+          </button>
+        </>
+      )}
     </div>
   );
 };

@@ -1,33 +1,33 @@
-import React, { useEffect } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import React from 'react';
+import { useRecoilValue } from 'recoil';
 import { Box } from '@mui/material';
 
-import { useFetchItems } from '@/hooks/ItemSearchPage/useFetchItems';
-import { useItemFilters } from '@/hooks/ItemSearchPage/useItemFilters';
+import { useItemListFilters } from '@/hooks/ItemSearchPage/useItemListFilters';
 
 import { errorMessageState } from '@/components/shares/atoms/state/errorMessageState';
 
 import { ItemFilterFields } from '@/components/pages/ItemSearchPage/ItemFilterFields';
 import { ItemThumbnailGrid } from '@/components/shares/organisms/ItemThumbnailGrid';
-import { useFlashBackgroundOnRender } from '@/hooks/useFlashBackgroundOnRender';
-import { GetStaticPropsContext } from 'next';
-import { apiFetchedItemsState } from '@/components/shares/atoms/state/apiFetchedItemsState';
 import { ItemDataType } from '@/components/types/ItemDataType';
-import { filteredItemsState } from '@/components/shares/atoms/state/filteredItemsState';
-import { initializeFiltersState } from '@/components/shares/atoms/state/initializeFiltersState';
 import { API_BASE_URL } from '@/components/constants';
+import { useInitItemSearchPage } from '@/hooks/ItemSearchPage/useInitItemSearchPage';
 
 /**
- * 商品検索ページ
+ * ビルド時に初期の商品リストを取得する（SSG）。
+ * 取得した商品はプロップとしてコンポーネントに渡されます。
+ * @returns  取得した商品と再検証時間を含むプロップ。
  */
-// サブカテゴリーが変更されたとき、商品一覧を取得
-// SSG　静的サイト生成のための関数　ビルド時に取得したデータをpropsとして渡す
-export async function getStaticProps() {
+export async function getStaticProps(): Promise<{
+  props: {
+    fetchedItems: ItemDataType[];
+  };
+  revalidate: number;
+}> {
   const response = await fetch(API_BASE_URL + 'items');
   const itemData = await response.json();
 
   if (!itemData || !itemData.data) {
-    console.error('Invalid data structure:', itemData);
+    console.error('無効なデータ構造:', itemData);
     return {
       props: {
         fetchedItems: [],
@@ -40,53 +40,47 @@ export async function getStaticProps() {
     props: {
       fetchedItems: itemData.data,
     },
-    revalidate: 3600, // 60秒間隔で再生成
+    revalidate: 3600, // 60秒ごとに再検証
   };
 }
 
+/**
+ * 商品検索ページのメインコンポーネント。
+ * - 取得した商品でページを初期化
+ * - 商品のフィルタリングを処理
+ * - フィルタリングされた商品を表示
+ *
+ * @param fetchedItems SSGで取得した商品リスト
+ */
 export const ItemSearchPage = ({
   fetchedItems,
 }: {
   fetchedItems: ItemDataType[];
 }) => {
   const errorMessage = useRecoilValue(errorMessageState);
-  // TODO カテゴリーが変更されたとき、サブカテゴリーを変更する
-  // サブカテゴリーにすべてを追加する
-  // 絞り込み見直し　多分おかしい
 
-  const backgroundColor = useFlashBackgroundOnRender();
-  const setInitializeFilters = useSetRecoilState(initializeFiltersState);
-  const setApiFetchedItems = useSetRecoilState(apiFetchedItemsState);
+  // 取得した商品でページを初期化
+  useInitItemSearchPage(fetchedItems);
 
-  //  カテゴリーが変更されたとき、商品一覧を取得
-  const { setPriceInfoForSlider } = useFetchItems();
-
-  // 絞り込み条件が変更されたとき、商品一覧を絞り込み
-  useItemFilters();
-
-  // 初回レンダリング時だけSSGで取得した商品一覧をセット
-  useEffect(() => {
-    if (fetchedItems) {
-      setApiFetchedItems(fetchedItems);
-      setPriceInfoForSlider(fetchedItems);
-      setInitializeFilters(true);
-    }
-  }, []);
+  // 商品のフィルタリングロジックを処理
+  useItemListFilters();
 
   // エラーメッセージがあれば表示
   if (errorMessage) {
     return <div>{errorMessage}</div>;
   }
 
+  // TODO
+  // フィルタリングロジックを再検討（多分間違っている）
+  // フィルターをクリアしたとき、スライダーが初期化されていない
+
   return (
-    <div className="flashBackground" style={{ backgroundColor }}>
-      <Box flexDirection="column">
-        {/* 絞り込み */}
-        <ItemFilterFields />
-        {/* 絞り込み後の商品表示 */}
-        <ItemThumbnailGrid />
-      </Box>
-    </div>
+    <Box flexDirection="column">
+      {/* 商品のフィルタリングセクション */}
+      <ItemFilterFields />
+      {/* フィルタリング後の商品を表示 */}
+      <ItemThumbnailGrid />
+    </Box>
   );
 };
 

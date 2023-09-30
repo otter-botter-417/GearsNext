@@ -1,7 +1,8 @@
-import { TextFieldWithValidation } from '@/components/shares/atoms/form/TextFieldWithValidation';
-import { useFormMethods } from '@/hooks/useFormMethods ';
-import { Box } from '@mui/system';
 import { FC } from 'react';
+import { Box } from '@mui/system';
+import { useFormMethods } from '@/hooks/useFormMethods ';
+
+import { TextFieldWithValidation } from '@/components/shares/atoms/form/TextFieldWithValidation';
 
 interface AuthValidationInputFieldsProps {
   inputFormFieldsList: {

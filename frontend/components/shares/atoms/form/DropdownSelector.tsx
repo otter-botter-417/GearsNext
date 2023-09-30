@@ -1,46 +1,61 @@
-import { TextField, MenuItem } from "@mui/material";
-import React from "react";
-import { UseFormReturn, FieldError } from "react-hook-form";
-import { DropDownListSelector } from "./DropDownListSelector";
+import React, { FC } from 'react';
+import { TextField, MenuItem } from '@mui/material';
 
-// プルダウン　選択式のフォーム
+import { useFormMethods } from '@/hooks/useFormMethods';
 
-// optionsListには選択肢のリストが入る
+import { getOptionList } from '@/components/pages/addItemPage/DropDownListSelector';
+import { GetFieldErrorMessage } from './GetFieldErrorMessage';
 
-interface DropdownSelectorProps {
+type DropdownSelectorProps = {
   name: string;
   label: string;
-  formMethods: UseFormReturn<any>;
-  defaultValue?: string;
-}
+  options?: string[];
+};
 
-export const DropdownSelector: React.FC<DropdownSelectorProps> = ({
+/**
+ * 単一選択のプルダウンメニューを提供します。
+ * - このコンポーネントは、任意のフォームフィールド名（name）、ラベル（label）を受け取ります。
+ * ― また、任意のプルダウンメニューの選択肢（options）を受け取ることができます。
+ *
+ * @param name - フォームフィールドの名前
+ * @param label - フォームフィールドのラベル
+ * @param options - プルダウンメニューの選択肢
+ */
+export const DropdownSelector: FC<DropdownSelectorProps> = ({
   name,
   label,
-  formMethods,
-  defaultValue,
+  options,
 }) => {
   const {
     register,
+    watch,
     formState: { errors },
-  } = formMethods;
+  } = useFormMethods();
+  const optionsList = options || getOptionList(name);
+  let selectedValue = watch(name);
 
-  const errorMessage = errors[name] ? (errors[name] as FieldError).message : ""; //undefined または string または FieldError の可能性があるため、エラーが発生　沼ポイント
+  // 選択されている値がオプションに存在するか確認
+  // 存在しない場合は空文字にする　主にカテゴリーの選択肢が変更された場合に発生
+  if (!optionsList.includes(selectedValue)) {
+    selectedValue = '';
+  }
 
-  const optionsList = name ? DropDownListSelector({ idName: name }) : [];
-
+  // 選択肢が存在しない、または空の場合は null を返す
+  if (!optionsList || optionsList.length === 0) {
+    return null;
+  }
   return (
     <TextField
       {...register(name)}
       error={!!errors[name]}
-      helperText={errorMessage}
+      helperText={GetFieldErrorMessage(errors, name)}
       id={name}
       select
       label={label}
+      value={selectedValue} // valueを動的に更新
       defaultValue={optionsList[0]}
       fullWidth
     >
-      {/* map関数でリスト内の選択肢の処理 */}
       {optionsList.map((option) => (
         <MenuItem key={option} value={option}>
           {option}

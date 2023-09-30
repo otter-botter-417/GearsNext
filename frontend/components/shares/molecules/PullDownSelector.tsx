@@ -1,14 +1,13 @@
-// PullDownSelector.tsx
-import React from 'react';
+import React, { FC } from 'react';
 import { useRecoilState, RecoilState } from 'recoil';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 
-interface PullDownSelectorProps {
+type PullDownSelectorProps = {
   options: string[];
   label: string;
   stateAtom: RecoilState<string>;
-}
+};
 
 /**
  * プルダウンセレクター
@@ -24,7 +23,7 @@ interface PullDownSelectorProps {
  * stateAtom={categoryValueState}
  * />
  */
-export const PullDownSelector: React.FC<PullDownSelectorProps> = ({
+export const PullDownSelector: FC<PullDownSelectorProps> = ({
   options,
   label,
   stateAtom,

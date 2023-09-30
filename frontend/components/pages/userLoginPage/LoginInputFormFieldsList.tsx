@@ -1,11 +1,7 @@
 /**
- * ログイン画面の入力フォームのフィールド名とラベル名のリスト
- * @returns フィールド名とラベル名のリスト
+ * ユーザーログイン画面用の入力フォームフィールド情報
  */
-export const LoginInputFormFieldsList = () => {
-  const FormNamesList = [
-    { name: 'email', label: 'メールアドレス' },
-    { name: 'password', label: 'パスワード' },
-  ];
-  return FormNamesList;
-};
+export const LoginInputFormFieldsList = [
+  { name: 'email', label: 'メールアドレス' },
+  { name: 'password', label: 'パスワード' },
+];

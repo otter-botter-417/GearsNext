@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useRecoilState, RecoilState } from 'recoil';
 import { Autocomplete } from '@mui/material';
 import TextField from '@mui/material/TextField';
 
-interface PullDownMultiSelectorProps {
+type PullDownMultiSelectorProps = {
   options: string[];
   label: string;
   stateAtom: RecoilState<string[]>;
-}
+};
 
 /**
  * Autocompleteを使用して、複数選択ができるセレクター
@@ -23,7 +23,7 @@ interface PullDownMultiSelectorProps {
  * stateAtom={categoryValueState}
  * />
  */
-export const PullDownMultiSelector: React.FC<PullDownMultiSelectorProps> = ({
+export const PullDownMultiSelector: FC<PullDownMultiSelectorProps> = ({
   options,
   label,
   stateAtom,

@@ -36,11 +36,12 @@ export const ParentComment: FC<ParentCommentProps> = ({
       </Typography>
       <Box display={'flex'} alignItems={'center'}>
         {/* 時間情報を表示 */}
-        <TimeDifferenceFormatter time={comment.createdAt} />
+        <TimeDifferenceFormatter time={comment.createdAt} variant={'overline'} />
 
         {/* ログインしている場合、返信ボタンを表示 */}
         {user && (
           <Button
+            size='small'
             onClick={() => replyHandle(comment.commentId, comment.userName)}
           >
             返信する

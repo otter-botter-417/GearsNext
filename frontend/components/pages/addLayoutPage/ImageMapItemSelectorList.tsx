@@ -12,6 +12,7 @@ import {
 
 import { filteredItemsState } from '@/components/shares/atoms/state/filteredItemsState';
 import { imageMapDataListState } from '@/components/shares/atoms/state/imageMapDataListState';
+import { FittedImage } from '@/components/shares/atoms/FittedImage';
 
 type ImageMapItemSelectorListType = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -76,28 +77,25 @@ export const ImageMapItemSelectorList: FC<ImageMapItemSelectorListType> = ({
     itemId: item.itemId,
     image: item.imageName,
   }));
-
   return (
     <List sx={{ maxWidth: '100%', maxHeight: '100%', overflow: 'auto' }}>
       {filteredItemList.map((item, index) => (
-        // リストアイテム
-        <ListItem key={index} alignItems="flex-start">
+        <div key={index} style={{ display: 'flex', alignItems: 'flex-start' }}>
           <ListItemButton
             onClick={() => onClickListButton(item.itemId, item.itemName)}
           >
-            {/* リストのアイテムの個別の画像 */}
             <ListItemAvatar>
-              <Avatar
-                alt={item.itemName}
+              <FittedImage
                 src={item.image}
-                variant="square"
-                sx={{ width: 'auto', height: 30 }}
+                alt={item.itemName}
+                containerWidth={70}
+                containerHeight={30}
               />
             </ListItemAvatar>
             <ListItemText primary={item.itemName} />
             <Divider variant="inset" component="li" />
           </ListItemButton>
-        </ListItem>
+        </div>
       ))}
     </List>
   );

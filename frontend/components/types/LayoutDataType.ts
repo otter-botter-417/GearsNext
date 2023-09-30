@@ -1,5 +1,6 @@
 export type LayoutDataType = {
   layoutId: number;
+  imageName: string;
   text: string;
   userId: number;
   userName: string;
@@ -12,7 +13,7 @@ export type LayoutDataType = {
     layoutId: number,
     content: string,
     userName: string,
-    parentId:  number | null,
+    parentId: number | null,
     createdAt: string
   }>;
   items: Array<{ itemId: number, itemName: string, imageName: string }>;

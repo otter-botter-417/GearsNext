@@ -2,13 +2,13 @@ import React, { FC, useState } from 'react';
 import Image from 'next/legacy/image';
 import { Box } from '@mui/material';
 
-import { LAYOUT_IMAGE_BASE_URL } from '@/components/constants';
 import { ImageMapType } from '@/components/types/ImageMapType';
 
 import { LayoutLabelItem } from './LayoutLabelItem';
 
 type LayoutImageOnTagImageMapProps = {
   layoutId: number;
+  imageName: string;
   tagPositions: ImageMapType[];
 };
 
@@ -21,7 +21,7 @@ type LayoutImageOnTagImageMapProps = {
  * @returns {JSX.Element}
  */
 export const LayoutImageOnTagImageMap: FC<LayoutImageOnTagImageMapProps> = ({
-  layoutId,
+  imageName,
   tagPositions,
 }) => {
   const [isTagPositionVisible, setIsTagPositionVisible] = useState(true);
@@ -36,7 +36,7 @@ export const LayoutImageOnTagImageMap: FC<LayoutImageOnTagImageMapProps> = ({
       >
         {/* レイアウト画像 */}
         <Image
-          src={`${LAYOUT_IMAGE_BASE_URL}${layoutId}.jpg`}
+          src={imageName}
           layout="fill"
           objectFit="contain"
           priority

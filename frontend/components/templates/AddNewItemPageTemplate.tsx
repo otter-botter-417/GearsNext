@@ -1,12 +1,15 @@
-import React, { ReactNode } from "react";
-import { Box, Grid } from "@mui/material";
+import React, { FC, ReactNode } from 'react';
+import { Box, Grid } from '@mui/material';
 
-// ReactNodeはReactの型定義の一部で、React要素を表すための型
 interface AddNewItemPageTemplateProps {
   children: ReactNode;
 }
 
-const AddNewItemPageTemplate: React.FC<AddNewItemPageTemplateProps> = ({
+/**
+ * このコンポーネントは、商品追加ページで用いるテンプレートです。
+ *
+ */
+export const AddNewItemPageTemplate: FC<AddNewItemPageTemplateProps> = ({
   children,
 }) => {
   return (
@@ -17,5 +20,3 @@ const AddNewItemPageTemplate: React.FC<AddNewItemPageTemplateProps> = ({
     </Box>
   );
 };
-
-export default AddNewItemPageTemplate;

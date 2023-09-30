@@ -3,6 +3,7 @@ import { Typography } from '@mui/material';
 
 type TimeDifferenceFormatterProps = {
   time: string;
+  variant?: string;
 };
 
 // 1分、1時間、1日の秒数
@@ -18,6 +19,7 @@ const ONE_DAY_IN_SECONDS = 86400;
  */
 export const TimeDifferenceFormatter: FC<TimeDifferenceFormatterProps> = ({
   time,
+  variant = 'body1',
 }) => {
   // 現在のエポック時間（秒）
   const currentEpochTimeInSeconds = Math.floor(Date.now() / 1000);
@@ -47,7 +49,10 @@ export const TimeDifferenceFormatter: FC<TimeDifferenceFormatterProps> = ({
   }
 
   return (
-    <Typography variant="body2" component="div">
+    <Typography
+      variant={variant as 'body1' | 'body2' | 'caption'}
+      component="div"
+    >
       {formattedTimeDifference}
     </Typography>
   );

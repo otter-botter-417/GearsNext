@@ -7,6 +7,7 @@ import { imageMapPositionState } from '@/components/shares/atoms/state/imageMapP
 
 import { ImageMapLabel } from './ImageMapLabel';
 import { ImageMapTagEditor } from './ImageMapTagEditor';
+import Image from 'next/legacy/image';
 
 /**
  * このコンポーネントは、選択された画像を表示し、
@@ -25,9 +26,6 @@ export const ImageWithMapEditor = () => {
   const setTextFieldPosition = useSetRecoilState(imageMapPositionState);
   const setItemSearchQuery = useSetRecoilState(itemSearchQueryState);
 
-  // 画像が選択されていない時は何も表示しない
-  if (!imagePreviewUrl) return null;
-
   /**
    * 画像がクリックされた際に呼び出されるハンドラー。
    *
@@ -43,6 +41,7 @@ export const ImageWithMapEditor = () => {
       if (!firstClickDone) {
         setFirstClickDone(true);
       }
+
       const rect = e.currentTarget.getBoundingClientRect();
       const actualWidth = e.currentTarget.offsetWidth;
       const actualHeight = e.currentTarget.offsetHeight;
@@ -50,17 +49,21 @@ export const ImageWithMapEditor = () => {
       // クリックされた座標を画像のパーセンテージで計算
       const x = ((e.clientX - rect.left) / actualWidth) * 100;
       const y = ((e.clientY - rect.top) / actualHeight) * 100;
+
       setTextFieldPosition({ x, y });
       setOpen(true);
       setItemSearchQuery('');
     },
-    [setTextFieldPosition, setOpen, setItemSearchQuery],
+    [setTextFieldPosition, setOpen, setItemSearchQuery, firstClickDone], // <- Add missing dependency
   );
+
+  // 画像が選択されていない時は何も表示しない
+  if (!imagePreviewUrl) return null;
 
   return (
     <div
       style={{
-        position: 'relative' as 'relative',
+        position: 'relative',
         display: 'inline-block',
         width: '100%',
         height: '100%',
@@ -84,14 +87,13 @@ export const ImageWithMapEditor = () => {
           クリックしてタグを設定する
         </div>
       )}
-      <img
+      <Image
         src={imagePreviewUrl}
         alt="Image Preview"
-        style={{
-          width: '100%',
-          height: 'auto',
-          objectFit: 'contain',
-        }}
+        layout="responsive"
+        width={500} // Set appropriate values
+        height={300} // Set appropriate values
+        objectFit="contain"
         onClick={handleImageClick}
       />
       <ImageMapTagEditor open={open} setOpen={setOpen} />

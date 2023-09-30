@@ -1,30 +1,25 @@
 import React from 'react';
-import Link from 'next/link';
+import Link from '@mui/material/Link';
 
 import { NextPage } from 'next';
 import { Box } from '@mui/system';
-import { useRecoilValue } from 'recoil';
-import { userState } from '@/components/shares/atoms/state/userState';
+import Button from '@mui/material/Button';
+import { HomeImageGrid } from '@/components/pages/homePage/HomeImageGrid';
+import { useFetchHomeDataApi } from '@/hooks/api/useFetchHomeDataApi';
 
 const Home: NextPage = () => {
-  const user = useRecoilValue(userState);
+  //データの取得
+  useFetchHomeDataApi();
+
   return (
-    <React.StrictMode>
-      <Box
-        display={'flex'}
-        flexDirection={'column'}
-        alignItems="center"
-        justifyContent="center"
-      >
-        {user && user ? 'ログイン済み' : '未ログイン'}
-        {/* 各ページヘのリンク */}
-        <Link href="/AddNewItemPage">AddNewItemPage</Link>
-        <Link href="/AddNewLayoutPage">AddNewLayoutPage</Link>
-        <Link href="/ItemPage">ItemPage</Link>
-        <Link href="/ItemSearchPage">ItemSearchPage</Link>
-        <Link href="/UserRegisterPage">UserRegisterPage</Link>
+    <Box display="flex" justifyContent="center">
+      <Box width="80%">
+        <Link href="/ItemSearchPage">
+          <Button variant="outlined">商品を検索する</Button>
+        </Link>
+        <HomeImageGrid />
       </Box>
-    </React.StrictMode>
+    </Box>
   );
 };
 

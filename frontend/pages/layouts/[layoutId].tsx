@@ -68,6 +68,7 @@ export const LayoutPage = ({
       leftSide={
         <LayoutImageOnTagImageMap
           layoutId={layoutDetail.layoutId}
+          imageName={layoutDetail.imageName}
           tagPositions={layoutDetail.tagPositions}
         />
       }

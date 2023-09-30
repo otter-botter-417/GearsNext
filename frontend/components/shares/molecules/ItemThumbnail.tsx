@@ -1,27 +1,26 @@
-import Link from 'next/link';
+import { FC } from 'react';
+import Link from '@mui/material/Link';
 import Image from 'next/legacy/image';
 import { Box, Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
 import { ItemDataType } from '@/components/types/ItemDataType';
-import { getItemImageUrl } from '@/components/shares/atoms/getItemImageUrl';
-import { useRouter } from 'next/router';
 
 type ItemThumbnailProps = {
   ItemData: ItemDataType;
 };
 
-// TODO アマゾンの価格を更新させる
 /**
  * 商品のサムネイル画像と基本情報を表示する
+ * - 商品画像
+ * - ブランド名
+ * - 商品名
+ * - 価格
  *
  * @param itemData 商品データ
  * @returns 商品のサムネイル
  */
-export const ItemThumbnail: React.FC<ItemThumbnailProps> = ({ ItemData }) => {
-  const router = useRouter();
-  const { itemId } = router.query;
-
+export const ItemThumbnail: FC<ItemThumbnailProps> = ({ ItemData }) => {
   return (
     <Grid
       container

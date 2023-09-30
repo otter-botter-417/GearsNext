@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import React, { FC } from 'react';
+import { FittedImage } from './FittedImage';
 
 // 画像を表示する共通のコンポーネント
 type ItemImageProps = {
@@ -18,18 +18,12 @@ type ItemImageProps = {
  * @returns {JSX.Element} 商品の画像
  */
 export const ItemImage: FC<ItemImageProps> = ({ item, imageSize }) => {
-  console.log(item);
   return (
-    <Image
+    <FittedImage
       src={item.imageName}
       alt={`${item.itemId}`}
-      layout="responsive"
-      width={imageSize}
-      height={imageSize}
-      loading="lazy"
-      style={{
-        objectFit: 'cover',
-      }}
+      containerWidth={imageSize}
+      containerHeight={imageSize}
     />
   );
 };

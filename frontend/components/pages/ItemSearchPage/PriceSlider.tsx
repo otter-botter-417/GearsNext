@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { FC, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import Slider from '@mui/material/Slider';
 import { Box, Input } from '@mui/material';
@@ -9,7 +9,10 @@ import { priceAfterLimitValueState } from '@/components/shares/atoms/state/price
 import { itemPriceListForSliderState } from '@/components/shares/atoms/state/itemPriceListForSliderState';
 import { itemPriceRangeForSliderState } from '@/components/shares/atoms/state/itemPriceRangeForSliderState';
 
-// TODO コンポーネント化を検討　長すぎる
+// 非常に難しいコード。理解するのに時間がかかる。
+
+
+// 価格のデータポイントと範囲を定義
 interface PriceDataPoint {
   price: number;
 }
@@ -26,10 +29,10 @@ interface BarChartData {
 
 /**
  * 価格のビン（範囲内の価格の数）を計算する関数
- * @param priceDataPoints - 価格のデータポイントの配列
- * @param priceRange - 価格の最小値と最大値
- * @param numberOfBins - ビンの数
- * @returns バーチャートのデータ
+ * @param {PriceDataPoint[]} priceDataPoints - 価格のデータポイントの配列
+ * @param {PriceRange} priceRange - 価格の最小値と最大値
+ * @param {number} numberOfBins - ビンの数
+ * @returns {BarChartData[]} - バーチャートのデータ
  */
 const calculatePriceBins = (
   priceDataPoints: PriceDataPoint[],
@@ -59,14 +62,22 @@ const calculatePriceBins = (
 
 /**
  * 価格スライダーコンポーネント
+ *
+ * - 価格のビンを計算し、それを基にバーチャートを表示
+ * - スライダーと入力フィールドで価格の最小値と最大値を設定
+ *
+ * @returns JSX.Element
  */
-const PriceSlider: React.FC = () => {
+export const PriceSlider: FC = () => {
   const [value, setValue] = useState<PriceRange>({ min: 0, max: 1000000 });
+  // Recoilステートから価格範囲と価格リストを取得
   const priceRange = useRecoilValue(itemPriceRangeForSliderState);
   const itemPriceListForSlider = useRecoilValue(itemPriceListForSliderState);
   const setPriceAfterLimitValue = useSetRecoilState(priceAfterLimitValueState);
-  const priceDataPoints = itemPriceListForSlider.map((price) => ({ price }));
 
+  // 価格データポイントを作成
+  const priceDataPoints = itemPriceListForSlider.map((price) => ({ price }));
+  // バーチャートデータを計算
   const barChartData = calculatePriceBins(priceDataPoints, priceRange, 50);
 
   /**
@@ -164,5 +175,3 @@ const PriceSlider: React.FC = () => {
     </Box>
   );
 };
-
-export default PriceSlider;

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { ImageList, ImageListItem } from '@mui/material';
 
-import Link from 'next/link';
+import Link from '@mui/material/Link';
 import { ItemImage } from '../atoms/ItemImage';
 
 type ImageGridListProps = {
@@ -18,10 +18,10 @@ type ImageGridListProps = {
 /**
  * このコンポーネントは、受け取った商品リストから、画像をグリッドで表示するUIを提供します。
  *
- * @param {ItemDataType[]} itemList - 表示する商品のリスト
- * @param {number} imageSize - 画像のサイズ（縦・横は同じサイズ）
- * @param {number} cols - 一行に表示する画像の数
- * @param {boolean} isLink - 商品画像をクリックしたときに、商品詳細ページに遷移するかどうか
+ * @param itemList - 表示する商品のリスト
+ * @param imageSize - 画像のサイズ（縦・横は同じサイズ）
+ * @param cols - 一行に表示する画像の数
+ * @param isLink - 商品画像をクリックしたときに、商品詳細ページに遷移するかどうか
  *
  * @returns {JSX.Element} 商品画像をグリッドで表示するコンポーネントを含むReact要素
  *

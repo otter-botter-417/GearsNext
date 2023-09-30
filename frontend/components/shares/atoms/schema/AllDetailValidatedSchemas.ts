@@ -1,0 +1,9 @@
+export { TentDetailValidatedSchema } from './TentDetailValidatedSchema';
+export { TarpDetailValidatedSchema } from './TarpDetailValidatedSchema';
+export { ChairDetailValidatedSchema } from './ChairDetailValidatedSchema';
+export { TableDetailValidatedSchema } from './TableDetailValidatedSchema';
+export { LanternDetailValidatedSchema } from './LanternDetailValidatedSchema';
+export { SleepingBagDetailValidatedSchema } from './SleepingBagDetailValidatedSchema';
+export { FloorMatDetailValidatedSchema } from './FloorMatDetailValidatedSchema';
+export { CampBedDetailValidatedSchema } from './CampBedDetailValidatedSchema';
+export { StoveDetailValidatedSchema } from './StoveDetailValidatedSchema';

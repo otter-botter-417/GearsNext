@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
 
 import { ITEM_IMAGE_BASE_URL } from '@/components/constants';
 import { ImageMapType } from '@/components/types/ImageMapType';
+import { FittedImage } from '@/components/shares/atoms/FittedImage';
 
 type ItemDetailCardProps = {
   item: ImageMapType;
@@ -19,10 +19,11 @@ type ItemDetailCardProps = {
 export const ItemDetailCard: FC<ItemDetailCardProps> = ({ item }) => {
   return (
     <Card>
-      <CardMedia
-        component="img"
+      <FittedImage
+        src={`${ITEM_IMAGE_BASE_URL}${item.itemId}.jpg`}
         alt={item.itemName}
-        image={`${ITEM_IMAGE_BASE_URL}${item.itemId}.jpg`}
+        containerWidth={100}
+        containerHeight={100}
       />
     </Card>
   );

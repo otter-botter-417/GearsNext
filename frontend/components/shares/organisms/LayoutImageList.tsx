@@ -2,10 +2,10 @@ import React, { FC } from 'react';
 import { Box } from '@mui/system';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-import Link from 'next/link';
-import Image from 'next/image';
+import Link from '@mui/material/Link';
 
 import { LAYOUT_IMAGE_BASE_URL } from '@/components/constants';
+import { FittedImage } from '../atoms/FittedImage';
 
 type LayoutImageListProps = {
   layouts: Array<{
@@ -43,16 +43,12 @@ export const LayoutImageList: FC<LayoutImageListProps> = ({
       <ImageList sx={{ width: 'auto', height: 'auto' }} cols={3}>
         {layouts.map((layout) => (
           <ImageListItem key={layout.layoutId}>
-            <Link href={`/layout/${layout.layoutId}`}>
-              <Image
+            <Link href={`/layouts/${layout.layoutId}`}>
+              <FittedImage
                 src={`${LAYOUT_IMAGE_BASE_URL}${layout.layoutId}.jpg`}
                 alt={`Layout ${layout.layoutId}`}
-                loading="lazy"
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  objectFit: 'cover',
-                }}
+                containerWidth={200}
+                containerHeight={200}
               />
             </Link>
           </ImageListItem>

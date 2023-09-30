@@ -86,13 +86,10 @@ export const InventoryIconButton: FC<InventoryIconButtonProps> = ({
   return (
     <UserInteractiveIconButton
       title="持っている物"
-      loginAlertTitle="ログインが必要です"
       isIconActive={isIconActive}
       inactiveIcon={<LibraryAddRoundedIcon sx={ICON_STYLE_INACTIVE} />}
       activeIcon={<LibraryAddRoundedIcon sx={ICON_STYLE_ACTIVE} />}
       onClick={onClickIcon}
-      isLoggedIn={isLoggedIn}
-      showLoginAlert={showLoginAlert}
     />
   );
 };

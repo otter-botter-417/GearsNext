@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Box } from '@mui/material';
 
-import { useFormMethods } from '@/hooks/useFormMethods ';
+import { useFormMethods } from '@/hooks/useFormMethods';
 import { SubmitButton } from '@/components/shares/atoms/button/SubmitButton';
 import { AuthValidationInputFields } from '@/components/shares/molecules/AuthValidationInputFields';
 

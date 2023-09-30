@@ -75,7 +75,7 @@ export const useApiRequest = () => {
           }
         }
         console.error("APIリクエストに失敗しました。", err);
-        return null;
+        throw err;
       }
     },
     []

@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import { LoadingButton } from '@mui/lab';
 
-interface SubmitButtonProps {
+type SubmitButtonProps = {
   loading: boolean;
   text: string;
   type?: 'submit' | 'button'; // Add this line
-}
+};
 
 /**
  * LoadingButtonをラッピングして、ローディング状態やボタンテキストなどを

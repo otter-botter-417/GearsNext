@@ -17,6 +17,7 @@ interface AuthFormProps {
   inputFormFieldsList: Field[];
   onSubmit: (data: any) => void;
   buttonText: string;
+  loading: boolean;
 }
 
 /**
@@ -30,6 +31,7 @@ interface AuthFormProps {
  * @param inputFormFieldsList - フォームフィールドの名前とラベルの配列
  * @param onSubmit - フォーム送信時に実行されるコールバック関数
  * @param buttonText - 送信ボタンに表示されるテキスト
+ * @param loading - ローディング中かどうか
  *
  * @example
  * ```tsx
@@ -46,6 +48,7 @@ export const AuthForm: FC<AuthFormProps> = ({
   inputFormFieldsList,
   onSubmit,
   buttonText,
+  loading,
 }) => {
   const formMethods = useFormMethods(); // ここで formMethods を取得
 
@@ -56,10 +59,7 @@ export const AuthForm: FC<AuthFormProps> = ({
         formMethods={formMethods}
       />
       <Box sx={{ pb: '15%', display: 'flex', justifyContent: 'center' }}>
-        <SubmitButton
-          loading={formMethods.watch('loading') || false}
-          text={buttonText}
-        />
+        <SubmitButton loading={loading} text={buttonText} />
       </Box>
     </form>
   );

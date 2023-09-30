@@ -1,12 +1,10 @@
 import React from 'react';
 import Link from '@mui/material/Link';
-import { Typography, Box } from '@mui/material';
+import { Typography } from '@mui/material';
+
+import { useRedirectIfAuthenticated } from '@/hooks/UserAuth/useRedirectIfAuthenticated';
 
 import { AuthPageTemplate } from '@/components/templates/AuthPageTemplate';
-import { useUserLogin } from '@/hooks/UserAuth/useUserLogin';
-import { useRecoilValue } from 'recoil';
-import { userState } from '@/components/shares/atoms/state/userState';
-import { useRouter } from 'next/router';
 import { LoginForm } from '@/components/pages/userLoginPage/LoginForm';
 
 /**
@@ -21,14 +19,7 @@ import { LoginForm } from '@/components/pages/userLoginPage/LoginForm';
  * @returns ユーザーログインページの要素
  */
 const UserLoginPage = () => {
-  const { formMethods, onSubmit } = useUserLogin();
-  const user = useRecoilValue(userState);
-  const router = useRouter();
-
-  // 既にログインしている場合はホームページにリダイレクト
-  if (user) {
-    router.push('/');
-  }
+  useRedirectIfAuthenticated();
 
   const title = <Typography variant="h4">ログイン</Typography>;
   const loginForm = <LoginForm />;

@@ -21,7 +21,7 @@ export const ReplyComment: FC<ReplyCommentProps> = ({ replyComment }) => {
   return (
     <Typography variant="body2" component="div">
       {replyComment.userName} {replyComment.content}
-      <TimeDifferenceFormatter time={replyComment.createdAt} />
+      <TimeDifferenceFormatter time={replyComment.createdAt} variant='overline'/>
     </Typography>
   );
 };

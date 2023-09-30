@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import { TextField } from '@mui/material';
+import { UseFormReturn } from 'react-hook-form';
 
 import { getFieldErrorMessage } from './getFieldErrorMessage';
-import { UseFormReturn } from 'react-hook-form';
 
 type TextFieldWithValidationProps = {
   name: string;

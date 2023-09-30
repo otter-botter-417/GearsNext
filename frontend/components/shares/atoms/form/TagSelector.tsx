@@ -3,8 +3,8 @@ import { TextField, MenuItem, Chip } from '@mui/material';
 
 import { useFormMethods } from '@/hooks/useFormMethods';
 
-import { getTagOptions } from './getTagOptions';
-import { getFieldErrorMessage } from './getFieldErrorMessage';
+import { GetTagOptions } from './GetTagOptions';
+import { getFieldErrorMessage } from './GetFieldErrorMessage';
 
 type TagSelectorProps = {
   idName: string;
@@ -24,7 +24,7 @@ export const TagSelector: FC<TagSelectorProps> = ({ idName, label }) => {
     formState: { errors },
   } = useFormMethods();
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const tagOptions = getTagOptions(idName);
+  const tagOptions = GetTagOptions(idName);
 
   /**
    * タグ選択が変更されたときのハンドラ

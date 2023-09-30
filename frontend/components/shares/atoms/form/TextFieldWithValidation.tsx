@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { TextField } from '@mui/material';
 import { UseFormReturn } from 'react-hook-form';
 
-import { getFieldErrorMessage } from './getFieldErrorMessage';
+import { GetFieldErrorMessage } from './GetFieldErrorMessage';
 
 type TextFieldWithValidationProps = {
   name: string;
@@ -42,7 +42,7 @@ export const TextFieldWithValidation: FC<TextFieldWithValidationProps> = ({
     <TextField
       {...register(name)}
       error={Boolean(errors[name])}
-      helperText={getFieldErrorMessage(errors, name)}
+      helperText={GetFieldErrorMessage(errors, name)}
       id={name}
       label={label}
       fullWidth

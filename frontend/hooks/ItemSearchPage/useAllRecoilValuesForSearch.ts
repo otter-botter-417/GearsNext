@@ -1,4 +1,3 @@
-// useAllRecoilValuesForSearch.js
 import { useRecoilValue } from 'recoil';
 
 import { subCategoryValueState } from '@/components/shares/atoms/state/subCategoryValueState';
@@ -8,17 +7,19 @@ import { filterSwitchState } from '@/components/shares/atoms/state/filterSwitchS
 import { priceAfterLimitValueState } from '@/components/shares/atoms/state/priceAfterLimitValueState';
 import { sortPatternValueState } from '@/components/shares/atoms/state/sortPatternValueState';
 import { apiFetchedItemsState } from '@/components/shares/atoms/state/apiFetchedItemsState';
+import { categoryValueState } from '@/components/shares/atoms/state/categoryValueState';
 
 /**
  * 商品検索ページで使用するRecoilの状態をまとめて取得するカスタムフック
  * applyFiltersを呼び出すために必要な状態をまとめて取得する
- * @returns {subCategoryValue, itemTags, colorTags, filterSwitch, sliderValue, sortPatternValue, itemList} 商品検索ページで使用するRecoilの状態
+ * @returns 商品検索ページで使用するRecoilの状態
  * @example
  *   useEffect(() => {
  *  applyFilters(itemList);
  *  }, [allRecoilValues]);
  */
 export const useAllRecoilValuesForSearch = () => {
+    const categoryValue = useRecoilValue(categoryValueState);
     const subCategoryValue = useRecoilValue(subCategoryValueState);
     const itemTags = useRecoilValue(itemTagsState);
     const colorTags = useRecoilValue(colorTagsState);
@@ -28,6 +29,7 @@ export const useAllRecoilValuesForSearch = () => {
     const itemList = useRecoilValue(apiFetchedItemsState);
 
     return {
+        categoryValue,
         subCategoryValue,
         itemTags,
         colorTags,

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { ImageList, ImageListItem } from '@mui/material';
 
-import Link from 'next/link';
+import Link from '@mui/material/Link';
 import { ItemImage } from '../atoms/ItemImage';
 
 type ImageGridListProps = {

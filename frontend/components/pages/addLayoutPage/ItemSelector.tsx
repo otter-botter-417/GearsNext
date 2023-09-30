@@ -25,7 +25,7 @@ type ItemSelectorProps = {
  */
 export const ItemSelector: FC<ItemSelectorProps> = ({ open, onClose }) => {
   const setSelectedItemsList = useSetRecoilState(selectedItemsListState);
-  const selectCategoryName = ['選択中', ...CategoryNameList];
+  const selectCategoryName = ['選択中','すべて', ...CategoryNameList];
 
   const selectReset = () => {
     setSelectedItemsList([]);

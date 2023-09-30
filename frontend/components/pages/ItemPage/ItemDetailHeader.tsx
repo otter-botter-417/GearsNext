@@ -38,7 +38,7 @@ export const ItemDetailHeader: FC<ItemDetailHeaderProps> = ({
         alignItems: 'center',
         justifyContent: 'center',
         position: 'relative',
-        width: '100%',
+        width: '90%',
       }}
     >
       {/* 商品名　メーカー　を表示 */}
@@ -55,11 +55,10 @@ export const ItemDetailHeader: FC<ItemDetailHeaderProps> = ({
       >
         <Image
           src={imageName}
-          alt={`${itemName} by ${brandName}`}
+          alt={imageName}
           layout="fill"
           objectFit="contain"
           priority
-          style={{ position: 'absolute', top: 0, left: 0 }} // 必要: 'fill'レイアウトを使うときに'absolute'を設定
         />
       </Box>
     </Box>

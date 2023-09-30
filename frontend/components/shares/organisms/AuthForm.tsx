@@ -2,23 +2,23 @@ import React, { FC } from 'react';
 import { Box } from '@mui/material';
 
 import { useFormMethods } from '@/hooks/useFormMethods ';
-import { SubmitButton } from '@/components/shares/atoms/SubmitButton';
+import { SubmitButton } from '@/components/shares/atoms/button/SubmitButton';
 import { AuthValidationInputFields } from '@/components/shares/molecules/AuthValidationInputFields';
 
-interface Field {
+type Field = {
   name: string;
   label: string;
-}
+};
 
 /**
  * TODO onSubmitの引数の型がわからないのでanyにしている
  */
-interface AuthFormProps {
+type AuthFormProps = {
   inputFormFieldsList: Field[];
   onSubmit: (data: any) => void;
   buttonText: string;
   loading: boolean;
-}
+};
 
 /**
  * 汎用的なユーザー認証フォームコンポーネント

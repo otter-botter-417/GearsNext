@@ -1,42 +1,69 @@
-import { TextField, MenuItem } from '@mui/material';
-import React from 'react';
-import { UseFormReturn, FieldError } from 'react-hook-form';
-import { TagListSelector } from './TagListSelector';
-// import { Tags } from '@/components/shares/atoms/Tags';
+import React, { FC, useState } from 'react';
+import { TextField, MenuItem, Chip } from '@mui/material';
 
-// プルダウン　選択式のフォーム
+import { useFormMethods } from '@/hooks/useFormMethods';
 
-// optionsListには選択肢のリストが入る
+import { getTagOptions } from './getTagOptions';
+import { getFieldErrorMessage } from './getFieldErrorMessage';
 
-interface TagSelectorProps {
-  name: string;
+type TagSelectorProps = {
+  idName: string;
   label: string;
-  formMethods: UseFormReturn<any>;
-  defaultValue?: string;
-}
+};
 
-export const TagSelector: React.FC<TagSelectorProps> = ({
-  name,
-  label,
-  formMethods,
-  defaultValue,
-}) => {
+/**
+ * 複数選択可能なタグセレクターを提供します。
+ * - このコンポーネントは、任意のフォームフィールド名（idName）とラベル（label）を受け取ります。
+ *
+ * @param idName - フォームフィールドの名前
+ * @param label - フォームフィールドのラベル
+ */
+export const TagSelector: FC<TagSelectorProps> = ({ idName, label }) => {
   const {
     register,
     formState: { errors },
-  } = formMethods;
+  } = useFormMethods();
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const tagOptions = getTagOptions(idName);
 
-  // const errorMessage = errors[name] ? (errors[name] as FieldError).message : ""; //undefined または string または FieldError の可能性があるため、エラーが発生　沼ポイント
-
-  const optionsList = name ? TagListSelector({ idName: name }) : [];
+  /**
+   * タグ選択が変更されたときのハンドラ
+   *
+   * @param {React.ChangeEvent<{ value: unknown }>} event - イベントオブジェクト
+   */
+  const handleTagSelectionChange = (
+    event: React.ChangeEvent<{ value: unknown }>,
+  ) => {
+    setSelectedTags(event.target.value as string[]);
+  };
 
   return (
-    <></>
-    // <Tags
-    //   name={name}
-    //   text={label}
-    //   formMethods={formMethods}
-    //   items={optionsList}
-    // />
+    <TextField
+      {...register(idName)}
+      id={idName}
+      select
+      label={label}
+      value={selectedTags}
+      onChange={handleTagSelectionChange}
+      error={!!errors[idName]}
+      helperText={getFieldErrorMessage(errors, idName)}
+      fullWidth
+      SelectProps={{
+        multiple: true,
+        renderValue: (selected) => (
+          <div>
+            {(selected as string[]).map((value) => (
+              <Chip key={value} label={value} />
+            ))}
+          </div>
+        ),
+      }}
+    >
+      {tagOptions.map((option) => (
+        <MenuItem key={option} value={option}>
+          {option}
+        </MenuItem>
+      ))}
+    </TextField>
   );
 };

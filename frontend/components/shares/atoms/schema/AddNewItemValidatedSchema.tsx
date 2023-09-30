@@ -1,36 +1,38 @@
-import * as yup from "yup";
+import * as yup from 'yup';
 
-export const AddNewItemValidatedSchema = () => {
-  const schema = yup.object().shape({
-    itemName: yup.string().required("商品名は必須です。"),
-    asin: yup
-      .string()
-      .required("ASINは必須です。")
-      .test("len", "ASINは正確に10桁である必要があります", (val) =>
-        val ? val.length === 10 : false
-      ),
-    imageName: yup.string().required("画像パスは必須です。"),
-    price: yup
-      .number()
-      .positive("価格は正の数である必要があります。")
-      .required("定価は必須です。"),
+// 共通のバリデーションルール
+const requiredString = yup.string().required('この項目は必須です。');
+const requiredNumber = yup.number().required('この項目は必須です。');
 
-    openWidth: yup.number().required("幅は必須です。"),
-    openDepth: yup.number().required("長さは必須です。"),
-    openHeight: yup.number().required("高さは必須です。"),
-    storageWidth: yup.number().required("収納幅は必須です。"),
-    storageDepth: yup.number().required("収納長さは必須です。"),
-    storageHeight: yup.number().required("収納高さは必須です。"),
-    weight: yup.number().required("重量は必須です。"),
-    brandName: yup.string().required(),
-    itemCategoryName: yup.string().required(),
-    itemTags: yup.array().of(yup.string()).notRequired(), //文字列の配列　必須ではない
-    colorTags: yup.array().of(yup.string()).notRequired(), //文字列の配列　必須ではない
+/**
+ * 商品情報のバリデーションスキーマ
+ */
+export const AddNewItemValidatedSchema = yup.object().shape({
+  // 基本情報
+  itemName: requiredString.label('商品名'),
+  asin: requiredString.test(
+    'len',
+    'ASINは正確に10桁である必要があります',
+    (val) => (val ? val.length === 10 : false),
+  ),
+  price: requiredNumber.positive('価格は正の数である必要があります。'),
+  brandName: requiredString.label('ブランド名'),
+  itemCategoryName: requiredString.label('カテゴリ名'),
+  itemSubCategoryName: requiredString.label('サブカテゴリ名'),
 
-    // itemSubCategoryName: yup.string().required(),
+  // サイズ情報
+  openWidth: requiredNumber.label('幅'),
+  openDepth: requiredNumber.label('長さ'),
+  openHeight: requiredNumber.label('高さ'),
+  storageWidth: requiredNumber.label('収納幅'),
+  storageDepth: requiredNumber.label('収納長さ'),
+  storageHeight: requiredNumber.label('収納高さ'),
+  weight: requiredNumber.label('重量'),
 
-    // details: yup.array().of(yup.mixed()).notRequired(), // 文字列、数値、日付、ブール値など混合した配列　必須ではない
-    loading: yup.boolean(),
-  });
-  return schema;
-};
+  // 任意項目
+  itemTags: yup.array().of(yup.string()).label('タグ').notRequired(),
+  colorTags: yup.array().of(yup.string()).label('色').notRequired(),
+
+  // ローディング状態
+  loading: yup.boolean().required(),
+});

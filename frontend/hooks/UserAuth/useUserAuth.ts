@@ -7,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useSetRecoilState } from 'recoil';
 import { useApiRequest } from '@/hooks/api/useApiRequest';
 import { userState } from '@/components/shares/atoms/state/userState';
+import { AxiosError } from 'axios';
 
 /**
  * フォームデータをAPIリクエストデータに変換する関数の型
@@ -76,21 +77,25 @@ export const useUserAuth = <T extends Record<string, any>>(
                 setLoading(false);
                 router.push('/');
             }
-        } catch (err: any) {
-            setLoading(false);
+        } catch (err: unknown) {  
+            if (err instanceof AxiosError) {
+                setLoading(false);
 
-            // エラーコードが422の場合、バリデーションエラーとして扱う
-            if (err.response && err.response.status === 422) {
-                const validationErrors = err.response.data as Record<string, string[]>;
+                // エラーコードが422の場合、バリデーションエラーとして扱う
+                if (err.response && err.response.status === 422) {
+                    const validationErrors = err.response.data as Record<string, string[]>;
 
-                // サーバーからのエラーメッセージをreact-hook-formに登録
-                for (const [field, messages] of Object.entries(validationErrors)) {
-                    const camelField = convertSnakeToCamelCase(field);
-                    formMethods.setError(camelField as unknown as Path<T>, {
-                        type: 'manual',
-                        message: messages[0],
-                    });
+                    // サーバーからのエラーメッセージをreact-hook-formに登録
+                    for (const [field, messages] of Object.entries(validationErrors)) {
+                        const camelField = convertSnakeToCamelCase(field);
+                        formMethods.setError(camelField as unknown as Path<T>, {
+                            type: 'manual',
+                            message: messages[0],
+                        });
+                    }
                 }
+            } else {
+                console.log(err);
             }
         }
     };

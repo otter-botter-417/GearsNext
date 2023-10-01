@@ -173,7 +173,7 @@ class LayoutRepository implements LayoutRepositoryInterface
      */
     public function getTopFavoriteLayouts(int $number): Collection
     {
-        return $this->model->with(['users'])->orderBy('favorite_layout', 'desc')->take($number)->get();
+        return $this->model->with(['users'])->orderBy('favorite_count', 'desc')->take($number)->get();
     }
 
     /**

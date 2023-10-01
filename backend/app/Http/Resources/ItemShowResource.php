@@ -18,7 +18,7 @@ class ItemShowResource extends JsonResource
             'itemId' => $this->item_id,
             'itemName' => $this->item_name,
             'price' => $this->price,
-            'imageName' => config('constants.ITEM_IMAGE_BASE_URL') . $this->item_id . '.jpg',
+            'imageName' => $this->image_url,
             'asin' => $this->asin,
             'openSize' => [
                 'openWidth' => $this->open_width,

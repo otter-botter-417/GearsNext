@@ -10,6 +10,11 @@ use App\Exceptions\ItemNotFoundException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\UploadedFile;
+use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Facades\Storage;
+use Aws\Exception\AwsException;
+use Illuminate\Contracts\Filesystem\Filesystem;
 
 /**
  * 商品に関するリポジトリクラス
@@ -88,16 +93,50 @@ class EloquentItemRepository implements ItemRepositoryInterface
      * 商品データを登録
      * @param  array $baseData
      * @param  array $tagIds ['colorTagIds' => [], 'itemTagIds' => []]
+     * @param  array $attributesData
      * @return void
      */
-    public function createItemData(array $baseData, $tagIds, $attributesData): void
+    public function createItemData(array $baseData, $tagIds, $attributesData, $imageFile): void
     {
-        DB::transaction(function () use ($baseData, $tagIds, $attributesData) {
-            $item = Item::create($baseData);
+        DB::transaction(function () use ($baseData, $tagIds, $attributesData,$imageFile) {
+            $item = Item::create(array_merge($baseData, ['image_url' => 'placeholder_url']));
             $item->colorTags()->sync($tagIds['colorTagIds']);
             $item->itemTags()->sync($tagIds['itemTagIds']);
             $item->itemAttributes()->createMany($attributesData);
+            $this->uploadImage($imageFile,$item->item_id);
+
+            $image_url = $this->uploadImage($imageFile,$item->item_id);
+
+            if ($image_url) {
+                $item->update(['image_url' => $image_url]);
+            }
         });
+    }
+
+    /**
+     * 画像jpgに変換しS3にアップロード
+     *
+     * @param UploadedFile $imageFile
+     * @param int $itemId
+     * @return string
+     * @throws \Exception
+     */
+    public function uploadImage(UploadedFile $imageFile, int $itemId): string
+    {
+        /** @var Filesystem $disk */
+        $disk = Storage::disk('s3');
+
+        try {
+            $inputPath = $imageFile->path();
+            $convertImage = Image::make($inputPath)->encode('jpg');
+            $newFileName = 'item/' . $itemId . '.jpg';
+            $disk->put($newFileName, (string) $convertImage, 'public');
+            $url = $disk->url($newFileName);
+            return $url;
+        } catch (AwsException $e) {
+            Log::error("AWS Error: " . $e->getMessage());
+            throw $e;
+        }
     }
 
     /**
@@ -233,7 +272,7 @@ class EloquentItemRepository implements ItemRepositoryInterface
      */
     public function getTopViewedItems(int $number): Collection
     {
-        return $this->model->orderBy('view_count', 'desc')->take($number)->get();
+        return $this->model->orderBy('view_count', 'desc')->take($number)->with(['brand'])->get();
     }
 
     /**
@@ -243,7 +282,7 @@ class EloquentItemRepository implements ItemRepositoryInterface
      */
     public function getTopFavoriteItems(int $number): Collection
     {
-        return $this->model->orderBy('favorite_item', 'desc')->take($number)->get();
+        return $this->model->orderBy('favorite_count', 'desc')->take($number)->with(['brand'])->get();
     }
 
     /**
@@ -253,7 +292,7 @@ class EloquentItemRepository implements ItemRepositoryInterface
      */
     public function getNewlyArrivedItems(int $number): Collection
     {
-        return $this->model->orderBy('created_at', 'desc')->take($number)->get();
+        return $this->model->orderBy('created_at', 'desc')->take($number)->with(['brand'])->get();
     }
 
     // /**

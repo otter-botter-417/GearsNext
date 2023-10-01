@@ -22,6 +22,10 @@ class ColorTagTableSeeder extends Seeder
             "ホワイト",
             "ベージュ",
             "ブラウン",
+            "カッパー",
+            "ネイビー",
+
+            
         ];
 
         foreach ($categories as $category) {

@@ -44,7 +44,8 @@ class ItemController extends Controller
      */
     public function store(ItemRegisterRequest $request): Response
     {
-        $this->itemService->register($request->itemData);
+        $imageFile = $request->file('image');
+        $this->itemService->register($request->itemData,$imageFile);
         return response(null, 201);
     }
 

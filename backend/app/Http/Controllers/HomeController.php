@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\HomeResource;
 use App\Services\HomeService;
+use Illuminate\Support\Facades\Log;
 
 /**
  * ホーム画面に関する操作を管理するコントローラークラスです。
@@ -32,7 +33,7 @@ class HomeController extends Controller
      */
     public function index(): HomeResource
     {
-        $homeData = $this->homeService->getHomeData(5);
+        $homeData = $this->homeService->getHomeData(10);
         return  new HomeResource($homeData);
     }
 }

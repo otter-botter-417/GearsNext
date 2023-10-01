@@ -16,6 +16,7 @@ class LayoutShowResource extends JsonResource
     {
         return [
             'layoutId' => $this->layout_id,
+            'imageName' => config('constants.LAYOUT_IMAGE_BASE_URL') . $this->layout_id . '.jpg',
             'text' => $this->text,
             'userId' => $this->user_id,
             'userName' => $this->users->user_name,

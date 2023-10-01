@@ -13,6 +13,14 @@ use Illuminate\Foundation\Http\FormRequest;
 class ItemRegisterRequest extends FormRequest
 {
     /**
+     * リクエストのバリデーション前にデータを整形
+     */
+    public function prepareForValidation()
+    {
+        $itemData = json_decode($this->input('itemData'), true);
+        $this->merge($itemData);
+    }
+    /**
      * @return bool
      */
     public function authorize()
@@ -31,7 +39,6 @@ class ItemRegisterRequest extends FormRequest
         return [
             'itemData.baseData.item_name' => $baseDataRules . '|max:255',
             'itemData.baseData.asin' => $baseDataRules . '|size:10',
-            'itemData.baseData.image_name' => $baseDataRules . '|max:255',
             'itemData.baseData.price' => $numericRule,
             'itemData.baseData.open_width' => $numericRule,
             'itemData.baseData.open_depth' => $numericRule,
@@ -46,10 +53,8 @@ class ItemRegisterRequest extends FormRequest
             'itemData.itemTags.*' => 'string|max:50',
             'itemData.colorTags' => 'required',
             'itemData.colorTags.*' => 'string|max:20',
-            'itemData.details.capacity' => 'numeric',
-            'itemData.details.inner_tent' => 'string|max:255',
-            'itemData.details.grand_sheet' => 'string|max:255',
-            'itemData.details.fabrics' => 'string|max:255',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+
         ];
     }
 
@@ -65,9 +70,6 @@ class ItemRegisterRequest extends FormRequest
             'itemData.baseData.asin.required' => $this->generateMessage('required', 'ASIN'),
             'itemData.baseData.asin.size' => 'ASINは10文字である必要があります。',
             'itemData.baseData.asin.string' => $this->generateMessage('string', 'ASIN'),
-            'itemData.baseData.image_name.required' => $this->generateMessage('required', '画像名'),
-            'itemData.baseData.image_name.max' => $this->generateMessage('max', '画像名', '255'),
-            'itemData.baseData.image_name.string' => $this->generateMessage('string', '画像名'),
             'itemData.baseData.price.required' => $this->generateMessage('required', '価格'),
             'itemData.baseData.price.numeric' => $this->generateMessage('numeric', '価格'),
             'itemData.baseData.open_width.required' => $this->generateMessage('required', '展開時の幅'),
@@ -100,14 +102,6 @@ class ItemRegisterRequest extends FormRequest
             'itemData.colorTags.required' => $this->generateMessage('required', 'カラータグ'),
             'itemData.colorTags.*.max' => $this->generateMessage('max', 'カラータグ', '20'),
             'itemData.colorTags.*.string' => $this->generateMessage('string', 'カラータグ'),
-
-            'itemData.details.capacity.numeric' => $this->generateMessage('numeric', '容量'),
-            'itemData.details.inner_tent.max' => $this->generateMessage('max', 'インナーテントの詳細', '255'),
-            'itemData.details.inner_tent.string' => $this->generateMessage('string', 'インナーテントの詳細'),
-            'itemData.details.grand_sheet.max' => $this->generateMessage('max', 'グランドシートの詳細', '255'),
-            'itemData.details.grand_sheet.string' => $this->generateMessage('string', 'グランドシートの詳細'),
-            'itemData.details.fabrics.max' => $this->generateMessage('max', '素材の詳細', '255'),
-            'itemData.details.fabrics.string' => $this->generateMessage('string', '素材の詳細')
         ];
     }
 

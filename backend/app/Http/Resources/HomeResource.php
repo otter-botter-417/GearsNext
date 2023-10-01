@@ -24,58 +24,64 @@ class HomeResource extends JsonResource
         return [
             'topViewedItems' => collect($this->resource['topViewedItems'])->map(function ($item) {
                 return [
-                    'itemId' => $item->itemId,
-                    'itemName' => $item->itemName,
-                    'imageName' => $item->imageName,
-                    'favoriteCount' => $item->favoriteCount,
-                    'viewCount' => $item->viewCount,
+                    'itemId' => $item->item_id,
+                    'itemName' => $item->item_name,
+                    'imageName' => $item->image_url,
+                    'brandName' => $item->brand->brand_name,
+                    'favoriteCount' => $item->favorite_count,
+                    'viewCount' => $item->view_count,
                 ];
             }),
 
             'topFavoriteItems' => collect($this->resource['topFavoriteItems'])->map(function ($item) {
                 return [
-                    'itemId' => $item->itemId,
-                    'itemName' => $item->itemName,
-                    'imageName' => $item->imageName,
-                    'favoriteCount' => $item->favoriteCount,
-                    'viewCount' => $item->viewCount,
+                    'itemId' => $item->item_id,
+                    'itemName' => $item->item_name,
+                    'imageName' => $item->image_url,
+                    'brandName' => $item->brand->brand_name,
+                    'favoriteCount' => $item->favorite_count,
+                    'viewCount' => $item->view_count,
                 ];
             }),
 
             'newlyArrivedItems' => collect($this->resource['newlyArrivedItems'])->map(function ($item) {
                 return [
-                    'itemId' => $item->itemId,
-                    'itemName' => $item->itemName,
-                    'imageName' => $item->imageName,
-                    'favoriteCount' => $item->favoriteCount,
-                    'viewCount' => $item->viewCount,
+                    'itemId' => $item->item_id,
+                    'itemName' => $item->item_name,
+                    'imageName' => $item->image_url,
+                    'brandName' => $item->brand->brand_name,
+                    'favoriteCount' => $item->favorite_count,
+                    'viewCount' => $item->view_count,
                 ];
             }),
 
             'topViewedLayouts' => collect($this->resource['topViewedLayouts'])->map(function ($item) {
                 return [
-                    'layoutId' => $item->layoutId,
-                    'favoriteCount' => $item->favoriteCount,
-                    'viewCount' => $item->viewCount,
-                    'userName' => $item->users->userName,
+                    'layoutId' => $item->layout_id,
+                    'favoriteCount' => $item->favorite_count,
+                    'imageName' => config('constants.LAYOUT_IMAGE_BASE_URL') . $item->layout_id . '.jpg',
+                    'viewCount' => $item->view_count,
+                    'userName' => $item->users->user_name,
                 ];
             }),
 
             'topFavoriteLayouts' => collect($this->resource['topFavoriteLayouts'])->map(function ($item) {
                 return [
-                    'layoutId' => $item->layoutId,
-                    'favoriteCount' => $item->favoriteCount,
-                    'viewCount' => $item->viewCount,
-                    'userName' => $item->users->userName,
+                    'layoutId' => $item->layout_id,
+                    'favoriteCount' => $item->favorite_count,
+                    'imageName' => config('constants.LAYOUT_IMAGE_BASE_URL') . $item->layout_id . '.jpg',
+                    'viewCount' => $item->view_count,
+                    'userName' => $item->users->user_name,
                 ];
             }),
 
             'newlyArrivedLayouts' => collect($this->resource['newlyArrivedLayouts'])->map(function ($item) {
                 return [
-                    'layoutId' => $item->layoutId,
-                    'favoriteCount' => $item->favoriteCount,
-                    'viewCount' => $item->viewCount,
-                    'userName' => $item->users->userName,
+                    'layoutId' => $item->layout_id,
+                    'favoriteCount' => $item->favorite_count,
+                    'imageName' => config('constants.LAYOUT_IMAGE_BASE_URL') . $item->layout_id . '.jpg',
+                    'viewCount' => $item->view_count,
+                    'userName' => $item->users->user_name,
                 ];
             }),
         ];

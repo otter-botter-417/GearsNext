@@ -36,7 +36,7 @@ class UserController extends Controller
     {
         $registerData = $request->only(['user_name', 'email', 'password']);
         $token = $this->userService->register($registerData);
-        return response()->json(['token' => $token], 201);
+        return response()->json($token, 201);
     }
 
     /**
@@ -47,6 +47,7 @@ class UserController extends Controller
      */
     public function login(UserLoginRequest $request): JsonResponse
     {
+        Log::debug('login');
         $loginRequest = $request->only(['email', 'password']);
         $token = $this->userService->login($loginRequest);
         return response()->json($token, 200);

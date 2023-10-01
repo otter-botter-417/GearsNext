@@ -16,6 +16,7 @@ use App\Contracts\ViewItemHistoryRepositoryInterface;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Collection;
 
+
 /**
  * 商品に関するサービスクラス
  * @package App\Services
@@ -126,7 +127,7 @@ class ItemService
      * @throws ItemTagNotFoundException アイテムタグが見つからない場合
      * @throws ColorTagNotFoundException カラータグが見つからない場合
      */
-    public function register(array $itemData): void
+    public function register(array $itemData, $imageFile): void
     {
         if ($this->itemRepository->checkItemsExistsByAsin($itemData['baseData']['asin'])) {
             throw new ItemAlreadyRegisteredException();
@@ -134,7 +135,7 @@ class ItemService
         $baseData = $this->appendBrandAndCategoryIds($itemData);
         $tagIds = $this->prepareTags($itemData);
         $attributesData = $this->prepareAttributesData($itemData['details'], $baseData['category_id']);
-        $this->itemRepository->createItemData($baseData, $tagIds, $attributesData);
+        $this->itemRepository->createItemData($baseData, $tagIds, $attributesData,$imageFile);
     }
 
     /**

@@ -22,7 +22,15 @@ class BrandTableSeeder extends Seeder
             "WIWO",
             "BUNDOK",
             "OneTigris",
-            "WAQ"
+            "WAQ",
+            "AO Coolers",
+            "UNIFLAME",
+            "CAPTAIN STAG",
+            'ALPACA',
+            'NANGA',
+
+
+
         ];
 
         foreach ($categories as $category) {

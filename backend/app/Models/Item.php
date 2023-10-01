@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $item_id
  * @property string $item_name 
  * @property int $price
- * @property string $image_name
  * @property string $asin 
  * @property float $open_width 
  * @property float $open_depth 
@@ -40,8 +39,8 @@ class Item extends Model
     protected $fillable = [
         'item_name',
         'price',
-        'image_name',
         'asin',
+        'image_url',
         'open_width',
         'open_depth',
         'open_height',

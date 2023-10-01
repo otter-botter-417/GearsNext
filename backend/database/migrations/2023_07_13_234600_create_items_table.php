@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('item_name', 50);
             $table->foreignId('brand_id')->constrained('brands', 'brand_id')->onDelete('cascade');
             $table->integer('price');
-            $table->string('image_name', 50);
+            $table->string('image_url', 100);
             $table->string('asin', 10);
             $table->float('open_width', 5, 1);
             $table->float('open_depth', 5, 1);

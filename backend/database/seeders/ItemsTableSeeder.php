@@ -24,7 +24,7 @@ class ItemsTableSeeder extends Seeder
             'Item_name' => "ソロベースEX",
             'brand_id' => 5,
             'price' => 25581,
-            'image_name' => "solobase_ex",
+            'image_url' => "https://gears-images.s3.ap-northeast-1.amazonaws.com/item/1.jpg",
             'asin' => "B0B3W5TG2Y",
             'open_width' => 360,
             'open_depth' => 190,

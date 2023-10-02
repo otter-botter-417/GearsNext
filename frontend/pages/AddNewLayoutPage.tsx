@@ -30,8 +30,6 @@ const AddNewLayoutPage = () => {
     layoutPost();
   };
 
-  // TODO　投稿後の画面遷移
-
   return (
     <form onSubmit={handleFormSubmit}>
       <LayoutPageTemplate

@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import Slider from '@mui/material/Slider';
 import { Box, Input } from '@mui/material';
@@ -8,9 +8,10 @@ import { ItemDataText } from '@/components/shares/atoms/text/ItemDataText';
 import { priceAfterLimitValueState } from '@/components/shares/atoms/state/priceAfterLimitValueState';
 import { itemPriceListForSliderState } from '@/components/shares/atoms/state/itemPriceListForSliderState';
 import { itemPriceRangeForSliderState } from '@/components/shares/atoms/state/itemPriceRangeForSliderState';
+import { filteredItemsState } from '@/components/shares/atoms/state/filteredItemsState';
+import { resetTriggerState } from '@/components/shares/atoms/state/resetTriggerState';
 
 // 非常に難しいコード。理解するのに時間がかかる。
-
 
 // 価格のデータポイントと範囲を定義
 interface PriceDataPoint {
@@ -74,11 +75,17 @@ export const PriceSlider: FC = () => {
   const priceRange = useRecoilValue(itemPriceRangeForSliderState);
   const itemPriceListForSlider = useRecoilValue(itemPriceListForSliderState);
   const setPriceAfterLimitValue = useSetRecoilState(priceAfterLimitValueState);
+  const resetTrigger = useRecoilValue(resetTriggerState);
 
   // 価格データポイントを作成
   const priceDataPoints = itemPriceListForSlider.map((price) => ({ price }));
   // バーチャートデータを計算
   const barChartData = calculatePriceBins(priceDataPoints, priceRange, 50);
+
+  useEffect(() => {
+    setValue(priceRange);
+    setPriceAfterLimitValue(priceRange);
+  }, [resetTrigger, priceRange, setValue, setPriceAfterLimitValue]);
 
   /**
    * スライダーの値が変更されたときの処理

@@ -18,9 +18,6 @@ import { AxiosError } from 'axios';
  */
 type DataTransformer<T> = (data: T) => Record<string, any>;
 
-type DeepPartial<T> = {
-    [P in keyof T]?: DeepPartial<T[P]>;
-};
 /**
  * 共通のユーザー認証処理を行うカスタムフック
  *
@@ -53,7 +50,7 @@ export const useUserAuth = <T extends Record<string, any>>(
     // テストユーザーの場合は、デフォルト値を設定 ポートフォリオ用設定
     const defaultValues: any = testUser ? {
         email: 'test@test.com',
-        password: 'password',
+        password: 'password1',
     } : undefined;
 
     const formMethods = useForm<T>({

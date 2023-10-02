@@ -1,5 +1,6 @@
 import React from 'react';
-import Link from '@mui/material/Link';
+import NextLink from 'next/link';
+
 import { Typography } from '@mui/material';
 
 import { useRedirectIfAuthenticated } from '@/hooks/UserAuth/useRedirectIfAuthenticated';
@@ -22,7 +23,7 @@ const UserRegisterPage = () => {
 
   const title = <Typography variant="h4">新規登録</Typography>;
   const registerForm = <RegisterForm />;
-  const link = <Link href="/UserLoginPage">既にアカウントを持っている</Link>;
+  const link = <NextLink href="/UserLoginPage">既にアカウントを持っている</NextLink>;
 
   return <AuthPageTemplate title={title} form={registerForm} link={link} />;
 };

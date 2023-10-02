@@ -1,5 +1,6 @@
 import React from 'react';
-import Link from '@mui/material/Link';
+import NextLink from 'next/link';
+
 
 import { NextPage } from 'next';
 import { Box } from '@mui/system';
@@ -14,9 +15,9 @@ const Home: NextPage = () => {
   return (
     <Box display="flex" justifyContent="center">
       <Box width="80%">
-        <Link href="/ItemSearchPage">
+        <NextLink href="/ItemSearchPage">
           <Button variant="outlined">商品を検索する</Button>
-        </Link>
+        </NextLink>
         <HomeImageGrid />
       </Box>
     </Box>

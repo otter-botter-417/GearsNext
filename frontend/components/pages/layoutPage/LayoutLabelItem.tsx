@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import Link from '@mui/material/Link';
+import NextLink from 'next/link';
+
 
 import { ImageMapType } from '@/components/types/ImageMapType';
 
@@ -21,10 +22,10 @@ type LayoutLabelItemProps = {
  */
 export const LayoutLabelItem: FC<LayoutLabelItemProps> = ({ tagPosition }) => {
   return (
-    <Link href={`/items/${tagPosition.itemId}`}>
+    <NextLink href={`/items/${tagPosition.itemId}`}>
       <LabelItem item={tagPosition}>
         <ItemDetailCard item={tagPosition} />
       </LabelItem>
-    </Link>
+    </NextLink>
   );
 };

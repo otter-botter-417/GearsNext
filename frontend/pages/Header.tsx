@@ -2,12 +2,14 @@ import React from 'react';
 import { useRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
 import { Box } from '@mui/system';
-import Link from '@mui/material/Link';
+import NextLink from 'next/link';
+
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
 import { userState } from '@/components/shares/atoms/state/userState';
+import { Button } from '@mui/material';
 
 /**
  * このコンポーネントは、ヘッダーを表示します。
@@ -36,24 +38,24 @@ const Header = () => {
     <AppBar position="fixed">
       <Toolbar variant="dense">
         <Box display="flex" justifyContent="center" width="100%">
-          <Link href={`/`}>
+          <NextLink href={`/`}>
             <Typography variant="h4">Gears</Typography>
-          </Link>
+          </NextLink>
         </Box>
         <Box display="flex" justifyContent="space-between" width="100%">
           {user ? (
             <>
-              <Link href={`/AddNewLayoutPage`}>
+              <NextLink href={`/AddNewLayoutPage`}>
                 <Typography variant="body1">レイアウトを投稿する</Typography>
-              </Link>
-              <Link onClick={handleLogout} component="button">
+              </NextLink>
+              <Button onClick={handleLogout} component="button">
                 <Typography variant="body1">ログアウト</Typography>
-              </Link>
+              </Button>
             </>
           ) : (
-            <Link href={`/UserLoginPage`}>
+            <NextLink href={`/UserLoginPage`}>
               <Typography variant="body1">ログイン</Typography>
-            </Link>
+            </NextLink>
           )}
         </Box>
       </Toolbar>

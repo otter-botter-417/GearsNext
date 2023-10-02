@@ -37,6 +37,7 @@ export const LayoutImageOnTagImageMap: FC<LayoutImageOnTagImageMapProps> = ({
         {/* レイアウト画像 */}
         <Image
           src={imageName}
+          alt="layout image"
           layout="fill"
           objectFit="contain"
           priority

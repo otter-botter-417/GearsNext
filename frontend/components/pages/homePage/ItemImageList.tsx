@@ -4,6 +4,7 @@ import { HomeLayoutType } from '@/components/types/HomeLayoutType';
 import { HomeItemType } from '@/components/types/HomeItemType';
 import NextLink from 'next/link';
 import { EllipsisTypography } from '@/components/shares/atoms/EllipsisTypography';
+import Image from 'next/image';
 
 type ItemImageListProps = {
   data: HomeItemType | HomeLayoutType;
@@ -32,7 +33,7 @@ export const ItemImageList: FC<ItemImageListProps> = ({ data }) => {
     >
       <NextLink href={link}>
         <div style={{ position: 'relative', height: '200px' }}>
-          <img
+          <Image
             src={data.imageName}
             alt={title}
             loading="eager"

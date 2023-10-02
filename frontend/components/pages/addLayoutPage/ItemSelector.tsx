@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { Dialog, DialogTitle, Box, Button } from '@mui/material';
+import { Dialog, DialogTitle, Box, Button, Typography } from '@mui/material';
 
 import { CategoryNameTags } from './CategoryNameTags';
 import { ItemsSelectCheckBox } from './ItemsSelectCheckBox';
@@ -25,7 +25,7 @@ type ItemSelectorProps = {
  */
 export const ItemSelector: FC<ItemSelectorProps> = ({ open, onClose }) => {
   const setSelectedItemsList = useSetRecoilState(selectedItemsListState);
-  const selectCategoryName = ['選択中','すべて', ...CategoryNameList];
+  const selectCategoryName = ['選択中', 'すべて', ...CategoryNameList];
 
   const selectReset = () => {
     setSelectedItemsList([]);
@@ -34,7 +34,9 @@ export const ItemSelector: FC<ItemSelectorProps> = ({ open, onClose }) => {
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>
-        持っているギアからレイアウトで使用しているギアを登録できます
+        <Typography variant="body1">
+          持っているギアからレイアウトに登録するギアを選択してください。
+        </Typography>
       </DialogTitle>
       <CategoryNameTags selectCategoryName={selectCategoryName} />
       <Box

@@ -56,7 +56,7 @@
 
 ### URL
 
-- [Live Demo](http://www.gears-outdoor.net:3000/)
+- [http://www.gears-outdoor.net:3000/](http://www.gears-outdoor.net:3000/)
   - ログインフォームにテストユーザー用の値が初期設定されています。
 
 ## 主要機能

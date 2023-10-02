@@ -14,9 +14,15 @@ const Home: NextPage = () => {
   return (
     <Box display="flex" justifyContent="center">
       <Box width="80%">
-        <NextLink href="/ItemSearchPage">
-          <Button variant="outlined">商品を検索する</Button>
-        </NextLink>
+        <Box display="flex" justifyContent="space-around" pt={3} padding={3}>
+          <NextLink href="/ItemSearchPage">
+            <Button variant="outlined">商品を探す</Button>
+          </NextLink>
+          <NextLink href="/AddNewLayoutPage">
+            <Button variant="outlined">レイアウトを投稿する</Button>
+          </NextLink>
+        </Box>
+
         <HomeImageGrid />
       </Box>
     </Box>

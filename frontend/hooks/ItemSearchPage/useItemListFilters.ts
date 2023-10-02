@@ -95,7 +95,7 @@ export const useItemListFilters = () => {
         // フィルタリング関数の配列
         const filters = [
             filterByCondition((item) => categoryValue === 'すべてのカテゴリー' || item.categoryName === categoryValue),
-            filterByCondition((item) => !subCategoryValue || item.subCategoryName === subCategoryValue),
+            filterByCondition((item) => !subCategoryValue || subCategoryValue === 'すべてのサブカテゴリー' || item.subCategoryName === subCategoryValue),
             filterByCondition((item) => itemSearchQuery ? item.itemName.includes(itemSearchQuery) : true),
             filterByCondition((item) => item.price >= sliderValue.min && item.price <= sliderValue.max),
             // 並び替え

@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 import { HomeLayoutType } from '@/components/types/HomeLayoutType';
 import { HomeItemType } from '@/components/types/HomeItemType';
 import NextLink from 'next/link';
+import { EllipsisTypography } from '@/components/shares/atoms/EllipsisTypography';
 
 type ItemImageListProps = {
   data: HomeItemType | HomeLayoutType;
@@ -31,48 +32,22 @@ export const ItemImageList: FC<ItemImageListProps> = ({ data }) => {
     >
       <NextLink href={link}>
         <div style={{ position: 'relative', height: '200px' }}>
-          {/* img のコンテナ, 高さを固定 */}
           <img
             src={data.imageName}
             alt={title}
             loading="eager"
             style={{
-              width: '100%', // 横幅を固定
-              height: '100%', // 縦幅は自動
-              position: 'absolute', // 絶対位置指定
-              left: '50%', // 中央に配置
-              top: '50%', // 中央に配置
-              transform: 'translate(-50%, -50%)', // 中央に配置
+              width: '100%',
+              height: '100%',
               objectFit: 'contain', // 画像を拡大縮小して容器にフィットさせる
             }}
           />
         </div>
-        <div style={{ height: '50px' }}>
-          {' '}
+        <div>
           {/* テキストのコンテナ, 高さを固定 */}
           <Box display={'flex'} alignItems={'center'} flexDirection={'column'}>
-            <Typography
-              style={{
-                overflow: 'hidden',
-                whiteSpace: 'nowrap',
-                textOverflow: 'ellipsis',
-                width: '180px',
-                textAlign: 'center',
-              }}
-            >
-              {title}
-            </Typography>
-            <Typography
-              style={{
-                overflow: 'hidden',
-                whiteSpace: 'nowrap',
-                textOverflow: 'ellipsis',
-                width: '180px',
-                textAlign: 'center',
-              }}
-            >
-              {subtitle}
-            </Typography>
+            <EllipsisTypography text={title} />
+            <EllipsisTypography text={subtitle} />
           </Box>
         </div>
       </NextLink>

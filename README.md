@@ -38,6 +38,7 @@
 - **認証**: JWT
 - **画像処理**: Intervention Image
 - **AWS SDK**: AWS S3 にファイルを保存
+- **データベース**: MariaDB
 
 #### 共通
 

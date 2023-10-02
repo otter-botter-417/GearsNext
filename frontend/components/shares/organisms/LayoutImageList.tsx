@@ -2,7 +2,8 @@ import React, { FC } from 'react';
 import { Box } from '@mui/system';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-import Link from '@mui/material/Link';
+import NextLink from 'next/link';
+
 
 import { LAYOUT_IMAGE_BASE_URL } from '@/components/constants';
 import { FittedImage } from '../atoms/FittedImage';
@@ -43,14 +44,14 @@ export const LayoutImageList: FC<LayoutImageListProps> = ({
       <ImageList sx={{ width: 'auto', height: 'auto' }} cols={3}>
         {layouts.map((layout) => (
           <ImageListItem key={layout.layoutId}>
-            <Link href={`/layouts/${layout.layoutId}`}>
+            <NextLink href={`/layouts/${layout.layoutId}`}>
               <FittedImage
                 src={`${LAYOUT_IMAGE_BASE_URL}${layout.layoutId}.jpg`}
                 alt={`Layout ${layout.layoutId}`}
                 containerWidth={200}
                 containerHeight={200}
               />
-            </Link>
+            </NextLink>
           </ImageListItem>
         ))}
       </ImageList>

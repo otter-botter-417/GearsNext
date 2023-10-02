@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
 import { ImageList, ImageListItem } from '@mui/material';
 
-import Link from '@mui/material/Link';
+import NextLink from 'next/link';
+
 import { ItemImage } from '../atoms/ItemImage';
 
 type ImageGridListProps = {
@@ -40,9 +41,9 @@ export const ImageGridList: FC<ImageGridListProps> = ({
         <ImageListItem key={item.itemId}>
           {/* isLink が true の場合、画像を Link コンポーネントで囲む */}
           {isLink ? (
-            <Link href={`/items/${item.itemId}`}>
+            <NextLink href={`/items/${item.itemId}`}>
               <ItemImage item={item} imageSize={imageSize} />
-            </Link>
+            </NextLink>
           ) : (
             <ItemImage item={item} imageSize={imageSize} />
           )}

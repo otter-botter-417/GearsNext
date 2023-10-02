@@ -1,5 +1,6 @@
 import { FC } from 'react';
-import Link from '@mui/material/Link';
+import NextLink from 'next/link';
+
 import Image from 'next/legacy/image';
 import { Box, Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
@@ -31,7 +32,7 @@ export const ItemThumbnail: FC<ItemThumbnailProps> = ({ ItemData }) => {
     >
       {/* 商品画像 */}
       <Grid item xs={12} sm={12} md={12}>
-        <Link href={`/items/${ItemData.itemId}`}>
+        <NextLink href={`/items/${ItemData.itemId}`}>
           <Image
             src={ItemData.imageName}
             alt="item image"
@@ -41,7 +42,7 @@ export const ItemThumbnail: FC<ItemThumbnailProps> = ({ ItemData }) => {
             objectFit="contain"
             priority
           />
-        </Link>
+        </NextLink>
       </Grid>
 
       {/* 基本情報 */}

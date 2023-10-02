@@ -51,8 +51,28 @@ export const ItemImageList: FC<ItemImageListProps> = ({ data }) => {
           {' '}
           {/* テキストのコンテナ, 高さを固定 */}
           <Box display={'flex'} alignItems={'center'} flexDirection={'column'}>
-            <Typography>{title}</Typography>
-            <Typography>{subtitle}</Typography>
+            <Typography
+              style={{
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                textOverflow: 'ellipsis',
+                width: '180px',
+                textAlign: 'center',
+              }}
+            >
+              {title}
+            </Typography>
+            <Typography
+              style={{
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                textOverflow: 'ellipsis',
+                width: '180px',
+                textAlign: 'center',
+              }}
+            >
+              {subtitle}
+            </Typography>
           </Box>
         </div>
       </NextLink>

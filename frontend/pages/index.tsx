@@ -1,7 +1,6 @@
 import React from 'react';
 import NextLink from 'next/link';
 
-
 import { NextPage } from 'next';
 import { Box } from '@mui/system';
 import Button from '@mui/material/Button';

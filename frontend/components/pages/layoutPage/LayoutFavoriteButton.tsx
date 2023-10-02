@@ -34,7 +34,7 @@ export const LayoutFavoriteButton: FC<LayoutFavoriteButtonProps> = ({
   const ICON_STYLE_INACTIVE = { fontSize: ICON_SIZE };
   useEffect(() => {
     setIsFavorite(isFavorite);
-  }, [isFavorite]);
+  }, [isFavorite, setIsFavorite]);
 
   if (!user) return null;
   /**

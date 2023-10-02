@@ -21,7 +21,7 @@ export const SubCategorySelector = () => {
    */
   useEffect(() => {
     setSubCategoryValue('');
-  }, [categoryValue]);
+  }, [categoryValue, setSubCategoryValue]);
 
   if (!categoryValue) {
     setSubCategoryValue('');

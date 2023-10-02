@@ -66,11 +66,6 @@
 
 ![ER Diagram](/docs/er_diagram.png)
 
-- **テーブル説明**:
-  - `users`: ユーザー情報を格納
-  - `products`: 商品情報を格納
-  // その他のテーブル説明
-
 
 ## 主要機能
 

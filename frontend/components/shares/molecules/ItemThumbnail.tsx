@@ -3,9 +3,9 @@ import NextLink from 'next/link';
 
 import Image from 'next/legacy/image';
 import { Box, Grid } from '@mui/material';
-import Typography from '@mui/material/Typography';
 
 import { ItemDataType } from '@/components/types/ItemDataType';
+import { EllipsisTypography } from '../atoms/EllipsisTypography';
 
 type ItemThumbnailProps = {
   ItemData: ItemDataType;
@@ -47,11 +47,12 @@ export const ItemThumbnail: FC<ItemThumbnailProps> = ({ ItemData }) => {
 
       {/* 基本情報 */}
       <Box display="flex" flexDirection="column" alignItems="center">
-        <Typography variant={'body2'}>{ItemData.brandName}</Typography>
-        <Typography variant={'h6'}>{ItemData.itemName}</Typography>
-        <Typography variant={'h6'}>
-          ¥{ItemData.price.toLocaleString()}
-        </Typography>
+        <EllipsisTypography text={ItemData.brandName} />
+        <EllipsisTypography text={ItemData.itemName} variant={'body2'} />
+        <EllipsisTypography
+          text={`¥${ItemData.price.toLocaleString()}`}
+          variant={'body2'}
+        />
       </Box>
     </Grid>
   );

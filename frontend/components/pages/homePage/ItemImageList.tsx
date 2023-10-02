@@ -36,6 +36,8 @@ export const ItemImageList: FC<ItemImageListProps> = ({ data }) => {
           <Image
             src={data.imageName}
             alt={title}
+            width={200}
+            height={200}
             loading="eager"
             style={{
               width: '100%',

@@ -70,7 +70,7 @@
 ## 主要機能
 
 ### 商品検索ページ
-
+[http://www.gears-outdoor.net:3000/ItemSearchPage](http://www.gears-outdoor.net:3000/ItemSearchPage)
 - **商品名での検索**: オートコンプリート機能付き
 - **カテゴリー・サブカテゴリー選択**: プルダウン形式で単一選択
 - **詳細な絞り込み**: アコーディオン形式で折りたたみ可能
@@ -81,25 +81,25 @@
 - **結果表示**: 画像をメインとしたグリッド表示、ページネーション機能付き
 
 ### レイアウト投稿機能
-
+[http://www.gears-outdoor.net:3000/AddNewLayoutPage](http://www.gears-outdoor.net:3000/AddNewLayoutPage)
 - **メイン画像アップロード**: 画像ファイル選択
 - **商品ラベル配置**: 画像上をクリックで選択し、配置可能
 - **投稿コメント**: テキストエリアで入力
 - **使用商品の登録**: 商品リストから選択
 
 ### 投稿されたレイアウトの個別ページ
-
+[http://www.gears-outdoor.net:3000/layouts/1](http://www.gears-outdoor.net:3000/layouts/1)
 - **投稿画像とイメージマップ表示**
 - **投稿コメント**
 - **認証されたユーザーのアクション**: いいねとコメント投稿可能
 - **商品リスト**: ページ下部に表示
 
 ### 商品個別ページ
-
+[http://www.gears-outdoor.net:3000/items/1](http://www.gears-outdoor.net:3000/items/1)
  **商品情報**: 価格、ブランド、サイズ等
 - **関連レイアウト**: 商品が使用されているレイアウトをグリッド表示
 
 ### 商品追加ページ
-
+[http://www.gears-outdoor.net:3000/AddNewItemPage](http://www.gears-outdoor.net:3000/AddNewItemPage)
 - **商品アップロード**: 商品データを登録できます。
 - **AWS S3**: 画像はバックエンドからAWS S3にアップロードされます。

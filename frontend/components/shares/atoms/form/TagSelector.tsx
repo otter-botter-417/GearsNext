@@ -4,7 +4,7 @@ import { TextField, MenuItem, Chip } from '@mui/material';
 import { useFormMethods } from '@/hooks/useFormMethods';
 
 import { GetTagOptions } from './GetTagOptions';
-import { getFieldErrorMessage } from './GetFieldErrorMessage';
+import { GetFieldErrorMessage } from './GetFieldErrorMessage';
 
 type TagSelectorProps = {
   idName: string;
@@ -46,7 +46,7 @@ export const TagSelector: FC<TagSelectorProps> = ({ idName, label }) => {
       value={selectedTags}
       onChange={handleTagSelectionChange}
       error={!!errors[idName]}
-      helperText={getFieldErrorMessage(errors, idName)}
+      helperText={GetFieldErrorMessage(errors, idName)}
       fullWidth
       SelectProps={{
         multiple: true,

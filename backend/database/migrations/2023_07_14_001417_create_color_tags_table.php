@@ -17,8 +17,6 @@ return new class extends Migration
         Schema::create('color_tags', function (Blueprint $table) {
             $table->id('color_tag_id');
             $table->string('color_tag_name', 50);
-            // 外部キー制約を設定
-
         });
     }
 

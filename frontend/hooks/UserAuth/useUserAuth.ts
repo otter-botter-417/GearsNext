@@ -18,6 +18,9 @@ import { AxiosError } from 'axios';
  */
 type DataTransformer<T> = (data: T) => Record<string, any>;
 
+type DeepPartial<T> = {
+    [P in keyof T]?: DeepPartial<T[P]>;
+};
 /**
  * 共通のユーザー認証処理を行うカスタムフック
  *
@@ -33,20 +36,29 @@ type DataTransformer<T> = (data: T) => Record<string, any>;
  * @param schema Yupによるバリデーションスキーマ
  * @param apiEndpoint APIエンドポイントのURL
  * @param transformData フォームデータをAPIに適した形に変換する関数
+ * @param testUser テストユーザーを使用する場合はtrue ポートフォリオ用設定
  * @returns フォームメソッド、onSubmit関数、ローディング状態
  */
 export const useUserAuth = <T extends Record<string, any>>(
     schema: any,
     apiEndpoint: string,
-    transformData: DataTransformer<T>
+    transformData: DataTransformer<T>,
+    testUser?: boolean // テストユーザーを使用する場合はtrue ポートフォリオ用設定
 ) => {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
     const { sendRequest } = useApiRequest();
     const setUser = useSetRecoilState(userState);
 
+    // テストユーザーの場合は、デフォルト値を設定 ポートフォリオ用設定
+    const defaultValues: any = testUser ? {
+        email: 'test@test.com',
+        password: 'password',
+    } : undefined;
+
     const formMethods = useForm<T>({
         resolver: yupResolver(schema),
+        defaultValues
     });
 
     // スネークケースをキャメルケースに変換
@@ -77,7 +89,7 @@ export const useUserAuth = <T extends Record<string, any>>(
                 setLoading(false);
                 router.push('/');
             }
-        } catch (err: unknown) {  
+        } catch (err: unknown) {
             if (err instanceof AxiosError) {
                 setLoading(false);
 

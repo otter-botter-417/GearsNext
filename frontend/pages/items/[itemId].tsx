@@ -26,6 +26,7 @@ interface ItemData {
 export async function getStaticProps(context: GetStaticPropsContext) {
   const itemId = context.params?.itemId;
   const response = await fetch(API_BASE_URL + `items/${itemId}`);
+  console.log('response', response);
   const itemData = (await response.json()) as ItemData;
   return {
     props: {

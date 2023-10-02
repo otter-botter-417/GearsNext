@@ -14,7 +14,8 @@ export const useUserLogin = () => {
   return useUserAuth<LoginFormDataTypes>(
     LoginValidatedSchema,
     'user/login',
-    loginTransformer  
+    loginTransformer,
+    true  // テストユーザーを使用する場合はtrue ポートフォリオ用設定
   );
 };
 

@@ -6,6 +6,7 @@ import {
   Typography,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { styled } from '@mui/system';
 
 import { ItemTagList } from '@/components/shares/atoms/SelectNames/ItemTagList';
 import { ColorTagList } from '@/components/shares/atoms/SelectNames/ColorTagList';
@@ -16,6 +17,11 @@ import { colorTagsState } from '@/components/shares/atoms/state/colorTagsState';
 import { PullDownMultiSelector } from '@/components/shares/molecules/PullDownMultiSelector';
 import { PriceSlider } from '@/components/pages/ItemSearchPage/PriceSlider';
 import { FilterToggleButton } from '@/components/pages/ItemSearchPage/FilterToggleButton';
+
+// アコーディオンの外枠のスタイルを定義 通常だと薄いため太くしている
+const CustomAccordion = styled(Accordion)({
+  border: '1px solid #ccc', // 枠線の太さと色を設定
+});
 
 /**
  * このコンポーネントは商品検索ページで提供される詳細オプションのセクションです。
@@ -32,7 +38,7 @@ import { FilterToggleButton } from '@/components/pages/ItemSearchPage/FilterTogg
  * @returns 商品検索ページで提供される詳細オプションのセクション。
  */
 export const AccordionSection = () => (
-  <Accordion>
+  <CustomAccordion>
     <AccordionSummary
       expandIcon={<ExpandMoreIcon />}
       aria-controls="panel1a-content"
@@ -64,5 +70,5 @@ export const AccordionSection = () => (
         </Grid>
       </Grid>
     </AccordionDetails>
-  </Accordion>
+  </CustomAccordion>
 );

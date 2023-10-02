@@ -4,7 +4,6 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import NextLink from 'next/link';
 
-
 import { LAYOUT_IMAGE_BASE_URL } from '@/components/constants';
 import { FittedImage } from '../atoms/FittedImage';
 
@@ -14,7 +13,6 @@ type LayoutImageListProps = {
     favoriteCount: number;
     viewCount: number;
   }>;
-  height: string;
 };
 
 /**
@@ -22,26 +20,19 @@ type LayoutImageListProps = {
  * スクロール可能な画像リスト
  *
  * @param layouts layouts{ layoutId: number; favoriteCount: number; viewCount: number;}
- * @param height レイアウトの高さ
  * @example
  * <LayoutImageList
  * layouts={layouts}
  * height={'500px'}
  * />
  */
-export const LayoutImageList: FC<LayoutImageListProps> = ({
-  layouts = [],
-  height,
-}) => {
+export const LayoutImageList: FC<LayoutImageListProps> = ({ layouts = [] }) => {
   return (
-    <Box
-      sx={{
-        overflowY: 'scroll',
-        height: height,
-        width: '100%',
-      }}
-    >
-      <ImageList sx={{ width: 'auto', height: 'auto' }} cols={3}>
+    <Box>
+      <ImageList
+        sx={{ width: 'auto', height: 'auto' }}
+        cols={layouts.length + 10}
+      >
         {layouts.map((layout) => (
           <ImageListItem key={layout.layoutId}>
             <NextLink href={`/layouts/${layout.layoutId}`}>

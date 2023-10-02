@@ -8,6 +8,7 @@ import { ItemThumbnail } from '@/components/shares/molecules/ItemThumbnail';
 import { filteredItemsState } from '@/components/shares/atoms/state/filteredItemsState';
 import { paginationState } from '../atoms/state/paginationState';
 import { PaginationControls } from '../molecules/PaginationControls';
+import { Typography } from '@mui/material';
 
 // ページネーションのスタートとエンドインデックスを計算するヘルパー関数
 const calculateStartAndEndIndex = (
@@ -53,7 +54,9 @@ export const ItemThumbnailGrid: React.FC = () => {
             </Grid>
           ))
         ) : (
-          <p>No items found</p>
+          <Grid item xs={12} style={{ textAlign: 'center' }}>
+            <Typography variant="body1">対象商品がありません</Typography>
+          </Grid>
         )}
       </Grid>
       <PaginationControls />

@@ -93,7 +93,7 @@ export const ItemPage = ({ itemDetail }: { itemDetail: ItemDataType }) => {
         </Grid>
         <Grid item xs={12}>
           {/* レイアウトの画像リスト */}
-          <LayoutImageList layouts={itemDetail.layouts} height={'700px'} />
+          <LayoutImageList layouts={itemDetail.layouts} />
         </Grid>
       </Grid>
     </Box>

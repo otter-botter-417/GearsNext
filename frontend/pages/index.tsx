@@ -22,7 +22,6 @@ const Home: NextPage = () => {
             <Button variant="outlined">レイアウトを投稿する</Button>
           </NextLink>
         </Box>
-
         <HomeImageGrid />
       </Box>
     </Box>

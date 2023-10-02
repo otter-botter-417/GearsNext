@@ -1,4 +1,5 @@
 import { useRecoilValue } from 'recoil';
+import { useRouter } from 'next/router';
 
 import { useApiRequest } from '@/hooks/api/useApiRequest';
 import { useErrorHandler } from '@/hooks/api/useErrorHandler';
@@ -21,7 +22,7 @@ export const useLayoutCreate = () => {
     const text = useRecoilValue(textState);
     const imageMapDataList = useRecoilValue(imageMapDataListState);
     const selectedItemsList = useRecoilValue(selectedItemsListState);
-
+    const router = useRouter();
     /**
      * 商品一覧を非同期に取得する。
      * カテゴリーに応じてURLを変更し、APIリクエストを行う。
@@ -52,6 +53,12 @@ export const useLayoutCreate = () => {
                 handleError(null, 'レスポンスが無効です。');
                 return;
             }
+
+            // レスポンスが正常だった場合、トップページに遷移する
+            if (response?.status === 201) {
+                router.push('/');
+            }
+
             // エラーが発生していた場合、エラーをクリアする
             clearError();
         } catch (error) {

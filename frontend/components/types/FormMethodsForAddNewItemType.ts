@@ -20,7 +20,6 @@ export interface AddNewItemFormFields {
     weight: number;
     itemTags: Maybe<(string | undefined)[] | undefined>;
     colorTags: Maybe<(string | undefined)[] | undefined>;
-    loading: boolean;
 }
 
 export type UseFormMethodsForAddNewItem = UseFormReturn<AddNewItemFormFields>;

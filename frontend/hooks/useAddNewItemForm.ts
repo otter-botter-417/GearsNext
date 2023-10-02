@@ -29,12 +29,11 @@ export const useAddNewItemForm = () => {
     // useFormを用いて基本的なフォームメソッドを設定
     const formMethods: UseFormMethodsForAddNewItem = useForm<AddNewItemFormFields>({
         defaultValues: {
-            loading: false,
             itemTags: [],
             colorTags: [],
         },
-        resolver: yupResolver(AddNewItemValidatedSchema),
-    });
+        resolver: yupResolver(AddNewItemValidatedSchema) as any,
+    }); //TODO anyの型を修正する
 
     // カテゴリーに応じた詳細フォームメソッドを設定
     const detailFormMethods = useDetailFormMethods(formMethods);

@@ -54,7 +54,7 @@ export const useUserAuth = <T extends Record<string, any>>(
     } : undefined;
 
     const formMethods = useForm<T>({
-        resolver: yupResolver(schema),
+        resolver: yupResolver(schema) as any, //TODO anyの型を修正する
         defaultValues
     });
 

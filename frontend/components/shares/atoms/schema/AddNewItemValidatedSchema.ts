@@ -32,7 +32,4 @@ export const AddNewItemValidatedSchema = yup.object().shape({
   // 任意項目
   itemTags: yup.array().of(yup.string()).label('タグ').notRequired(),
   colorTags: yup.array().of(yup.string()).label('色').notRequired(),
-
-  // ローディング状態
-  loading: yup.boolean().required(),
 });

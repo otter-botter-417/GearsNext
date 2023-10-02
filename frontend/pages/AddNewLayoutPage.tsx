@@ -10,14 +10,19 @@ import { AddLayoutPageLeftOrganism } from '@/components/pages/addLayoutPage/AddL
 import { AddLayoutPageRightOrganism } from '@/components/pages/addLayoutPage/AddLayoutPageRightOrganism';
 import { AddLayoutPageSelectedItemImageList } from '@/components/pages/addLayoutPage/AddLayoutPageSelectedItemImageList';
 import { AddLayoutPageTopOrganism } from '@/components/pages/addLayoutPage/AddLayoutPageTopOrganism';
+import { useInitAddNewLayoutPage } from '@/hooks/useInitAddNewLayoutPage';
 
 /**
  * レイアウト投稿ページを提供します。
  * クライアントサイドレンダリングでレイアウトの投稿を行う
  */
 const AddNewLayoutPage = () => {
-  useFetchUserInventory();
+  useInitAddNewLayoutPage();
+  // 商品を取得する
   useFetchItems();
+  // ユーザーのインベントリを取得する
+  useFetchUserInventory();
+
   useItemNameFilters();
   const { layoutPost } = useLayoutCreate();
 

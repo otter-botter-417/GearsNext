@@ -57,18 +57,18 @@ export const ImageWithMapEditor = () => {
     [setTextFieldPosition, setOpen, setItemSearchQuery, firstClickDone], // <- Add missing dependency
   );
 
-  // 画像が選択されていない時は何も表示しない
-  if (!imagePreviewUrl) return null;
+  if (!imagePreviewUrl) return null; // 画像が取得できるまでnullを返す
 
   return (
-    <div
-      style={{
-        position: 'relative',
-        display: 'inline-block',
-        width: '100%',
-        height: '100%',
-      }}
-    >
+    <div style={{ position: 'relative' }}>
+      <Image
+        src={imagePreviewUrl}
+        alt="Image Preview"
+        width={100}
+        height={100}
+        layout="responsive"
+        onClick={handleImageClick}
+      />
       {!firstClickDone && (
         <div
           style={{
@@ -78,7 +78,7 @@ export const ImageWithMapEditor = () => {
             transform: 'translate(-50%, -50%)',
             color: 'white',
             fontWeight: 'bold',
-            background: 'rgba(0, 0, 0, 0.5)',
+            background: 'rgba(0, 0, 0, 0.99)',
             padding: '10px',
             borderRadius: '5px',
             fontSize: '14px',
@@ -87,16 +87,8 @@ export const ImageWithMapEditor = () => {
           クリックしてタグを設定する
         </div>
       )}
-      <Image
-        src={imagePreviewUrl}
-        alt="Image Preview"
-        layout="responsive"
-        width={500} // Set appropriate values
-        height={300} // Set appropriate values
-        objectFit="contain"
-        onClick={handleImageClick}
-      />
       <ImageMapTagEditor open={open} setOpen={setOpen} />
+
       <ImageMapLabel />
     </div>
   );

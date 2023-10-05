@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from "react";
 import { useApiRequest } from "./useApiRequest";
 import { itemDetailState } from "@/components/shares/atoms/state/itemDetailState";
-import { useSetRecoilState } from "recoil";
+import { useResetRecoilState, useSetRecoilState } from "recoil";
 import { userItemStatesState } from "@/components/shares/atoms/state/userItemStatesState";
 
 // TODO いいね　持っているもの　を取得できるようにする
@@ -9,11 +9,10 @@ export const useGetItemDataApi = (itemId: string) => {
   const { sendRequest } = useApiRequest();
   const setItemDetail = useSetRecoilState(itemDetailState);
   const setUserItemStates = useSetRecoilState(userItemStatesState);
-
+  const resetUserItemStates = useResetRecoilState(userItemStatesState);
 
   const fetchData = useCallback(async () => {
     try {
-
       if (!itemId) {
         console.log("itemId is undefined or null");
         return;
@@ -37,6 +36,7 @@ export const useGetItemDataApi = (itemId: string) => {
   }, [itemId, sendRequest, setItemDetail]);
   useEffect(() => {
     if (itemId) {
+      resetUserItemStates();
       fetchData();
     }
   }, [itemId, fetchData]);

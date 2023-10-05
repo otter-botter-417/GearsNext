@@ -1,10 +1,12 @@
 import React, { FC, useState } from 'react';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import { Box } from '@mui/material';
 
 import { ImageMapType } from '@/components/types/ImageMapType';
 
 import { LayoutLabelItem } from './LayoutLabelItem';
+
+type OnLoadingCompleteResult = { naturalHeight: number; naturalWidth: number };
 
 type LayoutImageOnTagImageMapProps = {
   layoutId: number;
@@ -25,12 +27,20 @@ export const LayoutImageOnTagImageMap: FC<LayoutImageOnTagImageMapProps> = ({
   tagPositions,
 }) => {
   const [isTagPositionVisible, setIsTagPositionVisible] = useState(true);
+  const [aspectRatio, setAspectRatio] = useState(0);
 
+  // 画像の読み込みが完了した時に実行される関数 (画像のアスペクト比を取得する)
+  const onImageLoadingComplete = (e: OnLoadingCompleteResult) => {
+    setAspectRatio(e.naturalWidth / e.naturalHeight);
+  };
   return (
     <>
       <Box
         sx={{
+          aspectRatio: `${aspectRatio || 1}`,
           position: 'relative',
+          width: '100%',
+          maxHeight: 100,
           paddingTop: '100%',
         }}
       >
@@ -42,6 +52,7 @@ export const LayoutImageOnTagImageMap: FC<LayoutImageOnTagImageMapProps> = ({
           objectFit="contain"
           priority
           onClick={() => setIsTagPositionVisible((prev) => !prev)}
+          onLoadingComplete={(e) => onImageLoadingComplete(e)}
         />
 
         {/* タグ（商品ラベル） */}

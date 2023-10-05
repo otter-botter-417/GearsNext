@@ -37,10 +37,10 @@ export const LayoutPageTemplate: FC<LayoutTemplateProps> = ({
         {top}
       </Box>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={8}>
-          {leftSide}
+        <Grid item xs={12} md={9}>
+          <Box>{leftSide}</Box>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={3}>
           <Box marginLeft={{ md: 2 }}>{rightSide}</Box>
         </Grid>
       </Grid>

@@ -34,14 +34,14 @@ class FavoriteItemRepository implements FavoriteItemRepositoryInterface
      * お気に入りに商品を追加
      * @param  int    $userId
      * @param  int    $itemId
-     * @return void
+     * @return FavoriteItem
      */
-    public function addFavoriteItemData(int $userId, int $itemId): void
+    public function addFavoriteItemData(int $userId, int $itemId): FavoriteItem
     {
-        $this->model->firstOrCreate([
-            'user_id' => $userId,
-            'item_id' => $itemId,
-        ]);
+        return $this->model->firstOrCreate([
+                    'user_id' => $userId,
+                    'item_id' => $itemId,
+                ]);
     }
 
     /**

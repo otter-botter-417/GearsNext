@@ -51,6 +51,8 @@ export const LayoutComments: FC<LayoutCommentsProps> = ({
     setCommentText(`@${userName} `);
   };
 
+  if (!comments) return null;
+
   return (
     <Box>
       {/* コメントの表示処理 */}

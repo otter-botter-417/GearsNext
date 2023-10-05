@@ -58,7 +58,10 @@ class FavoriteItemService
      */
     public function addFavoriteItem(int $userId, int $itemId): void
     {
-        $this->favoriteItemRepository->addFavoriteItemData($userId, $itemId);
+        $item = $this->favoriteItemRepository->addFavoriteItemData($userId, $itemId);
+        if ($item->wasRecentlyCreated) {
+            $this->itemRepository->incrementitemFavoriteCount($itemId);
+        }
     }
 
     /**
@@ -71,5 +74,7 @@ class FavoriteItemService
     public function removeFavoriteItem(int $userId, int $itemId): void
     {
         $this->favoriteItemRepository->removeFavoriteItemData($userId, $itemId);
+        $this->itemRepository->decrementitemFavoriteCount($itemId);
+
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Contracts;
 
+use App\Models\FavoriteItem;
+
 interface FavoriteItemRepositoryInterface
 {
     /**
@@ -15,9 +17,9 @@ interface FavoriteItemRepositoryInterface
      * お気に入りに商品を追加
      * @param  int  $userId
      * @param  int  $itemId
-     * @return void
+     * @return FavoriteItem
      */
-    public function addFavoriteItemData(int $userId, int $itemId): void;
+    public function addFavoriteItemData(int $userId, int $itemId): FavoriteItem;
 
     /**
      * お気に入りから商品を削除

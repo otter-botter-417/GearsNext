@@ -1,7 +1,7 @@
 import React from 'react';
 import fetch from 'node-fetch';
 import Box from '@mui/material/Box';
-import { Grid, useMediaQuery } from '@mui/material';
+import { Grid } from '@mui/material';
 import { useRouter } from 'next/router';
 import { GetStaticPropsContext } from 'next';
 
@@ -26,7 +26,6 @@ interface ItemData {
 export async function getStaticProps(context: GetStaticPropsContext) {
   const itemId = context.params?.itemId;
   const response = await fetch(API_BASE_URL + `items/${itemId}`);
-  console.log('response', response);
   const itemData = (await response.json()) as ItemData;
   return {
     props: {

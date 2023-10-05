@@ -95,6 +95,7 @@ class LayoutService
 
     /**
      * 画像jpgに変換しS3にアップロード
+     * リソースの解放も行う
      */
     public function uploadImage(UploadedFile $imageFile, int $layoutId): void
     {
@@ -102,8 +103,8 @@ class LayoutService
             $inputPath = $imageFile->path();
             $convertImage = Image::make($inputPath)->encode('jpg');
             $newFileName = 'layout/image/' . $layoutId . '.jpg';
-            // $convertImage->storeAs('layout/image',new File($newFileName), 's3');
             Storage::disk('s3')->put($newFileName, (string) $convertImage, 'public');
+            $convertImage->destroy(); //リソースの解放
             } catch (AwsException $e) {
                 Log::error("AWS Error: " . $e->getMessage());
                 throw $e;

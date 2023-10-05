@@ -8,6 +8,7 @@ import { imagePreviewUrlState } from '@/components/shares/atoms/state/imagePrevi
 import { itemSearchQueryState } from '@/components/shares/atoms/state/itemSearchQueryState';
 import { imageMapPositionState } from '@/components/shares/atoms/state/imageMapPositionState';
 import { imageMapDataListState } from '@/components/shares/atoms/state/imageMapDataListState';
+import { loadingButtonState } from '@/components/shares/atoms/state/loadingButtonState';
 import { selectedTabIndexState } from '@/components/shares/atoms/state/selectedTabIndexState';
 import { selectedItemsListState } from '@/components/shares/atoms/state/selectedItemsListState';
 import { selectedCategoryNameState } from '@/components/shares/atoms/state/selectedCategoryNameState';
@@ -25,11 +26,13 @@ export const useInitAddNewLayoutPage = (
     const resetImagePreviewUrl = useResetRecoilState(imagePreviewUrlState);
     const resetItemSearchQuery = useResetRecoilState(itemSearchQueryState);
     const resetImageMapDataList = useResetRecoilState(imageMapDataListState);
+    const resetLoadingButtonState = useResetRecoilState(loadingButtonState);
     const resetTextFieldPosition = useResetRecoilState(imageMapPositionState);
     const resetSelectedTabIndex = useResetRecoilState(selectedTabIndexState);
     const resetSelectedItemsList = useResetRecoilState(selectedItemsListState,);
     const resetSelectedCategoryName = useResetRecoilState(selectedCategoryNameState);
     const resetUserInventoryItemList = useResetRecoilState(userInventoryItemListState);
+
 
     useEffect(() => {
         resetText();
@@ -38,6 +41,7 @@ export const useInitAddNewLayoutPage = (
         resetImagePreviewUrl();
         resetItemSearchQuery();
         resetImageMapDataList();
+        resetLoadingButtonState();
         resetTextFieldPosition();
         resetSelectedTabIndex();
         resetSelectedItemsList();

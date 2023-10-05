@@ -6,6 +6,7 @@ import { CategoryNameTags } from './CategoryNameTags';
 import { ItemsSelectCheckBox } from './ItemsSelectCheckBox';
 import { CategoryNameList } from '@/components/shares/atoms/SelectNames/CategoryNameList';
 import { selectedItemsListState } from '@/components/shares/atoms/state/selectedItemsListState';
+import { ItemNameSearchField } from './ItemNameSearchField';
 
 type ItemSelectorProps = {
   open: boolean;
@@ -25,7 +26,12 @@ type ItemSelectorProps = {
  */
 export const ItemSelector: FC<ItemSelectorProps> = ({ open, onClose }) => {
   const setSelectedItemsList = useSetRecoilState(selectedItemsListState);
-  const selectCategoryName = ['選択中', 'すべて', ...CategoryNameList];
+  const selectCategoryName = [
+    '選択中',
+    '持っている',
+    'すべて',
+    ...CategoryNameList,
+  ];
 
   const selectReset = () => {
     setSelectedItemsList([]);
@@ -35,9 +41,10 @@ export const ItemSelector: FC<ItemSelectorProps> = ({ open, onClose }) => {
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>
         <Typography variant="body1">
-          持っているギアからレイアウトに登録するギアを選択してください。
+          レイアウトに登録するギアを選択してください。
         </Typography>
       </DialogTitle>
+      <ItemNameSearchField />
       <CategoryNameTags selectCategoryName={selectCategoryName} />
       <Box
         sx={{

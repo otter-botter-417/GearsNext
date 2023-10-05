@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Comment;
 use App\Contracts\CommentRepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * レイアウトのコメントに関するリポジトリクラス
@@ -16,6 +17,16 @@ class CommentRepository implements CommentRepositoryInterface
     public function __construct(Comment $comment)
     {
         $this->model = $comment;
+    }
+
+    /**
+     * レイアウトのコメントを取得
+     * @param  int $layoutId
+     * @return Collection
+     */
+    public function getLayoutComments(int $layoutId): Collection
+    {
+        return $this->model->where('layout_id', $layoutId)->get();
     }
 
     /**

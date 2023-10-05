@@ -34,13 +34,25 @@ class CommentService
     }
 
     /**
+     * レイアウトのコメントを取得
+     * @param  Layout $layout
+     * @return Collection
+     */
+    public function getLayoutComments(int $layout_id): Collection
+    {
+        return $this->commentRepository->getLayoutComments($layout_id);
+    }
+
+    /**
      * レイアウトにコメントを追加
      * @param  int  $userId
+     * @param  int $layoutId
      * @return void
      */
-    public function createLayoutComment(int $userId, Layout $layout, array $commentData): void
+    public function createLayoutComment(int $userId, int $layout_id, array $commentData): Collection
     {
-        $this->commentRepository->createLayoutComment($userId, $layout->layout_id, $commentData);
+        $this->commentRepository->createLayoutComment($userId, $layout_id, $commentData);
+        return $this->commentRepository->getLayoutComments($layout_id);
     }
 
     /**

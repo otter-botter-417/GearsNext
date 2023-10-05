@@ -24,7 +24,6 @@ class LayoutShowResource extends JsonResource
             'viewCount' => $this->view_count,
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,
-            'comments' => $this->comments,
             'comments' => $this->comments->map(function ($comment) {
                 return [
                     'commentId' => $comment->comment_id,

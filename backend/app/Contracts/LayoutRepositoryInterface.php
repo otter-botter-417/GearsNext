@@ -67,6 +67,20 @@ interface LayoutRepositoryInterface
     public function saveViewLayoutHistory(Layout $layout, int $userId): void;
 
     /**
+     * レイアウトのお気に入り数をインクリメント
+     * @param  int  $layoutId
+     * @return void
+     */
+    public function incrementLayoutFavoriteCount(int $layoutId): void;
+
+    /**
+     * レイアウトのお気に入り数をデクリメント
+     * @param  int  $layoutId
+     * @return void
+     */
+    public function decrementLayoutFavoriteCount(int $layoutId): void;
+
+    /**
      * レイアウトを更新する
      * @param  Layout  $layout
      * @param  array $data レイアウトデータ

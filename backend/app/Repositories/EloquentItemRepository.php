@@ -163,6 +163,28 @@ class EloquentItemRepository implements ItemRepositoryInterface
     }
 
     /**
+     * 商品のお気に入り数をインクリメント
+     * @param  int  $itemId
+     * @return void
+     */
+    public function incrementItemFavoriteCount(int $itemId): void
+    {
+        $item = $this->find($itemId);
+        $item->increment('favorite_count');
+    }
+
+    /**
+     * 商品のお気に入り数をデクリメント
+     * @param  int  $itemId
+     * @return void
+     */
+    public function decrementItemFavoriteCount(int $itemId): void
+    {
+        $item = $this->find($itemId);
+        $item->decrement('favorite_count');
+    }
+
+    /**
      * 商品を更新
      * @param array $baseData
      * @param array $tagIds ['colorTagIds' => [], 'itemTagIds' => []]

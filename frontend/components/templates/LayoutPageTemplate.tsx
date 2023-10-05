@@ -32,16 +32,23 @@ export const LayoutPageTemplate: FC<LayoutTemplateProps> = ({
   bottom,
 }) => {
   return (
-    <Box sx={{ width: '80%', maxHeight: '100%', margin: '0 auto' }}>
+    <Box
+      sx={{
+        width: '80%',
+        maxWidth: '1500px',
+        maxHeight: '100%',
+        margin: '0 auto',
+      }}
+    >
       <Box display="flex" justifyContent="end" marginBottom={2}>
         {top}
       </Box>
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={9}>
-          <Box>{leftSide}</Box>
+      <Grid container spacing={0}>
+        <Grid item xs={12} md={8}>
+          <Box maxWidth={'800px'} display="flex" justifyContent="center"  >{leftSide}</Box>
         </Grid>
-        <Grid item xs={12} md={3}>
-          <Box marginLeft={{ md: 2 }}>{rightSide}</Box>
+        <Grid item xs={12} md={4}>
+          <Box paddingLeft={4}>{rightSide}</Box>
         </Grid>
       </Grid>
       <Box>{bottom}</Box>

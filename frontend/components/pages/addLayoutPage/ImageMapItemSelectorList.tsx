@@ -2,9 +2,7 @@ import React, { FC } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   List,
-  ListItem,
   ListItemAvatar,
-  Avatar,
   ListItemText,
   Divider,
   ListItemButton,
@@ -45,6 +43,7 @@ export const ImageMapItemSelectorList: FC<ImageMapItemSelectorListType> = ({
 
       if (existingItemIndex !== -1) {
         // 既存のアイテムが見つかった場合、それを新しいデータで更新
+        // 1つのアイテムに対して複数のタグを設定できない為、
         return prevList.map((item, index) =>
           index === existingItemIndex
             ? {

@@ -8,6 +8,7 @@ use App\Models\ViewLayoutHistory;
 use App\Contracts\LayoutRepositoryInterface;
 use App\Exceptions\LayoutNotFoundException;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Log;
 
 /**
  * レイアウトに関するリポジトリクラス
@@ -131,6 +132,29 @@ class LayoutRepository implements LayoutRepositoryInterface
             ['updated_at' => now()]
         );
     }
+
+    /**
+     * レイアウトのお気に入り数をインクリメント
+     * @param  int  $layoutId
+     * @return void
+     */
+    public function incrementLayoutFavoriteCount(int $layoutId): void
+    {
+        $layout = $this->model->find($layoutId);
+        $layout->increment('favorite_count');
+    }
+
+    /**
+     * レイアウトのお気に入り数をデクリメント
+     * @param  int  $layoutId
+     * @return void
+     */
+    public function decrementLayoutFavoriteCount(int $layoutId): void
+    {
+        $layout = $this->model->find($layoutId);
+        $layout->decrement('favorite_count');
+    }
+
     /**
      * レイアウトを更新
      * @param  Layout  $layout

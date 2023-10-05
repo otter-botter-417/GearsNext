@@ -2,7 +2,7 @@
 
 namespace App\Contracts;
 
-use App\Models\Layout;
+use App\Models\FavoriteLayout;
 
 interface FavoriteLayoutRepositoryInterface
 {
@@ -16,9 +16,9 @@ interface FavoriteLayoutRepositoryInterface
      * お気に入りにレイアウトを追加
      * @param  int $userId
      * @param  int $layoutId
-     * @return void
+     * @return FavoriteLayout
      */
-    public function addFavoriteLayoutData(int $userId, int $layoutId): void;
+    public function addFavoriteLayoutData(int $userId, int $layoutId): FavoriteLayout;
 
     /**
      * お気に入りからレイアウトを削除

@@ -30,6 +30,8 @@ Route::group([], function () {
     Route::get('layout', [PublicLayoutController::class, 'index']);
     Route::get('layout/{layout}', [PublicLayoutController::class, 'show'])
          ->middleware('AttachUserIdToRequest');
+
+    Route::get ('comment/{layout}', [CommentController::class, 'show']); 
 });
 
 // 認証が必要なルート

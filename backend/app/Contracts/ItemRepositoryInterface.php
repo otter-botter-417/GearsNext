@@ -66,6 +66,19 @@ interface ItemRepositoryInterface
     public function incrementViewCount(\App\Models\Item $item): void;
 
     /**
+     * 商品のお気に入り数をインクリメント
+     * @param  int  $itemId
+     * @return void
+     */
+    public function incrementItemFavoriteCount(int $itemId): void;
+
+    /**
+     * 商品のお気に入り数をデクリメント
+     * @param  int  $itemId
+     * @return void
+     */
+    public function decrementItemFavoriteCount(int $itemId): void;
+    /**
      * 商品を更新
      * @param Item $item
      * @param array $baseData 商品の基本情報

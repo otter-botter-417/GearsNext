@@ -7,8 +7,11 @@ import { selectedCategoryNameState } from '@/components/shares/atoms/state/selec
 import { userInventoryItemListState } from '@/components/shares/atoms/state/userInventoryItemListState';
 
 import { ItemDataType } from '@/components/types/ItemDataType';
+import { apiFetchedItemsState } from '@/components/shares/atoms/state/apiFetchedItemsState';
+import { itemSearchQueryState } from '@/components/shares/atoms/state/itemSearchQueryState';
 
 const SELECTED_CATEGORY = '選択中';
+const INVENTORY_CATEGORY = '持っている';
 const ALL_CATEGORY = 'すべて';
 /**
  * このコンポーネントは、ユーザーがレイアウトに使用する商品を選択するためのチェックボックスリストのUIを提供します。
@@ -20,11 +23,13 @@ const ALL_CATEGORY = 'すべて';
  */
 export const ItemsSelectCheckBox: FC = () => {
   const userInventoryItemList = useRecoilValue(userInventoryItemListState);
+  const apiFetchedItems = useRecoilValue(apiFetchedItemsState);
   const [selectedItemsList, setSelectedItemsList] = useRecoilState(
     selectedItemsListState,
   );
   const selectedCategoryName = useRecoilValue(selectedCategoryNameState);
-
+  const itemSearchQuery = useRecoilValue(itemSearchQueryState);
+  
   /**
    * ユーザーが選択した商品の中に、指定した商品が含まれているかどうかを判定する関数。
    * @param itemId
@@ -45,7 +50,7 @@ export const ItemsSelectCheckBox: FC = () => {
         event.target.checked
           ? [
               ...selectedItemsList,
-              userInventoryItemList.find((item) => item.itemId === itemId),
+              apiFetchedItems.find((item) => item.itemId === itemId),
             ].filter((item): item is ItemDataType => item !== undefined)
           : selectedItemsList.filter((item) => item.itemId !== itemId)
       ) as ItemDataType[];
@@ -55,12 +60,18 @@ export const ItemsSelectCheckBox: FC = () => {
 
   return (
     <FormGroup style={{ paddingLeft: '16px' }}>
-      {userInventoryItemList.map((item) => {
+      {apiFetchedItems.map((item) => {
         const shouldDisplay =
-          selectedCategoryName === SELECTED_CATEGORY
+          (selectedCategoryName === SELECTED_CATEGORY // 選択中のカテゴリー
             ? isItemSelected(item.itemId)
+            : // 持っている物の場合
+            selectedCategoryName === INVENTORY_CATEGORY
+            ? userInventoryItemList.some(
+                (inventoryItem) => inventoryItem.itemId === item.itemId,
+              )
             : selectedCategoryName === ALL_CATEGORY ||
-              item.categoryName === selectedCategoryName;
+              item.categoryName === selectedCategoryName) && // 新しい条件を追加: itemSearchQueryのチェック
+          (itemSearchQuery === '' || item.itemName.includes(itemSearchQuery));
 
         return (
           shouldDisplay && (

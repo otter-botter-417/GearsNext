@@ -1,6 +1,5 @@
 import React, { FC, useState } from 'react';
-import { IconButton, Typography } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import {Typography } from '@mui/material';
 
 import { ImageMapType } from '@/components/types/ImageMapType';
 
@@ -31,7 +30,7 @@ export const LabelItem: FC<LabelItemProps> = ({ item, children }) => {
   // 動的に座標を設定
   const dynamicLabelStyle = {
     position: 'absolute' as 'absolute',
-    padding: '5px',
+    padding: '1px',
     borderRadius: '10px',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     top: `${item.yPosition}%`,

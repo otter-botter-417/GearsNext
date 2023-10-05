@@ -27,7 +27,6 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const layoutId = context.params?.layoutId;
   const response = await fetch(API_BASE_URL + `layout/${layoutId}`);
   const itemData = (await response.json()) as LayoutData;
-
   return {
     props: {
       layoutDetail: itemData.data,
@@ -63,6 +62,7 @@ export const LayoutPage = ({
   layoutId: string;
 }) => {
   useLayoutShowApi(layoutId);
+
   return (
     <LayoutPageTemplate
       leftSide={
@@ -72,7 +72,7 @@ export const LayoutPage = ({
           tagPositions={layoutDetail.tagPositions}
         />
       }
-      rightSide={<LayoutPageRightOrganism layoutDetail={layoutDetail} />}
+      rightSide={<LayoutPageRightOrganism />}
       bottom={<LayoutPageSelectedItemImageList />}
     />
   );

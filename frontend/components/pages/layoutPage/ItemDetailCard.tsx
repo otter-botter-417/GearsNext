@@ -4,6 +4,7 @@ import Card from '@mui/material/Card';
 import { ITEM_IMAGE_BASE_URL } from '@/components/constants';
 import { ImageMapType } from '@/components/types/ImageMapType';
 import { FittedImage } from '@/components/shares/atoms/FittedImage';
+import { Box } from '@mui/system';
 
 type ItemDetailCardProps = {
   item: ImageMapType;
@@ -19,12 +20,14 @@ type ItemDetailCardProps = {
 export const ItemDetailCard: FC<ItemDetailCardProps> = ({ item }) => {
   return (
     <Card>
-      <FittedImage
-        src={`${ITEM_IMAGE_BASE_URL}${item.itemId}.jpg`}
-        alt={item.itemName}
-        containerWidth={100}
-        containerHeight={100}
-      />
+      <Box display="flex" justifyContent="center" alignItems="flex-start">
+        <FittedImage
+          src={`${ITEM_IMAGE_BASE_URL}${item.itemId}.jpg`}
+          alt={item.itemName}
+          containerWidth={100}
+          containerHeight={100}
+        />
+      </Box>
     </Card>
   );
 };

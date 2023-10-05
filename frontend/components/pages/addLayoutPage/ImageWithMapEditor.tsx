@@ -8,6 +8,7 @@ import { imageMapPositionState } from '@/components/shares/atoms/state/imageMapP
 import { ImageMapLabel } from './ImageMapLabel';
 import { ImageMapTagEditor } from './ImageMapTagEditor';
 import Image from 'next/legacy/image';
+import { imageOriginalSizeState } from '@/components/shares/atoms/state/imageOriginalSizeState';
 
 /**
  * このコンポーネントは、選択された画像を表示し、
@@ -25,6 +26,7 @@ export const ImageWithMapEditor = () => {
   const imagePreviewUrl = useRecoilValue(imagePreviewUrlState);
   const setTextFieldPosition = useSetRecoilState(imageMapPositionState);
   const setItemSearchQuery = useSetRecoilState(itemSearchQueryState);
+  const imageOriginalSize = useRecoilValue(imageOriginalSizeState);
 
   /**
    * 画像がクリックされた際に呼び出されるハンドラー。
@@ -60,13 +62,18 @@ export const ImageWithMapEditor = () => {
   if (!imagePreviewUrl) return null; // 画像が取得できるまでnullを返す
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div
+      style={{
+        width: imageOriginalSize.width,
+        height: imageOriginalSize.height,
+        position: 'relative',
+      }}
+    >
       <Image
         src={imagePreviewUrl}
         alt="Image Preview"
-        width={100}
-        height={100}
-        layout="responsive"
+        layout="fill"
+        objectFit="contain"
         onClick={handleImageClick}
       />
       {!firstClickDone && (

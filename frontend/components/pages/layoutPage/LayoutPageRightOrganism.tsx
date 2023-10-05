@@ -1,18 +1,14 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import { Box } from '@mui/material';
 
 import { useCreateComment } from '@/hooks/api/useCreateComment';
-
-import { LayoutDataType } from '@/components/types/LayoutDataType';
 
 import { LayoutInfo } from './LayoutInfo';
 import { AddNewComment } from './AddNewComment';
 import { LayoutComments } from './LayoutComments';
 import { LayoutPageButtons } from './LayoutPageButtons';
-
-type LayoutPageRightOrganismProps = {
-  layoutDetail: LayoutDataType;
-};
+import { layoutDetailState } from '@/components/shares/atoms/state/layoutDetailState';
 
 /**
  * このコンポーネントは、レイアウトページの右側に配置される主要なUIを提供します。
@@ -21,12 +17,13 @@ type LayoutPageRightOrganismProps = {
  *
  * @returns {JSX.Element} レイアウトの詳細情報、コメント、および新規コメント入力フィールドを含むReact要素
  */
-export const LayoutPageRightOrganism: FC<LayoutPageRightOrganismProps> = ({
-  layoutDetail,
-}) => {
+export const LayoutPageRightOrganism = () => {
   const [commentText, setCommentText] = useState('');
   const [commentParentId, setCommentParentId] = useState<number | null>(null);
   const { createComment } = useCreateComment();
+  const layoutDetail = useRecoilValue(layoutDetailState);
+
+  if (!layoutDetail) return null;
 
   /**
    * コメント送信ボタンが押されたときに実行される関数。

@@ -7,8 +7,11 @@ use App\Models\Layout;
 use App\Services\CommentService;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
+use App\Http\Resources\CommentResource;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 /**
  * レイアウトへのコメントに関する操作を管理するコントローラークラスです。
@@ -24,17 +27,33 @@ class CommentController extends Controller
     {
         $this->commentService = $commentService;
     }
+
+    /**
+     * コメントの取得
+     * @param  Layout  $layout
+     * @return ResourceCollection
+     */
+    public function show(Layout $layout): ResourceCollection
+    {
+        $comments = $this->commentService->getLayoutComments($layout->layout_id);
+        return CommentResource::collection($comments);
+
+    }
+
     /**
      * コメントの投稿
+     * 追加後のレイアウトのコメント一覧を返します。
      * @param  StoreCommentRequest  $request
      * @param  Layout  $layout
-     * @return Response
+     * @return ResourceCollection
      */
-    public function store(StoreCommentRequest $request, Layout $layout): Response
+    public function store(StoreCommentRequest $request, Layout $layout): ResourceCollection
     {
         $commentData = $request->only(['content', 'parent_id']);
-        $this->commentService->createLayoutComment(Auth::id(), $layout, $commentData);
-        return response(null, 201);
+        $newCommentData = $this->commentService->createLayoutComment(Auth::id(), $layout->layout_id, $commentData);
+        Log::debug($newCommentData);
+        return CommentResource::collection($newCommentData);
+
     }
 
     /**

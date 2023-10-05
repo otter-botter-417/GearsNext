@@ -11,8 +11,7 @@ import { useImageSelector } from '@/hooks/useImageSelector';
 export const ReSelectImageButton: FC = () => {
   const imageFile = useRecoilValue(imageFileState);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const imageRef = useRef<HTMLImageElement | null>(null);
-  const { handleFileChange } = useImageSelector({ imageRef });
+  const { handleFileChange } = useImageSelector();
 
   if (!imageFile) return null;
   return (

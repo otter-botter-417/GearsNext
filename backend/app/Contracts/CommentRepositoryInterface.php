@@ -3,9 +3,17 @@
 namespace App\Contracts;
 
 use App\Models\Comment;
+use Illuminate\Database\Eloquent\Collection;
 
 interface CommentRepositoryInterface
 {
+    /**
+     * レイアウトのコメントを取得
+     * @param  int $layoutId
+     * @return Collection
+     */
+    public function getLayoutComments(int $layoutId): Collection;
+
     /**
      * レイアウトにコメントを追加
      * @param  int  $userId

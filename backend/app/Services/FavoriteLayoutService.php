@@ -58,7 +58,10 @@ class FavoriteLayoutService
      */
     public function addFavoriteLayout($userId, $layoutId)
     {
-        $this->favoriteLayoutRepository->addFavoriteLayoutData($userId, $layoutId);
+        $layout = $this->favoriteLayoutRepository->addFavoriteLayoutData($userId, $layoutId);
+        if ($layout->wasRecentlyCreated) {
+            $this->layoutRepository->incrementLayoutFavoriteCount($layoutId);
+        }
     }
 
     /**
@@ -71,5 +74,7 @@ class FavoriteLayoutService
     public function removeFavoriteLayout(int $userId, int $layoutId)
     {
         $this->favoriteLayoutRepository->removeFavoriteLayoutData($userId, $layoutId);
+        $this->layoutRepository->decrementLayoutFavoriteCount($layoutId);
+
     }
 }

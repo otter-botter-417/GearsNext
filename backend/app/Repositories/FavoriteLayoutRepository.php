@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\FavoriteLayout;
 use App\Contracts\FavoriteLayoutRepositoryInterface;
 use App\Exceptions\LayoutNotFavoritedException;
+use App\Models\Layout;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -34,14 +35,14 @@ class FavoriteLayoutRepository implements FavoriteLayoutRepositoryInterface
      * お気に入りにレイアウトを追加
      * @param  int   $userId
      * @param  int   $layoutId
-     * @return void
+     * @return Layout
      */
-    public function addFavoriteLayoutData(int $userId, int $layoutId): void
+    public function addFavoriteLayoutData(int $userId, int $layoutId): FavoriteLayout
     {
-        $this->model->firstOrCreate([
-            'user_id' => $userId,
-            'layout_id' => $layoutId,
-        ]);
+        return $this->model->firstOrCreate([
+                    'user_id' => $userId,
+                    'layout_id' => $layoutId,
+               ]);
     }
 
     /**

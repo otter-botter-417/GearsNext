@@ -3,6 +3,7 @@ import { Button } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { imageFileState } from '@/components/shares/atoms/state/imageFileState';
 import { useRecoilValue } from 'recoil';
+import { loadingButtonState } from '@/components/shares/atoms/state/loadingButtonState';
 
 /**
  * このコンポーネントは、レイアウト投稿ページの投稿ボタンを提供します。
@@ -10,15 +11,17 @@ import { useRecoilValue } from 'recoil';
  */
 export const AddLayoutPageSubmitButton = () => {
   const imageFile = useRecoilValue(imageFileState);
+  const loading = useRecoilValue(loadingButtonState);
+  console.log('loading', loading);
   return (
     <Button
       type="submit"
       size="large"
+      disabled={loading || !imageFile}
       variant="contained"
       endIcon={<SendIcon />}
-      disabled={!imageFile}
     >
-      投稿
+      {loading ? '投稿中...' : '投稿'}
     </Button>
   );
 };

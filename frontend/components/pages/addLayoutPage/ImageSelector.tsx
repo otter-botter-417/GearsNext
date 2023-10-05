@@ -11,8 +11,7 @@ import { useImageSelector } from '@/hooks/useImageSelector';
  */
 export const ImageSelector: FC = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const imageRef = useRef<HTMLImageElement | null>(null);
-  const { handleFileChange } = useImageSelector({ imageRef });
+  const { handleFileChange } = useImageSelector();
 
   return (
     <div>
@@ -24,7 +23,7 @@ export const ImageSelector: FC = () => {
         style={{ display: 'none' }}
       />
       <Button
-        onClick={() => fileInputRef.current?.click()} 
+        onClick={() => fileInputRef.current?.click()}
         variant="contained"
         style={{
           padding: '10px 20px',

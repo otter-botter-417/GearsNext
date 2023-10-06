@@ -71,7 +71,7 @@
 ## 主要機能
 
 ### 商品検索ページ
-[https://gears-camp.com/ItemSearchPage]([https://gears-camp.com/gears-camp.com/)/ItemSearchPage)
+[https://gears-camp.com/ItemSearchPage]([https://gears-camp.com/ItemSearchPage)
 - **商品名での検索**: オートコンプリート機能付き
 - **カテゴリー・サブカテゴリー選択**: プルダウン形式で単一選択
 - **詳細な絞り込み**: アコーディオン形式で折りたたみ可能
@@ -97,7 +97,7 @@
 
 ### 商品個別ページ
 [https://gears-camp.com/items/1](https://gears-camp.com/items/1)
- **商品情報**: 価格、ブランド、サイズ等
+- **商品情報**: 価格、ブランド、サイズ等
 - **関連レイアウト**: 商品が使用されているレイアウトをグリッド表示
 
 ### 商品追加ページ

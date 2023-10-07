@@ -9,8 +9,6 @@ import { imageMapPositionState } from '@/components/shares/atoms/state/imageMapP
 import { ImageMapLabel } from './ImageMapLabel';
 import { ImageMapTagEditor } from './ImageMapTagEditor';
 import Image from 'next/legacy/image';
-import { imageOriginalSizeState } from '@/components/shares/atoms/state/imageOriginalSizeState';
-import { ImageMapType } from '@/components/types/ImageMapType';
 
 const IMAGE_SIZE = 500;
 
@@ -32,7 +30,6 @@ export const ImageWithMapEditor = () => {
   const imagePreviewUrl = useRecoilValue(imagePreviewUrlState);
   const setTextFieldPosition = useSetRecoilState(imageMapPositionState);
   const setItemSearchQuery = useSetRecoilState(itemSearchQueryState);
-  const imageOriginalSize = useRecoilValue(imageOriginalSizeState);
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
 
   /**
@@ -85,7 +82,6 @@ export const ImageWithMapEditor = () => {
       }
     }
     setImageSize({ width, height });
-    console.log('width', width);
   };
 
   if (!imagePreviewUrl) return null; // 画像が取得できるまでnullを返す

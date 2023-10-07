@@ -21,7 +21,7 @@ import { userState } from '@/components/shares/atoms/state/userState';
 import { LinkButtonWithIcon } from '@/components/shares/molecules/LinkButtonWithIcon';
 import HeaderAuthButton from '@/components/shares/molecules/HeaderAuthButton';
 
-const FONT_COLOR = '#d6dade';
+const FONT_COLOR = '#DEDBDB';
 
 const Header = () => {
   const [user, setUser] = useRecoilState(userState);

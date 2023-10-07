@@ -8,7 +8,6 @@ import { ItemDataText } from '@/components/shares/atoms/text/ItemDataText';
 import { priceAfterLimitValueState } from '@/components/shares/atoms/state/priceAfterLimitValueState';
 import { itemPriceListForSliderState } from '@/components/shares/atoms/state/itemPriceListForSliderState';
 import { itemPriceRangeForSliderState } from '@/components/shares/atoms/state/itemPriceRangeForSliderState';
-import { filteredItemsState } from '@/components/shares/atoms/state/filteredItemsState';
 import { resetTriggerState } from '@/components/shares/atoms/state/resetTriggerState';
 
 // 非常に難しいコード。理解するのに時間がかかる。

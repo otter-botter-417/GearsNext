@@ -26,7 +26,7 @@ export const LayoutPageSelectedItemImageList: FC = () => {
       <ImageGridList
         itemList={layoutDetail.items}
         imageSize={200}
-        cols={4}
+        cols={layoutDetail.items.length}
         isLink={true}
       />
     </Box>

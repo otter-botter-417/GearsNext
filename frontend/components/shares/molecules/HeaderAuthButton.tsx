@@ -28,23 +28,19 @@ const HeaderAuthButton: FC<HeaderAuthButtonProps> = ({
   color,
 }) => {
   return user ? (
-    <Box display="flex" justifyContent="flex-end">
-      <Button onClick={handleLogout}>
-        <Typography variant={'body1'} color={color} minWidth={80}>
-          ログアウト
-        </Typography>
-      </Button>
-    </Box>
+    <Button onClick={handleLogout}>
+      <Typography variant={'body1'} color={color} minWidth={80}>
+        ログアウト
+      </Typography>
+    </Button>
   ) : (
-    <Box display="flex" justifyContent="flex-end" justifyItems={'center'}>
-      <LinkButtonWithIcon
-        href="/UserLoginPage"
-        endIcon={<LoginIcon color="secondary" fontSize="small" />}
-        color={color}
-      >
-        ログイン
-      </LinkButtonWithIcon>
-    </Box>
+    <LinkButtonWithIcon
+      href="/UserLoginPage"
+      endIcon={<LoginIcon color="secondary" fontSize="small" />}
+      color={color}
+    >
+      ログイン
+    </LinkButtonWithIcon>
   );
 };
 

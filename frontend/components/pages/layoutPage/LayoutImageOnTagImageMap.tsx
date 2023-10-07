@@ -14,6 +14,8 @@ type LayoutImageOnTagImageMapProps = {
   tagPositions: ImageMapType[];
 };
 
+const IMAGE_SIZE = 500;
+
 /**
  * このコンポーネントは、レイアウト詳細ページでレイアウト画像とその上のタグ（詳細ラベル）を表示します。
  * - レイアウト画像: 指定された`layoutId`に基づいて画像を表示します。
@@ -27,21 +29,41 @@ export const LayoutImageOnTagImageMap: FC<LayoutImageOnTagImageMapProps> = ({
   tagPositions,
 }) => {
   const [isTagPositionVisible, setIsTagPositionVisible] = useState(true);
-  const [aspectRatio, setAspectRatio] = useState(0);
+  const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
 
-  // 画像の読み込みが完了した時に実行される関数 (画像のアスペクト比を取得する)
+  // 画像の読み込みが完了した時に実行される関数 (画像のwidth heightを取得する)
+  // 画像のwidth heightを取得して、画像のサイズを調整する
   const onImageLoadingComplete = (e: OnLoadingCompleteResult) => {
-    setAspectRatio(e.naturalWidth / e.naturalHeight);
+    let width = e.naturalWidth;
+    let height = e.naturalHeight;
+
+    // アスペクト比率を計算
+    const aspectRatio = width / height;
+
+    if (width > IMAGE_SIZE || height > IMAGE_SIZE) {
+      if (width > height) {
+        width = IMAGE_SIZE;
+        height = IMAGE_SIZE / aspectRatio;
+      } else {
+        height = IMAGE_SIZE;
+        width = IMAGE_SIZE * aspectRatio;
+      }
+    }
+    setImageSize({ width, height });
+    console.log('width', width);
   };
+
   return (
     <>
       <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        width={imageSize.width}
+        height={imageSize.height}
         sx={{
-          aspectRatio: `${aspectRatio || 1}`,
           position: 'relative',
-          width: '100%',
-          maxHeight: 100,
-          paddingTop: '100%',
+          margin: '0 auto',
         }}
       >
         {/* レイアウト画像 */}

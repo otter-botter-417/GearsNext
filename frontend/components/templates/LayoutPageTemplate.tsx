@@ -35,7 +35,7 @@ export const LayoutPageTemplate: FC<LayoutTemplateProps> = ({
     <Box
       sx={{
         width: '80%',
-        maxWidth: '1500px',
+        maxWidth: '1000px',
         maxHeight: '100%',
         margin: '0 auto',
       }}
@@ -45,10 +45,10 @@ export const LayoutPageTemplate: FC<LayoutTemplateProps> = ({
       </Box>
       <Grid container spacing={0}>
         <Grid item xs={12} md={8}>
-          <Box maxWidth={'800px'} display="flex" justifyContent="center"  >{leftSide}</Box>
+          {leftSide}
         </Grid>
         <Grid item xs={12} md={4}>
-          <Box paddingLeft={4}>{rightSide}</Box>
+          <Box>{rightSide}</Box>
         </Grid>
       </Grid>
       <Box>{bottom}</Box>

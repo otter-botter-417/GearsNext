@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { Box } from '@mui/material';
 
 import { imagePreviewUrlState } from '@/components/shares/atoms/state/imagePreviewUrlState';
 import { itemSearchQueryState } from '@/components/shares/atoms/state/itemSearchQueryState';
@@ -9,6 +10,11 @@ import { ImageMapLabel } from './ImageMapLabel';
 import { ImageMapTagEditor } from './ImageMapTagEditor';
 import Image from 'next/legacy/image';
 import { imageOriginalSizeState } from '@/components/shares/atoms/state/imageOriginalSizeState';
+import { ImageMapType } from '@/components/types/ImageMapType';
+
+const IMAGE_SIZE = 500;
+
+type OnLoadingCompleteResult = { naturalHeight: number; naturalWidth: number };
 
 /**
  * このコンポーネントは、選択された画像を表示し、
@@ -27,6 +33,7 @@ export const ImageWithMapEditor = () => {
   const setTextFieldPosition = useSetRecoilState(imageMapPositionState);
   const setItemSearchQuery = useSetRecoilState(itemSearchQueryState);
   const imageOriginalSize = useRecoilValue(imageOriginalSizeState);
+  const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
 
   /**
    * 画像がクリックされた際に呼び出されるハンドラー。
@@ -59,14 +66,40 @@ export const ImageWithMapEditor = () => {
     [setTextFieldPosition, setOpen, setItemSearchQuery, firstClickDone], // <- Add missing dependency
   );
 
+  // 画像の読み込みが完了した時に実行される関数 (画像のwidth heightを取得する)
+  // 画像のwidth heightを取得して、画像のサイズを調整する
+  const onImageLoadingComplete = (e: OnLoadingCompleteResult) => {
+    let width = e.naturalWidth;
+    let height = e.naturalHeight;
+
+    // アスペクト比率を計算
+    const aspectRatio = width / height;
+
+    if (width > IMAGE_SIZE || height > IMAGE_SIZE) {
+      if (width > height) {
+        width = IMAGE_SIZE;
+        height = IMAGE_SIZE / aspectRatio;
+      } else {
+        height = IMAGE_SIZE;
+        width = IMAGE_SIZE * aspectRatio;
+      }
+    }
+    setImageSize({ width, height });
+    console.log('width', width);
+  };
+
   if (!imagePreviewUrl) return null; // 画像が取得できるまでnullを返す
 
   return (
-    <div
-      style={{
-        width: imageOriginalSize.width,
-        height: imageOriginalSize.height,
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      width={imageSize.width}
+      height={imageSize.height}
+      sx={{
         position: 'relative',
+        margin: '0 auto',
       }}
     >
       <Image
@@ -74,7 +107,9 @@ export const ImageWithMapEditor = () => {
         alt="Image Preview"
         layout="fill"
         objectFit="contain"
+        priority
         onClick={handleImageClick}
+        onLoadingComplete={(e) => onImageLoadingComplete(e)}
       />
       {!firstClickDone && (
         <div
@@ -95,8 +130,7 @@ export const ImageWithMapEditor = () => {
         </div>
       )}
       <ImageMapTagEditor open={open} setOpen={setOpen} />
-
       <ImageMapLabel />
-    </div>
+    </Box>
   );
 };

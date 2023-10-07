@@ -24,7 +24,7 @@ const UserLoginPage = () => {
 
   const title = <Typography variant="h4">ログイン</Typography>;
   const loginForm = <LoginForm />;
-  const link = <NextLink href="/UserRegisterPage">アカウントを持っていない</NextLink>;
+  const link = <NextLink href="/UserRegisterPage">新規登録はこちら</NextLink>;
 
   return <AuthPageTemplate title={title} form={loginForm} link={link} />;
 };

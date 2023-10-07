@@ -23,7 +23,11 @@ const UserRegisterPage = () => {
 
   const title = <Typography variant="h4">新規登録</Typography>;
   const registerForm = <RegisterForm />;
-  const link = <NextLink href="/UserLoginPage">既にアカウントを持っている</NextLink>;
+  const link = (
+    <NextLink href="/UserLoginPage">
+      既にアカウントを持っている方はこちら
+    </NextLink>
+  );
 
   return <AuthPageTemplate title={title} form={registerForm} link={link} />;
 };

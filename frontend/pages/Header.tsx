@@ -14,6 +14,7 @@ import { Button } from '@mui/material';
 const Header = () => {
   const [user, setUser] = useRecoilState(userState);
   const router = useRouter();
+  const fontColor = '#d6dade';
 
   const handleLogout = () => {
     localStorage.removeItem('access_token');
@@ -34,7 +35,9 @@ const Header = () => {
             <Box display="flex" justifyContent="center">
               <NextLink href={`/`}>
                 <Button>
-                  <Typography variant="h4">Gears</Typography>
+                  <Typography variant="h4" color={fontColor}>
+                    Gears
+                  </Typography>
                 </Button>
               </NextLink>
             </Box>
@@ -42,13 +45,13 @@ const Header = () => {
               {user ? (
                 <>
                   <Button onClick={handleLogout} component="button">
-                    <Typography variant="h6">ログアウト</Typography>
+                    <Typography variant="h6"color={fontColor}>ログアウト</Typography>
                   </Button>
                 </>
               ) : (
                 <NextLink href={`/UserLoginPage`}>
                   <Button>
-                    <Typography variant="h6">ログイン</Typography>
+                    <Typography variant="h6"color={fontColor}>ログイン</Typography>
                   </Button>
                 </NextLink>
               )}

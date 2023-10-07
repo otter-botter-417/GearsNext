@@ -6,6 +6,7 @@ import Header from './Header';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import React from 'react';
 import '../styles/global.css';
+import { useTheme, useMediaQuery } from '@mui/material';
 
 import themeOptions from '@/styles/themes/themeOptions';
 import { useRouter } from 'next/router';
@@ -26,11 +27,14 @@ function MyApp({ Component, pageProps }: AppProps) {
 }
 
 const InsideRecoilRoot = ({ Component, pageProps }: InsideRecoilRootProps) => {
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const paddingTop = isSmallScreen ? '130px' : '100px'; // こちらの値は実際のヘッダーの高さに合わせて調整してください。
   const router = useRouter();
   useGetUserApi();
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ pt: '64px' }}>
+      <Box sx={{ pt: paddingTop }}>
         <CssBaseline />
         <Header />
         <Component {...pageProps} />

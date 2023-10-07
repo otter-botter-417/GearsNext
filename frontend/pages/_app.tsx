@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app';
 import { RecoilRoot } from 'recoil';
 import { Box, CssBaseline } from '@mui/material';
 import Header from './Header';
-import { createTheme, ThemeProvider } from '@mui/material';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import React from 'react';
 import '../styles/global.css';
 import { useMediaQuery } from '@mui/material';

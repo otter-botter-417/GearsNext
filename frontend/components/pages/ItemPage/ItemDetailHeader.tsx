@@ -39,6 +39,8 @@ export const ItemDetailHeader: FC<ItemDetailHeaderProps> = ({
         justifyContent: 'center',
         position: 'relative',
         width: '90%',
+        maxWidth: '600px',
+        maxHeight: '100%',
       }}
     >
       {/* 商品名　メーカー　を表示 */}
@@ -49,7 +51,8 @@ export const ItemDetailHeader: FC<ItemDetailHeaderProps> = ({
       <Box
         sx={{
           position: 'relative', // 必要: 'fill'レイアウトを使うときに親要素に'relative'を設定
-          width: '100%',
+          width: '60%',
+          maxWidth: '600px',
           paddingTop: '100%', // アスペクト比を保持
         }}
       >

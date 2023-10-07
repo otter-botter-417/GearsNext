@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import { Box } from '@mui/material';
 
 import { ImageMapType } from '@/components/types/ImageMapType';
@@ -50,7 +50,6 @@ export const LayoutImageOnTagImageMap: FC<LayoutImageOnTagImageMapProps> = ({
       }
     }
     setImageSize({ width, height });
-    console.log('width', width);
   };
 
   return (

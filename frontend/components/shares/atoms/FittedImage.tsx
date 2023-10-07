@@ -1,4 +1,4 @@
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import React, { FC } from 'react';
 
 type FittedImageProps = {
@@ -35,8 +35,8 @@ export const FittedImage: FC<FittedImageProps> = ({
         src={src}
         alt={alt}
         layout="fill"
-        objectFit="contain" // 画像がコンテナに収まるように調整
-        loading="lazy"
+        loading="eager"
+        style={{ objectFit: 'contain' }}
       />
     </div>
   );

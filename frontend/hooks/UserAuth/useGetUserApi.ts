@@ -46,7 +46,7 @@ export const useGetUserApi = () => {
         setUser(null);
       }
     } catch (err: any) {
-      console.log('get', err);
+      // console.log('get', err);
     }
   };
 };

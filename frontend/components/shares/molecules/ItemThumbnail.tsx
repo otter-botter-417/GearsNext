@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import NextLink from 'next/link';
 
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import { Box, Grid } from '@mui/material';
 
 import { ItemDataType } from '@/components/types/ItemDataType';
@@ -37,8 +37,8 @@ export const ItemThumbnail: FC<ItemThumbnailProps> = ({ ItemData }) => {
             src={ItemData.imageName}
             alt="item image"
             layout="responsive"
-            width={500}
-            height={500}
+            sizes="100vw"
+
             objectFit="contain"
             priority
           />

@@ -16,6 +16,7 @@ export const LayoutImageList: FC<LayoutImageListProps> = ({ item }) => {
         <Image
           src={item.imageName}
           alt={item.layoutId}
+          sizes="100vw"
           priority
         />
         <ImageListItemBar title={item.userName} position="below" />

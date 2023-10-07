@@ -48,7 +48,7 @@ export const LayoutPageTemplate: FC<LayoutTemplateProps> = ({
           {leftSide}
         </Grid>
         <Grid item xs={12} md={4}>
-          <Box>{rightSide}</Box>
+          <Box pl={4}>{rightSide}</Box>
         </Grid>
       </Grid>
       <Box>{bottom}</Box>

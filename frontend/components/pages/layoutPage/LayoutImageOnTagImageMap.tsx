@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import { Box } from '@mui/material';
 
 import { ImageMapType } from '@/components/types/ImageMapType';
@@ -29,7 +29,7 @@ export const LayoutImageOnTagImageMap: FC<LayoutImageOnTagImageMapProps> = ({
   tagPositions,
 }) => {
   const [isTagPositionVisible, setIsTagPositionVisible] = useState(true);
-  const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
+  const [imageSize, setImageSize] = useState({ width: 100, height: 100 });
 
   // 画像の読み込みが完了した時に実行される関数 (画像のwidth heightを取得する)
   // 画像のwidth heightを取得して、画像のサイズを調整する
@@ -69,8 +69,8 @@ export const LayoutImageOnTagImageMap: FC<LayoutImageOnTagImageMapProps> = ({
         <Image
           src={imageName}
           alt="layout image"
-          layout="fill"
-          objectFit="contain"
+          fill
+          sizes="(max-width: 768px) 100vw"
           priority
           onClick={() => setIsTagPositionVisible((prev) => !prev)}
           onLoadingComplete={(e) => onImageLoadingComplete(e)}

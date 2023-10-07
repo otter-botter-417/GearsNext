@@ -26,7 +26,7 @@ export const AddLayoutPageSelectedItemImageList: FC = () => {
         itemList={selectedItemsList}
         imageSize={200}
         cols={selectedItemsList.length}
-        isLink={true}
+        isLink={false}
       />
     </Box>
   );

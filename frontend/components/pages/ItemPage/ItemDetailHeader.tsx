@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Box } from '@mui/material';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 
 import { ItemName } from '@/components/pages/ItemPage/Details/ItemName';
 import { BrandName } from '@/components/pages/ItemPage/Details/BrandName';
@@ -51,16 +51,17 @@ export const ItemDetailHeader: FC<ItemDetailHeaderProps> = ({
       <Box
         sx={{
           position: 'relative', // 必要: 'fill'レイアウトを使うときに親要素に'relative'を設定
-          width: '60%',
-          maxWidth: '600px',
+          width: '100%',
+          maxWidth: '800px',
           paddingTop: '100%', // アスペクト比を保持
         }}
       >
         <Image
           src={imageName}
           alt={imageName}
-          layout="fill"
-          objectFit="contain"
+          fill
+          sizes="(max-width: 768px) 100vw"
+          style={{ objectFit: 'contain' }}
           priority
         />
       </Box>

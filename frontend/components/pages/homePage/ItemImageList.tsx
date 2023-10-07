@@ -28,25 +28,20 @@ export const ItemImageList: FC<ItemImageListProps> = ({ data }) => {
   }
 
   return (
-    <ImageListItem
-      style={{ width: '200px', height: '250px', overflow: 'hidden' }}
-    >
+    <ImageListItem style={{ width: '200px', height: '250px' }}>
       <NextLink href={link}>
-        <div style={{ position: 'relative', height: '200px' }}>
-          <Image
-            src={data.imageName}
-            alt={title}
-            width={200}
-            height={200}
-            loading="eager"
-            priority
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'contain', // 画像を拡大縮小して容器にフィットさせる
-            }}
-          />
-        </div>
+        <div
+          style={{
+            position: 'relative',
+            width: '100%',
+            height: '200px',
+            overflow: 'hidden',
+            backgroundImage: `url(${data.imageName})`,
+            backgroundSize: 'contain', // アスペクト比を維持しつつ画像をコンテナにフィット
+            backgroundRepeat: 'no-repeat', // 画像を繰り返さない
+            backgroundPosition: 'center', // 画像を中央に配置
+          }}
+        ></div>
         <div>
           {/* テキストのコンテナ, 高さを固定 */}
           <Box display={'flex'} alignItems={'center'} flexDirection={'column'}>

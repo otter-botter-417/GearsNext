@@ -8,7 +8,7 @@ import { imageMapPositionState } from '@/components/shares/atoms/state/imageMapP
 
 import { ImageMapLabel } from './ImageMapLabel';
 import { ImageMapTagEditor } from './ImageMapTagEditor';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 
 const IMAGE_SIZE = 500;
 
@@ -30,7 +30,10 @@ export const ImageWithMapEditor = () => {
   const imagePreviewUrl = useRecoilValue(imagePreviewUrlState);
   const setTextFieldPosition = useSetRecoilState(imageMapPositionState);
   const setItemSearchQuery = useSetRecoilState(itemSearchQueryState);
-  const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
+  const [imageSize, setImageSize] = useState({
+    width: IMAGE_SIZE,
+    height: IMAGE_SIZE,
+  });
 
   /**
    * 画像がクリックされた際に呼び出されるハンドラー。
@@ -52,7 +55,6 @@ export const ImageWithMapEditor = () => {
       const actualWidth = e.currentTarget.offsetWidth;
       const actualHeight = e.currentTarget.offsetHeight;
 
-      // クリックされた座標を画像のパーセンテージで計算
       const x = ((e.clientX - rect.left) / actualWidth) * 100;
       const y = ((e.clientY - rect.top) / actualHeight) * 100;
 
@@ -60,7 +62,7 @@ export const ImageWithMapEditor = () => {
       setOpen(true);
       setItemSearchQuery('');
     },
-    [setTextFieldPosition, setOpen, setItemSearchQuery, firstClickDone], // <- Add missing dependency
+    [setTextFieldPosition, setOpen, setItemSearchQuery], // firstClickDone を取り除きました
   );
 
   // 画像の読み込みが完了した時に実行される関数 (画像のwidth heightを取得する)
@@ -91,8 +93,8 @@ export const ImageWithMapEditor = () => {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      width={imageSize.width}
-      height={imageSize.height}
+      width={`${imageSize.width}px`}
+      height={`${imageSize.height}px`}
       sx={{
         position: 'relative',
         margin: '0 auto',
@@ -101,8 +103,8 @@ export const ImageWithMapEditor = () => {
       <Image
         src={imagePreviewUrl}
         alt="Image Preview"
-        layout="fill"
-        objectFit="contain"
+        width={imageSize.width}
+        height={imageSize.height}
         priority
         onClick={handleImageClick}
         onLoadingComplete={(e) => onImageLoadingComplete(e)}

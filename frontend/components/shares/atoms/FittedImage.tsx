@@ -34,9 +34,10 @@ export const FittedImage: FC<FittedImageProps> = ({
       <Image
         src={src}
         alt={alt}
-        layout="fill"
-        loading="eager"
+        fill
+        sizes="(max-width: 768px) 100vw"
         style={{ objectFit: 'contain' }}
+        priority
       />
     </div>
   );

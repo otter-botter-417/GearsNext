@@ -28,8 +28,7 @@ export const useApiRequest = () => {
       localStorage.setItem('access_token', newAccessToken);
       return newAccessToken;
     } catch (err) {
-      console.error("Failed to refresh token", err);
-      return null;
+      throw err;
     }
   };
 
@@ -74,7 +73,6 @@ export const useApiRequest = () => {
             return await performRequest(method, url, requestData, newToken);
           }
         }
-        console.error("APIリクエストに失敗しました。", err);
         throw err;
       }
     },

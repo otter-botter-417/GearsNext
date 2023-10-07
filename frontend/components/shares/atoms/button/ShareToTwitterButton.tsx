@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { IconButton } from '@mui/material';
 import { TwitterIcon, TwitterShareButton } from 'react-share';
 
 import { ICON_SIZE } from '@/components/constants';
@@ -20,9 +19,7 @@ export const ShareToTwitterButton: FC<ShareToTwitterProps> = ({
   url,
   title,
 }) => (
-  <IconButton>
-    <TwitterShareButton url={url} title={title}>
+  <TwitterShareButton url={url} title={title} style={{ marginRight: '8px' , marginTop:'6px' }}> {/* marginRightを追加 */}
       <TwitterIcon round size={ICON_SIZE} />
     </TwitterShareButton>
-  </IconButton>
 );

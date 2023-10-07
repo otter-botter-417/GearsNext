@@ -39,6 +39,7 @@ export const ItemImageList: FC<ItemImageListProps> = ({ data }) => {
             width={200}
             height={200}
             loading="eager"
+            priority
             style={{
               width: '100%',
               height: '100%',

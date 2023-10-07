@@ -30,7 +30,7 @@ export const ItemFilterFields = () => {
         container
         spacing={2}
         justifyContent="center"
-        style={{ width: '80%', margin: '0 auto' }}
+        style={{ margin: '0 auto' }}
       >
         {/* 基本検索条件をまとめたコンポーネント */}
         <Grid item xs={12}>

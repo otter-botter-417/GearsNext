@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { IconButton } from '@mui/material';
 import { LineIcon, LineShareButton } from 'react-share';
 
 import { ICON_SIZE } from '@/components/constants';
@@ -18,10 +17,9 @@ type ShareToLineProps = {
  */
 export const ShareToLineButton: FC<ShareToLineProps> = ({ url, title }) => {
   return (
-    <IconButton>
-      <LineShareButton url={url} title={title}>
+    
+      <LineShareButton url={url} title={title} style={{  marginTop:'6px' }}>
         <LineIcon round={true} size={ICON_SIZE} />
       </LineShareButton>
-    </IconButton>
   );
 };

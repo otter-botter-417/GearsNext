@@ -14,12 +14,16 @@ import { ItemDetailPageButtons } from '@/components/pages/ItemPage/ItemDetailPag
 import { CategoryDetailSwitcher } from '@/components/shares/organisms/CategoryDetailSwitcher';
 
 import { ItemDataType } from '@/components/types/ItemDataType';
-import { API_BASE_URL } from '@/components/constants';
+import { API_BASE_URL, DEFAULT_PAGE_WIDTH } from '@/components/constants';
 
 interface ItemData {
   data: {
     data: ItemDataType;
   };
+}
+
+interface ApiResponse {
+  data: ItemDataType[];
 }
 
 // SSG　静的サイト生成のための関数　ビルド時に取得したデータをpropsとして渡す
@@ -31,12 +35,22 @@ export async function getStaticProps(context: GetStaticPropsContext) {
     props: {
       itemDetail: itemData.data,
     },
-    revalidate: 3600, // 60秒間隔で再生成
+    revalidate: 1800,
   };
 }
 
 export async function getStaticPaths() {
-  const paths = [{ params: { itemId: '1' } }, { params: { itemId: '2' } }];
+  // APIを呼び出してすべてのアイテムのIDを取得
+  const response = await fetch(API_BASE_URL + 'items');
+  const data = (await response.json()) as ApiResponse;
+
+  // itemsを明示的に型付け
+  const items: ItemDataType[] = data.data;
+
+  // 取得したIDを使用して、paths配列を生成
+  const paths = items.map((item: ItemDataType) => ({
+    params: { itemId: item.itemId.toString() },
+  }));
 
   return {
     paths,
@@ -59,10 +73,11 @@ export const ItemPage = ({ itemDetail }: { itemDetail: ItemDataType }) => {
   const itemId = router.query.itemId;
 
   useGetItemDataApi(itemId as string);
-
   return (
-    <Box sx={{ width: '80%', margin: '0 auto' }}>
-      <Grid container>
+    <Box
+      sx={{ width: '80%', margin: '0 auto', maxWidth: { DEFAULT_PAGE_WIDTH } }}
+    >
+      <Grid container maxWidth={DEFAULT_PAGE_WIDTH} margin="0 auto">
         <Grid item xs={12} md={7}>
           {/* 商品画像と商品名とブランド名*/}
           <ItemDetailHeader

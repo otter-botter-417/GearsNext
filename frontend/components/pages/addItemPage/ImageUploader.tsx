@@ -19,6 +19,7 @@ export const ImageUploader = () => {
           width={500}
           height={300}
           objectFit="contain"
+          priority
         />
       ) : (
         <ImagePlaceholderWithSelector />

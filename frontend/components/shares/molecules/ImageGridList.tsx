@@ -38,7 +38,14 @@ export const ImageGridList: FC<ImageGridListProps> = ({
   return (
     <ImageList sx={{ width: 'auto', height: 'auto' }} cols={cols}>
       {itemList.map((item) => (
-        <ImageListItem key={item.itemId}>
+        <ImageListItem
+          key={item.itemId}
+          sx={{
+            display: 'flex',
+            justifyContent: 'center', // 中央に配置
+            alignItems: 'center', // 垂直方向の中央に配置
+          }}
+        >
           {/* isLink が true の場合、画像を Link コンポーネントで囲む */}
           {isLink ? (
             <NextLink href={`/items/${item.itemId}`}>

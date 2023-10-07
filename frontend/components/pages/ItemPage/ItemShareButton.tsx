@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { IconButton, Popover, Tooltip } from '@mui/material';
+import { Box, IconButton, Popover, Tooltip } from '@mui/material';
 import ShareIcon from '@mui/icons-material/Share';
 
 import { ICON_SIZE, BASE_URL } from '@/components/constants';
@@ -60,9 +60,22 @@ export const ItemShareButton: FC<ShareIconButtonProps> = ({
           vertical: 'bottom',
           horizontal: 'left',
         }}
+        PaperProps={{
+          elevation: 3, // オプション: 影の深さを調整する場合
+          style: {
+            borderRadius: '8px', // この行でPopoverの端を丸める
+          },
+        }}
       >
-        <ShareToTwitterButton url={url} title={itemName} />
-        <ShareToLineButton url={url} title={itemName} />
+        <Box
+          sx={{ p: 1 }}
+          display={'flex'}
+          justifyContent={'center'}
+          alignItems={'center'}
+        >
+          <ShareToTwitterButton url={url} title={itemName} />
+          <ShareToLineButton url={url} title={itemName} />
+        </Box>
       </Popover>
     </>
   );

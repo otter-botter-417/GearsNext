@@ -13,7 +13,11 @@ export const LayoutImageList: FC<LayoutImageListProps> = ({ item }) => {
   return (
     <NextLink href={`/layouts/${item.layoutId}`}>
       <ImageListItem>
-        <Image src={item.imageName} alt={item.layoutId} loading="lazy" />
+        <Image
+          src={item.imageName}
+          alt={item.layoutId}
+          priority
+        />
         <ImageListItemBar title={item.userName} position="below" />
       </ImageListItem>
     </NextLink>

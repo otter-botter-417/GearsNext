@@ -17,7 +17,9 @@ interface LayoutData {
     data: LayoutDataType;
   };
 }
-
+interface ApiResponse {
+  data: LayoutDataType[];
+}
 /**
  * SSGによる静的サイト生成のための関数
  * @param context - GetStaticPropsContext
@@ -37,7 +39,16 @@ export async function getStaticProps(context: GetStaticPropsContext) {
 }
 
 export async function getStaticPaths() {
-  const paths = [{ params: { layoutId: '1' } }];
+  // APIからすべてのlayoutIdを取得
+  const response = await fetch(API_BASE_URL + 'layout');
+  const data = (await response.json()) as ApiResponse;
+
+  const layouts: LayoutDataType[] = data.data;
+
+  // 取得したlayoutIdをもとにpathsを生成
+  const paths = layouts.map((layout: LayoutDataType) => ({
+    params: { layoutId: layout.layoutId.toString() },
+  }));
 
   return {
     paths,

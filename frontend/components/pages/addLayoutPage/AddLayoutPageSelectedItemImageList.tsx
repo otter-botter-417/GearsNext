@@ -18,11 +18,16 @@ export const AddLayoutPageSelectedItemImageList: FC = () => {
     <Box
       sx={{
         overflowY: 'scroll',
-        height: '200',
+        height: '100',
         width: '100%',
       }}
     >
-      <ImageGridList itemList={selectedItemsList} imageSize={200} cols={5} />
+      <ImageGridList
+        itemList={selectedItemsList}
+        imageSize={200}
+        cols={selectedItemsList.length}
+        isLink={true}
+      />
     </Box>
   );
 };

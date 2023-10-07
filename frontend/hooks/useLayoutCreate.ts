@@ -10,6 +10,7 @@ import { imageFileState } from '@/components/shares/atoms/state/imageFileState';
 import { imageMapDataListState } from '@/components/shares/atoms/state/imageMapDataListState';
 import { selectedItemsListState } from '@/components/shares/atoms/state/selectedItemsListState';
 import { loadingButtonState } from '@/components/shares/atoms/state/loadingButtonState';
+import { useAuthGuard } from './UserAuth/useAuthGuard';
 /**
  * 商品一覧と価格情報を管理するカスタムフック。
  * カテゴリーが変更された場合、APIから商品一覧を取得する。
@@ -33,6 +34,7 @@ export const useLayoutCreate = () => {
      */
     const layoutPost = async () => {
         try {
+            useAuthGuard();
             setLoading(true);
 
             const formData = new FormData();

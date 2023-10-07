@@ -12,7 +12,6 @@ import { loadingButtonState } from '@/components/shares/atoms/state/loadingButto
 export const AddLayoutPageSubmitButton = () => {
   const imageFile = useRecoilValue(imageFileState);
   const loading = useRecoilValue(loadingButtonState);
-  console.log('loading', loading);
   return (
     <Button
       type="submit"

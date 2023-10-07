@@ -62,7 +62,7 @@ export const ImageWithMapEditor = () => {
       setOpen(true);
       setItemSearchQuery('');
     },
-    [setTextFieldPosition, setOpen, setItemSearchQuery], // firstClickDone を取り除きました
+    [setTextFieldPosition, setOpen, setItemSearchQuery, firstClickDone],
   );
 
   // 画像の読み込みが完了した時に実行される関数 (画像のwidth heightを取得する)

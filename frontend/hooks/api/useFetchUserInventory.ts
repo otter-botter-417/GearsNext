@@ -6,23 +6,25 @@ import { useApiRequest } from "./useApiRequest";
 
 import { STATUS_OK, STATUS_UNAUTHORIZED } from "@/components/constants";
 import { userInventoryItemListState } from "@/components/shares/atoms/state/userInventoryItemListState";
-
-
+import { useAuthGuard } from "../UserAuth/useAuthGuard";
 
 /**
  * ユーザーの持っている商品を取得するカスタムフック
  */
 export const useFetchUserInventory = () => {
+    useAuthGuard();
+    const router = useRouter();
+    const isLoggedin = useAuthGuard();
     const { sendRequest } = useApiRequest();
     const setUserInventoryItemList = useSetRecoilState(userInventoryItemListState)
-    const router = useRouter();
-
     const generateErrorMessage = () => {
         return '持っている商品の取得に失敗しました。'
     };
-
     const fetchUserInventory = async () => {
+        if (!isLoggedin) return;
         try {
+            if (typeof window === 'undefined') return;
+
             const url = 'user/inventory';
             const response = await sendRequest('get', url);
 

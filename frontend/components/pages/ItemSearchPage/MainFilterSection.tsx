@@ -24,7 +24,7 @@ import { SubCategorySelector } from './SubCategorySelector';
 export const MainFilterSection = () => {
   const ExtendedCategoryNameList = ['すべてのカテゴリー', ...CategoryNameList];
   return (
-    <Grid container spacing={2} justifyContent="center">
+    <Grid container spacing={2}>
       <Grid item xs={12}>
         <SearchBar />
       </Grid>

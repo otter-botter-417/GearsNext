@@ -41,10 +41,10 @@ export const ItemThumbnailGrid: React.FC = () => {
   return (
     <Box display={'flex'} flexDirection={'column'} alignItems="center">
       <PaginationControls />
-      <Grid container spacing={2} style={{ margin: '0 auto' }}>
+      <Grid container justifyContent="center">
         {currentItems && currentItems.length > 0 ? (
           currentItems.map((data: ItemDataType, index: number) => (
-            <Grid item xs={5} sm={4} md={3} key={index}>
+            <Grid key={index} item xs={5} sm={4} md={3}>
               <ItemThumbnail ItemData={data} />
             </Grid>
           ))

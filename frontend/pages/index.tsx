@@ -12,7 +12,7 @@ const Home: NextPage = () => {
 
   return (
     <Box display="flex" justifyContent="center">
-      <Box width="80%" maxWidth={DEFAULT_PAGE_WIDTH}>
+      <Box width="100%" maxWidth={DEFAULT_PAGE_WIDTH}>
         <HomeImageGrid />
       </Box>
     </Box>

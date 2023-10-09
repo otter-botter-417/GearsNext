@@ -22,11 +22,12 @@ export const AuthPageTemplate: FC<AuthPageTemplateProps> = ({
   return (
     <Box
       display="flex"
+      width="100%"
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
     >
-      {title}
+      <Box mb={2}>{title}</Box>
       {form}
       {link}
     </Box>

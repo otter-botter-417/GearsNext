@@ -7,6 +7,7 @@ type PullDownSelectorProps = {
   options: string[];
   label: string;
   stateAtom: RecoilState<string>;
+  value?: string;
 };
 
 /**
@@ -27,11 +28,13 @@ export const PullDownSelector: FC<PullDownSelectorProps> = ({
   options,
   label,
   stateAtom,
+  value,
 }) => {
-  const [value, setValue] = useRecoilState(stateAtom);
+  const [selectedValue, setSelectedValue] = useRecoilState(stateAtom);
+  const finalValue = value && options.includes(value) ? value : selectedValue;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
+    setSelectedValue(event.target.value);
   };
 
   return (
@@ -39,7 +42,7 @@ export const PullDownSelector: FC<PullDownSelectorProps> = ({
       id={label}
       select
       label={label}
-      value={value}
+      value={finalValue}
       onChange={handleChange}
       fullWidth={true}
       style={{ minWidth: '100px' }} // ここで最小幅を設定

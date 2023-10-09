@@ -48,17 +48,17 @@ export const AccordionSection = () => (
     </AccordionSummary>
     <AccordionDetails>
       <Grid container spacing={1}>
-        <Grid item xs={1} sx={{ minWidth: '90px' }}>
+        <Grid item xs={12} md={2}>
           <FilterToggleButton />
         </Grid>
-        <Grid item xs={5} sx={{ minWidth: '300px' }}>
+        <Grid item xs={6} md={5} >
           <PullDownMultiSelector
             options={ItemTagList}
             label="タグ"
             stateAtom={itemTagsState}
           />
         </Grid>
-        <Grid item xs={5} sx={{ minWidth: '300px' }}>
+        <Grid item xs={6} md={5}>
           <PullDownMultiSelector
             options={ColorTagList}
             label="カラー"

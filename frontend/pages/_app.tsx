@@ -11,6 +11,7 @@ import { useMediaQuery } from '@mui/material';
 import { themeOptions } from '@/styles/themes/themeOptions';
 import { NextComponentType, NextPageContext } from 'next';
 import { useGetUserApi } from '@/hooks/UserAuth/useGetUserApi';
+import { DEFAULT_PAGE_WIDTH } from '@/components/constants';
 
 const theme = createTheme(themeOptions);
 interface InsideRecoilRootProps {
@@ -32,7 +33,7 @@ const InsideRecoilRoot = ({ Component, pageProps }: InsideRecoilRootProps) => {
   useGetUserApi();
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ pt: paddingTop }}>
+      <Box sx={{ pt: paddingTop, mx: 'auto', maxWidth: DEFAULT_PAGE_WIDTH,  width:'80%'}}>
         <CssBaseline />
         <Header />
         <Component {...pageProps} />

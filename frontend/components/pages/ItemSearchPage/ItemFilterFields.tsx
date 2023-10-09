@@ -25,44 +25,37 @@ export const ItemFilterFields = () => {
   const filteredItemCount = useRecoilValue(filteredItemCountState);
 
   return (
-    <>
-      <Grid
-        container
-        spacing={2}
-        justifyContent="center"
-        style={{ margin: '0 auto' }}
-      >
-        {/* 基本検索条件をまとめたコンポーネント */}
-        <Grid item xs={12}>
-          <MainFilterSection />
-        </Grid>
-
-        {/* 折りたたみ可能なセクション */}
-        <Grid item xs={12}>
-          <AccordionSection />
-        </Grid>
-
-        {/* 条件クリア */}
-        <Grid item xs={3}>
-          <FilterResetButton />
-        </Grid>
-
-        <Grid item xs={7}>
-          <Box display={'flex'} justifyContent="flex-end" width={'100%'}>
-            {/* 対象商品数と並び替え */}
-            <Box padding={2}>
-              <Typography>{`${filteredItemCount}件`}</Typography>
-            </Box>
-            <Box width={'20%'}>
-              <PullDownSelector
-                options={SortPattern}
-                label="並び替え"
-                stateAtom={sortPatternValueState}
-              />
-            </Box>
-          </Box>
-        </Grid>
+    <Grid container spacing={2}>
+      {/* 基本検索条件をまとめたコンポーネント */}
+      <Grid item xs={12}>
+        <MainFilterSection />
       </Grid>
-    </>
+
+      {/* 折りたたみ可能なセクション */}
+      <Grid item xs={12}>
+        <AccordionSection />
+      </Grid>
+
+      {/* 条件クリア */}
+      <Grid item xs={3}>
+        <FilterResetButton />
+      </Grid>
+
+      <Grid item xs={9}>
+        <Box display={'flex'} justifyContent="flex-end">
+          {/* 対象商品数と並び替え */}
+          <Box>
+            <Typography>{`${filteredItemCount}件`}</Typography>
+          </Box>
+          <Box>
+            <PullDownSelector
+              options={SortPattern}
+              label="並び替え"
+              stateAtom={sortPatternValueState}
+            />
+          </Box>
+        </Box>
+      </Grid>
+    </Grid>
   );
 };

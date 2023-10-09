@@ -1,5 +1,6 @@
 import { Box, Grid } from '@mui/material';
 import React, { FC, ReactNode } from 'react';
+import { DEFAULT_PAGE_WIDTH } from '../constants';
 
 interface LayoutTemplateProps {
   top?: ReactNode;
@@ -34,8 +35,8 @@ export const LayoutPageTemplate: FC<LayoutTemplateProps> = ({
   return (
     <Box
       sx={{
-        width: '80%',
-        maxWidth: '1000px',
+        width: '96%',
+        maxWidth: DEFAULT_PAGE_WIDTH,
         maxHeight: '100%',
         margin: '0 auto',
       }}
@@ -43,7 +44,7 @@ export const LayoutPageTemplate: FC<LayoutTemplateProps> = ({
       <Box display="flex" justifyContent="end" marginBottom={2}>
         {top}
       </Box>
-      <Grid container spacing={0}>
+      <Grid container>
         <Grid item xs={12} md={8}>
           {leftSide}
         </Grid>

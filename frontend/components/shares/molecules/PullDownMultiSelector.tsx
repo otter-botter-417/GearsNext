@@ -32,6 +32,7 @@ export const PullDownMultiSelector: FC<PullDownMultiSelectorProps> = ({
 
   return (
     <Autocomplete
+    fullWidth
       multiple
       id={label}
       options={options}

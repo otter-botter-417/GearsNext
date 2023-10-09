@@ -9,5 +9,5 @@ export const BASE_URL = 'http://localhost:3000';
 export const API_BASE_URL = 'http://127.0.0.1:8000/api/' //local
 export const ITEM_IMAGE_BASE_URL = 'https://gears-images.s3.ap-northeast-1.amazonaws.com/item/';
 export const LAYOUT_IMAGE_BASE_URL = 'https://gears-images.s3.ap-northeast-1.amazonaws.com/layout/image/';
-export const DEFAULT_PAGE_WIDTH = '1080px';
+export const DEFAULT_PAGE_WIDTH = '1300px';
 

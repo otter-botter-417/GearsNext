@@ -1,16 +1,15 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
-import { Box } from '@mui/material';
 
 import { useItemListFilters } from '@/hooks/ItemSearchPage/useItemListFilters';
+import { useInitItemSearchPage } from '@/hooks/ItemSearchPage/useInitItemSearchPage';
 
+import { API_BASE_URL } from '@/components/constants';
+import { ItemDataType } from '@/components/types/ItemDataType';
 import { errorMessageState } from '@/components/shares/atoms/state/errorMessageState';
-
 import { ItemFilterFields } from '@/components/pages/ItemSearchPage/ItemFilterFields';
 import { ItemThumbnailGrid } from '@/components/shares/organisms/ItemThumbnailGrid';
-import { ItemDataType } from '@/components/types/ItemDataType';
-import { API_BASE_URL, DEFAULT_PAGE_WIDTH } from '@/components/constants';
-import { useInitItemSearchPage } from '@/hooks/ItemSearchPage/useInitItemSearchPage';
+import { ItemSearchPageTemplate } from '@/components/templates/ItemSearchPageTemplate';
 
 /**
  * ビルド時に初期の商品リストを取得する（SSG）。
@@ -70,24 +69,11 @@ export const ItemSearchPage = ({
     return <div>{errorMessage}</div>;
   }
 
-  // TODO
-  // フィルタリングロジックを再検討（多分間違っている）
-  // フィルターをクリアしたとき、スライダーが初期化されていない
-
   return (
-    <Box
-      display="flex"
-      justifyContent="center" // この行を追加
-      alignItems="center"
-      flexDirection="column"
-      maxWidth={DEFAULT_PAGE_WIDTH}
-      margin="0 auto"
-    >
-      {/* 商品のフィルタリングセクション */}
-      <ItemFilterFields />
-      {/* フィルタリング後の商品を表示 */}
-      <ItemThumbnailGrid />
-    </Box>
+    <ItemSearchPageTemplate
+      filterSection={<ItemFilterFields />}
+      itemGridSection={<ItemThumbnailGrid />}
+    />
   );
 };
 

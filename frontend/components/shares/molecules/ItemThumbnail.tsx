@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import NextLink from 'next/link';
 
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import { Box, Grid } from '@mui/material';
 
 import { ItemDataType } from '@/components/types/ItemDataType';
@@ -23,27 +23,18 @@ type ItemThumbnailProps = {
  */
 export const ItemThumbnail: FC<ItemThumbnailProps> = ({ ItemData }) => {
   return (
-    <Grid
-      container
-      spacing={3}
-      minWidth={130}
-      alignItems="center"
-      justifyContent="center"
-    >
-      {/* 商品画像 */}
-      <Grid item xs={12} sm={12} md={12}>
-        <NextLink href={`/items/${ItemData.itemId}`}>
-          <Image
-            src={ItemData.imageName}
-            alt="item image"
-            layout="responsive"
-            sizes="100vw"
-
-            objectFit="contain"
-            priority
-          />
-        </NextLink>
-      </Grid>
+    <>
+      <NextLink href={`/items/${ItemData.itemId}`}>
+        <Image
+          src={ItemData.imageName}
+          alt="item image"
+          layout="responsive"
+          width={300}
+          height={300}
+          objectFit="contain"
+          priority
+        />
+      </NextLink>
 
       {/* 基本情報 */}
       <Box display="flex" flexDirection="column" alignItems="center">
@@ -54,6 +45,6 @@ export const ItemThumbnail: FC<ItemThumbnailProps> = ({ ItemData }) => {
           variant={'body2'}
         />
       </Box>
-    </Grid>
+    </>
   );
 };

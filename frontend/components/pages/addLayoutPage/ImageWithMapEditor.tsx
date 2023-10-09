@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 import { imagePreviewUrlState } from '@/components/shares/atoms/state/imagePreviewUrlState';
 import { itemSearchQueryState } from '@/components/shares/atoms/state/itemSearchQueryState';
@@ -116,15 +116,14 @@ export const ImageWithMapEditor = () => {
             top: '10%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            color: 'white',
-            fontWeight: 'bold',
-            background: 'rgba(0, 0, 0, 0.99)',
-            padding: '10px',
+            background: 'rgba(0, 0, 0, 0.7)',
+            padding: '5px',
             borderRadius: '5px',
-            fontSize: '14px',
           }}
         >
-          クリックしてタグを設定する
+          <Typography variant="body2" color="white">
+            画像上をクリックして、商品タグを設定できます
+          </Typography>
         </div>
       )}
       <ImageMapTagEditor open={open} setOpen={setOpen} />

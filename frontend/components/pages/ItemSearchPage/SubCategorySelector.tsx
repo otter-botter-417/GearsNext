@@ -18,19 +18,11 @@ export const SubCategorySelector = () => {
   const [subCategoryValue, setSubCategoryValue] = useRecoilState(
     subCategoryValueState,
   );
-  const { applyItemFilters } = useItemListFilters();
 
-  /**
-   * カテゴリーが変更されたとき、サブカテゴリーを初期化します。
-   */
   useEffect(() => {
-    setSubCategoryValue('');
+    setSubCategoryValue('すべてのサブカテゴリー');
   }, [categoryValue, setSubCategoryValue]);
 
-  if (!categoryValue) {
-    setSubCategoryValue('');
-    return null;
-  }
   let subCategoryOptions = [];
   if (categoryValue === 'すべてのカテゴリー') {
     subCategoryOptions = ['すべてのサブカテゴリー'];
@@ -40,11 +32,15 @@ export const SubCategorySelector = () => {
       SUB_CATEGORY_OPTIONS[category] || [],
     );
   }
+  const validValue = subCategoryOptions.includes(subCategoryValue)
+    ? subCategoryValue
+    : 'すべてのサブカテゴリー';
   return (
     <PullDownSelector
       options={subCategoryOptions}
       label="SubCategory"
       stateAtom={subCategoryValueState}
+      value={validValue}
     />
   );
 };

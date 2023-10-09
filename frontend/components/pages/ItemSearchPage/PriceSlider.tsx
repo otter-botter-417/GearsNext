@@ -118,7 +118,7 @@ export const PriceSlider: FC = () => {
   };
 
   return (
-    <Box>
+    <Box marginX={5}>
       <ItemDataText text="price" />
       <ResponsiveContainer width="100%" height={100}>
         <BarChart

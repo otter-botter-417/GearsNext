@@ -29,7 +29,7 @@ const AddNewItemPage = () => {
           {/* カテゴリー毎の詳細情報 */}
           <CategoryDetailList detailFormMethods={detailFormMethods} />
           {/* 送信ボタン */}
-          <SubmitButton type={'button'} loading={loading} text={'データ送信'} />
+          <SubmitButton loading={loading} text={'データ送信'} />
         </form>
       </AddNewItemPageTemplate>
     </FormProvider>

@@ -14,6 +14,7 @@ export const ItemImageList: FC<ItemImageListProps> = ({ data }) => {
   let title: string;
   let subtitle: string;
   let link: string;
+  const pattern = 'itemId' in data ? 'item' : 'layout';
 
   if ('itemId' in data) {
     title = data.itemName;
@@ -45,7 +46,12 @@ export const ItemImageList: FC<ItemImageListProps> = ({ data }) => {
         <div>
           {/* テキストのコンテナ, 高さを固定 */}
           <Box display={'flex'} alignItems={'center'} flexDirection={'column'}>
-            <EllipsisTypography text={title} />
+            {/* レイアウトのときは文字の大きさを変更 */}
+            {'layoutId' in data ? (
+              <EllipsisTypography text={title} variant="h6" />
+            ) : (
+              <EllipsisTypography text={title} />
+            )}
             <EllipsisTypography text={subtitle} />
           </Box>
         </div>

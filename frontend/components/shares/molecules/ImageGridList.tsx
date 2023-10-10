@@ -35,15 +35,18 @@ export const ImageGridList: FC<ImageGridListProps> = ({
   cols,
   isLink = false,
 }) => {
+  // cols が 10 以下の場合、10 に設定する 数が少ないとレイアウトが崩れるため
+  cols = cols > 10 ? cols : 10;
   return (
-    <ImageList sx={{ width: 'auto', height: 'auto' }} cols={cols}>
+    <ImageList cols={cols}>
       {itemList.map((item) => (
         <ImageListItem
           key={item.itemId}
           sx={{
+            width: imageSize,
             display: 'flex',
-            justifyContent: 'center', // 中央に配置
-            alignItems: 'center', // 垂直方向の中央に配置
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           {/* isLink が true の場合、画像を Link コンポーネントで囲む */}

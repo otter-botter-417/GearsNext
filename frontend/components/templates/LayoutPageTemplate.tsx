@@ -46,7 +46,9 @@ export const LayoutPageTemplate: FC<LayoutTemplateProps> = ({
       </Box>
       <Grid container>
         <Grid item xs={12} md={8}>
-          {leftSide}
+          <Box display={'flex'} width={'100%'} maxHeight={'600px'}>
+            {leftSide}
+          </Box>
         </Grid>
         <Grid item xs={12} md={4}>
           <Box pl={4}>{rightSide}</Box>

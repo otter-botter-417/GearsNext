@@ -5,6 +5,7 @@ import { Box } from '@mui/material';
 import { ImageMapType } from '@/components/types/ImageMapType';
 
 import { LayoutLabelItem } from './LayoutLabelItem';
+import { IMAGE_SIZE_HEIGHT, IMAGE_SIZE_WIDTH } from '@/components/constants';
 
 type OnLoadingCompleteResult = { naturalHeight: number; naturalWidth: number };
 
@@ -40,48 +41,46 @@ export const LayoutImageOnTagImageMap: FC<LayoutImageOnTagImageMapProps> = ({
     // アスペクト比率を計算
     const aspectRatio = width / height;
 
-    if (width > IMAGE_SIZE || height > IMAGE_SIZE) {
+    if (width > IMAGE_SIZE_WIDTH || height > IMAGE_SIZE_HEIGHT) {
       if (width > height) {
-        width = IMAGE_SIZE;
-        height = IMAGE_SIZE / aspectRatio;
+        width = IMAGE_SIZE_WIDTH;
+        height = IMAGE_SIZE_WIDTH / aspectRatio;
       } else {
-        height = IMAGE_SIZE;
-        width = IMAGE_SIZE * aspectRatio;
+        height = IMAGE_SIZE_HEIGHT;
+        width = IMAGE_SIZE_HEIGHT * aspectRatio;
       }
     }
     setImageSize({ width, height });
   };
 
   return (
-    <>
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        width={imageSize.width}
-        height={imageSize.height}
-        sx={{
-          position: 'relative',
-          margin: '0 auto',
-        }}
-      >
-        {/* レイアウト画像 */}
-        <Image
-          src={imageName}
-          alt="layout image"
-          fill
-          sizes="(max-width: 768px) 100vw"
-          priority
-          onClick={() => setIsTagPositionVisible((prev) => !prev)}
-          onLoadingComplete={(e) => onImageLoadingComplete(e)}
-        />
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      width={`${imageSize.width}px`}
+      height={`${imageSize.height}px`}
+      sx={{
+        position: 'relative',
+        margin: '0 auto',
+      }}
+    >
+      {/* レイアウト画像 */}
+      <Image
+        src={imageName}
+        alt="layout image"
+        fill
+        priority
+        style={{ objectFit: 'contain' }}
+        onClick={() => setIsTagPositionVisible((prev) => !prev)}
+        onLoadingComplete={(e) => onImageLoadingComplete(e)}
+      />
 
-        {/* タグ（商品ラベル） */}
-        {isTagPositionVisible &&
-          tagPositions.map((tag) => (
-            <LayoutLabelItem key={tag.itemId} tagPosition={tag} />
-          ))}
-      </Box>
-    </>
+      {/* タグ（商品ラベル） */}
+      {isTagPositionVisible &&
+        tagPositions.map((tag) => (
+          <LayoutLabelItem key={tag.itemId} tagPosition={tag} />
+        ))}
+    </Box>
   );
 };

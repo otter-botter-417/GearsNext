@@ -88,10 +88,12 @@ export const ItemPage = ({ itemDetail }: { itemDetail: ItemDataType }) => {
         </Grid>
         <Grid item sm={12} md={5}>
           {/* いいね　と　共有ボタンの表示コンポーネント　共有時の情報を渡す */}
-          <ItemDetailPageButtons
-            itemId={itemId}
-            itemName={itemDetail.itemName}
-          />
+          <Box display={'flex'} minHeight={'50px'}>
+            <ItemDetailPageButtons
+              itemId={itemId}
+              itemName={itemDetail.itemName}
+            />
+          </Box>
           {/* 商品の基本情報 */}
           <ItemBaseData
             price={itemDetail.price}

@@ -6,6 +6,7 @@ import { ItemShareButton } from './ItemShareButton';
 import { InventoryIconButton } from './InventoryIconButton';
 import { userItemStatesState } from '@/components/shares/atoms/state/userItemStatesState';
 import { useRecoilValue } from 'recoil';
+import { useAuthGuard } from '@/hooks/UserAuth/useAuthGuard';
 
 interface ItemDetailPageButtonsProps {
   itemId: string | string[] | undefined;
@@ -38,6 +39,10 @@ export const ItemDetailPageButtons: FC<ItemDetailPageButtonsProps> = ({
     return null; // またはローディングスピナー等を表示
   }
 
+  const isLogin = useAuthGuard(false);
+  if (!isLogin) {
+    return null; // またはローディングスピナー等を表示
+  }
   return (
     <Box>
       {/* いいねアイコン */}

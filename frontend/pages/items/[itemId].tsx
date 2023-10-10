@@ -75,10 +75,10 @@ export const ItemPage = ({ itemDetail }: { itemDetail: ItemDataType }) => {
   useGetItemDataApi(itemId as string);
   return (
     <Box
-      sx={{ width: '80%', margin: '0 auto', maxWidth: { DEFAULT_PAGE_WIDTH } }}
+      sx={{ width: '100%', margin: '0 auto', maxWidth: { DEFAULT_PAGE_WIDTH } }}
     >
       <Grid container maxWidth={DEFAULT_PAGE_WIDTH} margin="0 auto">
-        <Grid item xs={12} md={7}>
+        <Grid item xs={12} md={8}>
           {/* 商品画像と商品名とブランド名*/}
           <ItemDetailHeader
             itemName={itemDetail.itemName}
@@ -86,7 +86,7 @@ export const ItemPage = ({ itemDetail }: { itemDetail: ItemDataType }) => {
             imageName={itemDetail.imageName}
           />
         </Grid>
-        <Grid item sm={12} md={5}>
+        <Grid item sm={12} md={4}>
           {/* いいね　と　共有ボタンの表示コンポーネント　共有時の情報を渡す */}
           <Box display={'flex'} minHeight={'50px'}>
             <ItemDetailPageButtons

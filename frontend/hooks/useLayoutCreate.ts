@@ -34,7 +34,6 @@ export const useLayoutCreate = () => {
      */
     const layoutPost = async () => {
         try {
-            useAuthGuard();
             setLoading(true);
 
             const formData = new FormData();

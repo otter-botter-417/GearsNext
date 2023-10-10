@@ -73,6 +73,9 @@ export const useApiRequest = () => {
             return await performRequest(method, url, requestData, newToken);
           }
         }
+        if (!isAxiosError(err) || err.response?.status !== 401) {
+          console.error(err);  // 401エラー以外の場合のみログを出力
+        }
         throw err;
       }
     },

@@ -12,9 +12,8 @@ import { useAuthGuard } from "../UserAuth/useAuthGuard";
  * ユーザーの持っている商品を取得するカスタムフック
  */
 export const useFetchUserInventory = () => {
-    useAuthGuard();
     const router = useRouter();
-    const isLoggedin = useAuthGuard();
+    const isLoggedin = useAuthGuard(true, '/UserLoginPage');
     const { sendRequest } = useApiRequest();
     const setUserInventoryItemList = useSetRecoilState(userInventoryItemListState)
     const generateErrorMessage = () => {

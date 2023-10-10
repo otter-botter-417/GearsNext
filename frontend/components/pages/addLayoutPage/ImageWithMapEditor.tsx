@@ -9,8 +9,7 @@ import { imageMapPositionState } from '@/components/shares/atoms/state/imageMapP
 import { ImageMapLabel } from './ImageMapLabel';
 import { ImageMapTagEditor } from './ImageMapTagEditor';
 import Image from 'next/image';
-
-const IMAGE_SIZE = 500;
+import { IMAGE_SIZE_HEIGHT, IMAGE_SIZE_WIDTH } from '@/components/constants';
 
 type OnLoadingCompleteResult = { naturalHeight: number; naturalWidth: number };
 
@@ -31,8 +30,8 @@ export const ImageWithMapEditor = () => {
   const setTextFieldPosition = useSetRecoilState(imageMapPositionState);
   const setItemSearchQuery = useSetRecoilState(itemSearchQueryState);
   const [imageSize, setImageSize] = useState({
-    width: IMAGE_SIZE,
-    height: IMAGE_SIZE,
+    width: IMAGE_SIZE_WIDTH,
+    height: IMAGE_SIZE_HEIGHT,
   });
 
   /**
@@ -74,13 +73,13 @@ export const ImageWithMapEditor = () => {
     // アスペクト比率を計算
     const aspectRatio = width / height;
 
-    if (width > IMAGE_SIZE || height > IMAGE_SIZE) {
+    if (width > IMAGE_SIZE_WIDTH || height > IMAGE_SIZE_HEIGHT) {
       if (width > height) {
-        width = IMAGE_SIZE;
-        height = IMAGE_SIZE / aspectRatio;
+        width = IMAGE_SIZE_WIDTH;
+        height = IMAGE_SIZE_WIDTH / aspectRatio;
       } else {
-        height = IMAGE_SIZE;
-        width = IMAGE_SIZE * aspectRatio;
+        height = IMAGE_SIZE_HEIGHT;
+        width = IMAGE_SIZE_HEIGHT * aspectRatio;
       }
     }
     setImageSize({ width, height });
@@ -103,9 +102,9 @@ export const ImageWithMapEditor = () => {
       <Image
         src={imagePreviewUrl}
         alt="Image Preview"
-        width={imageSize.width}
-        height={imageSize.height}
+        fill
         priority
+        style={{ objectFit: 'contain' }}
         onClick={handleImageClick}
         onLoadingComplete={(e) => onImageLoadingComplete(e)}
       />

@@ -33,35 +33,26 @@ export const SortSelect: FC<SortSelectProps> = ({ initialState, tabKeys }) => {
   };
 
   return (
-    <Box sx={{ maxWidth: '100%', margin: '0 auto' }}>
-      <TabContext value={value}>
-        <Box
-          sx={{
-            borderBottom: 2,
-            borderColor: 'divider',
-            maxWidth: '96%', // ここで最大幅を100%に制限
-            margin: '0 auto',
-          }}
-        >
-          <TabList
-            onChange={handleChange}
-            aria-label="lab API tabs example"
-            sx={{
-              maxWidth: '100%', // この値も調整して適切な幅を設定してください。
-              margin: '0 auto',
-            }}
-          >
-            {tabKeys.map((key) => (
-              <Tab label={keyLabel(key)} value={key} key={key} />
-            ))}
-          </TabList>
-        </Box>
-        {tabKeys.map((key) => (
-          <TabPanel value={key} key={key}>
-            <ItemSortedList value={key as keyof HomeStateType} />
-          </TabPanel>
-        ))}
-      </TabContext>
-    </Box>
+    <TabContext value={value}>
+      <Box
+        sx={{
+          borderBottom: 2,
+          borderColor: 'divider',
+          maxWidth: '96%', //下線のレイアウトを調整
+          margin: '0 auto',
+        }}
+      >
+        <TabList onChange={handleChange}>
+          {tabKeys.map((key) => (
+            <Tab label={keyLabel(key)} value={key} key={key} />
+          ))}
+        </TabList>
+      </Box>
+      {tabKeys.map((key) => (
+        <TabPanel value={key} key={key}>
+          <ItemSortedList value={key as keyof HomeStateType} />
+        </TabPanel>
+      ))}
+    </TabContext>
   );
 };

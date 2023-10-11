@@ -37,7 +37,7 @@ export const ItemThumbnail: FC<ItemThumbnailProps> = ({ ItemData }) => {
       </NextLink>
 
       {/* 基本情報 */}
-      <Box display="flex" flexDirection="column" alignItems="center">
+      <Box display="flex" flexDirection="column" alignItems="flex-start">
         <EllipsisTypography text={ItemData.brandName} />
         <EllipsisTypography text={ItemData.itemName} variant={'body2'} />
         <EllipsisTypography

@@ -28,7 +28,7 @@ const calculateStartAndEndIndex = (
  * @example
  * <ItemThumbnailGrid />
  */
-export const ItemThumbnailGrid: React.FC = () => {
+export const ItemThumbnailGrid = () => {
   const filteredItemList = useRecoilValue(filteredItemsState);
   const pagination = useRecoilValue(paginationState);
 
@@ -39,9 +39,9 @@ export const ItemThumbnailGrid: React.FC = () => {
   const currentItems = filteredItemList?.slice(startIndex, endIndex);
 
   return (
-    <Box display={'flex'} flexDirection={'column'} alignItems="center" paddingTop={3}>
+    <Box display={'flex'} paddingTop={3}>
       <PaginationControls />
-      <Grid container >
+      <Grid container sx={{ justifyContent: { xs: 'space-around', sm: 'initial' } }}>
         {currentItems && currentItems.length > 0 ? (
           currentItems.map((data: ItemDataType, index: number) => (
             <Grid key={index} item xs={5} sm={4} md={3}>
@@ -49,7 +49,7 @@ export const ItemThumbnailGrid: React.FC = () => {
             </Grid>
           ))
         ) : (
-          <Grid item xs={12} style={{ textAlign: 'center' }}>
+          <Grid item xs={12}>
             <Typography variant="body1">対象商品がありません</Typography>
           </Grid>
         )}

@@ -70,14 +70,14 @@
 
 ## 主要機能
 ### ホーム
-<img src="/docs/homePage" width="600" />  
+<img src="/docs/homePage.png" width="600" />  
 
 
 [https://gears-camp.com/](https://gears-camp.com/)
 - **商品とレイアウトのランイング情報**: 新着、いいね、閲覧数の切り替えが可能
 
 ### 商品検索ページ
-<img src="/docs/itemSearchPage" width="600" />  
+<img src="/docs/itemSearchPage.png" width="600" />  
 
 
 [https://gears-camp.com/ItemSearchPage]([https://gears-camp.com/gears-camp.com/)
@@ -99,7 +99,7 @@
 - **使用商品の登録**: 商品リストから選択
 
 ### 投稿されたレイアウトの個別ページ
-<img src="/docs/layoutPage2" width="600" />  
+<img src="/docs/layoutPage2.png" width="600" />  
 
 
 [https://gears-camp.com/layouts/1](https://gears-camp.com/layouts/1)

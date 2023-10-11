@@ -1,5 +1,5 @@
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 
 import { itemTagsState } from '@/components/shares/atoms/state/itemTagsState';
 import { colorTagsState } from '@/components/shares/atoms/state/colorTagsState';
@@ -35,8 +35,8 @@ export const FilterResetButton = () => {
   };
 
   return (
-    <Button variant="outlined" onClick={onClick}>
-      条件をクリア
+    <Button size='small' variant="outlined" onClick={onClick}>
+      <Typography variant="button">条件をクリア</Typography>
     </Button>
   );
 };

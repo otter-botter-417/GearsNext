@@ -1,6 +1,7 @@
 import { useRecoilValue } from 'recoil';
-import { Grid, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { Box } from '@mui/system';
+import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 
 import { filteredItemCountState } from '@/components/shares/atoms/state/filteredItemCountState';
 import { sortPatternValueState } from '@/components/shares/atoms/state/sortPatternValueState';
@@ -27,35 +28,30 @@ export const ItemFilterFields = () => {
   return (
     <Grid container spacing={2}>
       {/* 基本検索条件をまとめたコンポーネント */}
-      <Grid item xs={12}>
+      <Grid xs={12}>
         <MainFilterSection />
       </Grid>
-
       {/* 折りたたみ可能なセクション */}
-      <Grid item xs={12}>
+      <Grid xs={12}>
         <AccordionSection />
       </Grid>
-
       {/* 条件クリア */}
-      <Grid item xs={3}>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        width="100%"
+        padding={1}
+      >
         <FilterResetButton />
-      </Grid>
-
-      <Grid item xs={9}>
-        <Box display={'flex'} justifyContent="flex-end">
-          {/* 対象商品数と並び替え */}
-          <Box>
-            <Typography>{`${filteredItemCount}件`}</Typography>
-          </Box>
-          <Box>
-            <PullDownSelector
-              options={SortPattern}
-              label="並び替え"
-              stateAtom={sortPatternValueState}
-            />
-          </Box>
+        <Box display="flex" alignItems="center">
+          <Typography width={'100px'}>{`${filteredItemCount}件`}</Typography>
+          <PullDownSelector
+            options={SortPattern}
+            label="並び替え"
+            stateAtom={sortPatternValueState}
+          />
         </Box>
-      </Grid>
+      </Box>
     </Grid>
   );
 };

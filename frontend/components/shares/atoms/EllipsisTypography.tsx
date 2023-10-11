@@ -24,7 +24,7 @@ export const EllipsisTypography: FC<EllipsisTypographyProps> = ({
         overflow: 'hidden',
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
-        width: '180px',
+        width: '100%',
         textAlign: 'center',
       }}
       {...otherProps}

@@ -104,9 +104,9 @@
 
 ### 商品個別ページ
 
-<img src="/docs/itemPage.png" width="600" />
+<img src="/docs/itemPage.png" width="600" />  
 
-- [https://gears-camp.com/items/1](https://gears-camp.com/items/1)
+- [https://gears-camp.com/items/1](https://gears-camp.com/items/1)  
 **商品情報**: 価格、ブランド、サイズ等
 **関連レイアウト**: 商品が使用されているレイアウトをグリッド表示
 

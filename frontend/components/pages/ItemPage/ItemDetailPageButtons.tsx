@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 
 import { FavoriteIconButton } from './FavoriteIconButton';
@@ -34,15 +34,19 @@ export const ItemDetailPageButtons: FC<ItemDetailPageButtonsProps> = ({
 }) => {
   const userItemStates = useRecoilValue(userItemStatesState);
   const numericItemId = Number(itemId);
-
-  if (!userItemStates) {
-    return null; // またはローディングスピナー等を表示
-  }
-
   const isLogin = useAuthGuard(false);
-  if (!isLogin) {
-    return null; // またはローディングスピナー等を表示
+  const [showButtons, setShowButtons] = useState(false);
+
+  useEffect(() => {
+    if (isLogin) {
+      setShowButtons(true);
+    }
+  }, [isLogin]);
+
+  if (!showButtons || !userItemStates) {
+    return null;
   }
+
   return (
     <Box>
       {/* いいねアイコン */}

@@ -1,18 +1,19 @@
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
-/**
- * ユーザー認証を行うカスタムフック
- * トークンが存在しない場合、ログインページにリダイレクトする
- */
-export const useAuthGuard = (isRedirect: boolean, redirectPath: string = '/') => {
+export const useAuthGuard = (isRedirect: boolean, redirectPath: string = '/UserLoginPage') => {
     const router = useRouter();
+    const [isLogin, setIsLogin] = useState(false);
 
-    if (typeof window === 'undefined') return false;
+    useEffect(() => {
+        const token = localStorage.getItem('access_token');
+        if (!token) {
+            isRedirect && router.push(redirectPath);
+            setIsLogin(false);
+        } else {
+            setIsLogin(true);
+        }
+    }, [router, isRedirect, redirectPath]);
 
-    const token = localStorage.getItem('access_token');
-    if (!token) {
-        isRedirect && router.push(redirectPath);
-        return false;
-    }
-    return true;
-}
+    return isLogin;
+};

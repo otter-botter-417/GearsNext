@@ -69,9 +69,14 @@
 
 
 ## 主要機能
+### ホーム
+[https://gears-camp.com/](https://gears-camp.com/)
+![homePage](/docs/homePage.png)
+- **商品とレイアウトのランイング情報**: 新着、いいね、閲覧数の切り替えが可能
 
 ### 商品検索ページ
-[https://gears-camp.com/ItemSearchPage]([https://gears-camp.com/gears-camp.com/)/ItemSearchPage)
+[https://gears-camp.com/ItemSearchPage]([https://gears-camp.com/gears-camp.com/)
+![itemSearchPage](/docs/itemSearchPage.png)
 - **商品名での検索**: オートコンプリート機能付き
 - **カテゴリー・サブカテゴリー選択**: プルダウン形式で単一選択
 - **詳細な絞り込み**: アコーディオン形式で折りたたみ可能
@@ -83,6 +88,7 @@
 
 ### レイアウト投稿機能
 [https://gears-camp.com/AddNewLayoutPage](https://gears-camp.com/AddNewLayoutPage)
+
 - **メイン画像アップロード**: 画像ファイル選択
 - **商品ラベル配置**: 画像上をクリックで選択し、配置可能
 - **投稿コメント**: テキストエリアで入力
@@ -90,6 +96,7 @@
 
 ### 投稿されたレイアウトの個別ページ
 [https://gears-camp.com/layouts/1](https://gears-camp.com/layouts/1)
+![itemPage](/docs/itemPage.png)
 - **投稿画像とイメージマップ表示**
 - **投稿コメント**
 - **認証されたユーザーのアクション**: いいねとコメント投稿可能
@@ -97,10 +104,12 @@
 
 ### 商品個別ページ
 [https://gears-camp.com/items/1](https://gears-camp.com/items/1)
+![layoutPage2](/docs/layoutPage2.png)
  **商品情報**: 価格、ブランド、サイズ等
 - **関連レイアウト**: 商品が使用されているレイアウトをグリッド表示
 
 ### 商品追加ページ
 [https://gears-camp.com/AddNewItemPage](https://gears-camp.com/AddNewItemPage)
+![itemPage](/docs/itemPage.png)
 - **商品アップロード**: 商品データを登録できます。
 - **AWS S3**: 画像はバックエンドからAWS S3にアップロードされます。

@@ -96,7 +96,7 @@
 
 ### 投稿されたレイアウトの個別ページ
 [https://gears-camp.com/layouts/1](https://gears-camp.com/layouts/1)
-![itemPage](/docs/itemPage.png)
+<img src="/docs/itemPage.png" width="200" height="150">
 - **投稿画像とイメージマップ表示**
 - **投稿コメント**
 - **認証されたユーザーのアクション**: いいねとコメント投稿可能

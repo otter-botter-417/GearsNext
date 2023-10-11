@@ -39,9 +39,9 @@ export const ItemThumbnailGrid: React.FC = () => {
   const currentItems = filteredItemList?.slice(startIndex, endIndex);
 
   return (
-    <Box display={'flex'} flexDirection={'column'} alignItems="center">
+    <Box display={'flex'} flexDirection={'column'} alignItems="center" paddingTop={3}>
       <PaginationControls />
-      <Grid container justifyContent="center">
+      <Grid container >
         {currentItems && currentItems.length > 0 ? (
           currentItems.map((data: ItemDataType, index: number) => (
             <Grid key={index} item xs={5} sm={4} md={3}>

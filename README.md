@@ -76,11 +76,14 @@
 [https://gears-camp.com/](https://gears-camp.com/)
 - **商品とレイアウトのランイング情報**: 新着、いいね、閲覧数の切り替えが可能
 
+
+
+
 ### 商品検索ページ
 <img src="/docs/itemSearchPage.png" width="600" />  
 
 
-[https://gears-camp.com/ItemSearchPage]([https://gears-camp.com/gears-camp.com/)
+[https://gears-camp.com/ItemSearchPage](https://gears-camp.com/gears-camp.com/ItemSearchPage)
 - **商品名での検索**: オートコンプリート機能付き
 - **カテゴリー・サブカテゴリー選択**: プルダウン形式で単一選択
 - **詳細な絞り込み**: アコーディオン形式で折りたたみ可能
@@ -90,6 +93,9 @@
 - **条件クリア**: 検索条件を初期化
 - **結果表示**: 画像をメインとしたグリッド表示、ページネーション機能付き
 
+
+
+
 ### レイアウト投稿機能
 [https://gears-camp.com/AddNewLayoutPage](https://gears-camp.com/AddNewLayoutPage)
 
@@ -97,6 +103,9 @@
 - **商品ラベル配置**: 画像上をクリックで選択し、配置可能
 - **投稿コメント**: テキストエリアで入力
 - **使用商品の登録**: 商品リストから選択
+
+
+
 
 ### 投稿されたレイアウトの個別ページ
 <img src="/docs/layoutPage2.png" width="600" />  
@@ -108,6 +117,9 @@
 - **認証されたユーザーのアクション**: いいねとコメント投稿可能
 - **商品リスト**: ページ下部に表示
 
+
+
+
 ### 商品個別ページ
 
 <img src="/docs/itemPage.png" width="600" />  
@@ -116,6 +128,9 @@
 [https://gears-camp.com/items/1](https://gears-camp.com/items/1)
 - **商品情報**: 価格、ブランド、サイズ等
 - **関連レイアウト**: 商品が使用されているレイアウトをグリッド表示
+
+
+
 
 ### 商品追加ページ
 [https://gears-camp.com/AddNewItemPage](https://gears-camp.com/AddNewItemPage)

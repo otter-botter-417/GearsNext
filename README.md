@@ -96,15 +96,16 @@
 
 ### 投稿されたレイアウトの個別ページ
 [https://gears-camp.com/layouts/1](https://gears-camp.com/layouts/1)
-<img src="/docs/itemPage.png" width="700" >
+![layoutPage2](/docs/layoutPage2.png)
 - **投稿画像とイメージマップ表示**
 - **投稿コメント**
 - **認証されたユーザーのアクション**: いいねとコメント投稿可能
 - **商品リスト**: ページ下部に表示
 
 ### 商品個別ページ
+<img src="/docs/itemPage.png" width="600" >
+<br/>
 [https://gears-camp.com/items/1](https://gears-camp.com/items/1)
-![layoutPage2](/docs/layoutPage2.png)
  **商品情報**: 価格、ブランド、サイズ等
 - **関連レイアウト**: 商品が使用されているレイアウトをグリッド表示
 

@@ -103,6 +103,9 @@
 
 
 ### レイアウト投稿機能
+<img src="/docs/addNewLayoutPage.png" width="600" />  
+
+
 [https://gears-camp.com/AddNewLayoutPage](https://gears-camp.com/AddNewLayoutPage)
 
 - **メイン画像アップロード**: 画像ファイル選択
@@ -139,7 +142,9 @@
 
 
 ### 商品追加ページ
-[https://gears-camp.com/AddNewItemPage](https://gears-camp.com/AddNewItemPage)
-![itemPage](/docs/itemPage.png)
+<img src="/docs/addNewItemPage.png" width="600" />  
+
+
+[https://gears-camp.com/AddNewLayoutPage](https://gears-camp.com/AddNewLayoutPage)
 - **商品アップロード**: 商品データを登録できます。
 - **AWS S3**: 画像はバックエンドからAWS S3にアップロードされます。

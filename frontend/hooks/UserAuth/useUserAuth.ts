@@ -40,8 +40,9 @@ export const useUserAuth = <T extends Record<string, any>>(
     schema: any,
     apiEndpoint: string,
     transformData: DataTransformer<T>,
-    testUser?: boolean // テストユーザーを使用する場合はtrue ポートフォリオ用設定
+    testUser?: boolean,// テストユーザーを使用する場合はtrue ポートフォリオ用設定
 ) => {
+    const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
     const router = useRouter();
     const { sendRequest } = useApiRequest();
@@ -91,7 +92,7 @@ export const useUserAuth = <T extends Record<string, any>>(
                 setLoading(false);
 
                 // エラーコードが422の場合、バリデーションエラーとして扱う
-                if (err.response && err.response.status === 422) {
+                if (err.response) {
                     const validationErrors = err.response.data as Record<string, string[]>;
 
                     // サーバーからのエラーメッセージをreact-hook-formに登録
@@ -102,11 +103,12 @@ export const useUserAuth = <T extends Record<string, any>>(
                             message: messages[0],
                         });
                     }
+                    setErrorMessage('認証に失敗しました。ユーザー名またはパスワードが間違っています。');
                 }
             } else {
                 console.log(err);
             }
         }
     };
-    return { formMethods, onSubmit, loading };
+    return { formMethods, onSubmit, loading, errorMessage };
 };

@@ -1,6 +1,7 @@
 import { LoginValidatedSchema } from '@/components/pages/userLoginPage/LoginValidatedSchema';
 import { LoginFormDataTypes } from '@/components/types/LoginFormDataTypes';
 import { useUserAuth } from './useUserAuth';
+import { useState } from 'react';
 
 /**
  * ユーザーログインのカスタムフック
@@ -15,7 +16,7 @@ export const useUserLogin = () => {
     LoginValidatedSchema,
     'user/login',
     loginTransformer,
-    true  // テストユーザーを使用する場合はtrue ポートフォリオ用設定
+    true, // テストユーザーを使用する場合はtrue ポートフォリオ用設定
   );
 };
 

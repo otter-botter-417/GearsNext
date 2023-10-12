@@ -1,13 +1,16 @@
 import { useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import { useApiRequest } from "./api/useApiRequest";
 import { imageFileState } from "@/components/shares/atoms/state/imageFileState";
+import { errorMessageState } from "@/components/shares/atoms/state/errorMessageState";
+import { isAxiosError } from "axios";
 
 export const useItemForm = () => {
   const { sendRequest } = useApiRequest();
   const [loading, setLoading] = useState(false);
   const imageFile = useRecoilValue(imageFileState);
+  const setErrorMessage = useSetRecoilState(errorMessageState);
 
   const submitNewItemToDatabase = async (baseFormData: any, detailFormData: any) => {
     //フォームの入力情報をまとめる formDataから読み取るのはバリデーションが必要な要素
@@ -48,8 +51,13 @@ export const useItemForm = () => {
       setLoading(true);
       await sendRequest('post', 'items', formData);
     } catch (error) {
-      //エラーがあればアラート
-      alert(error);
+      if (isAxiosError(error)) {
+        // 422エラーの際にエラーレスポンスをthrow
+        if (error.response?.status === 422) {
+          setErrorMessage(error.response.data.message);
+          return;
+        }
+      }
     } finally {
       //送信が終わればローディング解除
       setLoading(false);

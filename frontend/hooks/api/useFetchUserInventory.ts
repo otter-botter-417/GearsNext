@@ -12,26 +12,22 @@ import { useAuthGuard } from "../UserAuth/useAuthGuard";
  * ユーザーの持っている商品を取得するカスタムフック
  */
 export const useFetchUserInventory = () => {
+    // useAuthGuard();
     const router = useRouter();
-    const isLoggedin = useAuthGuard(true, '/UserLoginPage');
+    const isLoggedin = useAuthGuard(true,);
     const { sendRequest } = useApiRequest();
     const setUserInventoryItemList = useSetRecoilState(userInventoryItemListState)
     const generateErrorMessage = () => {
         return '持っている商品の取得に失敗しました。'
     };
     const fetchUserInventory = async () => {
-        if (!isLoggedin) return;
         try {
-            if (typeof window === 'undefined') return;
-
             const url = 'user/inventory';
             const response = await sendRequest('get', url);
-
             if (response?.status === STATUS_OK) {
                 setUserInventoryItemList(response.data.data);
             }
         } catch (err: any) {
-            console.error(err.status);
             if (err.status === STATUS_UNAUTHORIZED) {
                 router.push('/UserLoginPage');
             }
@@ -41,7 +37,10 @@ export const useFetchUserInventory = () => {
     };
 
     useEffect(() => {
-        fetchUserInventory();
-    }, []);
+        if (typeof window === 'undefined') return;
+        if (isLoggedin) {
+            fetchUserInventory();
+        }
+    }, [isLoggedin]);
     return { fetchUserInventory }
 };

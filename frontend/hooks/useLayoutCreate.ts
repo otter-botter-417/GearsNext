@@ -3,14 +3,15 @@ import { useRouter } from 'next/router';
 import imageCompression from 'browser-image-compression';
 
 import { useApiRequest } from '@/hooks/api/useApiRequest';
-import { useErrorHandler } from '@/hooks/api/useErrorHandler';
 
 import { textState } from '@/components/shares/atoms/state/textState';
 import { imageFileState } from '@/components/shares/atoms/state/imageFileState';
 import { imageMapDataListState } from '@/components/shares/atoms/state/imageMapDataListState';
 import { selectedItemsListState } from '@/components/shares/atoms/state/selectedItemsListState';
 import { loadingButtonState } from '@/components/shares/atoms/state/loadingButtonState';
-import { useAuthGuard } from './UserAuth/useAuthGuard';
+import { errorMessageState } from '@/components/shares/atoms/state/errorMessageState';
+import { isAxiosError } from 'axios';
+
 /**
  * 商品一覧と価格情報を管理するカスタムフック。
  * カテゴリーが変更された場合、APIから商品一覧を取得する。
@@ -20,12 +21,12 @@ import { useAuthGuard } from './UserAuth/useAuthGuard';
  */
 export const useLayoutCreate = () => {
     const { sendRequest } = useApiRequest();
-    const { handleError, clearError } = useErrorHandler();
     const imageFile = useRecoilValue(imageFileState);
     const text = useRecoilValue(textState);
     const imageMapDataList = useRecoilValue(imageMapDataListState);
     const selectedItemsList = useRecoilValue(selectedItemsListState);
     const setLoading = useSetRecoilState(loadingButtonState);
+    const setErrorMessage = useSetRecoilState(errorMessageState);
 
     const router = useRouter();
     /**
@@ -65,24 +66,29 @@ export const useLayoutCreate = () => {
             const response = await sendRequest('post', 'user/layout', formData);
             setLoading(false);
 
-            if (!response) {
-                handleError(null, 'レスポンスが無効です。');
-                return;
-            }
 
             // レスポンスが正常だった場合、トップページに遷移する
             if (response?.status === 201) {
+                setErrorMessage('');
                 router.push('/');
             }
 
             // エラーが発生していた場合、エラーをクリアする
-            clearError();
+            setErrorMessage('');
         } catch (error) {
             setLoading(false);
 
-            // エラーが発生した場合、エラーを処理する
-            handleError(error);
-        }
+            if (isAxiosError(error)) {
+
+                // 422エラーの際にエラーレスポンスをthrow
+                if (error.response?.status === 422) {
+                    setErrorMessage(error.response.data.text);
+                    return;
+                }
+            }
+
+            setErrorMessage('エラーが発生しました。');
+        };
     };
     return { layoutPost };
 };

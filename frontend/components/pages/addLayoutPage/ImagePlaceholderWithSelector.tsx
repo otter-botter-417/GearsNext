@@ -18,7 +18,7 @@ export const ImagePlaceholderWithSelector: FC = () => {
       style={{
         border: '2px dashed #ccc',
         width: '100%',
-        paddingTop: '100%',
+        paddingTop: '50%',
         position: 'relative',
         display: 'flex',
         alignItems: 'center',

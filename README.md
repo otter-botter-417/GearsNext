@@ -103,7 +103,7 @@
 
 
 ### レイアウト投稿機能
-<img src="/docs/addNewLayoutPage.gif" width="450" />  
+<img src="/docs/addNewLayoutPage3.gif" width="600" />  
 
 
 [https://gears-camp.com/AddNewLayoutPage](https://gears-camp.com/AddNewLayoutPage)

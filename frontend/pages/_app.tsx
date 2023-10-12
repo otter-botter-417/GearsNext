@@ -1,6 +1,6 @@
 // pages/_app.tsx
 import type { AppProps } from 'next/app';
-import { RecoilRoot } from 'recoil';
+import { RecoilRoot, useSetRecoilState } from 'recoil';
 import { Box, CssBaseline } from '@mui/material';
 import Header from './Header';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -12,6 +12,8 @@ import { themeOptions } from '@/styles/themes/themeOptions';
 import { NextComponentType, NextPageContext } from 'next';
 import { useGetUserApi } from '@/hooks/UserAuth/useGetUserApi';
 import { DEFAULT_PAGE_WIDTH } from '@/components/constants';
+import { Footer } from '@/components/shares/atoms/Footer';
+import { errorMessageState } from '@/components/shares/atoms/state/errorMessageState';
 
 const theme = createTheme(themeOptions);
 interface InsideRecoilRootProps {
@@ -33,10 +35,18 @@ const InsideRecoilRoot = ({ Component, pageProps }: InsideRecoilRootProps) => {
   useGetUserApi();
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ pt: paddingTop, mx: 'auto', maxWidth: DEFAULT_PAGE_WIDTH,  width:'80%'}}>
+      <Box
+        sx={{
+          pt: paddingTop,
+          mx: 'auto',
+          maxWidth: DEFAULT_PAGE_WIDTH,
+          width: '80%',
+        }}
+      >
         <CssBaseline />
         <Header />
         <Component {...pageProps} />
+        <Footer />
       </Box>
     </ThemeProvider>
   );

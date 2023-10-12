@@ -47,8 +47,14 @@ class UserController extends Controller
      */
     public function login(UserLoginRequest $request): JsonResponse
     {
-        Log::debug('login');
         $loginRequest = $request->only(['email', 'password']);
+        
+        // 認証に失敗
+        if (!Auth::attempt($loginRequest)) {
+            return response()->json(['error' => '認証に失敗しました。ユーザー名またはパスワードが間違っています。'], 401);
+        }
+        
+        // 認証に成功した場合、トークンを返す
         $token = $this->userService->login($loginRequest);
         return response()->json($token, 200);
     }
@@ -58,7 +64,6 @@ class UserController extends Controller
      * @return JsonResponse
      */
     public function logout(): Response
-    //TODO frontend側でJWTを削除する　localStorage.removeItem('token');
     {
         auth('api')->logout(); // トークンを無効化
         return response(null, 200);

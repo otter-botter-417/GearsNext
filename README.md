@@ -58,7 +58,7 @@
 
 ### URL
 
-- [https://gears-camp.com/](https://gears-camp.com/)
+- [https://gears-camp.com](https://gears-camp.com)
   - ログインフォームにテストユーザー用の値が初期設定されています。
 
 ## データベース設計
@@ -73,7 +73,7 @@
 <img src="/docs/homePage.png" width="600" />  
 
 
-[https://gears-camp.com/](https://gears-camp.com/)
+[https://gears-camp.com](https://gears-camp.com)
 - **商品とレイアウトのランイング情報**: 新着、いいね、閲覧数の切り替えが可能
 
 

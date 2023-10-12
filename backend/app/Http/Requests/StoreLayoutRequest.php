@@ -31,7 +31,7 @@ class StoreLayoutRequest extends FormRequest
     {
         return [
             'layout_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'text' => 'nullable|string|max:255',
+            'text' => 'nullable|string|max:255|not_regex:/<[a-z][\s\S]*>/i',
             'items' => 'array',
             'items.*.item_id' => 'integer',
             'image_map_positions' => 'array',
@@ -50,6 +50,7 @@ class StoreLayoutRequest extends FormRequest
         return [
             'text.string' => 'テキストは文字列である必要があります。',
             'text.max' => 'テキストは255文字以内である必要があります。',
+            'text.not_regex' => 'テキストには無効なHTMLタグが含まれています。',
             'items.array' => '商品情報は配列である必要があります。',
             'items.*.item_id.integer' => '商品IDは整数である必要があります。',
             'image_map_positions.array' => '商品情報は配列である必要があります。',

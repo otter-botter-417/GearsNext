@@ -2,7 +2,7 @@ import * as yup from 'yup';
 
 // 共通のバリデーションルール
 const requiredString = yup.string().required('この項目は必須です。');
-const requiredNumber = yup.number().required('この項目は必須です。');
+const requiredNumber = yup.number().typeError('数字を入力してください。').required('この項目は必須です。');
 
 /**
  * 商品情報のバリデーションスキーマ

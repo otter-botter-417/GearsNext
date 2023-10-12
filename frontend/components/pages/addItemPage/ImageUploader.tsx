@@ -1,5 +1,5 @@
-import React from 'react';
-import { useRecoilValue } from 'recoil';
+import React, { useEffect } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import Image from 'next/image';
 
 import { imagePreviewUrlState } from '@/components/shares/atoms/state/imagePreviewUrlState';
@@ -7,7 +7,13 @@ import { ImagePlaceholderWithSelector } from '../addLayoutPage/ImagePlaceholderW
 
 export const ImageUploader = () => {
   // 選択された画像のプレビューURL
-  const imagePreviewUrl = useRecoilValue(imagePreviewUrlState);
+
+  const [imagePreviewUrl, setImagePreviewUrl] =
+    useRecoilState(imagePreviewUrlState);
+
+  useEffect(() => {
+    setImagePreviewUrl(null);
+  });
 
   return (
     <>

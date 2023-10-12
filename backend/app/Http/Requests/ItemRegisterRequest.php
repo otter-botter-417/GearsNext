@@ -18,6 +18,9 @@ class ItemRegisterRequest extends FormRequest
     public function prepareForValidation()
     {
         $itemData = json_decode($this->input('itemData'), true);
+            array_walk_recursive($itemData, function (&$value) {
+        $value = e($value);
+    });
         $this->merge($itemData);
     }
     /**
@@ -33,7 +36,7 @@ class ItemRegisterRequest extends FormRequest
      */
     public function rules()
     {
-        $baseDataRules = 'required|string';
+        $baseDataRules = 'required|string|not_regex:/<[a-z][\s\S]*>/i';
         $numericRule = 'required|numeric|min:0';
 
         return [
@@ -53,8 +56,8 @@ class ItemRegisterRequest extends FormRequest
             'itemData.itemTags.*' => 'string|max:50',
             'itemData.colorTags' => 'required',
             'itemData.colorTags.*' => 'string|max:20',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-
+            'itemData.details' => 'not_regex:/<[a-z][\s\S]*>/i',
+            'image' => 'required|image|mimes:jpg|max:2048',
         ];
     }
 
@@ -127,4 +130,5 @@ class ItemRegisterRequest extends FormRequest
                 return "{$field}には未定義のルールが適用されています。";
         }
     }
+    
 }

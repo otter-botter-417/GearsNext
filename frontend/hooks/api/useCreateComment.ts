@@ -1,7 +1,9 @@
 
+import { errorMessageState } from '@/components/shares/atoms/state/errorMessageState';
 import { layoutDetailState } from '@/components/shares/atoms/state/layoutDetailState';
 import { useApiRequest } from '@/hooks/api/useApiRequest';
 import { useErrorHandler } from '@/hooks/api/useErrorHandler';
+import { isAxiosError } from 'axios';
 import { useSetRecoilState } from 'recoil';
 
 /**
@@ -11,6 +13,7 @@ export const useCreateComment = () => {
     const { sendRequest } = useApiRequest();
     const { handleError, clearError } = useErrorHandler();
     const setLayoutDetail = useSetRecoilState(layoutDetailState);
+    const setErrorMessage = useSetRecoilState(errorMessageState);
 
     /**
      * 新規コメントを投稿する。
@@ -50,7 +53,14 @@ export const useCreateComment = () => {
             clearError();
             return true;
         } catch (error) {
-            handleError(error);
+            if (isAxiosError(error)) {
+                // 422エラーの際にエラーレスポンスをthrow
+                if (error.response?.status === 422) {
+                    setErrorMessage(error.response.data.message);
+                    return;
+                }
+            }
+
             return false;
         }
     };

@@ -1,12 +1,11 @@
 import React from 'react';
-import NextLink from 'next/link';
-
-import { Typography } from '@mui/material';
+import {Typography } from '@mui/material';
 
 import { useRedirectIfAuthenticated } from '@/hooks/UserAuth/useRedirectIfAuthenticated';
 
 import { AuthPageTemplate } from '@/components/templates/AuthPageTemplate';
 import { RegisterForm } from '@/components/pages/userRegisterPage/RegisterForm';
+import {LinkButton} from '@/components/shares/molecules/LinkButton';
 /**
  * ユーザー新規登録ページ
  *
@@ -24,9 +23,11 @@ const UserRegisterPage = () => {
   const title = <Typography variant="h4">新規登録</Typography>;
   const registerForm = <RegisterForm />;
   const link = (
-    <NextLink href="/UserLoginPage">
-      既にアカウントを持っている方はこちら
-    </NextLink>
+    <LinkButton
+      link={'/UserLoginPage'}
+      text="既にアカウントを持っている方はこちら"
+      pt={8}
+    />
   );
 
   return <AuthPageTemplate title={title} form={registerForm} link={link} />;

@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 import { useFormMethods } from '@/hooks/useFormMethods';
 import { SubmitButton } from '@/components/shares/atoms/button/SubmitButton';
@@ -18,6 +18,7 @@ type AuthFormProps = {
   onSubmit: (data: any) => void;
   buttonText: string;
   loading: boolean;
+  errorMessage?: string;
 };
 
 /**
@@ -32,6 +33,7 @@ type AuthFormProps = {
  * @param onSubmit - フォーム送信時に実行されるコールバック関数
  * @param buttonText - 送信ボタンに表示されるテキスト
  * @param loading - ローディング中かどうか
+ * @param errorMessage - エラーメッセージ
  *
  * @example
  * ```tsx
@@ -49,18 +51,32 @@ export const AuthForm: FC<AuthFormProps> = ({
   onSubmit,
   buttonText,
   loading,
+  errorMessage = '',
 }) => {
   const formMethods = useFormMethods(); // ここで formMethods を取得
 
   return (
-    <form onSubmit={formMethods.handleSubmit(onSubmit)}>
-      <AuthValidationInputFields
-        inputFormFieldsList={inputFormFieldsList}
-        formMethods={formMethods}
-      />
-      <Box sx={{ pb: '15%', display: 'flex', justifyContent: 'center' }}>
-        <SubmitButton loading={loading} text={buttonText} />
-      </Box>
-    </form>
+    <Box
+      display={'flex'}
+      flexDirection={'column'}
+      alignItems={'center'}
+      justifyContent={'center'}
+    >
+      {errorMessage && (
+        <Box padding={2}>
+          <Typography color={'error'}>{errorMessage}</Typography>
+        </Box>
+      )}
+
+      <form onSubmit={formMethods.handleSubmit(onSubmit)}>
+        <AuthValidationInputFields
+          inputFormFieldsList={inputFormFieldsList}
+          formMethods={formMethods}
+        />
+        <Box sx={{ pb: '15%', display: 'flex', justifyContent: 'center' }}>
+          <SubmitButton loading={loading} text={buttonText} />
+        </Box>
+      </form>
+    </Box>
   );
 };

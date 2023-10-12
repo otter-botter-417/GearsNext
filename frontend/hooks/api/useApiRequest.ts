@@ -12,6 +12,46 @@ import { API_BASE_URL } from "@/components/constants";
  * const response = await sendRequest('GET', 'items', null);
  */
 export const useApiRequest = () => {
+
+  /**
+  * APIリクエストを送信する関数
+  * - トークンが期限切れの場合は、トークンをリフレッシュしてからリクエストを再送信する。
+  * @param method リクエストメソッド (GET, POST, PUT, DELETE)
+  * @param url リクエストURL api/以下のパス
+  * @param requestData リクエストデータ
+  * @returns APIレスポンス
+  * @example
+  * const { sendRequest } = useApiRequest();
+  * const response = await sendRequest('GET', 'items', null);
+  */
+  const sendRequest = useCallback(
+    async (method: string, url: string, requestData: any = null): Promise<AxiosResponse | null> => {
+      let accessToken = localStorage.getItem("access_token");
+      try {
+        const response = await performRequest(method, url, requestData, accessToken);
+        return response;
+      } catch (err) {
+        if (isAxiosError(err)) {
+          // 401エラーの場合
+          if (err.response?.status === 401) {
+            const newToken = await refreshAccessToken();
+            if (newToken) {
+              return await performRequest(method, url, requestData, newToken);
+            }
+          }
+
+          // 422エラーの際にエラーレスポンスをthrow
+          if (err.response?.status === 422) {
+            throw err;
+          }
+        }
+        throw err; // この場所でエラーは `AxiosError` または `any` 型になります
+      }
+    },
+    []
+  );
+
+
   /**
    * アクセストークンをリフレッシュする。
    * @returns 新しいアクセストークンまたはnull。　
@@ -49,37 +89,6 @@ export const useApiRequest = () => {
     });
   };
 
-  /**
-  * APIリクエストを送信する関数
-  * - トークンが期限切れの場合は、トークンをリフレッシュしてからリクエストを再送信する。
-  * @param method リクエストメソッド (GET, POST, PUT, DELETE)
-  * @param url リクエストURL api/以下のパス
-  * @param requestData リクエストデータ
-  * @returns APIレスポンス
-  * @example
-  * const { sendRequest } = useApiRequest();
-  * const response = await sendRequest('GET', 'items', null);
-  */
-  const sendRequest = useCallback(
-    async (method: string, url: string, requestData: any = null): Promise<AxiosResponse | null> => {
-      let accessToken = localStorage.getItem("access_token");
-      try {
-        const response = await performRequest(method, url, requestData, accessToken);
-        return response;
-      } catch (err) {
-        if (isAxiosError(err) && err.response?.status === 401) {
-          const newToken = await refreshAccessToken();
-          if (newToken) {
-            return await performRequest(method, url, requestData, newToken);
-          }
-        }
-        if (!isAxiosError(err) || err.response?.status !== 401) {
-          console.error(err);  // 401エラー以外の場合のみログを出力
-        }
-        throw err;
-      }
-    },
-    []
-  );
+
   return { sendRequest };
 };

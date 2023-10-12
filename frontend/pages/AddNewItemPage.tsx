@@ -8,6 +8,7 @@ import { CategoryDetailList } from '@/components/pages/addItemPage/CategoryDetai
 import { SubmitButton } from '@/components/shares/atoms/button/SubmitButton';
 import { useAddNewItemForm } from '@/hooks/useAddNewItemForm';
 import { ImageUploader } from '@/components/pages/addItemPage/ImageUploader';
+import { ErrorAlert } from '@/components/shares/molecules/ErrorAlert';
 
 /**
  * 新規に商品情報をバックエンドのDBに送信するページ
@@ -28,6 +29,7 @@ const AddNewItemPage = () => {
           <BaseItemDataForm />
           {/* カテゴリー毎の詳細情報 */}
           <CategoryDetailList detailFormMethods={detailFormMethods} />
+          <ErrorAlert />
           {/* 送信ボタン */}
           <SubmitButton loading={loading} text={'データ送信'} />
         </form>

@@ -103,7 +103,7 @@
 
 
 ### レイアウト投稿機能 
-![addNewLayoutPage2](https://github.com/ren-mntn/GearsNext/assets/124283314/c0f8788b-2bf1-4e34-ac60-0cededdc145f)
+<img src="/docs/addNewLayoutPage2.gif" width="600" />  
 
 
 [https://gears-camp.com/AddNewLayoutPage](https://gears-camp.com/AddNewLayoutPage)

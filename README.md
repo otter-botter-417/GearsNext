@@ -103,13 +103,17 @@
 
 
 ### レイアウト投稿機能
-<img src="/docs/addNewLayoutPage3.gif" width="600" />  
+https://github.com/ren-mntn/GearsNext/assets/124283314/b1331dd2-1b63-4685-90b7-86f012eb77f2  
 
 
 [https://gears-camp.com/AddNewLayoutPage](https://gears-camp.com/AddNewLayoutPage)
 
 - **メイン画像アップロード**: 画像ファイル選択
 - **商品ラベル配置**: 画像上をクリックで選択し、配置可能
+
+
+
+
 - **投稿コメント**: テキストエリアで入力
 - **使用商品の登録**: 商品リストから選択
 

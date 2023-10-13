@@ -102,8 +102,8 @@
 
 
 
-### レイアウト投稿機能
-https://github.com/ren-mntn/GearsNext/assets/124283314/b1331dd2-1b63-4685-90b7-86f012eb77f2  
+### レイアウト投稿機能 
+![addNewLayoutPage2](https://github.com/ren-mntn/GearsNext/assets/124283314/c0f8788b-2bf1-4e34-ac60-0cededdc145f)
 
 
 [https://gears-camp.com/AddNewLayoutPage](https://gears-camp.com/AddNewLayoutPage)

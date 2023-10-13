@@ -8,6 +8,5 @@ export const paginationState = atom({
   default: {
     currentPage: 1,
     itemsPerPage: 20,
-    totalItems: 0,
   },
 });

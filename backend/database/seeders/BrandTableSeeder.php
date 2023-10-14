@@ -15,7 +15,7 @@ class BrandTableSeeder extends Seeder
      */
     public function run()
     {
-        $categories = [
+        $brands = [
             "ogawa",
             "Coleman",
             "snow peak",
@@ -28,14 +28,29 @@ class BrandTableSeeder extends Seeder
             "CAPTAIN STAG",
             'ALPACA',
             'NANGA',
-
-
-
+            'ノルディスク',
+            'テンマクデザイン',
+            'DOD',
+            'SoomLoom',
+            'TOMOUNT',
+            'FIELDOOR',
+            'MURACO',
+            'MSR',
+            'QUICKCAMP',
+            'ロゴス',
+            'LOGOS',
+            'MINIMAL WORKS',
+            'THE NORTH FACE',
+            'mont-bell',
+            'DD Hammocks',
         ];
 
-        foreach ($categories as $category) {
+        // ブランドリストをアルファベット順にソート
+        sort($brands);
+
+        foreach ($brands as $brand) {
             DB::table('brands')->insert([
-                'brand_name' => $category,
+                'brand_name' => $brand,
             ]);
         }
     }

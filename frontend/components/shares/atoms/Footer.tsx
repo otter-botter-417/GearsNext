@@ -9,8 +9,8 @@ export const Footer = () => {
   return (
     <Box
       display={'flex'}
-      pt={'50'}
-      pb={'25'}
+      pt={'50px'}
+      pb={'25px'}
       justifyContent={'center'}
       alignItems={'center'}
     >

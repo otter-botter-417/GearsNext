@@ -37,12 +37,19 @@ class BrandTableSeeder extends Seeder
             'MURACO',
             'MSR',
             'QUICKCAMP',
-            'ロゴス',
+            'SOTO',
             'LOGOS',
             'MINIMAL WORKS',
             'THE NORTH FACE',
             'mont-bell',
             'DD Hammocks',
+            'DIETZ',
+            'Petromax',
+            'FEUERHAND',
+            'JD Burford',
+            'Thous Winds',
+            'VERMONT LANTERNS',
+            'Kameyama',
         ];
 
         // ブランドリストをアルファベット順にソート

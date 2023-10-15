@@ -5,12 +5,14 @@ import { useApiRequest } from "./api/useApiRequest";
 import { imageFileState } from "@/components/shares/atoms/state/imageFileState";
 import { errorMessageState } from "@/components/shares/atoms/state/errorMessageState";
 import { isAxiosError } from "axios";
+import { successMessageState } from "@/components/shares/atoms/state/successMessageState";
 
 export const useItemForm = () => {
   const { sendRequest } = useApiRequest();
   const [loading, setLoading] = useState(false);
   const imageFile = useRecoilValue(imageFileState);
   const setErrorMessage = useSetRecoilState(errorMessageState);
+  const setSuccessMessages = useSetRecoilState(successMessageState);
 
   const submitNewItemToDatabase = async (baseFormData: any, detailFormData: any) => {
     //フォームの入力情報をまとめる formDataから読み取るのはバリデーションが必要な要素
@@ -49,11 +51,15 @@ export const useItemForm = () => {
     try {
       //ローディング状態に変更してDBにデータ送信
       setLoading(true);
+      setErrorMessage(null);
+      setSuccessMessages(null);
       await sendRequest('post', 'items', formData);
+      setSuccessMessages('登録に成功しました！');
     } catch (error) {
       if (isAxiosError(error)) {
         // 422エラーの際にエラーレスポンスをthrow
         if (error.response?.status === 422) {
+          console.log(error.response)
           setErrorMessage(error.response.data.message);
           return;
         }

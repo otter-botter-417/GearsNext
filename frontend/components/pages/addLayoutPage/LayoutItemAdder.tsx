@@ -15,7 +15,7 @@ export const LayoutItemAdder = () => {
   const [isSelectorOpen, setIsSelectorOpen] = useState(false);
 
   return (
-    <Box height={'80%'}>
+    <Box display={'flex'} height={'80%'} justifyContent={'center'} pt={3}>
       <Button variant="outlined" onClick={() => setIsSelectorOpen(true)}>
         レイアウトにギアを追加
       </Button>

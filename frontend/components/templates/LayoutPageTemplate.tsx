@@ -1,6 +1,6 @@
 import { Box, Grid } from '@mui/material';
 import React, { FC, ReactNode } from 'react';
-import { DEFAULT_PAGE_WIDTH } from '../constants';
+import { DEFAULT_PAGE_WIDTH, IMAGE_SIZE_HEIGHT } from '../constants';
 
 interface LayoutTemplateProps {
   top?: ReactNode;
@@ -46,7 +46,11 @@ export const LayoutPageTemplate: FC<LayoutTemplateProps> = ({
       </Box>
       <Grid container>
         <Grid item xs={12} md={8}>
-          <Box display={'flex'} width={'100%'} maxHeight={'600px'}>
+          <Box
+            display={'flex'}
+            width={'100%'}
+            maxHeight={`${IMAGE_SIZE_HEIGHT}px`}
+          >
             {leftSide}
           </Box>
         </Grid>

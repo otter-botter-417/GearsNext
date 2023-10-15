@@ -50,7 +50,9 @@ export const ItemThumbnailGrid = () => {
           ))
         ) : (
           <Grid item xs={12}>
+            <Box display={'flex'} justifyContent={'center'} >
             <Typography variant="body1">対象商品がありません</Typography>
+            </Box>
           </Grid>
         )}
       </Grid>

@@ -10,4 +10,7 @@ export const ItemTagList = [
   '煙突穴',
   '難燃素材',
   '高遮光性',
+  '拡張 連結',
+  "IGT規格",
+  "防水"
 ];

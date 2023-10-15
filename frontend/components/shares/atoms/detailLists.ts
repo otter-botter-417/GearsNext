@@ -31,20 +31,23 @@ export const DETAIL_LISTS: DetailLists = {
     ],
     チェア: [
         { name: "seatHeight", label: "座面高さ" },
+        { name: "heightAdjustment", label: "高さ調節" },
         { name: "reclining", label: "リクライニング" },
         ...COMMON_FIELDS
     ],
     ランタン: [
-        { name: "fuelType", label: "燃料" },
         { name: "intensity", label: "光量" },
+        { name: "lightColor", label: "光色" },
         { name: "runLength", label: "連続点灯時間" },
         { name: "batteryCapacity", label: "バッテリー容量" },
         { name: "chargingTime", label: "充電時間" },
+        { name: "waterproof ", label: "防水性能" },
+        { name: "burnTime", label: "燃焼時間" },
         ...COMMON_FIELDS
     ],
     テーブル: [
+        { name: "expansionMethod", label: "展開方式" },
         { name: "heightAdjustment", label: "高さ調節" },
-        { name: "capacity", label: "耐荷重" },
         ...COMMON_FIELDS
     ],
     寝袋: [

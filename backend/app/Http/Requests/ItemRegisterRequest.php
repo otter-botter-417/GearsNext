@@ -56,7 +56,7 @@ class ItemRegisterRequest extends FormRequest
             'itemData.itemTags.*' => 'string|max:50',
             'itemData.colorTags' => 'required',
             'itemData.colorTags.*' => 'string|max:20',
-            'itemData.details' => 'not_regex:/<[a-z][\s\S]*>/i',
+            'itemData.details.*' => 'not_regex:/<[a-z][\s\S]*>/i',
             'image' => 'required|image|mimes:jpg|max:2048',
         ];
     }

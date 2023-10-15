@@ -25,5 +25,12 @@ export const BrandNameList = [
   'snow peak',
   'テンマクデザイン',
   'ノルディスク',
-  'ロゴス',
+  'SOTO',
+  'DIETZ',
+  'Petromax',
+  'FEUERHAND',
+  'JD Burford',
+  'Thous Winds',
+  'VERMONT LANTERNS',
+  'Kameyama',
 ];

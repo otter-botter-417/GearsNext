@@ -19,9 +19,9 @@ export const LayoutPageSelectedItemImageList: FC = () => {
   return (
     <Box
       sx={{
-        overflowY: 'scroll',
         height: '100',
         width: '100%',
+        minHeight: '200px',
       }}
     >
       <ErrorAlert />

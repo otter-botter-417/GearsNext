@@ -41,7 +41,7 @@ export const ItemSelector: FC<ItemSelectorProps> = ({ open, onClose }) => {
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>
         <Typography variant="body1">
-          レイアウトに登録するギアを選択してください。
+          レイアウトに登録するギアを10個まで選択できます。
         </Typography>
       </DialogTitle>
       <ItemNameSearchField />

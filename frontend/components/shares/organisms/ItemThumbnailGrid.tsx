@@ -39,7 +39,7 @@ export const ItemThumbnailGrid = () => {
   const currentItems = filteredItemList?.slice(startIndex, endIndex);
 
   return (
-    <Box display={'flex'} paddingTop={3}>
+    <Box display={'flex'} flexDirection={'column'} paddingTop={3}>
       <PaginationControls />
       <Grid container sx={{ justifyContent: { xs: 'space-around', sm: 'initial' } }}>
         {currentItems && currentItems.length > 0 ? (

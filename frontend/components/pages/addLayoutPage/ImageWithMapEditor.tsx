@@ -9,7 +9,7 @@ import { imageMapPositionState } from '@/components/shares/atoms/state/imageMapP
 import { ImageMapLabel } from './ImageMapLabel';
 import { ImageMapTagEditor } from './ImageMapTagEditor';
 import Image from 'next/image';
-import { IMAGE_SIZE_HEIGHT, IMAGE_SIZE_WIDTH } from '@/components/constants';
+import { IMAGE_SIZE_HEIGHT } from '@/components/constants';
 
 type OnLoadingCompleteResult = { naturalHeight: number; naturalWidth: number };
 
@@ -25,14 +25,11 @@ type OnLoadingCompleteResult = { naturalHeight: number; naturalWidth: number };
  */
 export const ImageWithMapEditor = () => {
   const [open, setOpen] = useState(false);
-  const [firstClickDone, setFirstClickDone] = useState(false); // この状態を追加
+  const [firstClickDone, setFirstClickDone] = useState(false);
+  const [imageAspect, setImageAspect] = useState<number>(1); // アスペクト比の状態を追加
   const imagePreviewUrl = useRecoilValue(imagePreviewUrlState);
   const setTextFieldPosition = useSetRecoilState(imageMapPositionState);
   const setItemSearchQuery = useSetRecoilState(itemSearchQueryState);
-  const [imageSize, setImageSize] = useState({
-    width: IMAGE_SIZE_WIDTH,
-    height: IMAGE_SIZE_HEIGHT,
-  });
 
   /**
    * 画像がクリックされた際に呼び出されるハンドラー。
@@ -64,26 +61,21 @@ export const ImageWithMapEditor = () => {
     [setTextFieldPosition, setOpen, setItemSearchQuery, firstClickDone],
   );
 
-  // 画像の読み込みが完了した時に実行される関数 (画像のwidth heightを取得する)
-  // 画像のwidth heightを取得して、画像のサイズを調整する
+  // 画像の読み込みが完了した時に実行される関数
+  // 画像のアスペクト比を計算して、状態を更新する
   const onImageLoadingComplete = (e: OnLoadingCompleteResult) => {
     let width = e.naturalWidth;
     let height = e.naturalHeight;
 
     // アスペクト比率を計算
     const aspectRatio = width / height;
-
-    if (width > IMAGE_SIZE_WIDTH || height > IMAGE_SIZE_HEIGHT) {
-      if (width > height) {
-        width = IMAGE_SIZE_WIDTH;
-        height = IMAGE_SIZE_WIDTH / aspectRatio;
-      } else {
-        height = IMAGE_SIZE_HEIGHT;
-        width = IMAGE_SIZE_HEIGHT * aspectRatio;
-      }
-    }
-    setImageSize({ width, height });
+    setImageAspect(aspectRatio); // アスペクト比の状態を更新
   };
+
+  const calculatedWidth = Math.min(
+    imageAspect * IMAGE_SIZE_HEIGHT,
+    window.innerWidth,
+  );
 
   if (!imagePreviewUrl) return null; // 画像が取得できるまでnullを返す
 
@@ -92,9 +84,8 @@ export const ImageWithMapEditor = () => {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      width={`${imageSize.width}px`}
-      height={`${imageSize.height}px`}
-      sx={{
+      style={{
+        maxWidth: `${calculatedWidth}px`,
         position: 'relative',
         margin: '0 auto',
       }}
@@ -102,9 +93,16 @@ export const ImageWithMapEditor = () => {
       <Image
         src={imagePreviewUrl}
         alt="Image Preview"
-        fill
+        // fill
         priority
-        style={{ objectFit: 'contain' }}
+        width={calculatedWidth}
+        height={calculatedWidth / imageAspect}
+        sizes="100vw"
+        style={{
+          width: '100%',
+          height: 'auto',
+          objectFit:"contain"
+        }}
         onClick={handleImageClick}
         onLoadingComplete={(e) => onImageLoadingComplete(e)}
       />

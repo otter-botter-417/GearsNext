@@ -27,7 +27,7 @@ class ItemFactory extends Factory
         return [
             'item_name' => $this->faker->realText(10),
             'price' => $this->faker->numberBetween(100, 100000),
-            'image_url' => $this->faker->regexify('[A-Za-z0-9]{10}'),
+            'image_url' => 'https://s3-ap-northeast-1.amazonaws.com/gears-images/item/' . $this->faker->numberBetween(1, 10) . '.jpg',
             'asin' => $this->faker->unique()->bothify('???#######'),
             'open_width' => $this->faker->randomFloat(1, 10, 100),
             'open_depth' => $this->faker->randomFloat(1, 10, 100),

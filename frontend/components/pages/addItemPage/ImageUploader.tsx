@@ -13,7 +13,7 @@ export const ImageUploader = () => {
 
   useEffect(() => {
     setImagePreviewUrl(null);
-  });
+  },[]);
 
   return (
     <>

@@ -23,6 +23,7 @@ import { userState } from '@/components/shares/atoms/state/userState';
 import { LinkButtonWithIcon } from '@/components/shares/molecules/LinkButtonWithIcon';
 import HeaderAuthButton from '@/components/shares/molecules/HeaderAuthButton';
 import { DEFAULT_PAGE_WIDTH } from '@/components/constants';
+import Image from 'next/image';
 
 const FONT_COLOR = '#dedee0';
 
@@ -59,6 +60,7 @@ const Header = () => {
               >
                 <NextLink href={`/`}>
                   <Button>
+                    <Image src="/icon.png" alt="logo" width={50} height={50} />
                     <Typography
                       variant={isSmallScreen ? 'h6' : 'h4'}
                       color={FONT_COLOR}

@@ -32,8 +32,8 @@ class ColorTagTableSeeder extends Seeder
             "グレー",
             "グレージュ",
             "シルバー",
-            "ゴールド"
-
+            "ゴールド",
+            "オレンジ"
             
         ];
 

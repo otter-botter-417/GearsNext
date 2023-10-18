@@ -22,6 +22,7 @@ export type LayoutDataType = {
     yPosition: number,
     itemId: number,
     itemName: string,
+    imageUrl: string
   }>;
 };
 

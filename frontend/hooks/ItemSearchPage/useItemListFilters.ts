@@ -98,8 +98,20 @@ export const useItemListFilters = () => {
             filterByCondition((item) => !subCategoryValue || subCategoryValue === 'すべてのサブカテゴリー' || item.subCategoryName === subCategoryValue),
             filterByCondition((item) => itemSearchQuery ? item.itemName.includes(itemSearchQuery) : true),
             filterByCondition((item) => item.price >= sliderValue.min && item.price <= sliderValue.max),
-            // 並び替え
-            (items: ItemDataType[]): ItemDataType[] => items.sort(sortPatternValue === '高い順' ? (a, b) => b.price - a.price : (a, b) => a.price - b.price),
+            // 並び替え 
+            (items: ItemDataType[]): ItemDataType[] => {
+                if (sortPatternValue === '新着順') {
+                    return items.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+                } else if (sortPatternValue === '閲覧数順') {
+                    return items.sort((a, b) => b.viewCount - a.viewCount);
+                } else if (sortPatternValue === '高い順') {
+                    return items.sort((a, b) => b.price - a.price);
+                } else if (sortPatternValue === '安い順') {
+                    return items.sort((a, b) => a.price - b.price);
+                } else {
+                    return items.sort((a, b) => b.favoriteCount - a.favoriteCount);
+                }
+            },
         ];
 
         // フィルタリング処理

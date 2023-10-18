@@ -51,6 +51,7 @@ class BrandTableSeeder extends Seeder
             'VERMONT LANTERNS',
             'Kameyama',
             'THERMAREST',
+            'Aladdin',
         ];
 
         // ブランドリストをアルファベット順にソート

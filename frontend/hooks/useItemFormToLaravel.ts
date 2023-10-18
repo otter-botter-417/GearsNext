@@ -29,6 +29,7 @@ export const useItemForm = () => {
           item_name: baseFormData.itemName,
           asin: baseFormData.asin,
           price: parseInt(baseFormData.price, 10),
+          image_url: baseFormData.imageUrl,
           open_width: parseFloat(baseFormData.openWidth,),
           open_depth: parseFloat(baseFormData.openDepth,),
           open_height: parseFloat(baseFormData.openHeight,),
@@ -59,7 +60,7 @@ export const useItemForm = () => {
       if (isAxiosError(error)) {
         // 422エラーの際にエラーレスポンスをthrow
         if (error.response?.status === 422) {
-          console.log(error.response)
+          console.log(error)
           setErrorMessage(error.response.data.message);
           return;
         }

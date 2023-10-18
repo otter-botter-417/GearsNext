@@ -96,47 +96,14 @@ class EloquentItemRepository implements ItemRepositoryInterface
      * @param  array $attributesData
      * @return void
      */
-    public function createItemData(array $baseData, $tagIds, $attributesData, $imageFile): void
+    public function createItemData(array $baseData, array $tagIds, array $attributesData): void
     {
-        DB::transaction(function () use ($baseData, $tagIds, $attributesData,$imageFile) {
-            $item = Item::create(array_merge($baseData, ['image_url' => 'placeholder_url']));
+        DB::transaction(function () use ($baseData, $tagIds, $attributesData) {
+            $item = Item::create($baseData); // image_urlは$baseData内にすでに含まれている
             $item->colorTags()->sync($tagIds['colorTagIds']);
             $item->itemTags()->sync($tagIds['itemTagIds']);
             $item->itemAttributes()->createMany($attributesData);
-            $this->uploadImage($imageFile,$item->item_id);
-
-            $image_url = $this->uploadImage($imageFile,$item->item_id);
-
-            if ($image_url) {
-                $item->update(['image_url' => $image_url]);
-            }
         });
-    }
-
-    /**
-     * 画像jpgに変換しS3にアップロード
-     *
-     * @param UploadedFile $imageFile
-     * @param int $itemId
-     * @return string
-     * @throws \Exception
-     */
-    public function uploadImage(UploadedFile $imageFile, int $itemId): string
-    {
-        /** @var Filesystem $disk */
-        $disk = Storage::disk('s3');
-
-        try {
-            $inputPath = $imageFile->path();
-            $convertImage = Image::make($inputPath)->encode('jpg');
-            $newFileName = 'item/' . $itemId . '.jpg';
-            $disk->put($newFileName, (string) $convertImage, 'public');
-            $url = $disk->url($newFileName);
-            return $url;
-        } catch (AwsException $e) {
-            Log::error("AWS Error: " . $e->getMessage());
-            throw $e;
-        }
     }
 
     /**

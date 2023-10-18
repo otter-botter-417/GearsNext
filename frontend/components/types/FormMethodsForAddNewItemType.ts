@@ -8,6 +8,7 @@ export interface AddNewItemFormFields {
     itemName: string;
     asin: string;
     price: number;
+    imageUrl: string;
     brandName: string;
     itemCategoryName: string;
     itemSubCategoryName: string;

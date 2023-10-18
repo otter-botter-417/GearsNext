@@ -33,4 +33,6 @@ export const BrandNameList = [
   'Thous Winds',
   'VERMONT LANTERNS',
   'Kameyama',
+  'THERMAREST',
+
 ];

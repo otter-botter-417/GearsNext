@@ -89,7 +89,7 @@
 <img src="/docs/itemSearchPage.png" width="600" />  
 
 
-[https://gears-camp.com/ItemSearchPage](https://gears-camp.com/gears-camp.com/ItemSearchPage)
+[https://gears-camp.com/ItemSearchPage](https://gears-camp.com/ItemSearchPage)
 - **商品名での検索**: オートコンプリート機能付き
 - **カテゴリー・サブカテゴリー選択**: プルダウン形式で単一選択
 - **詳細な絞り込み**: アコーディオン形式で折りたたみ可能
@@ -124,7 +124,7 @@
 <img src="/docs/layoutPage2.png" width="600" />  
 
 
-[https://gears-camp.com/layouts/1](https://gears-camp.com/layouts/1)
+[https://gears-camp.com/layouts/1](https://gears-camp.com/layouts/17)
 - **投稿画像とイメージマップ表示**
 - **投稿コメント**
 - **認証されたユーザーのアクション**: いいねとコメント投稿可能

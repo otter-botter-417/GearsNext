@@ -24,8 +24,6 @@ const AddNewItemPage = () => {
     <FormProvider formMethods={formMethods}>
       <AddNewItemPageTemplate>
         <form onSubmit={submitBothForms}>
-          {/* 画像アップロード */}
-          <ImageUploader />
           {/* 全商品共有の基本情報 */}
           <BaseItemDataForm />
           {/* カテゴリー毎の詳細情報 */}

@@ -43,6 +43,7 @@ class ItemRegisterRequest extends FormRequest
             'itemData.baseData.item_name' => $baseDataRules . '|max:255',
             'itemData.baseData.asin' => $baseDataRules . '|size:10',
             'itemData.baseData.price' => $numericRule,
+            'itemData.baseData.image_url' => $baseDataRules,
             'itemData.baseData.open_width' => $numericRule,
             'itemData.baseData.open_depth' => $numericRule,
             'itemData.baseData.open_height' => $numericRule,
@@ -57,7 +58,6 @@ class ItemRegisterRequest extends FormRequest
             'itemData.colorTags' => 'required',
             'itemData.colorTags.*' => 'string|max:20',
             'itemData.details.*' => 'not_regex:/<[a-z][\s\S]*>/i',
-            'image' => 'required|image|mimes:jpg|max:2048',
         ];
     }
 
@@ -73,6 +73,8 @@ class ItemRegisterRequest extends FormRequest
             'itemData.baseData.asin.required' => $this->generateMessage('required', 'ASIN'),
             'itemData.baseData.asin.size' => 'ASINは10文字である必要があります。',
             'itemData.baseData.asin.string' => $this->generateMessage('string', 'ASIN'),
+            'itemData.baseData.image_url.required' => $this->generateMessage('required', '画像URL'),
+            'itemData.baseData.image_url.string' => $this->generateMessage('string', '画像URL'),
             'itemData.baseData.price.required' => $this->generateMessage('required', '価格'),
             'itemData.baseData.price.numeric' => $this->generateMessage('numeric', '価格'),
             'itemData.baseData.open_width.required' => $this->generateMessage('required', '展開時の幅'),

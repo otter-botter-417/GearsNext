@@ -49,7 +49,7 @@ interface ItemRepositoryInterface
      * @param array $attributesData 商品の属性情報
      * @return void
      */
-    public function createItemData(array $baseData, $tagIds, $attributesData, $imageFile): void;
+    public function createItemData(array $baseData, array $tagIds, array $attributesData): void;
 
     /**
      * 商品に関連する情報を取得

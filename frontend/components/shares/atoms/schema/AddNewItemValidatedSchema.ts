@@ -16,6 +16,7 @@ export const AddNewItemValidatedSchema = yup.object().shape({
     (val) => (val ? val.length === 10 : false),
   ),
   price: requiredNumber.positive('価格は正の数である必要があります。'),
+  imageUrl: requiredString.url('有効なURLを入力してください。'),
   brandName: requiredString.label('ブランド名'),
   itemCategoryName: requiredString.label('カテゴリ名'),
   itemSubCategoryName: requiredString.label('サブカテゴリ名'),

@@ -47,6 +47,7 @@ class LayoutShowResource extends JsonResource
                     'yPosition' => $tagPosition->y_position,
                     'itemId' => $tagPosition->item_id,
                     'itemName' => $tagPosition->item->item_name,
+                    'imageUrl' => $tagPosition->item->image_url,
                 ];
             }),
             'user' => [

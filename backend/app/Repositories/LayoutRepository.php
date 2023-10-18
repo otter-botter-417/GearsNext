@@ -103,11 +103,12 @@ class LayoutRepository implements LayoutRepositoryInterface
                 'users', 
                 'comments.user', 
                 'tagPositions' => function($query) {
-                    $query->with('item:item_id,item_name'); // tagPositionsと関連付けられたitemのデータを取得
+                    $query->with('item:item_id,item_name,image_url'); // image_urlも追加
                 }
             ])
             ->first();
     }
+    
     /**
      * レイアウトの閲覧数をインクリメント
      * @param  Layout  $layout

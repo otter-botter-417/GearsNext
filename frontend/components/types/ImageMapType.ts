@@ -3,4 +3,5 @@ export type ImageMapType = {
     yPosition: number;
     itemId: number;
     itemName: string;
+    imageUrl?: string;
 };

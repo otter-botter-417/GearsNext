@@ -149,6 +149,6 @@
 <img src="/docs/addNewItemPage.png" width="600" />  
 
 
-[https://gears-camp.com/AddNewLayoutPage](https://gears-camp.com/AddNewLayoutPage)
+[https://gears-camp.com/AddNewLayoutPage](https://gears-camp.com/AddNewItemPage)
 - **商品アップロード**: 商品データを登録できます。
 - **AWS S3**: 画像はバックエンドからAWS S3にアップロードされます。

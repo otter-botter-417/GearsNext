@@ -52,11 +52,11 @@ export const DETAIL_LISTS: DetailLists = {
     ],
     寝袋: [
         { name: "capacity", label: "収容人数" },
+        { name: "materials", label: "中綿素材" },
         { name: "fillPower", label: "フィルパワー" },
         { name: "comfortTemp", label: "快適温度" },
         { name: "limitTemp", label: "限界温度" },
         { name: "lowerTemp", label: "下限温度" },
-        { name: "materials", label: "中綿素材" },
         ...COMMON_FIELDS
     ],
     マット: [

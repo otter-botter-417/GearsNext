@@ -49,7 +49,8 @@ export async function getStaticPaths() {
 
   // 取得したIDを使用して、paths配列を生成
   const paths = items.map((item: ItemDataType) => ({
-    params: { itemId: item.itemId.toString() },
+    // params: { itemId: item.itemId.toString() },
+    params: { itemId: '1' },
   }));
 
   return {

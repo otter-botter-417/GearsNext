@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import Image from 'next/image';
 
 import { imagePreviewUrlState } from '@/components/shares/atoms/state/imagePreviewUrlState';
@@ -13,7 +13,7 @@ export const ImageUploader = () => {
 
   useEffect(() => {
     setImagePreviewUrl(null);
-  },[]);
+  },[setImagePreviewUrl]);
 
   return (
     <>

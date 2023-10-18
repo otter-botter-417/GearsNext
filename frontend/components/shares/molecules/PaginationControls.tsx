@@ -46,7 +46,7 @@ export const PaginationControls = () => {
       ...prev,
       currentPage: 1,
     }));
-  }, [filteredItems]);
+  }, [filteredItems,setPagination]);
 
   if (totalPages === 1) return null;
 

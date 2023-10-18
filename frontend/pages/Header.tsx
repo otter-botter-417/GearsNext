@@ -2,8 +2,8 @@ import React from 'react';
 import { useRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
 import NextLink from 'next/link';
+import Image from 'next/image';
 
-// @mui/material components
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -11,19 +11,16 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
-// @mui/material hooks
 import useMediaQuery from '@mui/material/useMediaQuery';
 import useTheme from '@mui/material/styles/useTheme';
 
-// @mui/icons-material
 import SearchIcon from '@mui/icons-material/Search';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 
 import { userState } from '@/components/shares/atoms/state/userState';
 import { LinkButtonWithIcon } from '@/components/shares/molecules/LinkButtonWithIcon';
 import HeaderAuthButton from '@/components/shares/molecules/HeaderAuthButton';
-import { DEFAULT_PAGE_WIDTH } from '@/components/constants';
-import Image from 'next/image';
+import { DEFAULT_PAGE_WIDTH, ICON_IMAGE_BASE_URL } from '@/components/constants';
 
 const FONT_COLOR = '#dedee0';
 
@@ -60,7 +57,7 @@ const Header = () => {
               >
                 <NextLink href={`/`}>
                   <Button>
-                    <Image src="/icon.png" alt="logo" width={50} height={50} />
+                    <Image src={ICON_IMAGE_BASE_URL} alt="logo" width={50} height={50} />
                     <Typography
                       variant={isSmallScreen ? 'h6' : 'h4'}
                       color={FONT_COLOR}

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Domain\ViewItemHistory;
 
-use App\Contracts\ViewItemHistoryRepositoryInterface;
+use App\Domain\ViewItemHistory\ViewItemHistoryRepositoryInterface;
 use App\Models\ViewItemHistory;
 
 /**

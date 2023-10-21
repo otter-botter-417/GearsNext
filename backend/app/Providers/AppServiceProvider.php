@@ -48,8 +48,8 @@ class AppServiceProvider extends ServiceProvider
             'App\Domain\Layout\LayoutRepository'
         );
         $this->app->bind(
-            'App\Contracts\ViewItemHistoryRepositoryInterface',
-            'App\Repositories\ViewItemHistoryRepository'
+            'App\Domain\ViewItemHistory\ViewItemHistoryRepositoryInterface',
+            'App\Domain\ViewItemHistory\ViewItemHistoryRepository'
         );
         $this->app->bind(
             'App\Domain\Comment\CommentRepositoryInterface',

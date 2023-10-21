@@ -11,7 +11,7 @@ use App\Contracts\CategoryRepositoryInterface;
 use App\Contracts\SubCategoryRepositoryInterface;
 use App\Domain\FavoriteItem\FavoriteItemRepositoryInterface;
 use App\Domain\UserInventory\UserInventoryRepositoryInterface;
-use App\Contracts\ViewItemHistoryRepositoryInterface;
+use App\Domain\ViewItemHistory\ViewItemHistoryRepositoryInterface;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Collection;
 

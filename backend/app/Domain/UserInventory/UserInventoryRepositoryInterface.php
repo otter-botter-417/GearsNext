@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contracts;
+namespace App\Domain\UserInventory;
 
 interface UserInventoryRepositoryInterface
 {

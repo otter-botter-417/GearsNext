@@ -40,8 +40,8 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\FavoriteLayoutRepository'
         );
         $this->app->bind(
-            'App\Contracts\UserInventoryRepositoryInterface',
-            'App\Repositories\UserInventoryRepository'
+            'App\Domain\UserInventory\UserInventoryRepositoryInterface',
+            'App\Domain\UserInventory\UserInventoryRepository'
         );
         $this->app->bind(
             'App\Domain\Layout\LayoutRepositoryInterface',

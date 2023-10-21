@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace App\Domain\UserInventory;
 
-use App\Contracts\UserRepositoryInterface;
-use App\Contracts\ItemRepositoryInterface;
-use App\Contracts\UserInventoryRepositoryInterface;
+use App\Domain\User\UserRepositoryInterface;
+use App\Domain\Item\ItemRepositoryInterface;
+use App\Domain\UserInventory\UserInventoryRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
 /**

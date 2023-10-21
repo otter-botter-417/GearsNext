@@ -16,16 +16,16 @@ class AppServiceProvider extends ServiceProvider
             'App\Domain\Item\EloquentItemRepository'
         );
         $this->app->bind(
-            'App\Contracts\BrandRepositoryInterface',
-            'App\Repositories\BrandRepository'
+            'App\Domain\Item\BrandRepositoryInterface',
+            'App\Domain\Item\BrandRepository'
         );
         $this->app->bind(
-            'App\Contracts\CategoryRepositoryInterface',
-            'App\Repositories\CategoryRepository'
+            'App\Domain\Item\CategoryRepositoryInterface',
+            'App\Domain\Item\CategoryRepository'
         );
         $this->app->bind(
-            'App\Contracts\SubCategoryRepositoryInterface',
-            'App\Repositories\SubCategoryRepository'
+            'App\Domain\Item\SubCategoryRepositoryInterface',
+            'App\Domain\Item\SubCategoryRepository'
         );
         $this->app->bind(
             'App\Domain\User\UserRepositoryInterface',

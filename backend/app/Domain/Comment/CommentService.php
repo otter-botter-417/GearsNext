@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services;
+namespace App\Domain\Comment;
 
+use App\Domain\Comment\CommentRepositoryInterface;
+use App\Domain\Layout\LayoutRepositoryInterface;
 use App\Models\Layout;
 use App\Models\Comment;
-use App\Contracts\CommentRepositoryInterface;
-use App\Contracts\LayoutRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
 /**

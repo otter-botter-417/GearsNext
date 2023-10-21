@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contracts;
+namespace App\Domain\Comment;
 
 use App\Models\Comment;
 use Illuminate\Database\Eloquent\Collection;

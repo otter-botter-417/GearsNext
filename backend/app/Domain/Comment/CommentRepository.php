@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Domain\Comment;
 
 use App\Models\Comment;
-use App\Contracts\CommentRepositoryInterface;
+use App\Domain\Comment\CommentRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
 /**

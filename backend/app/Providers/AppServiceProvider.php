@@ -52,8 +52,8 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\ViewItemHistoryRepository'
         );
         $this->app->bind(
-            'App\Contracts\CommentRepositoryInterface',
-            'App\Repositories\CommentRepository'
+            'App\Domain\Comment\CommentRepositoryInterface',
+            'App\Domain\Comment\CommentRepository'
         );
 
         //Brandとかのモックを作ってないからItemだけモックを採用するとエラーが発生する為一時的にコメントアウト

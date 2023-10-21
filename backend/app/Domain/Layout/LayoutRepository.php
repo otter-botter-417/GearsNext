@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Domain\Layout;
 
 use App\Models\Layout;
 use App\Models\TagPosition;
 use App\Models\ViewLayoutHistory;
-use App\Contracts\LayoutRepositoryInterface;
 use App\Exceptions\LayoutNotFoundException;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Log;
 
 /**
  * レイアウトに関するリポジトリクラス

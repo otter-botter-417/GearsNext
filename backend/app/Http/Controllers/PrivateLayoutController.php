@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Layout;
-use App\Services\LayoutService;
+use App\Domain\Layout\LayoutService;
 use App\Http\Requests\StoreLayoutRequest;
 use App\Http\Requests\UpdateLayoutRequest;
 use App\Http\Resources\LayoutIndexResource;

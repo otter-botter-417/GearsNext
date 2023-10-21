@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contracts;
+namespace App\Domain\Layout;
 
 use App\Models\Layout;
 use Illuminate\Database\Eloquent\Collection;

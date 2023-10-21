@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\Domain\User;
 
 use App\Models\User;
-use App\Contracts\UserRepositoryInterface;
 use App\Exceptions\LoginFailedException;
 use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;

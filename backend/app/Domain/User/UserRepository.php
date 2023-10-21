@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Domain\User;
 
 use App\Models\User;
-use App\Contracts\UserRepositoryInterface;
+
 
 /**
  * ユーザーに関するリポジトリクラス

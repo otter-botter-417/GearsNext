@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
-use App\Services\ItemService;
+use App\Domain\Item\ItemService;
 use App\Http\Requests\ItemIndexRequest;
 use App\Http\Requests\ItemRegisterRequest;
 use App\Http\Resources\ItemShowResource;

@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Domain\Item;
 
 use App\Models\Item;
 use App\Models\ColorTag;
 use App\Models\ItemTag;
-use App\Contracts\ItemRepositoryInterface;
 use App\Exceptions\ItemNotFoundException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;

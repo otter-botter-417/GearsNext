@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\Layout;
-use App\Contracts\ItemRepositoryInterface;
+use App\Domain\Item\ItemRepositoryInterface;
 use App\Contracts\LayoutRepositoryInterface;
 use App\Contracts\FavoriteLayoutRepositoryInterface;
 use Aws\Exception\AwsException;

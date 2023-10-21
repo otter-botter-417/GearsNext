@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contracts;
+namespace App\Domain\Item;
 
 use App\Models\Item;
 use Illuminate\Database\Eloquent\Collection;

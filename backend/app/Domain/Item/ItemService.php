@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Services;
+namespace App\Domain\Item;
 
 use App\Models\Item;
 use App\Exceptions\CategoryNotFoundException;
 use App\Exceptions\ItemAlreadyRegisteredException;
 use App\Exceptions\ItemNotFoundException;
-use App\Contracts\ItemRepositoryInterface;
 use App\Contracts\BrandRepositoryInterface;
 use App\Contracts\CategoryRepositoryInterface;
 use App\Contracts\SubCategoryRepositoryInterface;

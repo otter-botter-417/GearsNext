@@ -9,11 +9,6 @@ use App\Exceptions\ItemNotFoundException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\UploadedFile;
-use Intervention\Image\ImageManagerStatic as Image;
-use Illuminate\Support\Facades\Storage;
-use Aws\Exception\AwsException;
-use Illuminate\Contracts\Filesystem\Filesystem;
 
 /**
  * 商品に関するリポジトリクラス

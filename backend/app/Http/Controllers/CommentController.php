@@ -4,14 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Layout;
-use App\Services\CommentService;
+use App\Domain\Comment\CommentService;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
 use App\Http\Resources\CommentResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 /**
  * レイアウトへのコメントに関する操作を管理するコントローラークラスです。
@@ -51,7 +50,6 @@ class CommentController extends Controller
     {
         $commentData = $request->only(['content', 'parent_id']);
         $newCommentData = $this->commentService->createLayoutComment(Auth::id(), $layout->layout_id, $commentData);
-        Log::debug($newCommentData);
         return CommentResource::collection($newCommentData);
 
     }

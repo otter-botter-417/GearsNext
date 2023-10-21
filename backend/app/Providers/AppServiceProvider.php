@@ -12,48 +12,48 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            'App\Contracts\ItemRepositoryInterface',
-            'App\Repositories\EloquentItemRepository'
+            'App\Domain\Item\ItemRepositoryInterface',
+            'App\Domain\Item\EloquentItemRepository'
         );
         $this->app->bind(
-            'App\Contracts\BrandRepositoryInterface',
-            'App\Repositories\BrandRepository'
+            'App\Domain\Item\BrandRepositoryInterface',
+            'App\Domain\Item\BrandRepository'
         );
         $this->app->bind(
-            'App\Contracts\CategoryRepositoryInterface',
-            'App\Repositories\CategoryRepository'
+            'App\Domain\Item\CategoryRepositoryInterface',
+            'App\Domain\Item\CategoryRepository'
         );
         $this->app->bind(
-            'App\Contracts\SubCategoryRepositoryInterface',
-            'App\Repositories\SubCategoryRepository'
+            'App\Domain\Item\SubCategoryRepositoryInterface',
+            'App\Domain\Item\SubCategoryRepository'
         );
         $this->app->bind(
-            'App\Contracts\UserRepositoryInterface',
-            'App\Repositories\UserRepository'
+            'App\Domain\User\UserRepositoryInterface',
+            'App\Domain\User\UserRepository'
         );
         $this->app->bind(
-            'App\Contracts\FavoriteItemRepositoryInterface',
-            'App\Repositories\FavoriteItemRepository'
+            'App\Domain\FavoriteItem\FavoriteItemRepositoryInterface',
+            'App\Domain\FavoriteItem\FavoriteItemRepository'
         );
         $this->app->bind(
-            'App\Contracts\FavoriteLayoutRepositoryInterface',
-            'App\Repositories\FavoriteLayoutRepository'
+            'App\Domain\FavoriteLayout\FavoriteLayoutRepositoryInterface',
+            'App\Domain\FavoriteLayout\FavoriteLayoutRepository'
         );
         $this->app->bind(
-            'App\Contracts\UserInventoryRepositoryInterface',
-            'App\Repositories\UserInventoryRepository'
+            'App\Domain\UserInventory\UserInventoryRepositoryInterface',
+            'App\Domain\UserInventory\UserInventoryRepository'
         );
         $this->app->bind(
-            'App\Contracts\LayoutRepositoryInterface',
-            'App\Repositories\LayoutRepository'
+            'App\Domain\Layout\LayoutRepositoryInterface',
+            'App\Domain\Layout\LayoutRepository'
         );
         $this->app->bind(
-            'App\Contracts\ViewItemHistoryRepositoryInterface',
-            'App\Repositories\ViewItemHistoryRepository'
+            'App\Domain\ViewItemHistory\ViewItemHistoryRepositoryInterface',
+            'App\Domain\ViewItemHistory\ViewItemHistoryRepository'
         );
         $this->app->bind(
-            'App\Contracts\CommentRepositoryInterface',
-            'App\Repositories\CommentRepository'
+            'App\Domain\Comment\CommentRepositoryInterface',
+            'App\Domain\Comment\CommentRepository'
         );
 
         //Brandとかのモックを作ってないからItemだけモックを採用するとエラーが発生する為一時的にコメントアウト

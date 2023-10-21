@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace App\Domain\FavoriteLayout;
 
-use App\Contracts\UserRepositoryInterface;
-use App\Contracts\LayoutRepositoryInterface;
-use App\Contracts\FavoriteLayoutRepositoryInterface;
+use App\Domain\User\UserRepositoryInterface;
+use App\Domain\Layout\LayoutRepositoryInterface;
+use App\Domain\FavoriteLayout\FavoriteLayoutRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
 /**

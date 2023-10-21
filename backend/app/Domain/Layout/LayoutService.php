@@ -4,7 +4,7 @@ namespace App\Domain\Layout;
 
 use App\Models\Layout;
 use App\Domain\Item\ItemRepositoryInterface;
-use App\Contracts\FavoriteLayoutRepositoryInterface;
+use App\Domain\FavoriteLayout\FavoriteLayoutRepositoryInterface;
 use Aws\Exception\AwsException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\UploadedFile;

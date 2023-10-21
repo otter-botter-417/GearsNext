@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Domain\FavoriteLayout;
 
 use App\Models\FavoriteLayout;
-use App\Contracts\FavoriteLayoutRepositoryInterface;
+use App\Domain\FavoriteLayout\FavoriteLayoutRepositoryInterface;
 use App\Exceptions\LayoutNotFavoritedException;
 use App\Models\Layout;
 use Illuminate\Support\Facades\Log;

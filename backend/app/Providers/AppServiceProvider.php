@@ -32,8 +32,8 @@ class AppServiceProvider extends ServiceProvider
             'App\Domain\User\UserRepository'
         );
         $this->app->bind(
-            'App\Contracts\FavoriteItemRepositoryInterface',
-            'App\Repositories\FavoriteItemRepository'
+            'App\Domain\FavoriteItem\FavoriteItemRepositoryInterface',
+            'App\Domain\FavoriteItem\FavoriteItemRepository'
         );
         $this->app->bind(
             'App\Contracts\FavoriteLayoutRepositoryInterface',

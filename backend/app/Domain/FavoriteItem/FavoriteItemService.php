@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace App\Domain\FavoriteItem;
 
-use App\Contracts\UserRepositoryInterface;
-use App\Contracts\ItemRepositoryInterface;
-use App\Contracts\FavoriteItemRepositoryInterface;
+use App\Domain\User\UserRepositoryInterface;
+use App\Domain\Item\ItemRepositoryInterface;
+use App\Domain\FavoriteItem\FavoriteItemRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
 /**

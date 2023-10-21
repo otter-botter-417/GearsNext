@@ -3,7 +3,7 @@
 namespace App\Domain\Home;
 
 
-use App\Contracts\FavoriteItemRepositoryInterface;
+use App\Domain\FavoriteItem\FavoriteItemRepositoryInterface;
 use App\Domain\Item\ItemRepositoryInterface;
 use App\Domain\Layout\LayoutRepositoryInterface;
 use App\Domain\User\UserRepositoryInterface;

@@ -9,7 +9,7 @@ use App\Exceptions\ItemNotFoundException;
 use App\Contracts\BrandRepositoryInterface;
 use App\Contracts\CategoryRepositoryInterface;
 use App\Contracts\SubCategoryRepositoryInterface;
-use App\Contracts\FavoriteItemRepositoryInterface;
+use App\Domain\FavoriteItem\FavoriteItemRepositoryInterface;
 use App\Domain\UserInventory\UserInventoryRepositoryInterface;
 use App\Contracts\ViewItemHistoryRepositoryInterface;
 use Illuminate\Support\Facades\Log;

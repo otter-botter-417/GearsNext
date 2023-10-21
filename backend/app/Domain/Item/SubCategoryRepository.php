@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Domain\Item;
 
 use App\Models\SubCategory;
-use App\Contracts\SubCategoryRepositoryInterface;
 use App\Exceptions\SubCategoryNotFoundException;
 use Illuminate\Support\Facades\Log;
 

@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Domain\Item;
 
 use App\Models\Brand;
-use App\Contracts\BrandRepositoryInterface;
 use App\Exceptions\BrandNotFoundException;
 use Illuminate\Support\Facades\Log;
 

@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Domain\Item;
 
-use App\Models\Item;
 use App\Models\Category;
-use App\Contracts\CategoryRepositoryInterface;
 use App\Exceptions\CategoryNotFoundException;
 use Illuminate\Support\Facades\Log;
 

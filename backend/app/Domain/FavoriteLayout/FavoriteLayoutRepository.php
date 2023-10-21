@@ -2,9 +2,9 @@
 
 namespace App\Domain\FavoriteLayout;
 
+use App\Models\Layout;
 use App\Models\FavoriteLayout;
 use App\Exceptions\LayoutNotFavoritedException;
-use App\Models\Layout;
 use Illuminate\Support\Facades\Log;
 
 /**

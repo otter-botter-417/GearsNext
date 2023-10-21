@@ -2,9 +2,9 @@
 
 namespace App\Domain\Comment;
 
-use App\Domain\Layout\LayoutRepositoryInterface;
 use App\Models\Layout;
 use App\Models\Comment;
+use App\Domain\Layout\LayoutRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
 /**

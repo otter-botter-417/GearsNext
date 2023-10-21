@@ -3,7 +3,6 @@
 namespace App\Domain\Comment;
 
 use App\Models\Comment;
-use App\Domain\Comment\CommentRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
 /**

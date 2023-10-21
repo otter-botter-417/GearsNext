@@ -3,7 +3,6 @@
 namespace App\Domain\UserInventory;
 
 use App\Models\UserInventory;
-use App\Domain\UserInventory\UserInventoryRepositoryInterface;
 use App\Exceptions\ItemNotInInventoryException;
 use Illuminate\Support\Facades\Log;
 

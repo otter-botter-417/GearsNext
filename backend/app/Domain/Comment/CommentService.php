@@ -2,7 +2,6 @@
 
 namespace App\Domain\Comment;
 
-use App\Domain\Comment\CommentRepositoryInterface;
 use App\Domain\Layout\LayoutRepositoryInterface;
 use App\Models\Layout;
 use App\Models\Comment;

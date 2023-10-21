@@ -4,7 +4,6 @@ namespace App\Domain\User;
 
 use App\Models\User;
 
-
 /**
  * ユーザーに関するリポジトリクラス
  * @mixin UserRepositoryInterface

@@ -2,7 +2,6 @@
 
 namespace App\Domain\ViewItemHistory;
 
-use App\Domain\ViewItemHistory\ViewItemHistoryRepositoryInterface;
 use App\Models\ViewItemHistory;
 
 /**

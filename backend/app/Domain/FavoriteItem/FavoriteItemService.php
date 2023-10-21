@@ -4,7 +4,6 @@ namespace App\Domain\FavoriteItem;
 
 use App\Domain\User\UserRepositoryInterface;
 use App\Domain\Item\ItemRepositoryInterface;
-use App\Domain\FavoriteItem\FavoriteItemRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
 /**

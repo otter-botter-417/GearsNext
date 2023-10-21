@@ -4,7 +4,6 @@ namespace App\Domain\FavoriteLayout;
 
 use App\Domain\User\UserRepositoryInterface;
 use App\Domain\Layout\LayoutRepositoryInterface;
-use App\Domain\FavoriteLayout\FavoriteLayoutRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
 /**

@@ -4,7 +4,6 @@ namespace App\Domain\UserInventory;
 
 use App\Domain\User\UserRepositoryInterface;
 use App\Domain\Item\ItemRepositoryInterface;
-use App\Domain\UserInventory\UserInventoryRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
 /**

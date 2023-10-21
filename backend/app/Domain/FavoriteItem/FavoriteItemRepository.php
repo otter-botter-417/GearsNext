@@ -3,7 +3,6 @@
 namespace App\Domain\FavoriteItem;
 
 use App\Models\FavoriteItem;
-use App\Domain\FavoriteItem\FavoriteItemRepositoryInterface;
 use App\Exceptions\ItemNotFavoritedException;
 use Illuminate\Support\Facades\Log;
 

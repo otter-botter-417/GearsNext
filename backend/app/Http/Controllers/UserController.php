@@ -36,6 +36,7 @@ class UserController extends Controller
     {
         $registerData = $request->only(['user_name', 'email', 'password']);
         $token = $this->userService->register($registerData);
+        Log::info($token);
         return response()->json($token, 201);
     }
 
@@ -65,7 +66,7 @@ class UserController extends Controller
      */
     public function logout(): Response
     {
-        auth('api')->logout(); // トークンを無効化
+        JWTAuth::invalidate(JWTAuth::getToken());// トークンを無効化
         return response(null, 200);
     }
 
@@ -88,7 +89,7 @@ class UserController extends Controller
     public function delete(): Response
     {
         $this->userService->deleteUserData(Auth::id());
-        auth('api')->logout(); // トークンを無効化
+        JWTAuth::invalidate(JWTAuth::getToken());// トークンを無効化
         return response(null, 204);
     }
 

@@ -53,7 +53,7 @@ class UserControllerTest extends TestCase
         parent::setUp();
 
         $response = $this->post('/api/user/register', $this->userData);
-        $this->token = $response->json('token');
+        $this->token = $response->json('access_token');
     }
 
     /**

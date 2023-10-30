@@ -79,7 +79,7 @@
 <img src="/docs/homePage.png" width="600" />  
 
 
-[https://gears-camp.com](https://gears-camp.com)
+[https://www.gears-camp.com](https://www.gears-camp.com)
 - **商品とレイアウトのランイング情報**: 新着、いいね、閲覧数の切り替えが可能
 
 
@@ -89,7 +89,7 @@
 <img src="/docs/itemSearchPage.png" width="600" />  
 
 
-[https://gears-camp.com/ItemSearchPage](https://gears-camp.com/ItemSearchPage)
+[https://www.gears-camp.com/ItemSearchPage](https://www.gears-camp.com/ItemSearchPage)
 - **商品名での検索**: オートコンプリート機能付き
 - **カテゴリー・サブカテゴリー選択**: プルダウン形式で単一選択
 - **詳細な絞り込み**: アコーディオン形式で折りたたみ可能
@@ -106,7 +106,7 @@
 <img src="/docs/addNewLayoutPage2.gif" width="600" />  
 
 
-[https://gears-camp.com/AddNewLayoutPage](https://gears-camp.com/AddNewLayoutPage)
+[https://www.gears-camp.com/AddNewLayoutPage](https://www.gears-camp.com/AddNewLayoutPage)
 
 - **メイン画像アップロード**: 画像ファイル選択
 - **商品ラベル配置**: 画像上をクリックで選択し、配置可能
@@ -124,7 +124,7 @@
 <img src="/docs/layoutPage2.png" width="600" />  
 
 
-[https://gears-camp.com/layouts/1](https://gears-camp.com/layouts/17)
+[https://www.gears-camp.com/layouts/1](https://www.gears-camp.com/layouts/17)
 - **投稿画像とイメージマップ表示**
 - **投稿コメント**
 - **認証されたユーザーのアクション**: いいねとコメント投稿可能
@@ -138,7 +138,7 @@
 <img src="/docs/itemPage.png" width="600" />  
 
 
-[https://gears-camp.com/items/1](https://gears-camp.com/items/1)
+[https://www.gears-camp.com/items/1](https://www.gears-camp.com/items/1)
 - **商品情報**: 価格、ブランド、サイズ等
 - **関連レイアウト**: 商品が使用されているレイアウトをグリッド表示
 
@@ -149,6 +149,6 @@
 <img src="/docs/addNewItemPage.png" width="600" />  
 
 
-[https://gears-camp.com/AddNewLayoutPage](https://gears-camp.com/AddNewItemPage)
+[https://www.gears-camp.com/AddNewLayoutPage](https://www.gears-camp.com/AddNewItemPage)
 - **商品アップロード**: 商品データを登録できます。
 - **AWS S3**: 画像はバックエンドからAWS S3にアップロードされます。

@@ -6,7 +6,7 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { ItemSortedList } from './ItemSortedList';
-import { HomeStateType } from '@/components/shares/atoms/state/homeDataState';
+import { HomeDataType } from '@/components/types/HomeDataType';
 
 type SortSelectProps = {
   initialState: string;
@@ -50,7 +50,7 @@ export const SortSelect: FC<SortSelectProps> = ({ initialState, tabKeys }) => {
       </Box>
       {tabKeys.map((key) => (
         <TabPanel value={key} key={key}>
-          <ItemSortedList value={key as keyof HomeStateType} />
+          <ItemSortedList value={key as keyof HomeDataType} />
         </TabPanel>
       ))}
     </TabContext>

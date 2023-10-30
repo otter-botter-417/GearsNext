@@ -2,13 +2,11 @@ import { Box, ImageList } from '@mui/material';
 import React, { FC } from 'react';
 import { useRecoilValue } from 'recoil';
 import { ItemImageList } from './ItemImageList';
-import {
-  HomeStateType,
-  homeDataState,
-} from '@/components/shares/atoms/state/homeDataState';
+import { homeDataState } from '@/components/shares/atoms/state/homeDataState';
+import { HomeDataType } from '@/components/types/HomeDataType';
 
 type ItemSortedListProps = {
-  value: keyof HomeStateType;
+  value: keyof HomeDataType;
 };
 
 export const ItemSortedList: FC<ItemSortedListProps> = ({ value }) => {

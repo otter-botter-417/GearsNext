@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
-use App\Services\UserInventoryService;
+use App\Domain\UserInventory\UserInventoryService;
 use App\Http\Resources\ItemIndexResource;
 use Illuminate\Http\Response;
 use Illuminate\Http\Resources\Json\ResourceCollection;

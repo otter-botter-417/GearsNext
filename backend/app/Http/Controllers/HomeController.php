@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\HomeResource;
-use App\Services\HomeService;
-use Illuminate\Support\Facades\Log;
+use App\Domain\Home\HomeService;
 
 /**
  * ホーム画面に関する操作を管理するコントローラークラスです。

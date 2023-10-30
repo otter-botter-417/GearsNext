@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Layout;
-use App\Services\FavoriteLayoutService;
+use App\Domain\FavoriteLayout\FavoriteLayoutService;
 use App\Http\Resources\LayoutIndexResource;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;

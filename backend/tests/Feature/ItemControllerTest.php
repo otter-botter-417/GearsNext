@@ -21,52 +21,60 @@ class ItemControllerTest extends TestCase
         Item::factory()->create();
     }
 
+    private function getItemData(): array
+    {
+        return [
+                'itemData' => [
+                    'baseData' => [
+                        'item_name' => 'ソロベースEX',
+                        'asin' => 'B08B7ZZCST',
+                        'price' => 25960,
+                        'image_url' => 'solobase_ex',
+                        'open_width' => '123',
+                        'open_depth' => '123',
+                        'open_height' => '123',
+                        'storage_width' => '123',
+                        'storage_depth' => '123',
+                        'storage_height' => '123',
+                        'weight' => '3.34',
+                        'brand_name' => 'BUNDOK',
+                        'item_category_name' => 'テント',
+                        'sub_category_name' => 'パップテント',
+                    ],
+                    'itemTags' =>
+                    [
+                        0 => '無骨',
+                        1 => '難燃素材',
+                    ],
+                    'colorTags' =>
+                    [
+                        0 => 'オリーブ',
+                        1 => 'レッド',
+                    ],
+                    'details' =>
+                    [
+                        'capacity' => '1',
+                        'inner_Tent' => '付属',
+                        'grand_sheet' => '無し',
+                        'fabrics' => 'Test',
+                    ],
+                ],
+            ];
+    }
+
+
     /**
      * 商品登録
      * @covers \App\Http\Controllers\ItemController::store
      */
     public function test_store_registers_an_item()
     {
-        $itemData = [
-            'itemData' => [
-                'baseData' => [
-                    'item_name' => 'ソロベースEX',
-                    'asin' => 'B08B7ZZCST',
-                    'image_name' => 'solobase_ex',
-                    'price' => 25960,
-                    'open_width' => '123',
-                    'open_depth' => '123',
-                    'open_height' => '123',
-                    'storage_width' => '123',
-                    'storage_depth' => '123',
-                    'storage_height' => '123',
-                    'weight' => '3.34',
-                    'brand_name' => 'BUNDOK',
-                    'item_category_name' => 'テント',
-                    'sub_category_name' => 'パップテント',
-                ],
-                'itemTags' =>
-                [
-                    0 => '無骨',
-                    1 => '難燃素材',
-                ],
-                'colorTags' =>
-                [
-                    0 => 'オリーブ',
-                    1 => 'レッド',
-                ],
-                'details' =>
-                [
-                    'capacity' => '1',
-                    'inner_Tent' => '付属',
-                    'grand_sheet' => '無し',
-                    'fabrics' => 'Test',
-                ],
-
-            ],
+        $itemData = $this->getItemData();
+        $formData = [
+            'itemData' => json_encode($itemData)
         ];
 
-        $response = $this->post('/api/items', $itemData);
+        $response = $this->post('/api/items', $formData);
         $response->assertStatus(201);
         $this->assertDatabaseHas('items', ['item_name' => 'ソロベースEX']);
         $this->assertDatabaseHas('item_attributes', [
@@ -152,7 +160,7 @@ class ItemControllerTest extends TestCase
                 'baseData' => [
                     'item_name' => 'ソロベースEXtest',
                     'asin' => 'B08B7ZZCST',
-                    'image_name' => 'solobase_ex',
+                    'image_url' => 'solobase_ex',
                     'price' => 25000,
                     'open_width' => '321',
                     'open_depth' => '312',
@@ -184,8 +192,11 @@ class ItemControllerTest extends TestCase
             ],
 
         ];
+        $formData = [
+            'itemData' => json_encode($itemData)
+        ];
 
-        $response = $this->put("/api/items/{$item->item_id}", $itemData);
+        $response = $this->put("/api/items/{$item->item_id}", $formData);
         $response->assertStatus(204);
         $this->assertDatabaseHas('items', ['item_name' => 'ソロベースEXtest']);
         $this->assertDatabaseHas('item_attributes', [
@@ -234,44 +245,13 @@ class ItemControllerTest extends TestCase
      */
     public function test_store_fails_when_trying_to_register_already_existing_item()
     {
-        $invalidItemData = [
-            'itemData' => [
-                'baseData' => [
-                    'item_name' => 'ソロベースEX',
-                    'price' => 25960,
-                    'image_name' => "solobase_ex",
-                    'asin' => "B0B3W5TG2Y",
-                    'open_width' => 360,
-                    'open_depth' => 190,
-                    'open_height' => 110,
-                    'storage_width' => 47,
-                    'storage_depth' => 24,
-                    'storage_height' => 24,
-                    'weight' => '3.34',
-                    'brand_name' => 'BUNDOK',
-                    'item_category_name' => 'テント',
-                    'sub_category_name' => 'パップテント'
-                ],
-                'itemTags' =>
-                [
-                    0 => '無骨',
-                    1 => '難燃素材',
-                ],
-                'colorTags' =>
-                [
-                    0 => 'オリーブ',
-                ],
-                'details' =>
-                [
-                    'capacity' => '1',
-                    'inner_tent' => '付属',
-                    'grand_sheet' => '無し',
-                    'fabrics' => 'TC',
-                ],
-            ],
+        $invalidItemData = $this->getItemData();
+        $formData = [
+            'itemData' => json_encode($invalidItemData)
         ];
 
-        $response = $this->post('/api/items', $invalidItemData);
+        $this->post('/api/items', $formData);
+        $response = $this->post('/api/items', $formData);
 
         $response->assertStatus(409)
             ->assertJson(['message' => '商品は既に登録されています。']);
@@ -287,14 +267,18 @@ class ItemControllerTest extends TestCase
             'itemData' => [],
         ];
 
-        $response = $this->postJson('/api/items', $data);
+        $formData = [
+            'itemData' => json_encode($data)
+        ];
+
+        $response = $this->postJson('/api/items', $formData);
 
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'itemData.baseData.item_name',
                 'itemData.baseData.price',
                 'itemData.baseData.asin',
-                'itemData.baseData.image_name',
+                'itemData.baseData.image_url',
                 'itemData.baseData.open_width',
                 'itemData.baseData.open_depth',
                 'itemData.baseData.open_height',
@@ -317,36 +301,52 @@ class ItemControllerTest extends TestCase
     public function test_store_fails_with_validation_error_invalid_type()
     {
         $data = [
-            'itemData' => [
-                'item_name' => 123,  //無効な商品名（数値）
-                'price' => 'abc',  //無効な価格（文字列）
-                'asin' => 123,  //無効なASIN（数値）
-                'image_name' => 123,  //無効な画像名（数値）
-                'open_width' => 'abc',  //無効な展開時の幅（文字列）
-                'open_depth' => 'abc',  //無効な展開時の奥行き（文字列）
-                'open_height' => 'abc',  //無効な展開時の高さ（文字列）
-                'storage_width' => 'abc',  //無効な収納時の幅（文字列）
-                'storage_depth' => 'abc',  //無効な収納時の奥行き（文字列）
-                'storage_height' => 'abc',  //無効な収納時の高さ（文字列）
-                'weight' => 'abc',  //無効な重量（文字列）
-                'brand_name' => 123,  //無効なブランド名（数値）
-                'item_category_name' => 123,  //無効な商品カテゴリー名（数値）
-                'sub_category_name' => 123,  //無効なサブカテゴリー名（数値）
+                'baseData' => [
+                    'item_name' => 123,
+                    'price' => '25960',
+                    'image_name' => 123,
+                    'asin' => 123,
+                    'open_width' => "360",
+                    'open_depth' => "190",
+                    'open_height' => "110",
+                    'storage_width' => "47",
+                    'storage_depth' => "24",
+                    'storage_height' => "24",
+                    'weight' => 3.34,
+                    'brand_name' => 123,
+                    'item_category_name' => 123,
+                    'sub_category_name' => 123,
+                ],
+                'itemTags' =>
+                [
+                    0 => '無骨',
+                    1 => '難燃素材',
+                ],
                 'colorTags' =>
                 [
-                    0 => 123,  //無効なカラータグ（数値）
+                    0 => 2,
                 ],
-            ],
+                'details' =>
+                [
+                    'capacity' => '1',
+                    'inner_tent' => '付属',
+                    'grand_sheet' => '無し',
+                    'fabrics' => 'TC',
+                ],
         ];
 
-        $response = $this->postJson('/api/items', $data);
+        $formData = [
+            'itemData' => json_encode($data)
+        ];
+
+        $response = $this->postJson('/api/items', $formData);
 
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'itemData.baseData.item_name',
                 'itemData.baseData.price',
                 'itemData.baseData.asin',
-                'itemData.baseData.image_name',
+                'itemData.baseData.image_url',
                 'itemData.baseData.open_width',
                 'itemData.baseData.open_depth',
                 'itemData.baseData.open_height',
@@ -357,7 +357,7 @@ class ItemControllerTest extends TestCase
                 'itemData.baseData.brand_name',
                 'itemData.baseData.item_category_name',
                 'itemData.baseData.sub_category_name',
-                'itemData.colorTags.0',
+                'itemData.colorTags',
             ]);
     }
 }

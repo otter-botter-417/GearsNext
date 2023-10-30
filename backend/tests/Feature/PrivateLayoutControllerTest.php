@@ -7,6 +7,7 @@ use App\Models\Layout;
 use Tests\TestCase;
 use Tests\Traits\AuthorizesRequests;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 
 /**
  * このクラスは、ユーザーのレイアウト管理に関連するエンドポイントのテストを担当します。
@@ -29,24 +30,38 @@ class PrivateLayoutControllerTest extends TestCase
         $this->initializeAuthorization();
         $this->item_1 = Item::factory()->create();  // ここを修正
         $this->item_2 = Item::factory()->create();
-
+    
         $this->layoutData = [
+            'layout_image' => UploadedFile::fake()->image('image1.jpg'),  // 仮想のアップロードされたファイル
             'text' => 'これはテストです。',
             'items' => [
                 [
                     'item_id' => $this->item_1->item_id,
+                ],
+                [
+                    'item_id' => $this->item_2->item_id,
+                ],
+            ],
+            'image_map_positions' => [
+                [
+                    'item_id' => $this->item_1->item_id,
+                    'item_name' => 'Item1',
                     'x_position' => 10,
                     'y_position' => 20,
                 ],
                 [
                     'item_id' => $this->item_2->item_id,
+                    'item_name' => 'Item2',
                     'x_position' => 100,
                     'y_position' => 200,
                 ],
             ]
         ];
-
-        $this->authorizedRequest('POST', '/api/user/layout', $this->layoutData);
+    
+        // 画像を含む場合、ファイルを送信するために `attach` メソッドを使用する
+        $this->authorizedRequest('POST', '/api/user/layout', $this->layoutData, [
+            'layout_image' => $this->layoutData['layout_image']
+        ]);
         $this->latestLayoutId = Layout::latest('layout_id')->first()->layout_id;
     }
 
@@ -89,15 +104,26 @@ class PrivateLayoutControllerTest extends TestCase
     {
         $update = Item::factory()->create();
         $updateLayoutData = [
+            'layout_image' => UploadedFile::fake()->image('image1.jpg'),  // 仮想のアップロードされたファイル
             'text' => 'これは更新テストです。',
             'items' => [
                 [
                     'item_id' => $update->item_id,
+                ],
+                [
+                    'item_id' => $this->item_1->item_id,
+                ],
+            ],
+            'image_map_positions' => [
+                [
+                    'item_id' => $update->item_id,
+                    'item_name' => $update->item_name,
                     'x_position' => 20,
                     'y_position' => 10,
                 ],
                 [
                     'item_id' => $this->item_1->item_id,
+                    'item_name' => $this->item_1->item_name,
                     'x_position' => 100,
                     'y_position' => 200,
                 ],
@@ -111,6 +137,7 @@ class PrivateLayoutControllerTest extends TestCase
             'x_position' => 20,
             'y_position' => 10,
         ]);
+    
     }
 
     /**

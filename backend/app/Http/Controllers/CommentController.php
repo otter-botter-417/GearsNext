@@ -11,7 +11,6 @@ use App\Http\Resources\CommentResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 /**
  * レイアウトへのコメントに関する操作を管理するコントローラークラスです。
@@ -37,7 +36,6 @@ class CommentController extends Controller
     {
         $comments = $this->commentService->getLayoutComments($layout->layout_id);
         return CommentResource::collection($comments);
-
     }
 
     /**
@@ -51,9 +49,7 @@ class CommentController extends Controller
     {
         $commentData = $request->only(['content', 'parent_id']);
         $newCommentData = $this->commentService->createLayoutComment(Auth::id(), $layout->layout_id, $commentData);
-        Log::debug($newCommentData);
         return CommentResource::collection($newCommentData);
-
     }
 
     /**

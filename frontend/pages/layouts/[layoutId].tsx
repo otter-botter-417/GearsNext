@@ -27,33 +27,57 @@ interface ApiResponse {
  */
 export async function getStaticProps(context: GetStaticPropsContext) {
   const layoutId = context.params?.layoutId;
-  const response = await fetch(API_BASE_URL + `layout/${layoutId}`);
-  const itemData = (await response.json()) as LayoutData;
-  return {
-    props: {
-      layoutDetail: itemData.data,
-      layoutId: layoutId,
-    },
-    revalidate: 60, // 30秒間隔で再生成
-  };
+  try {
+    const response = await fetch(API_BASE_URL + `layout/${layoutId}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch data');
+    }
+    const itemData = (await response.json()) as LayoutData;
+    if (!itemData || !itemData.data) {
+      throw new Error('Invalid data format');
+    }
+    return {
+      props: {
+        layoutDetail: itemData.data,
+        layoutId: layoutId,
+      },
+      revalidate: 60, // 30秒間隔で再生成
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      notFound: true,
+    };
+  }
 }
 
 export async function getStaticPaths() {
-  // APIからすべてのlayoutIdを取得
-  const response = await fetch(API_BASE_URL + 'layout');
-  const data = (await response.json()) as ApiResponse;
+  try {
+    // APIからすべてのlayoutIdを取得
+    const response = await fetch(API_BASE_URL + 'layout');
+    if (!response.ok) {
+      throw new Error('Failed to fetch data');
+    }
+    const data = (await response.json()) as ApiResponse;
+    if (!data || !Array.isArray(data.data)) {
+      throw new Error('Invalid data format');
+    }
 
-  const layouts: LayoutDataType[] = data.data;
+    const layouts: LayoutDataType[] = data.data;
 
-  // 取得したlayoutIdをもとにpathsを生成
-  const paths = layouts.map((layout: LayoutDataType) => ({
-    params: { layoutId: layout.layoutId.toString() },
-  }));
+    // 取得したlayoutIdをもとにpathsを生成
+    const paths = layouts.map((layout: LayoutDataType) => ({
+      params: { layoutId: layout.layoutId.toString() },
+    }));
 
-  return {
-    paths,
-    fallback: 'blocking',
-  };
+    return {
+      paths,
+      fallback: 'blocking',
+    };
+  } catch (error) {
+    console.error(error);
+    return { paths: [], fallback: 'blocking' };
+  }
 }
 
 /**

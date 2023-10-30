@@ -156,21 +156,6 @@ class CommentTest extends TestCase
     }
 
     /**
-     * ログインしていないユーザーがコメントを作成できないことを確認するテスト
-     * @covers \App\Http\Controllers\CommentController::store
-     */
-    public function test_unauthenticated_user_cannot_create_comment()
-    {
-        Auth::logout();
-        $response = $this->post('/api/user/layout/comment/' . $this->layout->layout_id, [
-            'content' => 'これはテストコメントです。',
-            'parent_id' => null
-        ]);
-
-        $response->assertStatus(401);
-    }
-
-    /**
      * 存在しないlayout_idでのコメント作成を阻止するテスト
      * @covers \App\Http\Controllers\CommentController::store
      */

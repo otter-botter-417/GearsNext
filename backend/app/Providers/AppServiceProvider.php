@@ -57,13 +57,13 @@ class AppServiceProvider extends ServiceProvider
         );
 
         //Brandとかのモックを作ってないからItemだけモックを採用するとエラーが発生する為一時的にコメントアウト
-        // if (config('app.env') === 'testing') {
-        //     // テスト環境の場合、モックリポジトリをバインド
-        //     $this->app->bind(ItemRepositoryInterface::class, MockEloquentItemRepository::class);
-        // } else {
-        //     // それ以外の環境では、実際のリポジトリをバインド
-        //     $this->app->bind(ItemRepositoryInterface::class, EloquentItemRepository::class);
-        // }
+        if (config('app.env') === 'testing') {
+            // テスト環境の場合、モックリポジトリをバインド
+            $this->app->bind(ItemRepositoryInterface::class, MockEloquentItemRepository::class);
+        } else {
+            // それ以外の環境では、実際のリポジトリをバインド
+            $this->app->bind(ItemRepositoryInterface::class, EloquentItemRepository::class);
+        }
     }
 
     /**

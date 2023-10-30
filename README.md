@@ -64,7 +64,7 @@
 
 ### URL
 
-- [https://gears-camp.com](https://gears-camp.com)
+- [https://www.gears-camp.com](https://www.gears-camp.com)
   - ログインフォームにテストユーザー用の値が初期設定されています。
 
 ## データベース設計

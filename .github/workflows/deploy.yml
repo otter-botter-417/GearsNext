@@ -1,0 +1,24 @@
+# .github/workflows/deploy.yml
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main  # メインブランチにプッシュされた場合に実行
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Deploy to EC2
+      run: |
+        ssh-keyscan ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+        chmod 600 ~/.ssh/known_hosts
+        echo "${{ secrets.SSH_KEY }}" > key.pem
+        chmod 600 key.pem
+        ssh -i key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} 'bash -s' < deploy_script.sh
+      env:
+        SSH_KEY: ${{ secrets.SSH_KEY }}

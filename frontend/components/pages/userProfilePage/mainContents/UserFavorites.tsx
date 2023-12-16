@@ -1,7 +1,7 @@
 import React from 'react';
 
 import useFavoriteSelection from '@/hooks/UserProfilePage/useFavoriteSelection';
-import ToggleButton from './ToggleButton';
+import ToggleButton from '../../../shares/molecules/ToggleButton';
 import SectionWithGrid from './SectionWithGrid';
 import { useFetchUserFavoriteItem } from '@/hooks/api/useFetchUserFavoriteItem';
 import { useFetchUserFavoriteLayout } from '@/hooks/api/useFetchUserFavoriteLayout';

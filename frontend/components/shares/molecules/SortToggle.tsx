@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Box, Typography } from '@mui/material';
 
-import CustomSwitch from '../../pages/userProfilePage/mainContents/CustomSwitch';
+import CustomSwitch from '@/components/shares/atoms/CustomSwitch';
 
 type SortToggleProps = {
   switchState: boolean;

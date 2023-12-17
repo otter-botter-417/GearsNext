@@ -13,4 +13,7 @@ export const LAYOUT_IMAGE_BASE_URL = 'https://gears-images.s3.ap-northeast-1.ama
 export const DEFAULT_PAGE_WIDTH = '1300px';
 export const IMAGE_SIZE_WIDTH = 800;
 export const IMAGE_SIZE_HEIGHT = 600;
-
+export const CONTENT_TYPES = {
+    ITEM: 'item',
+    LAYOUT: 'layout',
+};

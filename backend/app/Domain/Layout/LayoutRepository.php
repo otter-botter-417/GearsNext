@@ -7,6 +7,7 @@ use App\Models\TagPosition;
 use App\Models\ViewLayoutHistory;
 use App\Exceptions\LayoutNotFoundException;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Log;
 
 /**
  * レイアウトに関するリポジトリクラス
@@ -166,7 +167,7 @@ class LayoutRepository implements LayoutRepositoryInterface
         $layout->save();
         $layout->items()->detach();
         TagPosition::where('layout_id', $layout->layout_id)->delete();
-        $this->createLayoutPositions($layout, $data['items']);
+        $this->createLayoutPositions($layout, $data['image_map_positions']);
     }
 
     /**

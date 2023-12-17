@@ -3,15 +3,16 @@
 namespace App\Domain\FavoriteLayout;
 
 use App\Models\FavoriteLayout;
+use Illuminate\Database\Eloquent\Collection;
 
 interface FavoriteLayoutRepositoryInterface
 {
     /**
-     * お気に入りのレイアウト一覧を取得
+     * お気に入りのレイアウト一覧を取得し、それぞれのレイアウト情報を結合
      * @param  int $userId
-     * @return array
+     * @return Collection
      */
-    public function getFavoriteLayouts(int $userId);
+    public function getFavoriteLayouts(int $userId): Collection;
     /**
      * お気に入りにレイアウトを追加
      * @param  int $userId

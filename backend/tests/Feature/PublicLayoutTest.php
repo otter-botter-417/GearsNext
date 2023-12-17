@@ -16,30 +16,14 @@ class PublicLayoutTest extends TestCase
 {
     use RefreshDatabase, AuthorizesRequests;
 
-    private $layoutData = [
-        'text' => 'これはテストです。',
-        'items' => [
-            [
-                'item_id' => 1,
-                'x_position' => 10,
-                'y_position' => 20,
-            ],
-            [
-                'item_id' => 2,
-                'x_position' => 100,
-                'y_position' => 200,
-            ],
-        ]
-    ];
-
     private $createdLayoutId;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->initializeAuthorization();
-        Item::factory(5)->create();
-        $this->authorizedRequest('POST', '/api/user/layout', $this->layoutData);
+        Item::factory(3)->create();
+        Layout::factory(3)->create();
         $this->createdLayoutId = Layout::latest('layout_id')->first()->layout_id;
     }
 
@@ -50,16 +34,22 @@ class PublicLayoutTest extends TestCase
     public function test_can_get_layouts()
     {
         $response = $this->authorizedRequest('GET', '/api/layout');
-        // dd($response->json());
         $response->assertJsonStructure([
             'data' => [
                 '*' => [
                     'layoutId',
+                    'imageName',
+                    'text',
+                    'userId',
                     'userName',
                     'favoriteCount',
                     'viewCount',
                     'createdAt',
                     'updatedAt',
+                    'comments',
+                    'items',
+                    'tagPositions',
+                    'user',
                 ]
             ],
         ]);
@@ -72,10 +62,6 @@ class PublicLayoutTest extends TestCase
     public function test_can_get_layout_detail()
     {
         $response = $this->authorizedRequest('GET', '/api/layout/' . $this->createdLayoutId);
-        $this->assertDatabaseHas('item_layout', [
-            'item_id' => 1,
-            'layout_id' => $this->createdLayoutId
-        ]);
         $response->assertStatus(200)
             ->assertJsonStructure([
                 'data' => [

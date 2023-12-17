@@ -85,10 +85,8 @@ class PrivateLayoutControllerTest extends TestCase
         $response->assertJsonStructure([
             'data' => [
                 '*' => [
-                    'layoutId',
-                    'userName',
-                    'favoriteCount',
-                    'viewCount',
+                    'id',
+                    'imageName',
                     'createdAt',
                     'updatedAt',
                 ]
@@ -104,7 +102,6 @@ class PrivateLayoutControllerTest extends TestCase
     {
         $update = Item::factory()->create();
         $updateLayoutData = [
-            'layout_image' => UploadedFile::fake()->image('image1.jpg'),  // 仮想のアップロードされたファイル
             'text' => 'これは更新テストです。',
             'items' => [
                 [

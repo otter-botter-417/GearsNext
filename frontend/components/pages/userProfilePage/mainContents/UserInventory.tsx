@@ -2,7 +2,7 @@ import React from 'react';
 import { useRecoilValue } from 'recoil';
 
 import { ContentType } from '@/components/types/ContentType';
-import { userInventoryItemListState } from '@/components/shares/atoms/state/userInventoryItemListState';
+import { userInventoryItemListForProfileState } from '@/components/shares/atoms/state/userInventoryItemListForProfileState';
 import SectionWithGrid from './SectionWithGrid';
 import { useFetchUserInventory } from '@/hooks/api/useFetchUserInventory';
 
@@ -14,7 +14,9 @@ import { useFetchUserInventory } from '@/hooks/api/useFetchUserInventory';
 const UserInventory = () => {
   useFetchUserInventory();
 
-  const userInventoryItemList = useRecoilValue(userInventoryItemListState);
+  const userInventoryItemList = useRecoilValue(
+    userInventoryItemListForProfileState,
+  );
   return (
     <SectionWithGrid
       title={'持っているギア'}

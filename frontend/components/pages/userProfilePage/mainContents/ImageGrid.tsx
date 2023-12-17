@@ -49,9 +49,7 @@ const ImageGrid: FC<ImageGridProps> = ({
   return (
     <Box sx={{ p: 3 }}>
       {itemSortControl()}
-      <Grid container spacing={2}>
-        {imageGridViewer()}
-      </Grid>
+      {imageGridViewer()}
     </Box>
   );
 };

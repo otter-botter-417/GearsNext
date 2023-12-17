@@ -1,4 +1,4 @@
-import { UserProfilePageContentType } from "@/components/types/UserProfilePageContentType";
+import { ItemDataType } from "@/components/types/ItemDataType";
 import { atom } from "recoil";
 
 /**
@@ -6,5 +6,5 @@ import { atom } from "recoil";
  */
 export const userInventoryItemListState = atom({
     key: "userInventoryItemListState",
-    default: <UserProfilePageContentType[]>[],
+    default: <ItemDataType[]>[],
 });

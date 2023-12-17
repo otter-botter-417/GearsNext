@@ -9,6 +9,7 @@ const useFetchUserData = (): string => {
     const selectedIndex = useRecoilValue(selectedListState);
 
     //TODO APIをまとめるて１回で取得するようにする
+    //TODO もっているギアは、ItemDataType[]ではなく、UserInventoryItemType[]にする必要あり。
     // useFetchUserInventory();
     // useFetchUserFavoriteItem();
     // useFetchUserFavoriteLayout();

@@ -14,7 +14,6 @@ export const ItemImageList: FC<ItemImageListProps> = ({ data }) => {
   let title: string;
   let subtitle: string;
   let link: string;
-  const pattern = 'itemId' in data ? 'item' : 'layout';
 
   if ('itemId' in data) {
     title = data.itemName;

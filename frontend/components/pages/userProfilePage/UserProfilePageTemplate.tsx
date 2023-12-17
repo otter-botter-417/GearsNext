@@ -29,7 +29,6 @@ const UserProfilePageTemplate: FC<UserProfilePageTemplateProps> = ({
         sx={{
           position: 'fixed',
           top: 0, // ビューポートの上端から開始
-          width: '15%', // 幅は全体の15%
           height: '100vh', // 高さはビューポートの高さに合わせる
           overflowY: 'auto', // コンテンツがオーバーフローした場合にスクロール可能
           bgcolor: BOX_BG_COLOR,

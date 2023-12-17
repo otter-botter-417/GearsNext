@@ -34,8 +34,8 @@ class ItemIndexResource extends JsonResource
             'weight' => $this->weight,
             'favoriteCount' => $this->favorite_count,
             'viewCount' => $this->view_count,
-            'createdAt' => $this->created_at,
-            'updatedAt' => $this->updated_at,
+            'createdAt' => $this->created_at->toIso8601String(),
+            'updatedAt' => $this->updated_at->toIso8601String(),
 
             'brandName' => $this->brand->brand_name,
             'categoryName' => $this->category->category_name,

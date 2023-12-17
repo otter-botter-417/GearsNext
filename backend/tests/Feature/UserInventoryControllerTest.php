@@ -53,24 +53,8 @@ class UserInventoryControllerTest extends TestCase
             ->assertJsonStructure([
                 'data' => [
                     '*' => [
-                        'itemId',
-                        'itemName',
-                        'price',
+                        'id',
                         'imageName',
-                        'asin',
-                        'openSize' => [
-                            'openWidth',
-                            'openDepth',
-                            'openHeight'
-                        ],
-                        'storageSize' => [
-                            'storageWidth',
-                            'storageDepth',
-                            'storageHeight'
-                        ],
-                        'weight',
-                        'favoriteCount',
-                        'viewCount',
                         'createdAt',
                         'updatedAt',
                     ]

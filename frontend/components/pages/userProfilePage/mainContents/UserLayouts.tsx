@@ -4,6 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { ContentType } from '@/components/types/ContentType';
 import { userLayoutListState } from '@/components/shares/atoms/state/userLayoutListState';
 import SectionWithGrid from './SectionWithGrid';
+import { useFetchUserLayout } from '@/hooks/api/useFetchUserLayout';
 
 /**
  * UserLayouts コンポーネントは、ユーザーが投稿したレイアウトの一覧を表示します。
@@ -11,7 +12,9 @@ import SectionWithGrid from './SectionWithGrid';
  * SectionWithGrid コンポーネントを利用して、レイアウトのグリッド表示を行います。
  */
 const UserLayouts = () => {
+  useFetchUserLayout();
   const userLayoutList = useRecoilValue(userLayoutListState);
+  console.log(userLayoutList);
   return (
     <SectionWithGrid
       title={'投稿したレイアウト'}

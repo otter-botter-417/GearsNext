@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Layout;
 use Tests\TestCase;
 use Tests\Traits\AuthorizesRequests;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -19,6 +20,7 @@ class FavoriteLayoutControllerTest extends TestCase
     {
         parent::setUp();
         $this->initializeAuthorization();
+        Layout::factory()->create();
         $this->authorizedRequest('POST', '/api/user/favorite/layouts/1');
     }
 
@@ -53,10 +55,8 @@ class FavoriteLayoutControllerTest extends TestCase
             ->assertJsonStructure([
                 'data' => [
                     '*' => [
-                        'layoutId',
-                        'userName',
-                        'favoriteCount',
-                        'viewCount',
+                        'id',
+                        'imageName',
                         'createdAt',
                         'updatedAt',
                     ]

@@ -61,7 +61,7 @@ class PrivateLayoutController extends Controller
     public function update(UpdateLayoutRequest $request, Layout $layout): Response
     {
         $this->authorize('update', $layout);
-        $data = $request->only(['text', 'items']);
+        $data = $request->only(['text', 'items', 'image_map_positions']);
         $this->layoutService->updateLayout($layout, $data);
         return response(null, 204);
     }

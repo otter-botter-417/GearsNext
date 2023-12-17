@@ -7,13 +7,10 @@ use App\Domain\Layout\LayoutService;
 use App\Http\Requests\StoreLayoutRequest;
 use App\Http\Requests\UpdateLayoutRequest;
 use App\Http\Resources\LayoutIndexResource;
-use Aws\Exception\AwsException;
-use Illuminate\Http\Request;
+use App\Http\Resources\UserLayoutResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Response;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 
 /**
  * レイアウトに関する操作を管理するコントローラークラスです。
@@ -37,7 +34,7 @@ class PrivateLayoutController extends Controller
     public function index(): ResourceCollection
     {
         $layouts = $this->layoutService->getLayouts(Auth::id());
-        return LayoutIndexResource::collection($layouts);
+        return UserLayoutResource::collection($layouts);
     }
 
     /**

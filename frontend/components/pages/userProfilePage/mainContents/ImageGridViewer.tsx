@@ -16,15 +16,19 @@ type ImageGridViewerProps = {
  *
  * @param items: UserProfilePageContentType オブジェクトの配列
  * @param type: アイテムのタイプ（'item' または 'layout'）
- * 
+ *
  * @returns アイテムのリストをグリッド形式で表示するコンポーネント。
  */
 const ImageGridViewer: FC<ImageGridViewerProps> = ({ items, type }) => {
-  return items.map((data) => (
-    <Grid item xs={12} sm={6} md={4} key={data.id}>
-      <ItemCard id={data.id} type={type} imageName={data.imageName} />
+  return (
+    <Grid container spacing={2}>
+      {items.map((data) => (
+        <Grid item xs={12} sm={6} md={4} key={data.id}>
+          <ItemCard id={data.id} type={type} imageName={data.imageName} />
+        </Grid>
+      ))}
     </Grid>
-  ));
+  );
 };
 
 export default ImageGridViewer;

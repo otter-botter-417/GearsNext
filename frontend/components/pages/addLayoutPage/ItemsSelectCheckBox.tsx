@@ -29,7 +29,7 @@ export const ItemsSelectCheckBox: FC = () => {
   );
   const selectedCategoryName = useRecoilValue(selectedCategoryNameState);
   const itemSearchQuery = useRecoilValue(itemSearchQueryState);
-
+  
   /**
    * ユーザーが選択した商品の中に、指定した商品が含まれているかどうかを判定する関数。
    * @param itemId
@@ -67,7 +67,7 @@ export const ItemsSelectCheckBox: FC = () => {
             : // 持っている物の場合
             selectedCategoryName === INVENTORY_CATEGORY
             ? userInventoryItemList.some(
-                (inventoryItem) => inventoryItem.id === item.itemId,
+                (inventoryItem) => inventoryItem.itemId === item.itemId,
               )
             : selectedCategoryName === ALL_CATEGORY ||
               item.categoryName === selectedCategoryName) && // 新しい条件を追加: itemSearchQueryのチェック

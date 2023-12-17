@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Layout;
 use App\Domain\FavoriteLayout\FavoriteLayoutService;
-use App\Http\Resources\LayoutIndexResource;
+use App\Http\Resources\UserLayoutResource;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -31,7 +31,7 @@ class FavoriteLayoutController extends Controller
     public function index(): ResourceCollection
     {
         $favoriteLayouts = $this->favoriteLayoutService->getFavoriteLayouts(Auth::id());
-        return LayoutIndexResource::collection($favoriteLayouts);
+        return UserLayoutResource::collection($favoriteLayouts);
     }
 
     /**

@@ -36,7 +36,6 @@ class UserController extends Controller
     {
         $registerData = $request->only(['user_name', 'email', 'password']);
         $token = $this->userService->register($registerData);
-        Log::info($token);
         return response()->json($token, 201);
     }
 

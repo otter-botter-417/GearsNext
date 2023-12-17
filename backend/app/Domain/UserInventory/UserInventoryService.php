@@ -38,17 +38,13 @@ class UserInventoryService
     }
 
     /**
-     * ユーザーの持っている商品一覧を取得
+     * ユーザーの持っている商品を取得し、それぞれにItemの情報を結合して返す
      * @param  int  $userId
      * @return Collection
      */
     public function getUserInventories(int $userId): Collection
     {
-        $userInventoryItemIds = $this->userInventoryRepository
-            ->getUserInventoryItemIds($userId);
-        $userInventories = $this->itemRepository
-            ->getItemsByIds($userInventoryItemIds);
-        return $userInventories;
+        return $this->userInventoryRepository->getUserInventoryWithItem($userId);
     }
 
     /**

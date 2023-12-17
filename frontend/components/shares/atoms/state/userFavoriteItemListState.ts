@@ -2,9 +2,9 @@ import { UserProfilePageContentType } from "@/components/types/UserProfilePageCo
 import { atom } from "recoil";
 
 /**
- * ユーザーの持っている商品の配列を管理するRecoilのatom
+ * ユーザーのお気に入り商品の配列を管理するRecoilのatom
  */
-export const userInventoryItemListState = atom({
-    key: "userInventoryItemListState",
+export const userFavoriteItemListState = atom({
+    key: "userFavoriteItemListState",
     default: <UserProfilePageContentType[]>[],
 });

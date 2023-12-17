@@ -38,15 +38,14 @@ class FavoriteItemService
     }
 
     /**
-     * ユーザーのお気に入り商品を取得
+     * ユーザーのお気に入り商品を取得し、それぞれにItemの情報を結合して返す
      * @param  int  $userId
      * @return Collection
      */
     public function getFavoriteItems(int $userId): Collection
     {
-        $favoriteItemIds = $this->favoriteItemRepository->getFavoriteItems($userId);
-        $userInventories = $this->itemRepository->getItemsByIds($favoriteItemIds);
-        return $userInventories;
+        // ユーザーのお気に入り商品を取得し、それぞれに関連するItemの情報を即座にロードする
+        return $this->favoriteItemRepository->getFavoriteItemsWithItem($userId);
     }
 
     /**

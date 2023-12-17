@@ -5,6 +5,7 @@ namespace App\Domain\FavoriteLayout;
 use App\Models\Layout;
 use App\Models\FavoriteLayout;
 use App\Exceptions\LayoutNotFavoritedException;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -21,13 +22,13 @@ class FavoriteLayoutRepository implements FavoriteLayoutRepositoryInterface
     }
 
     /**
-     * お気に入りのレイアウト一覧を取得
+     * お気に入りのレイアウト一覧を取得し、それぞれのレイアウト情報を結合
      * @param  string $userId
-     * @return array
+     * @return Collection
      */
-    public function getFavoriteLayouts(int $userId)
+    public function getFavoriteLayouts(int $userId): Collection
     {
-        return $this->model->where('user_id', $userId)->pluck('layout_id')->toArray();
+        return $this->model->where('user_id', $userId)->with('layout')->get();
     }
 
     /**

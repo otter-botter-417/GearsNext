@@ -2,14 +2,16 @@
 
 namespace App\Domain\UserInventory;
 
+use Illuminate\Database\Eloquent\Collection;
+
 interface UserInventoryRepositoryInterface
 {
     /**
      * 持っている商品一覧を取得
      * @param  int $userId
-     * @return array
+     * @return Collection
      */
-    public function getUserInventoryItemIds(int $userId): array;
+    public function getUserInventoryWithItem(int $userId): Collection;
 
     /**
      * 持っている商品に追加

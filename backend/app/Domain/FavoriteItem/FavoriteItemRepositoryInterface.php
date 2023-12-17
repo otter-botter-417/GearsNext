@@ -3,15 +3,16 @@
 namespace App\Domain\FavoriteItem;
 
 use App\Models\FavoriteItem;
+use Illuminate\Database\Eloquent\Collection;
 
 interface FavoriteItemRepositoryInterface
 {
     /**
-     * お気に入りの商品一覧を取得
+     * ユーザーのお気に入りの商品一覧を取得し、それぞれの商品情報を結合
      * @param  int $userId
-     * @return array
+     * @return Collection
      */
-    public function getFavoriteItems(int $userId): array;
+    public function getFavoriteItemsWithItem(int $userId): Collection;
 
     /**
      * お気に入りに商品を追加

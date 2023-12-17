@@ -4,6 +4,7 @@ namespace App\Domain\UserInventory;
 
 use App\Models\UserInventory;
 use App\Exceptions\ItemNotInInventoryException;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -20,13 +21,14 @@ class UserInventoryRepository implements UserInventoryRepositoryInterface
     }
 
     /**
-     * 持っている商品一覧を取得
+     * 持っている商品一覧を取得し、それぞれの商品情報を結合
      * @param  int $userId
-     * @return array
+     * @return Collection
      */
-    public function getUserInventoryItemIds(int $userId): array
+    public function getUserInventoryWithItem(int $userId): Collection
     {
-        return $this->model->where('user_id', $userId)->pluck('item_id')->toArray();
+        return $this->model->where('user_id', $userId)->with('item')->get();
+
     }
 
     /**

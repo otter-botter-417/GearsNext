@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Domain\FavoriteItem\FavoriteItemService;
-use App\Http\Resources\ItemIndexResource;
+use App\Http\Resources\UserItemResource;
 use Illuminate\Http\Response;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +30,7 @@ class FavoriteItemController extends Controller
     public function index(): ResourceCollection
     {
         $favoriteItems = $this->favoriteItemService->getFavoriteItems(Auth::id());
-        return ItemIndexResource::collection($favoriteItems);
+        return UserItemResource::collection($favoriteItems);
     }
 
     /**

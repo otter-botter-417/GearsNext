@@ -44,9 +44,7 @@ class FavoriteLayoutService
      */
     public function getFavoriteLayouts($userId)
     {
-        $favoriteLayoutIds = $this->favoriteLayoutRepository->getFavoriteLayouts($userId);
-        $favoriteLayouts = $this->layoutRepository->getLayoutsByIds($favoriteLayoutIds);
-        return $favoriteLayouts;
+        return $this->favoriteLayoutRepository->getFavoriteLayouts($userId);
     }
 
     /**

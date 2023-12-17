@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Domain\UserInventory\UserInventoryService;
-use App\Http\Resources\ItemIndexResource;
+use App\Http\Resources\UserItemResource;
 use Illuminate\Http\Response;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +30,7 @@ class UserInventoryController extends Controller
     public function index(): ResourceCollection
     {
         $userInventories = $this->userInventoryService->getUserInventories(Auth::id());
-        return ItemIndexResource::collection($userInventories);
+        return UserItemResource::collection($userInventories);
     }
 
     /**

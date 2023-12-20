@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Domain\FavoriteLayout\FavoriteLayoutService;
+use App\Domain\Infrastructure\Storage\ImageUploadService;
+use App\Domain\Infrastructure\Storage\S3StorageService;
+use App\Domain\Infrastructure\Storage\StorageServiceInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -48,22 +52,17 @@ class AppServiceProvider extends ServiceProvider
             'App\Domain\Layout\LayoutRepository'
         );
         $this->app->bind(
-            'App\Domain\ViewItemHistory\ViewItemHistoryRepositoryInterface',
-            'App\Domain\ViewItemHistory\ViewItemHistoryRepository'
+            'App\Domain\ViewHistory\ViewHistoryRepositoryInterface',
+            'App\Domain\ViewHistory\ViewHistoryRepository'
         );
         $this->app->bind(
             'App\Domain\Comment\CommentRepositoryInterface',
             'App\Domain\Comment\CommentRepository'
         );
 
-        //Brandとかのモックを作ってないからItemだけモックを採用するとエラーが発生する為一時的にコメントアウト
-        if (config('app.env') === 'testing') {
-            // テスト環境の場合、モックリポジトリをバインド
-            $this->app->bind(ItemRepositoryInterface::class, MockEloquentItemRepository::class);
-        } else {
-            // それ以外の環境では、実際のリポジトリをバインド
-            $this->app->bind(ItemRepositoryInterface::class, EloquentItemRepository::class);
-        }
+        $this->app->bind(StorageServiceInterface::class, S3StorageService::class);
+        $this->app->bind(ImageUploadService::class);
+        $this->app->bind(FavoriteLayoutService::class);
     }
 
     /**

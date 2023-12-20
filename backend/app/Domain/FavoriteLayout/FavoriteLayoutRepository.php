@@ -22,6 +22,32 @@ class FavoriteLayoutRepository implements FavoriteLayoutRepositoryInterface
     }
 
     /**
+     * お気に入りに登録されているレイアウトを取得
+     * @param  int  $userId
+     * @param  int  $layoutId
+     * @return FavoriteLayout
+     * @throws LayoutNotFavoritedException
+     */
+    public function getFavoriteLayout(int $userId, int $layoutId): FavoriteLayout
+    {
+        $favoriteLayout = $this->model->where('user_id', $userId)
+            ->where('layout_id', $layoutId)
+            ->first();
+        if (!$favoriteLayout) {
+            Log::error(
+                'お気に入りにレイアウトが存在しません',
+                [
+                    'action' => 'removeFavoriteLayoutData',
+                    'userId' => $userId,
+                    'itemId' => $layoutId
+                ]
+            );
+            throw new LayoutNotFavoritedException();
+        }
+        return $favoriteLayout;
+    }
+
+    /**
      * お気に入りのレイアウト一覧を取得し、それぞれのレイアウト情報を結合
      * @param  string $userId
      * @return Collection
@@ -40,9 +66,9 @@ class FavoriteLayoutRepository implements FavoriteLayoutRepositoryInterface
     public function addFavoriteLayoutData(int $userId, int $layoutId): FavoriteLayout
     {
         return $this->model->firstOrCreate([
-                    'user_id' => $userId,
-                    'layout_id' => $layoutId,
-               ]);
+            'user_id' => $userId,
+            'layout_id' => $layoutId,
+        ]);
     }
 
     /**
@@ -53,20 +79,7 @@ class FavoriteLayoutRepository implements FavoriteLayoutRepositoryInterface
      */
     public function removeFavoriteLayoutData(int $userId, int $layoutId): void
     {
-        $favoriteLayout = $this->model->where('user_id', $userId)
-            ->where('layout_id', $layoutId)
-            ->first();
-        if (!$favoriteLayout) {
-            Log::error(
-                'お気に入りにレイアウトが存在しません',
-                [
-                    'action' => 'removeFavoriteLayoutData',
-                    'userId' => $userId,
-                    'itemId' => $layoutId
-                ]
-            );
-            throw new LayoutNotFavoritedException();
-        }
+        $favoriteLayout = $this->getFavoriteLayout($userId, $layoutId);
         $favoriteLayout->delete();
     }
 
@@ -76,7 +89,7 @@ class FavoriteLayoutRepository implements FavoriteLayoutRepositoryInterface
      * @param  int  $layoutId
      * @return bool
      */
-    public function getUserFavoriteExists(int $userId,int $layoutId): bool
+    public function getUserFavoriteExists(int $userId, int $layoutId): bool
     {
         return $this->model->where('user_id', $userId)->where('layout_id', $layoutId)->exists();
     }

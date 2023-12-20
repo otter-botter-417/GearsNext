@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Layout;
 use App\Domain\Layout\LayoutService;
+use App\Domain\Layout\LayoutDetailService;
 use App\Http\Resources\LayoutShowResource;
 use App\Http\Resources\LayoutIndexResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Support\Facades\Log;
 
 /**
  * パブリックなレイアウトに関する操作を管理するコントローラークラスです。
@@ -19,10 +19,12 @@ use Illuminate\Support\Facades\Log;
 class PublicLayoutController extends Controller
 {
     protected $layoutService;
+    protected $layoutDetailService;
 
-    public function __construct(LayoutService $layoutService)
+    public function __construct(LayoutService $layoutService, LayoutDetailService $layoutDetailService)
     {
         $this->layoutService = $layoutService;
+        $this->layoutDetailService = $layoutDetailService;
     }
 
     /**
@@ -31,8 +33,7 @@ class PublicLayoutController extends Controller
      */
     public function index(): ResourceCollection
     {
-        $layouts = $this->layoutService->getLayoutsAll();
-        Log::info($layouts);
+        $layouts = $this->layoutService->getAllLayouts();
         return LayoutIndexResource::collection($layouts);
     }
 
@@ -47,7 +48,7 @@ class PublicLayoutController extends Controller
     public function show(Request $request, Layout $layout): JsonResource
     {
         $userId = $request->attributes->get('user_id');
-        $layoutDetails  = $this->layoutService->getLayoutWithHistory($layout, $userId);
+        $layoutDetails  = $this->layoutDetailService->getLayoutDetails($layout, $userId);
         return  new LayoutShowResource($layoutDetails);
     }
 }

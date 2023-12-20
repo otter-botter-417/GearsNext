@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Domain\Item\ItemService;
+use App\Domain\Item\ItemCreateService;
 use App\Http\Requests\ItemIndexRequest;
 use App\Http\Requests\ItemRegisterRequest;
 use App\Http\Resources\ItemShowResource;
@@ -20,10 +21,12 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 class ItemController extends Controller
 {
     protected $itemService;
+    protected $itemCreateService;
 
-    public function __construct(ItemService $itemService)
+    public function __construct(ItemService $itemService, ItemCreateService $itemCreateService)
     {
         $this->itemService = $itemService;
+        $this->itemCreateService = $itemCreateService;
     }
 
     /**
@@ -44,7 +47,7 @@ class ItemController extends Controller
      */
     public function store(ItemRegisterRequest $request): Response
     {
-        $this->itemService->register($request->itemData);
+        $this->itemCreateService->register($request->itemData);
         return response(null, 201);
     }
 
@@ -57,20 +60,19 @@ class ItemController extends Controller
     public function show(Request $request, Item $item): ItemShowResource
     {
         $userId = $request->attributes->get('user_id');;
-        $itemData = $this->itemService->getItemDetails($item, $userId);
-        $this->itemService->viewCountIncrement($item);
+        $itemData = $this->itemService->getItemDetail($item, $userId);
         return  new ItemShowResource($itemData);
     }
 
     /**
-     * 商品詳細を更新
+     * 商品情報を更新
      * @param  Request  $request
      * @param  Item  $item
      * @return Response
      */
     public function update(ItemRegisterRequest $request, Item $item): Response
     {
-        $this->itemService->updateItemData($request->itemData, $item);
+        $this->itemCreateService->updateItemData($request->itemData, $item);
         return response(null, 204);
     }
 

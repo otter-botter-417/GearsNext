@@ -4,10 +4,8 @@ namespace App\Domain\Layout;
 
 use App\Models\Layout;
 use App\Models\TagPosition;
-use App\Models\ViewLayoutHistory;
 use App\Exceptions\LayoutNotFoundException;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Log;
 
 /**
  * レイアウトに関するリポジトリクラス
@@ -15,11 +13,13 @@ use Illuminate\Support\Facades\Log;
  */
 class LayoutRepository implements LayoutRepositoryInterface
 {
-    protected $model;
+    protected $layoutModel;
+    protected $tagPositionModel;
 
-    public function __construct(Layout $layout)
+    public function __construct(Layout $layout, TagPosition $tagPosition)
     {
-        $this->model = $layout;
+        $this->layoutModel = $layout;
+        $this->tagPositionModel = $tagPosition;
     }
 
     /**
@@ -27,65 +27,18 @@ class LayoutRepository implements LayoutRepositoryInterface
      * @param  int $userId
      * @return Collection
      */
-    public function getLayouts(int $userId): Collection
+    public function getUserLayouts(int $userId): Collection
     {
-        return $this->model->where('user_id', $userId)->with(['items', 'users'])->get();
+        return $this->layoutModel->where('user_id', $userId)->with(['items', 'users'])->get();
     }
 
     /**
      * 全てのレイアウトを取得する
      * @return Collection
      */
-    public function getLayoutsAll(): Collection
+    public function getAllLayouts(): Collection
     {
-        return $this->model->with(['items', 'users'])->get();
-    }
-
-    /**
-     * 指定されたIDの配列を元に関連するレイアウトデータを取得
-     * @param  array $layoutIds
-     * @return Collection
-     */
-    public function getLayoutsByIds(array $layoutIds): Collection
-    {
-        return $this->model->whereIn('layout_id', $layoutIds)->with(['users', 'tagPositions', 'comments'])->get();
-    }
-
-    /**
-     * レイアウトを登録する
-     * @param  string $text
-     * @param  int $userId
-     * @return Layout
-     */
-    public function createLayout(string $text, array $items, int $userId): Layout
-    {
-        $layout = Layout::create([
-            'text' => $text,
-            'user_id' => $userId,
-        ]);
-    
-        // 中間テーブルに item_id を登録
-        $layout->items()->attach($items);    
-        return $layout;
-    }
-
-    /**
-     * レイアウトのイメージマップ座標を登録する
-     * @param  Layout $layout
-     * @param  array $items レイアウトに使われている商品のデータ
-     * @return void
-     */
-    public function createLayoutPositions(Layout $layout, array $items): void
-    {
-        foreach ($items as $itemData) {
-            TagPosition::create([
-                'layout_id' => $layout->layout_id,
-                'item_id' => $itemData['item_id'],
-                'item_name' => $itemData['item_name'], 
-                'x_position' => $itemData['x_position'],
-                'y_position' => $itemData['y_position']
-            ]);
-        }
+        return $this->layoutModel->with(['items', 'users'])->get();
     }
 
     /**
@@ -94,80 +47,96 @@ class LayoutRepository implements LayoutRepositoryInterface
      * @return Layout リレーション先のデータも含めて返す
      * @throws LayoutNotFoundException
      */
-    public function getLayout(Layout $layout): Layout
+    public function getLayoutWithRelations(Layout $layout): Layout
     {
-        return Layout::where('layout_id', $layout->layout_id)
+        return $this->layoutModel::where('layout_id', $layout->layout_id)
             ->with([
                 'items',
-                'users', 
-                'comments.user', 
-                'tagPositions' => function($query) {
+                'users',
+                'comments.user',
+                'tagPositions' => function ($query) {
                     $query->with('item:item_id,item_name,image_url'); // image_urlも追加
                 }
             ])
             ->first();
     }
-    
-    /**
-     * レイアウトの閲覧数をインクリメント
-     * @param  Layout  $layout
-     * @return void
-     */
-    public function incrementLayoutViewCount(Layout $layout): void
-    {
-        $layout->increment('view_count');
-    }
 
     /**
-     * レイアウトの閲覧履歴を保存する
-     * すでに保存されていれば更新時間だけを更新
-     * @param  Layout  $layout
+     * レイアウトインスタンスを作成し、データベースに保存
+     * @param  string $text
      * @param  int $userId
-     * @return void
+     * @return Layout
      */
-    public function saveViewLayoutHistory(Layout $layout, int $userId): void
+    public function createLayout(string $text, int $userId): Layout
     {
-        ViewLayoutHistory::updateOrInsert(
-            ['user_id' => $userId, 'layout_id' => $layout->layout_id],
-            ['updated_at' => now()]
-        );
-    }
-
-    /**
-     * レイアウトのお気に入り数をインクリメント
-     * @param  int  $layoutId
-     * @return void
-     */
-    public function incrementLayoutFavoriteCount(int $layoutId): void
-    {
-        $layout = $this->model->find($layoutId);
-        $layout->increment('favorite_count');
-    }
-
-    /**
-     * レイアウトのお気に入り数をデクリメント
-     * @param  int  $layoutId
-     * @return void
-     */
-    public function decrementLayoutFavoriteCount(int $layoutId): void
-    {
-        $layout = $this->model->find($layoutId);
-        $layout->decrement('favorite_count');
+        return $this->layoutModel::create([
+            'text' => $text,
+            'user_id' => $userId,
+        ]);
     }
 
     /**
      * レイアウトを更新
      * @param  Layout  $layout
      * @param  array $data レイアウトデータ
-     * @return void
+     * @return Layout
      */
-    public function updateLayout(Layout $layout, array $data): void
+    public function updateLayout(Layout $layout, array $data): Layout
+    {
+        $this->updateLayoutData($layout, $data);
+        $this->resetLayoutItems($layout);
+        $this->resetTagPositions($layout);
+        $this->createTagPositionsForLayout($layout, $data['image_map_positions'] ?? []);
+
+        return $layout;
+    }
+
+    /**
+     * レイアウトのデータを更新
+     * @param Layout $layout
+     * @param array $data
+     */
+    private function updateLayoutData(Layout $layout, array $data): void
     {
         $layout->fill($data);
         $layout->save();
+    }
+
+    /**
+     * レイアウトに関連するアイテムのリセット
+     * @param Layout $layout
+     */
+    private function resetLayoutItems(Layout $layout): void
+    {
         $layout->items()->detach();
-        TagPosition::where('layout_id', $layout->layout_id)->delete();
-        $this->createLayoutPositions($layout, $data['image_map_positions']);
+    }
+
+    /**
+     * レイアウトに関連するタグ位置のリセット
+     * @param Layout $layout
+     */
+    private function resetTagPositions(Layout $layout): void
+    {
+        $this->tagPositionModel::where('layout_id', $layout->layout_id)->delete();
+    }
+
+    /**
+     * レイアウトのイメージマップ座標を登録する
+     * @param  Layout $layout
+     * @param  array $items レイアウトに使われている商品のデータ
+     * @return void
+     */
+    public function createTagPositionsForLayout(Layout $layout, array $items): void
+    {
+        foreach ($items as $itemData) {
+            $this->tagPositionModel::create([
+                'layout_id' => $layout->layout_id,
+                'item_id' => $itemData['item_id'],
+                'item_name' => $itemData['item_name'],
+                'x_position' => $itemData['x_position'],
+                'y_position' => $itemData['y_position']
+            ]);
+        }
     }
 
     /**
@@ -181,13 +150,36 @@ class LayoutRepository implements LayoutRepositoryInterface
     }
 
     /**
+     * レイアウトの閲覧数をインクリメント
+     * @param  Layout  $layout
+     * @return void
+     */
+    public function incrementLayoutViewCount(Layout $layout): void
+    {
+        $layout->increment('view_count');
+    }
+
+    /**
+     * レイアウトのお気に入り数に指定した数値を加算する
+     * @param  int  $layoutId
+     * @return void
+     */
+    public function adjustLayoutFavoriteCount(int $layoutId, int $amount): void
+    {
+        $layout = $this->layoutModel->find($layoutId);
+        if ($layout) {
+            $layout->increment('favorite_count', $amount);
+        }
+    }
+
+    /**
      * 閲覧数が多い順にレイアウトを取得
      * @param  int $number 取得するレイアウト数
      * @return Collection
      */
     public function getTopViewedLayouts(int $number): Collection
     {
-        return $this->model->with(['users'])->orderBy('view_count', 'desc')->take($number)->get();
+        return $this->layoutModel->orderBy('view_count', 'desc')->take($number)->get();
     }
 
     /**
@@ -197,7 +189,7 @@ class LayoutRepository implements LayoutRepositoryInterface
      */
     public function getTopFavoriteLayouts(int $number): Collection
     {
-        return $this->model->with(['users'])->orderBy('favorite_count', 'desc')->take($number)->get();
+        return $this->layoutModel->orderBy('favorite_count', 'desc')->take($number)->get();
     }
 
     /**
@@ -207,6 +199,6 @@ class LayoutRepository implements LayoutRepositoryInterface
      */
     public function getNewlyArrivedLayouts(int $number): Collection
     {
-        return $this->model->with(['users'])->orderBy('created_at', 'desc')->take($number)->get();
+        return $this->layoutModel->orderBy('created_at', 'desc')->take($number)->get();
     }
 }

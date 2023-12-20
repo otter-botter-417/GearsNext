@@ -24,8 +24,7 @@ class UserRepository implements UserRepositoryInterface
      */
     public function createUserData(array $registerData): User
     {
-        $user = $this->model->create($registerData);
-        return $user;
+        return $this->model->create($registerData);
     }
 
     /**

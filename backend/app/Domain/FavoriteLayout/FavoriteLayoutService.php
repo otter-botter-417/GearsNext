@@ -57,7 +57,7 @@ class FavoriteLayoutService
     {
         $layout = $this->favoriteLayoutRepository->addFavoriteLayoutData($userId, $layoutId);
         if ($layout->wasRecentlyCreated) {
-            $this->layoutRepository->incrementLayoutFavoriteCount($layoutId);
+            $this->layoutRepository->adjustLayoutFavoriteCount($layoutId, 1);
         }
     }
 
@@ -71,7 +71,20 @@ class FavoriteLayoutService
     public function removeFavoriteLayout(int $userId, int $layoutId)
     {
         $this->favoriteLayoutRepository->removeFavoriteLayoutData($userId, $layoutId);
-        $this->layoutRepository->decrementLayoutFavoriteCount($layoutId);
+        $this->layoutRepository->adjustLayoutFavoriteCount($layoutId, -1);
+    }
 
+    /**
+     * ユーザーがレイアウトをお気に入りに登録しているかを取得
+     * @param  int $userId
+     * @param  int $layoutId
+     * @return array
+     */
+    public function getLayoutFavoriteStatus(int $userId, int $layoutId): array
+    {
+        $userFavoriteExists = $this->favoriteLayoutRepository->getUserFavoriteExists($userId, $layoutId);
+        return [
+            'userFavoriteLayoutExists' => $userFavoriteExists,
+        ];;
     }
 }

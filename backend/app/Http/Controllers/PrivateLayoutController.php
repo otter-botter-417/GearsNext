@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Layout;
 use App\Domain\Layout\LayoutService;
+use App\Domain\Layout\CreateLayoutService;
 use App\Http\Requests\StoreLayoutRequest;
 use App\Http\Requests\UpdateLayoutRequest;
 use App\Http\Resources\LayoutIndexResource;
@@ -21,10 +22,14 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 class PrivateLayoutController extends Controller
 {
     protected $layoutService;
+    protected $CreateLayoutService;
 
-    public function __construct(LayoutService $layoutService)
-    {
+    public function __construct(
+        LayoutService $layoutService,
+        CreateLayoutService $CreateLayoutService
+    ) {
         $this->layoutService = $layoutService;
+        $this->CreateLayoutService = $CreateLayoutService;
     }
 
     /**
@@ -47,7 +52,7 @@ class PrivateLayoutController extends Controller
     {
         $imageFile = $request->file('layout_image');
         $data = $request->only(['text', 'items', 'image_map_positions']);
-        $this->layoutService->createLayout($imageFile, $data, Auth::id());
+        $this->CreateLayoutService->createLayout($imageFile, $data, Auth::id());
         return response(null, 201);
     }
 
@@ -62,7 +67,7 @@ class PrivateLayoutController extends Controller
     {
         $this->authorize('update', $layout);
         $data = $request->only(['text', 'items', 'image_map_positions']);
-        $this->layoutService->updateLayout($layout, $data);
+        $this->CreateLayoutService->updateLayout($layout, $data);
         return response(null, 204);
     }
 

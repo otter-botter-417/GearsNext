@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\User\UserAuthService;
 use App\Domain\User\UserService;
+use App\Exceptions\LoginFailedException;
+use App\Exceptions\TokenExpiredException;
 use App\Http\Requests\UserRegisterRequest;
 use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserUpdateRequest;
-use Illuminate\Support\Facades\Log;
+use App\Http\Resources\UserDataResource;
 use Illuminate\Support\Facades\Auth;
 use \Illuminate\Http\Request;
 use \Illuminate\Http\Response;
 use \Illuminate\Http\JsonResponse;
-use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
 
 /**
  * ユーザー情報に関する操作を管理するコントローラークラスです。
@@ -22,10 +23,13 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 class UserController extends Controller
 {
     protected $userService;
+    protected $userAuthService;
 
-    public function __construct(UserService $userService)
+
+    public function __construct(UserService $userService, UserAuthService $userAuthService)
     {
         $this->userService = $userService;
+        $this->userAuthService = $userAuthService;
     }
     /**
      * ユーザー登録
@@ -34,8 +38,8 @@ class UserController extends Controller
      */
     public function register(UserRegisterRequest $request): JsonResponse
     {
-        $registerData = $request->only(['user_name', 'email', 'password']);
-        $token = $this->userService->register($registerData);
+        $registerData = $request->validated();
+        $token = $this->userService->userRegister($registerData);
         return response()->json($token, 201);
     }
 
@@ -47,15 +51,8 @@ class UserController extends Controller
      */
     public function login(UserLoginRequest $request): JsonResponse
     {
-        $loginRequest = $request->only(['email', 'password']);
-        
-        // 認証に失敗
-        if (!Auth::attempt($loginRequest)) {
-            return response()->json(['error' => '認証に失敗しました。ユーザー名またはパスワードが間違っています。'], 401);
-        }
-        
-        // 認証に成功した場合、トークンを返す
-        $token = $this->userService->login($loginRequest);
+        $loginRequest = $request->validated();
+        $token = $this->userService->userLogin($loginRequest);
         return response()->json($token, 200);
     }
 
@@ -65,7 +62,7 @@ class UserController extends Controller
      */
     public function logout(): Response
     {
-        JWTAuth::invalidate(JWTAuth::getToken());// トークンを無効化
+        $this->userAuthService->tokenInvalidate();
         return response(null, 200);
     }
 
@@ -76,8 +73,8 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request): Response
     {
-        $data = $request->only(['user_name', 'email', 'password']);
-        $this->userService->updateUserData(Auth::id(), $data);
+        $data = $request->validated();
+        $this->userService->updateUserData($data);
         return response(null, 204);
     }
 
@@ -87,8 +84,7 @@ class UserController extends Controller
      */
     public function delete(): Response
     {
-        $this->userService->deleteUserData(Auth::id());
-        JWTAuth::invalidate(JWTAuth::getToken());// トークンを無効化
+        $this->userService->deleteUserAndInvalidateToken();
         return response(null, 204);
     }
 
@@ -96,33 +92,23 @@ class UserController extends Controller
      * トークンのリフレッシュ
      * @param  Request $request ['token']
      * @return JsonResponse
+     * @throws TokenRefreshFailedException トークンのリフレッシュに失敗した場合
      */
-    public function refreshToken(Request $request) : JsonResponse
+    public function refreshToken(Request $request): JsonResponse
     {
-        $token = $request->header('Authorization');
-        $token = str_replace('Bearer ', '', $token);
-        try {
-            $newToken = JWTAuth::setToken($token)->refresh();  // トークンをリフレッシュ
-
-        } catch (JWTException $e) {
-            Log::error($e);
-            return response()->json(['error' => 'Could not refresh the token'], 401);
-        }
-    
-        // 新しいトークンを返す
+        $token = $request->bearerToken();
+        $newToken = $this->userAuthService->refreshToken($token);
         return response()->json(['access_token' => $newToken]);
     }
 
-    public function getAuthenticatedUser(Request $request)
-    {   
-    // 認証されたユーザーを取得
-    $user = Auth::user();
-    if (!$user) {
-        return response()->json(['error' => 'User not authenticated'], 401);
-    }
-    $userData = [
-        'userId' => $user->user_id,
-        'userName' => $user->user_name];
-    return response()->json($userData, 200);
+    /**
+     * 認証済みユーザーの時のみユーザー情報を返す
+     * @return UserDataResource
+     * @throws TokenExpiredException トークンの有効期限が切れている場合
+     */
+    public function getAuthenticatedUser()
+    {
+        $userData = $this->userAuthService->getAuthenticatedUser();
+        return UserDataResource::collection($userData);
     }
 }

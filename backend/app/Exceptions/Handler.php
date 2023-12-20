@@ -78,6 +78,16 @@ class Handler extends ExceptionHandler
             return response()->json(['message' => $exception->getMessage()], 409);
         }
 
+        // 認証トークンの有効期限が切れている場合の例外をキャッチ
+        if ($exception instanceof TokenExpiredException) {
+            return response()->json(['message' => $exception->getMessage()], 401);
+        }
+
+        // 認証トークンの更新に失敗した場合の例外をキャッチ
+        if ($exception instanceof TokenRefreshFailedException) {
+            return response()->json(['message' => $exception->getMessage()], 401);
+        }
+
         // 商品が既に登録済みの場合の例外をキャッチ
         if ($exception instanceof ItemAlreadyRegisteredException) {
             return response()->json(['message' => $exception->getMessage()], 409);
